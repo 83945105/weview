@@ -6,6 +6,7 @@
   "private": false,
   "main": "packages/index.js",
   "files": [
+    "src",
     "lib",
     "packages",
     "examples"

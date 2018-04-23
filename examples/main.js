@@ -12,8 +12,6 @@ import {LayerRight} from '../packages/index';
 Vue.component(DemoBlock.name, DemoBlock);
 Vue.component(LayerRight.name, LayerRight);
 
-import '../packages/default.css';
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

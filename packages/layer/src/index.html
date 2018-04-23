@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="css/common.css" />
+		<link rel="stylesheet" href="css/fonts/iconfont.css" />
+		<link rel="stylesheet" href="css/weview/weview.css" />
+	</head>
+	<body>
+		<div v-cloak id="weview">
+			<input type="button" class="we-btn we-btn" onclick="layerOpen('rightLayer')" value="右侧" />
+			
+			<input type="button" class="we-btn we-btn" onclick="layerTopOpen('topLayer')" value="上侧" />
+		
+			<div id="we-layer-mask" class="we-layer-mask bg-black" onclick="layerCloseAll()"></div>
+			<!--右侧详情-->
+			<div id="rightLayer" class="we-layer-frame" style="top:0;bottom:0;" :style="{'width':layerWidth,'right':'-'+layerWidth}">
+				<div class="we-layer-frame-title">
+					<h3>详情</h3>
+					<i class="weiconfont we-icon-shanchu we-layer-frame-close" onclick="layerClose('rightLayer')"></i>
+				</div>
+				<div class="we-layer-frame-content we-v-scroll">
+					<div class="we-pa10 we-hidden">
+						<ul class="we-form we-form-info">
+							<li>
+								<em class="form-left we-w-mini we-tar we-fc-txt3">登录名：</em>
+								<div class="form-right we-wordwrap we-fc-txt1">wangxiaoming</div>
+							</li>
+							<li>
+								<em class="form-left we-w-mini we-tar we-fc-txt3">真实姓名：</em>
+								<div class="form-right we-wordwrap we-fc-txt1">王晓明</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="we-layer-frame-btn we-tac">
+					<button class="we-btn" onclick="layerClose('rightLayer')">提交</button>
+					<input type="button" class="we-btn we-btn-close" onclick="layerClose('rightLayer')" value="取消" />
+				</div>
+			</div>
+			<!--/右侧详情-->
+			
+			<!--上侧详情-->
+			<div id="topLayer" class="we-layer-frame" style="left:0;right:0;" :style="{'height':layerHeight,'top':'-'+layerHeight}">
+				<div class="we-layer-frame-title">
+					<h3>详情</h3>
+					<i class="weiconfont we-icon-shanchu we-layer-frame-close" onclick="layerTopClose('topLayer')"></i>
+				</div>
+				<div class="we-layer-frame-content we-v-scroll">
+					<div class="we-pa10 we-hidden">
+						<ul class="we-form we-form-info">
+							<li>
+								<em class="form-left we-w-mini we-tar we-fc-txt3">登录名：</em>
+								<div class="form-right we-wordwrap we-fc-txt1">wangxiaoming</div>
+							</li>
+							<li>
+								<em class="form-left we-w-mini we-tar we-fc-txt3">真实姓名：</em>
+								<div class="form-right we-wordwrap we-fc-txt1">王晓明</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="we-layer-frame-btn we-tac">
+					<button class="we-btn" onclick="layerTopClose('rightLayer')">提交</button>
+					<input type="button" class="we-btn we-btn-close" onclick="layerTopClose('topLayer')" value="取消" />
+				</div>
+			</div>
+			<!--/上侧详情-->
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="js/vue.min.js"></script>
+	<script type="text/javascript">
+		//打开弹层
+		function layerOpen(objId){
+        	document.getElementById("we-layer-mask").style.display="block";
+        	document.getElementById(objId).style.display="block";
+			setTimeout(function() {
+				document.getElementById(objId).style.right=0;
+    		},100);
+		}
+		//关闭弹层
+		function layerClose(objId){
+			document.getElementById("we-layer-mask").style.display="none";
+			document.getElementById(objId).style.right='-'+weview.layerWidth;
+			setTimeout(function() {
+				document.getElementById(objId).style.display="none";
+    		},500);
+		}
+		//关闭所有弹层
+		function layerCloseAll(){
+			document.getElementById("we-layer-mask").style.display="none";
+			var layerOne=document.getElementsByClassName("we-layer-frame");
+			for(var i=0;i<layerOne.length;i++){
+				layerOne[i].style.right="-"+weview.layerWidth;
+			}
+			setTimeout(function() {
+				for(var i=0;i<layerOne.length;i++){
+					layerOne[i].style.display="none";
+				}
+			},500);
+		}
+		
+		//打开弹层
+		function layerTopOpen(objId){
+        	document.getElementById("we-layer-mask").style.display="block";
+        	document.getElementById(objId).style.display="block";
+			setTimeout(function() {
+				document.getElementById(objId).style.top=0;
+    		},100);
+		}
+		//关闭弹层
+		function layerTopClose(objId){
+			document.getElementById("we-layer-mask").style.display="none";
+			document.getElementById(objId).style.top='-'+weview.layerWidth;
+			setTimeout(function() {
+				document.getElementById(objId).style.display="none";
+    		},500);
+		}
+		var weview=new Vue({
+			el:"#weview",
+			data:({
+				layerWidth:"55%",
+				layerHeight:"40%"
+			}),
+			mounted:function(){
+				if($(window).width()<=1600){
+					this.layerWidth="70%";
+				}
+				window.layerWidth=this.layerWidth;
+			}
+		});
+	</script>
+</html>
