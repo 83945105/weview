@@ -1,0 +1,87 @@
+[
+  {
+    "desc": "更新日志",
+    "name": "UpdateLog",
+    "path": "/updateLog"
+  },
+  {
+    "desc": "开发指南",
+    "name": "DevHelp",
+    "path": "/devHelp",
+    "items": [
+      {
+        "desc": "安装",
+        "name": "Install",
+        "path": "/install"
+      },
+      {
+        "desc": "快速上手",
+        "name": "QuickHand",
+        "path": "/quickHand"
+      },
+      {
+        "desc": "国际化",
+        "name": "Internationalization",
+        "path": "/internationalization"
+      },
+      {
+        "desc": "自定义主题",
+        "name": "CustomTheme",
+        "path": "/customTheme"
+      }
+    ]
+  },
+  {
+    "desc": "组件",
+    "name": "Component",
+    "path": "/component",
+    "items": [
+      {
+        "desc": "基础",
+        "name": "Basic",
+        "path": "/basic",
+        "items": [
+          {
+            "desc": "弹层",
+            "name": "Layer",
+            "path": "/layer",
+            "items": [
+              {
+                "desc": "弹层框架",
+                "name": "LayerFrame",
+                "path": "/layerFrame"
+              }
+            ]
+          },
+          {
+            "desc": "通知",
+            "name": "Notice",
+            "path": "/notice",
+            "items": [
+              {
+                "desc": "警告",
+                "name": "Alert",
+                "path": "/alert"
+              },
+              {
+                "desc": "加载",
+                "name": "Loading",
+                "path": "/loading"
+              },
+              {
+                "desc": "消息提示",
+                "name": "Message",
+                "path": "/message"
+              },
+              {
+                "desc": "询问框",
+                "name": "Confirm",
+                "path": "/confirm"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
