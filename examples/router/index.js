@@ -14,6 +14,14 @@ let DocRoutes = {
   children: []
 };
 
+//测试路由
+let TestRoutes = {
+  path: '/test',
+  name: "Test",
+  component: r => require.ensure([], () => r(require(`../components/Test.vue`))),
+  children: []
+};
+
 let initRouter = (routers = [], parent, folder, suffix) => {
   routers.forEach(router => {
     if (router.items) {
@@ -36,11 +44,11 @@ let initRouter = (routers = [], parent, folder, suffix) => {
 };
 
 initRouter(docsConf, DocRoutes, "docs", "md");
-initRouter(testConf, DocRoutes, "test", "vue");
+initRouter(testConf, TestRoutes, "test", "vue");
 
 export default new Router({
   routes: [{
     path: "/",
-    redirect: "LayerFrame",
-  }, DocRoutes]
+    redirect: "Test",
+  }, DocRoutes, TestRoutes]
 });
