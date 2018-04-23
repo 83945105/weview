@@ -1,0 +1,28 @@
+[
+  {
+    "desc": "组件测试",
+    "name": "ComponentTest",
+    "path": "/componentTest",
+    "items": [
+      {
+        "desc": "基础测试",
+        "name": "BasicTest",
+        "path": "/basicTest",
+        "items": [
+          {
+            "desc": "弹层测试",
+            "name": "LayerTest",
+            "path": "/layerTest",
+            "items": [
+              {
+                "desc": "弹层框架测试",
+                "name": "LayerFrameTest",
+                "path": "/layerFrameTest"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
