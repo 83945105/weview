@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="../../../../../weview/css/common.css">
 <template>
   <div class="we-layer-frame-title">
     <h3>{{title}}</h3>

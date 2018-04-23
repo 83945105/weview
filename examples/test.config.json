@@ -1,4 +1,8 @@
-[
+[{
+  "desc": "614651",
+  "name": "ApiFrameTest",
+  "path": "/apiFrameTest"
+},
   {
     "desc": "组件测试",
     "name": "ComponentTest",

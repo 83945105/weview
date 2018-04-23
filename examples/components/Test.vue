@@ -7,6 +7,8 @@
 
 <script>
   import TestHead from "../test/TestHead";
+  import '../../lib/static/css/common.css';
+  import '../../lib/static/less/api.less';
 
   import '../../packages/theme-chalk/index.less';
 
