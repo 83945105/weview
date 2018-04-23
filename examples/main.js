@@ -7,10 +7,8 @@ import router from './router'
 Vue.config.productionTip = false;
 
 import DemoBlock from './components/demo-block';
-import {LayerRight} from '../packages/index';
 
 Vue.component(DemoBlock.name, DemoBlock);
-Vue.component(LayerRight.name, LayerRight);
 
 /* eslint-disable no-new */
 new Vue({

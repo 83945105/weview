@@ -3,11 +3,12 @@
 </template>
 
 <script>
-    import ApiFrame from "../../packages/api/src/ApiFrame";
-    export default {
-        name: "ApiFrameTest",
-      components: {ApiFrame}
-    }
+  import ApiFrame from "../../packages/api/src/ApiFrame";
+
+  export default {
+    name: "ApiFrameTest",
+    components: {ApiFrame}
+  }
 </script>
 
 <style scoped>

@@ -6,11 +6,11 @@
  * version: v1.0
  */
 
-import LayerRight from './layer/index.js';
+import LayerFrame from './layer-frame/index';
 import Alert from './alert/index.js';
 
 const components = [
-  LayerRight,
+  LayerFrame,
   Alert
 ];
 
@@ -24,6 +24,6 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export {
-  LayerRight,
+  LayerFrame,
   Alert
 }

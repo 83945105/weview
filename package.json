@@ -36,6 +36,8 @@
   "bugs": {
     "url": "https://github.com/83945105/weview/issues"
   },
+  "unpkg": "lib/index.js",
+  "style": "lib/theme-chalk/index.css",
   "dependencies": {
   },
   "peerDependencies": {
@@ -46,17 +48,15 @@
     "less-loader": "4.1.0",
     "markdown-it-anchor": "4.0.0",
     "markdown-it-container": "2.0.0",
+    "vue-markdown-loader": "2.4.1",
     "moment": "2.22.1",
     "path": "0.12.7",
     "cheerio": "1.0.0-rc.2",
-    "axios": "0.16.2",
-    "events": "1.1.1",
     "iview": "2.9.2",
     "jquery": "1.11.3",
     "vue": "2.5.9",
     "vue-router": "3.0.1",
     "vuex": "2.5.0",
-    "vue-markdown-loader": "2.4.1",
     "autoprefixer": "7.1.2",
     "babel-core": "6.22.1",
     "babel-eslint": "8.2.1",

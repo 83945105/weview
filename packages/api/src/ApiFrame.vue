@@ -2,7 +2,7 @@
   <div>
     <div class="we-api-header">
       <div class="we-api-logo">
-        <img class="we-api-logo-img" src="../../../lib/static/images/weview_logo.png" />
+        <!--<img class="we-api-logo-img" src="../../../lib/static/images/weview_logo.png"/>-->
         <div class="we-api-logo-text">weview</div>
       </div>
       <ul class="we-api-nav">
@@ -94,12 +94,13 @@
 </template>
 
 <script>
-    import LayerFrameTest from "../../../examples/test/LayerFrameTest";
-    import LayerFrame from "../../layer/src/LayerFrame";
-    export default {
-        name: "ApiFrame",
-      components: {LayerFrame, LayerFrameTest}
-    }
+  import LayerFrameTest from "../../../examples/test/LayerFrameTest";
+  import LayerFrame from "../../layer/src/LayerFrame";
+
+  export default {
+    name: "ApiFrame",
+    components: {LayerFrame, LayerFrameTest}
+  }
 </script>
 
 <style scoped type="text/less">
