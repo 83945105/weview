@@ -6,13 +6,17 @@ import router from './router'
 
 Vue.config.productionTip = false;
 
+import weview from '../packages/index';
+
+Vue.use(weview);
+
 import DemoBlock from './components/demo-block';
 
 Vue.component(DemoBlock.name, DemoBlock);
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
+  el: '#index',
   router,
   components: {Index},
   template: '<Index/>'
