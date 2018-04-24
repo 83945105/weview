@@ -24,6 +24,11 @@
                 "path": "/layerFrameTest"
               }
             ]
+          },
+          {
+            "desc": "按钮测试",
+            "name": "ButtonTest",
+            "path": "/buttonTest"
           }
         ]
       }

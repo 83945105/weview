@@ -1,7 +1,11 @@
 <template>
   <div class="we-layer-frame-title">
-    <h3>{{title}}</h3>
-    <i class="weiconfont we-icon-shanchu we-layer-frame-close"></i>
+    <slot>
+      <h3>{{title}}</h3>
+      <i class="weiconfont we-icon-shanchu we-layer-frame-close"
+         @click.stop="handleClose"
+      ></i>
+    </slot>
   </div>
 </template>
 
@@ -11,7 +15,9 @@
 
   export default {
 
-    name: "layer-frame-top",
+    name: "we-layer-frame-top",
+
+    componentName: 'WeLayerFrameTop',
 
     mixins: [Emitter],
 
@@ -19,6 +25,13 @@
       title: {
         type: String,
         default: '详情'
+      }
+    },
+
+    methods: {
+      handleClose(e) {
+        this.$emit('close', e);
+        this.dispatch('WeLayerFrame', 'handleClose', e);
       }
     }
 

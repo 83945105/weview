@@ -21,7 +21,9 @@
 
 <script>
   export default {
-    name: "layer-frame",
+    name: "we-layer-frame",
+
+    componentName: 'WeLayerFrame',
 
     data() {
       return {
@@ -205,6 +207,12 @@
             break;
         }
       }
+    },
+
+    created() {
+      this.$on('handleClose', (e) => {
+        this.close();
+      });
     },
 
     mounted() {

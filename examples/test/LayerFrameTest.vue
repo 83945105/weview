@@ -10,7 +10,8 @@
     <layer-frame v-model="top" position="top" height="70%"></layer-frame>
     <layer-frame v-model="bottom" position="bottom" height="90%"></layer-frame>
     <layer-frame v-model="all">
-      <layer-frame-top></layer-frame-top>
+      <layer-frame-top>
+      </layer-frame-top>
     </layer-frame>
   </div>
 </template>
