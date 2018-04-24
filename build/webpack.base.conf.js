@@ -38,11 +38,11 @@ const vueMarkdownOption = {
         };*/
 
     // ```code`` 给这种样式加个class code_inline
-/*    const code_inline = MarkdownIt.renderer.rules.code_inline
-    MarkdownIt.renderer.rules.code_inline = function (...args) {
-      args[0][args[1]].attrJoin('class', 'code_inline')
-      return code_inline(...args)
-    }*/
+    /*    const code_inline = MarkdownIt.renderer.rules.code_inline
+        MarkdownIt.renderer.rules.code_inline = function (...args) {
+          args[0][args[1]].attrJoin('class', 'code_inline')
+          return code_inline(...args)
+        }*/
 
     return source;
   },
@@ -142,7 +142,7 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        loader: "style-loader!css-loader!less-loader"
+        loaders: ['style-loader', 'css-loader', 'less-loader']
       }
     ]
   },

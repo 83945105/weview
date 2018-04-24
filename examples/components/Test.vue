@@ -8,14 +8,12 @@
 <script>
   import TestHead from "../test/TestHead";
 
-  import '../../packages/theme-chalk/index.less';
-
   export default {
     components: {TestHead},
     name: "test"
   }
 </script>
 
-<style scoped>
-
+<style lang="less" type="text/less">
+  @import '../../packages/theme-chalk/index.less';
 </style>
