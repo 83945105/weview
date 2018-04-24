@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <we-button></we-button>
+    <we-button>default</we-button>
 
   </div>
 </template>

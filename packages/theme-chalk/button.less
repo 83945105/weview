@@ -1,0 +1,13 @@
+@import "./src/common/var";
+@import "./src/mixins/button";
+
+@btn-prefix-cls:~"@{css-prefix}button";
+
+.@{btn-prefix-cls}{
+  .btn;
+  .btn-default;
+
+  &-primary {
+    .btn-primary;
+  }
+}

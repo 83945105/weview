@@ -103,5 +103,6 @@
   }
 </script>
 
-<style scoped type="text/less">
+<style lang="less" type="text/less">
+  @import "../../theme-chalk/api.less";
 </style>

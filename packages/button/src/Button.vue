@@ -1,6 +1,6 @@
 <template>
   <button
-    class="we-btn"
+    class="we-button we-button-primary we-button-default"
     @click="handleClick"
   >
     <span v-if="$slots.default"><slot></slot></span>
@@ -20,3 +20,6 @@
     }
   }
 </script>
+<style lang="less" type="text/less">
+  @import "../../theme-chalk/button.less";
+</style>
