@@ -47,12 +47,12 @@ const vueMarkdownOption = {
   },
   //配置Markdown-it使用的插件
   use: [
-    [require('markdown-it-anchor'), {
+/*    [require('markdown-it-anchor'), {
       level: 2,
       slugify: slugify,
       permalink: true,
       permalinkBefore: true
-    }],
+    }],*/
     [require('markdown-it-container'), 'demo', {
       validate: function (params) {
         return params.trim().match(/^demo\s*(.*)$/);

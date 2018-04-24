@@ -35,10 +35,6 @@
       rightClass() {
         return 'right-custom-class';
       }
-    },
-
-    created() {
-      console.log(this.$WEVIEW)
     }
   }
 </script>
