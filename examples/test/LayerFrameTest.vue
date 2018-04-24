@@ -5,25 +5,20 @@
     <button @click.stop="top = true">上方弹出</button>
     <button @click.stop="bottom = true">下方弹出</button>
     <button @click.stop="all = true">完整示例</button>
-    <layer-frame v-model="right" :custom-class="rightClass" :esc-closeable="false"></layer-frame>
-    <layer-frame v-model="left" position="left" width="90%"></layer-frame>
-    <layer-frame v-model="top" position="top" height="70%"></layer-frame>
-    <layer-frame v-model="bottom" position="bottom" height="90%"></layer-frame>
-    <layer-frame v-model="all">
-      <layer-frame-top>
-      </layer-frame-top>
-    </layer-frame>
+    <we-layer-frame v-model="right" :custom-class="rightClass" :esc-closeable="false"></we-layer-frame>
+    <we-layer-frame v-model="left" position="left" width="90%"></we-layer-frame>
+    <we-layer-frame v-model="top" position="top" height="70%"></we-layer-frame>
+    <we-layer-frame v-model="bottom" position="bottom" height="90%"></we-layer-frame>
+    <we-layer-frame v-model="all">
+      <we-layer-frame-top>
+      </we-layer-frame-top>
+    </we-layer-frame>
   </div>
 </template>
 
 <script>
-  import LayerFrame from "../../packages/layer/src/LayerFrame";
-  import LayerFrameTop from "../../packages/layer/src/LayerFrameTop";
 
   export default {
-    components: {
-      LayerFrameTop,
-      LayerFrame},
     name: "layer-frame-test",
 
     data() {

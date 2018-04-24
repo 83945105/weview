@@ -7,14 +7,23 @@
  */
 
 import LayerFrame from './layer-frame/index';
+import LayerFrameTop from './layer-frame-top/index';
 
 const components = [
-  LayerFrame
+  LayerFrame,
+  LayerFrameTop
 ];
 
-const install = function (Vue) {
+const install = function (Vue, opts = {}) {
+
   components.map(component => Vue.component(component.name, component));
-  // Vue.prototype.$loading = WLoadingBar
+
+  const WEVIEW = {
+    version: '1.0.0',
+    size: opts.size || ''
+  };
+
+  Vue.prototype.$WEVIEW = WEVIEW;
 };
 
 if (typeof window !== 'undefined' && window.Vue) {
@@ -22,5 +31,8 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export {
-  LayerFrame
+  LayerFrame,
+  LayerFrameTop
 }
+
+export default install;
