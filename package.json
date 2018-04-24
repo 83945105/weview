@@ -1,6 +1,6 @@
 {
   "name": "weview",
-  "version": "0.0.1-dev",
+  "version": "0.0.2-dev",
   "description": "Tools based on Vue",
   "author": "wx_83945105 <18606167809@163.com>",
   "private": false,
@@ -17,7 +17,8 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
-    "build": "node build/build.js"
+    "build:file": "node build/build-entry.js",
+    "build:theme": "node build/build-theme.js"
   },
   "repository": {
     "type": "git",

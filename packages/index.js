@@ -7,11 +7,9 @@
  */
 
 import LayerFrame from './layer-frame/index';
-import Alert from './alert/index.js';
 
 const components = [
-  LayerFrame,
-  Alert
+  LayerFrame
 ];
 
 const install = function (Vue) {
@@ -24,6 +22,5 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export {
-  LayerFrame,
-  Alert
+  LayerFrame
 }
