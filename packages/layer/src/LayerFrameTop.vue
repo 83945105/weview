@@ -1,8 +1,8 @@
 <template>
   <div :class="[topClass]">
     <slot>
-      <h3>{{title}}</h3>
-      <i :class="[`${prefixCls}-icon`, `${prefixCls}-shanchu`, `${prefixCls}-layer-frame-close`]"
+      <h3>{{label}}</h3>
+      <i v-if="showCloseIcon" :class="[`${prefixCls}-icon`, `${prefixCls}-shanchu`, `${prefixCls}-layer-frame-close`]"
          @click.stop="handleClose"
       ></i>
     </slot>
@@ -24,9 +24,13 @@
     mixins: [Conf, Emitter],
 
     props: {
-      title: {
+      label: {
         type: String,
         default: '详情'
+      },
+      showCloseIcon: {
+        type: Boolean,
+        default: true
       }
     },
 

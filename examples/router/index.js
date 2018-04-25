@@ -49,6 +49,6 @@ initRouter(testConf, TestRoutes, "test", "vue");
 export default new Router({
   routes: [{
     path: "/",
-    redirect: "Test",
+    redirect: "LayerFrame",
   }, DocRoutes, TestRoutes]
 });

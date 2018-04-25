@@ -3,16 +3,82 @@
     <web-api-doc-head-menu
       :label="projectName"
       :logo-src="logoSrc"
-    ></web-api-doc-head-menu>
-    <web-api-doc-left-menu>
-      <web-api-doc-left-group-one>
-        <web-api-doc-left-item :value="true"></web-api-doc-left-item>
-        <web-api-doc-left-item></web-api-doc-left-item>
-        <web-api-doc-left-item></web-api-doc-left-item>
-        <web-api-doc-left-item></web-api-doc-left-item>
-      </web-api-doc-left-group-one>
-    </web-api-doc-left-menu>
-    <!--<router-view></router-view>-->
+    >
+      <web-api-doc-head-item label="首页"></web-api-doc-head-item>
+      <web-api-doc-head-item label="组件" :value="true"></web-api-doc-head-item>
+      <web-api-doc-head-item label="开发版"></web-api-doc-head-item>
+    </web-api-doc-head-menu>
+    <web-api-doc-content>
+      <web-api-doc-left-menu>
+
+        <template v-for="(row) in docs">
+
+          <template v-if="row.items">
+            <web-api-doc-left-group-one :key="row.name" :label="row.desc">
+
+              <template v-for="(item) in row.items">
+
+                <template v-if="!item.items">
+
+                  <web-api-doc-left-item :value="$route.name == item.name" :label="item.desc" :key="item.name"
+                                         @click="handleLinkRoute(item)"></web-api-doc-left-item>
+
+                </template>
+
+              </template>
+
+              <template v-for="(item) in row.items">
+
+                <template v-if="item.items">
+
+                  <web-api-doc-left-group-two :label="item.name" :key="item.name">
+
+                    <template v-for="(m) in item.items">
+
+                      <template v-if="!m.items">
+                        <web-api-doc-left-item :value="$route.name == m.name" :label="m.name + ' ' + m.desc"
+                                               :key="m.name" @click="handleLinkRoute(m)"></web-api-doc-left-item>
+                      </template>
+
+                    </template>
+
+                  </web-api-doc-left-group-two>
+
+                  <template v-for="(m) in item.items">
+
+                    <template v-if="m.items">
+
+                      <web-api-doc-left-group-two :label="m.name" :key="m.name">
+
+                        <template v-for="(o) in m.items">
+
+                          <template v-if="!o.items">
+                            <web-api-doc-left-item :value="$route.name == o.name" :label="o.name + ' ' + o.desc"
+                                                   :key="o.name" @click="handleLinkRoute(o)"></web-api-doc-left-item>
+                          </template>
+
+                        </template>
+
+                      </web-api-doc-left-group-two>
+
+                    </template>
+
+                  </template>
+
+                </template>
+
+              </template>
+
+            </web-api-doc-left-group-one>
+
+          </template>
+
+        </template>
+      </web-api-doc-left-menu>
+      <web-api-doc-right-content>
+        <router-view></router-view>
+      </web-api-doc-right-content>
+    </web-api-doc-content>
   </div>
 </template>
 
@@ -22,26 +88,44 @@
   import WebApiDocLeftMenu from "../../docwebsite/packages/webapidoc/left/src/Menu";
   import WebApiDocLeftGroupOne from "../../docwebsite/packages/webapidoc/left/src/GroupOne";
   import WebApiDocLeftItem from "../../docwebsite/packages/webapidoc/left/src/Item";
+  import WebApiDocRightContent from "../../docwebsite/packages/webapidoc/right/src/Content";
+  import WebApiDocContent from "../../docwebsite/packages/webapidoc/content/src/Content";
+  import WebApiDocHeadItem from "../../docwebsite/packages/webapidoc/head/src/Item";
+
+  import DocConf from '../../examples/docs.config';
+  import WebApiDocLeftGroupTwo from "../../docwebsite/packages/webapidoc/left/src/GroupTwo";
 
   const LogoSrc = require('../assets/weview_logo.png');
 
   export default {
     components: {
+      WebApiDocLeftGroupTwo,
+      WebApiDocHeadItem,
+      WebApiDocContent,
+      WebApiDocRightContent,
       WebApiDocLeftItem,
       WebApiDocLeftGroupOne,
       WebApiDocLeftMenu,
-      WebApiDocHeadMenu},
+      WebApiDocHeadMenu
+    },
     name: "docs",
 
     data() {
       return {
-        projectName: 'weview'
+        projectName: 'weview',
+        docs: DocConf
       };
     },
 
     computed: {
       logoSrc() {
         return LogoSrc;
+      }
+    },
+
+    methods: {
+      handleLinkRoute({name}) {
+        this.$router.push({name: name});
       }
     }
   }
