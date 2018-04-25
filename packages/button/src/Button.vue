@@ -57,6 +57,3 @@
     }
   }
 </script>
-<style lang="less" type="text/less">
-  @import "../../theme-chalk/button";
-</style>

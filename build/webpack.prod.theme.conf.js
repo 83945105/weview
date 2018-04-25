@@ -21,6 +21,22 @@ const webpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: [
       {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: path.posix.join('', 'fonts/[name].[ext]')
+        }
+      },
+      {
+        test: /\.(woff2?|eot|ttf|woff|otf)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: path.posix.join('', 'fonts/[name].[ext]')
+        }
+      },
+      {
         test: /\.less$/,
         use: ExtractTextPlugin.extract({
           use: [

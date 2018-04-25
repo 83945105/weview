@@ -2,7 +2,7 @@
   <div :class="[topClass]">
     <slot>
       <h3>{{title}}</h3>
-      <i class="we-icon we-shanchu we-layer-frame-close"
+      <i :class="[`${prefixCls}-icon`, `${prefixCls}-shanchu`, `${prefixCls}-layer-frame-close`]"
          @click.stop="handleClose"
       ></i>
     </slot>

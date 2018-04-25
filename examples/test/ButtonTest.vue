@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <we-button>default</we-button>
+    <we-button type="primary">这是一个按钮</we-button>
 
   </div>
 </template>

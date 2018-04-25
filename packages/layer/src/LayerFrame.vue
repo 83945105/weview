@@ -1,8 +1,7 @@
 <!--弹层框架-->
 <template>
   <div>
-    <div class="we-layer-mask-bg"
-         :class="[maskClass]"
+    <div :class="[maskClass, maskBgClass, customMaskClass]"
          @click.stop="maskClose"
     ></div>
     <div v-if="position === 'right' || position === 'left'" style="top:0;bottom:0;"
@@ -78,11 +77,17 @@
       customClass: {
         type: String
       },
+      customMaskClass: {
+        type: String
+      }
     },
 
     computed: {
       maskClass() {
         return `${this.prefixCls}-layer-mask`;
+      },
+      maskBgClass() {
+        return `${this.prefixCls}-layer-mask-bg`;
       },
       layerClass() {
         return `${this.prefixCls}-layer-frame`;
