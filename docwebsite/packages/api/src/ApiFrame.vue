@@ -1,24 +1,15 @@
 <template>
   <div>
-    <div class="we-api-header">
-      <div class="we-api-logo">
-        <!--<img class="we-api-logo-img" src="../../../lib/static/images/weview_logo.png"/>-->
-        <div class="we-api-logo-text">weview</div>
-      </div>
-      <ul class="we-api-nav">
-        <li>
-          <a>首页</a>
-        </li>
-        <li class="selected">
-          <a>指南</a>
-        </li>
-        <li>
-          <a>组件</a>
-        </li>
-      </ul>
-    </div>
+    <web-api-doc-head-menu>
+      <web-api-doc-head-item :value="true"></web-api-doc-head-item>
+      <web-api-doc-head-item></web-api-doc-head-item>
+      <web-api-doc-head-item></web-api-doc-head-item>
+    </web-api-doc-head-menu>
     <div class="we-api-main">
-      <div class="we-api-menu">
+      <web-api-doc-left-menu>
+        <web-api-doc-left-group-one>
+          <web-api-doc-left-item :value="true"></web-api-doc-left-item>
+        </web-api-doc-left-group-one>
         <h3 class="we-api-menu-level-one">开发指南</h3>
         <ul class="we-api-menu-list">
           <li>
@@ -83,10 +74,10 @@
             <a href="#">Rate 评分</a>
           </li>
         </ul>
-      </div>
+      </web-api-doc-left-menu>
       <div class="we-api-content">
         <div class="we-wordwrap" style="height:2000px;">
-          <layer-frame></layer-frame>
+          469464646
         </div>
       </div>
     </div>
@@ -94,15 +85,25 @@
 </template>
 
 <script>
-  import LayerFrameTest from "../../../examples/test/LayerFrameTest";
-  import LayerFrame from "../../layer/src/LayerFrame";
+
+  import WebApiDocHeadMenu from "../../webapidoc/head/src/Menu";
+  import WebApiDocHeadItem from "../../webapidoc/head/src/Item";
+  import WebApiDocLeftMenu from "../../webapidoc/left/src/Menu";
+  import WebApiDocLeftGroupOne from "../../webapidoc/left/src/GroupOne";
+  import WebApiDocLeftItem from "../../webapidoc/left/src/Item";
 
   export default {
-    name: "ApiFrame",
-    components: {LayerFrame, LayerFrameTest}
+    components: {
+      WebApiDocLeftItem,
+      WebApiDocLeftGroupOne,
+      WebApiDocLeftMenu,
+      WebApiDocHeadItem,
+      WebApiDocHeadMenu
+    },
+    name: "ApiFrame"
   }
 </script>
 
 <style lang="less" type="text/less">
-  @import "../../theme-chalk/api.less";
+  @import "../../../../docwebsite/packages/theme-chalk/api.less";
 </style>

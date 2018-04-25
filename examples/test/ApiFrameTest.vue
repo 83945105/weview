@@ -3,7 +3,7 @@
 </template>
 
 <script>
-  import ApiFrame from "../../packages/api/src/ApiFrame";
+  import ApiFrame from "../../docwebsite/packages/api/src/ApiFrame";
 
   export default {
     name: "ApiFrameTest",
