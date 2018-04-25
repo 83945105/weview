@@ -1,7 +1,6 @@
 <template>
   <button
-    class="we-button we-button-default"
-    :class="[typeClass]"
+    :class="[buttonClass, sizeClass, typeClass]"
     @click="handleClick"
   >
     <span v-if="$slots.default"><slot></slot></span>
@@ -9,10 +8,15 @@
 </template>
 
 <script>
-  export default {
-    name: "we-button",
 
-    componentName: 'WeButton',
+  import Conf from '../../../src/mixins/conf';
+
+  export default {
+    name: `${Conf.prefixCls}-button`,
+
+    componentName: `${Conf.prefixNameCls}Button`,
+
+    mixins: [Conf],
 
     props: {
       size: {
@@ -34,11 +38,14 @@
     },
 
     computed: {
+      buttonClass() {
+        return `${this.prefixCls}-button`;
+      },
       sizeClass() {
-        return ``;
+        return `${this.prefixCls}-button-${this.size}`;
       },
       typeClass() {
-        return `we-button-${this.type}`;
+        return `${this.prefixCls}-button-${this.type}`;
       }
     },
 
