@@ -10,9 +10,9 @@
   right:0px;
   z-index:999;
   background-color:transparent;
-}
-.we-layer-mask.bg-black{
-  background-color:rgba(0,0,0,0.3);
+  &-bg{
+    background-color:tint(@layer-mask-bg,50%);
+  }
 }
 .we-layer-frame{
   position:fixed;

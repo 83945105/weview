@@ -2,7 +2,7 @@
   <div :class="[topClass]">
     <slot>
       <h3>{{title}}</h3>
-      <i class="weiconfont we-icon-shanchu we-layer-frame-close"
+      <i class="we-icon we-shanchu we-layer-frame-close"
          @click.stop="handleClose"
       ></i>
     </slot>

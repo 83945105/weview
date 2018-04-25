@@ -5,6 +5,7 @@
     @click="handleClick"
   >
     <span v-if="$slots.default"><slot></slot></span>
+    <i class="we-icon we-audio"></i>
   </button>
 </template>
 
@@ -50,5 +51,5 @@
   }
 </script>
 <style lang="less" type="text/less">
-  @import "../../theme-chalk/button.less";
+  @import "../../theme-chalk/button";
 </style>

@@ -1,7 +1,7 @@
 <!--弹层框架-->
 <template>
   <div>
-    <div class="bg-black"
+    <div class="we-layer-mask-bg"
          :class="[maskClass]"
          @click.stop="maskClose"
     ></div>
