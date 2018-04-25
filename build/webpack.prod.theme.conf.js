@@ -1,23 +1,47 @@
-'use strict'
-const utils = require('./utils')
-const webpack = require('webpack')
-const config = require('../config')
-const merge = require('webpack-merge')
-const baseWebpackConfig = require('./webpack.base.conf')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const path = require('path')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+'use strict';
+const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const glob = require('glob');
 
-const env = process.env.NODE_ENV === 'testing'
-  ? require('../config/test.env')
-  : require('../config/prod.env')
+function resolve(dir) {
+  return path.join(__dirname, '..', dir)
+}
 
-const multiPageHelper = require('../static/conf/multiPageHelper');
-
-const webpackConfig = merge(baseWebpackConfig, {
+const webpackConfig = {
   entry: {
-    ...multiPageHelper.getThemes()
+    ...function () {
+      let entries = {};
+      glob.sync(`./packages/theme-chalk/*.less`).forEach(f => {
+        let name = f.match(new RegExp(`packages\/theme-chalk\/(\\S*).less`))[1];
+        entries[`${name}`] = f;
+      });
+      return entries;
+    }()
   },
+  output: {
+    path: path.resolve(__dirname, '../lib/theme-chalk'),
+    filename: path.posix.join('', '[name].css'),
+    publicPath: '/'
+  },
+  devtool: false,
+  context: path.resolve(__dirname, '../'),
+  node: {
+    setImmediate: false,
+    dgram: 'empty',
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty',
+    child_process: 'empty'
+  },
+  resolve: {
+    extensions: ['.less'],
+    alias: {
+      '@': resolve('packages'),
+    }
+  },
+  plugins: [
+    new ExtractTextPlugin('[name].css'),
+  ],
   module: {
     rules: [
       {
@@ -56,23 +80,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         })
       }
     ]
-  },
-  devtool: false,
-  output: {
-    path: path.resolve(__dirname, '../lib/theme-chalk'),
-    filename: path.posix.join('', '[name].css')
-  },
-  resolve: {
-    extensions: ['.less']
-  },
-  plugins: [
-    new ExtractTextPlugin('[name].css'),
-  ]
-})
+  }
+};
 
-if (config.build.bundleAnalyzerReport) {
-  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-  webpackConfig.plugins.push(new BundleAnalyzerPlugin())
-}
-
-module.exports = webpackConfig
+module.exports = webpackConfig;

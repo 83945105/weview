@@ -1,12 +1,11 @@
-'use strict'
-const utils = require('./utils')
-const webpack = require('webpack')
-const config = require('../config')
-const merge = require('webpack-merge')
-const baseWebpackConfig = require('./webpack.base.conf')
-const vueLoaderConfig = require('./vue-loader.conf')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const path = require('path')
+'use strict';
+const utils = require('./utils');
+const webpack = require('webpack');
+const config = require('../config');
+const vueLoaderConfig = require('./vue-loader.conf');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const path = require('path');
+const glob = require('glob');
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
@@ -14,14 +13,57 @@ function resolve(dir) {
 
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
-  : require('../config/prod.env')
+  : require('../config/prod.env');
 
-const multiPageHelper = require('../static/conf/multiPageHelper');
-
-const webpackConfig = merge(baseWebpackConfig, {
+const webpackConfig = {
   entry: {
-    ...multiPageHelper.getEntries()
+    ...function () {
+      let entries = {
+        index: './packages/index.js'
+      };
+      glob.sync(`./packages/*/index.js`).forEach(f => {
+        let name = f.match(new RegExp(`packages\/(\\S*)\/index.js`))[1];
+        entries[`${name}`] = f;
+      });
+      return entries;
+    }()
   },
+  context: path.resolve(__dirname, '../'),
+  devtool: false,
+  output: {
+    path: path.resolve(__dirname, '../lib'),
+    filename: path.posix.join('', '[name].js'),
+    publicPath: '/'
+  },
+  resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      '@': resolve('packages'),
+    }
+  },
+  node: {
+    setImmediate: false,
+    dgram: 'empty',
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty',
+    child_process: 'empty'
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': env
+    }),
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        compress: {
+          warnings: false
+        }
+      },
+      sourceMap: false,
+      parallel: true
+    }),
+    new webpack.optimize.ModuleConcatenationPlugin()
+  ],
   module: {
     rules: [
       ...utils.styleLoaders({
@@ -68,50 +110,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         loaders: ['style-loader', 'css-loader', 'less-loader']
       }
     ]
-  },
-  devtool: false,
-  output: {
-    path: path.resolve(__dirname, '../lib'),
-    filename: path.posix.join('', '[name].js')
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': env
-    }),
-    new UglifyJsPlugin({
-      uglifyOptions: {
-        compress: {
-          warnings: false
-        }
-      },
-      sourceMap: false,
-      parallel: true
-    }),
-    new webpack.optimize.ModuleConcatenationPlugin()
-  ]
-})
+  }
+};
 
-if (config.build.productionGzip) {
-  const CompressionWebpackPlugin = require('compression-webpack-plugin')
-
-  webpackConfig.plugins.push(
-    new CompressionWebpackPlugin({
-      asset: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: new RegExp(
-        '\\.(' +
-        config.build.productionGzipExtensions.join('|') +
-        ')$'
-      ),
-      threshold: 10240,
-      minRatio: 0.8
-    })
-  )
-}
-
-if (config.build.bundleAnalyzerReport) {
-  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-  webpackConfig.plugins.push(new BundleAnalyzerPlugin())
-}
-
-module.exports = webpackConfig
+module.exports = webpackConfig;
