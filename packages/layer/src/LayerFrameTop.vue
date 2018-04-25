@@ -1,5 +1,5 @@
 <template>
-  <div class="we-layer-frame-title">
+  <div :class="[topClass]">
     <slot>
       <h3>{{title}}</h3>
       <i class="weiconfont we-icon-shanchu we-layer-frame-close"
@@ -11,15 +11,17 @@
 
 <script>
 
+  import Conf from '../../../src/mixins/conf';
+
   import Emitter from '../../../src/mixins/emitter';
 
   export default {
 
-    name: "we-layer-frame-top",
+    name: `${Conf.prefixCls}-layer-frame-top`,
 
-    componentName: 'WeLayerFrameTop',
+    componentName: `${Conf.prefixNameCls}LayerFrameTop`,
 
-    mixins: [Emitter],
+    mixins: [Conf, Emitter],
 
     props: {
       title: {
@@ -28,10 +30,16 @@
       }
     },
 
+    computed: {
+      topClass() {
+        return `${this.prefixCls}-layer-frame-title`;
+      }
+    },
+
     methods: {
       handleClose(e) {
         this.$emit('close', e);
-        this.dispatch('WeLayerFrame', 'handleClose', e);
+        this.dispatch(`${this.prefixNameCls}LayerFrame`, 'handleClose', e);
       }
     }
 

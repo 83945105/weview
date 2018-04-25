@@ -1,6 +1,7 @@
 <template>
   <button
-    class="we-button we-button-primary we-button-default"
+    class="we-button we-button-default"
+    :class="[typeClass]"
     @click="handleClick"
   >
     <span v-if="$slots.default"><slot></slot></span>
@@ -12,6 +13,34 @@
     name: "we-button",
 
     componentName: 'WeButton',
+
+    props: {
+      size: {
+        type: String,
+        default: 'default'
+      },
+      type: {
+        type: String,
+        default: 'default'
+      },
+      round: {
+        type: Boolean,
+        default: false
+      },
+      disabled: {
+        type: Boolean,
+        default: false
+      }
+    },
+
+    computed: {
+      sizeClass() {
+        return ``;
+      },
+      typeClass() {
+        return `we-button-${this.type}`;
+      }
+    },
 
     methods: {
       handleClick(e) {

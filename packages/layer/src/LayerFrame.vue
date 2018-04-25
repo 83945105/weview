@@ -1,16 +1,19 @@
 <!--弹层框架-->
 <template>
   <div>
-    <div class="we-layer-mask bg-black" @click.stop="maskClose"></div>
-    <div v-if="position === 'right' || position === 'left'" class="we-layer-frame" style="top:0;bottom:0;"
-         :class="[customClass]"
+    <div class="bg-black"
+         :class="[maskClass]"
+         @click.stop="maskClose"
+    ></div>
+    <div v-if="position === 'right' || position === 'left'" style="top:0;bottom:0;"
+         :class="[layerClass, customClass]"
          :style="[transition]"
     >
       <slot name="top"></slot>
       <slot></slot>
     </div>
-    <div v-else-if="position === 'top' || position === 'bottom'" class="we-layer-frame" style="left:0;right:0;"
-         :class="[customClass]"
+    <div v-else-if="position === 'top' || position === 'bottom'" style="left:0;right:0;"
+         :class="[layerClass, customClass]"
          :style="[transition]"
     >
       <slot name="top"></slot>
@@ -20,10 +23,15 @@
 </template>
 
 <script>
-  export default {
-    name: "we-layer-frame",
 
-    componentName: 'WeLayerFrame',
+  import Conf from '../../../src/mixins/conf';
+
+  export default {
+    name: `${Conf.prefixCls}-layer-frame`,
+
+    componentName: `${Conf.prefixNameCls}LayerFrame`,
+
+    mixins: [Conf],
 
     data() {
       return {
@@ -69,10 +77,16 @@
       },
       customClass: {
         type: String
-      }
+      },
     },
 
     computed: {
+      maskClass() {
+        return `${this.prefixCls}-layer-mask`;
+      },
+      layerClass() {
+        return `${this.prefixCls}-layer-frame`;
+      },
       transition() {
         return {
           'transition': `all ${this.duration}s ease`,
@@ -210,6 +224,7 @@
     },
 
     created() {
+
       this.$on('handleClose', (e) => {
         this.close();
       });
@@ -221,6 +236,7 @@
       this.maskDom = this.$el.querySelector('.we-layer-mask');
       this.layerDom = this.$el.querySelector('.we-layer-frame');
       this.init();
+
     },
 
     beforeDestroy() {
