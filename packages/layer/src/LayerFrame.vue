@@ -229,7 +229,6 @@
     },
 
     created() {
-
       this.$on('handleClose', (e) => {
         this.close();
       });
@@ -238,10 +237,9 @@
     mounted() {
       // ESC close
       document.addEventListener('keydown', this.EscClose);
-      this.maskDom = this.$el.querySelector('.we-layer-mask');
-      this.layerDom = this.$el.querySelector('.we-layer-frame');
+      this.maskDom = this.$el.querySelector(`.${this.prefixCls}-layer-mask`);
+      this.layerDom = this.$el.querySelector(`.${this.prefixCls}-layer-frame`);
       this.init();
-
     },
 
     beforeDestroy() {

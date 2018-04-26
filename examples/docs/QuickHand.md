@@ -19,11 +19,11 @@
 
 ```javascript
 import Vue from 'vue';
-import weview from 'weview';
-import 'weview/lib/theme-chalk/index.css';
 import App from './App.vue';
 
-Vue.use(weview);
+import weview from 'weview';//引入weview
+import 'weview/lib/theme-chalk/index.css';//引入css
+Vue.use(weview);//注册到Vue
 
 new Vue({
   el: '#app',
@@ -38,16 +38,17 @@ new Vue({
 如果你只希望引入部分组件，比如 LayerFrame 和 LayerFrameTop，那么需要在 main.js 中写入以下内容：
 
 ```javascript
-import Vue from 'vue';
-import { LayerFrame, LayerFrameTop } from 'weview';
 import App from './App.vue';
+import Vue from 'vue';
 
-Vue.component(LayerFrame.name, LayerFrame);
+import { LayerFrame, LayerFrameTop } from 'weview';//导出所需组件
+
+Vue.component(LayerFrame.name, LayerFrame);//注册
 Vue.component(LayerFrameTop.name, LayerFrameTop);
 
 //或者
-Vue.use(LayerFrame)
-Vue.use(LayerFrameTop)
+Vue.use(LayerFrame);
+Vue.use(LayerFrameTop);
 
 new Vue({
   el: '#app',

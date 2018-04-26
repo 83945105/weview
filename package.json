@@ -12,11 +12,12 @@
     "examples"
   ],
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.examples.conf.js",
     "start": "npm run dev",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
+    "build:examples": "node build/build-examples.js",
     "build:file": "node build/build-entry.js",
     "build:theme": "node build/build-theme.js",
     "build:web-file": "node build/build-web-entry.js",

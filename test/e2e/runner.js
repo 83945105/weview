@@ -5,7 +5,7 @@ const webpack = require('webpack')
 const DevServer = require('webpack-dev-server')
 
 const webpackConfig = require('../../build/webpack.prod.entry.conf')
-const devConfigPromise = require('../../build/webpack.dev.conf')
+const devConfigPromise = require('../../build/webpack.dev.examples.conf')
 
 let server
 
