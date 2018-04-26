@@ -75,7 +75,7 @@ const webpackConfig = {
         collapseWhitespace: true,
         removeAttributeQuotes: true
       },
-      chunksSortMode: 'manual',//手动排序chunks
+      chunksSortMode: 'dependency'
     }),
     new webpack.HashedModuleIdsPlugin(),
     new webpack.optimize.ModuleConcatenationPlugin(),
