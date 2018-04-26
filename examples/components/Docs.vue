@@ -84,16 +84,16 @@
 
 <script>
 
-  import WebApiDocHeadMenu from "../../docwebsite/packages/web-api-doc/head/src/Menu";
-  import WebApiDocLeftMenu from "../../docwebsite/packages/web-api-doc/left/src/Menu";
-  import WebApiDocLeftGroupOne from "../../docwebsite/packages/web-api-doc/left/src/GroupOne";
-  import WebApiDocLeftItem from "../../docwebsite/packages/web-api-doc/left/src/Item";
-  import WebApiDocRightContent from "../../docwebsite/packages/web-api-doc/right/src/Content";
-  import WebApiDocContent from "../../docwebsite/packages/web-api-doc/content/src/Content";
-  import WebApiDocHeadItem from "../../docwebsite/packages/web-api-doc/head/src/Item";
+  import WebApiDocHeadMenu from "../../web/packages/web-api-doc/head/src/Menu";
+  import WebApiDocLeftMenu from "../../web/packages/web-api-doc/left/src/Menu";
+  import WebApiDocLeftGroupOne from "../../web/packages/web-api-doc/left/src/GroupOne";
+  import WebApiDocLeftItem from "../../web/packages/web-api-doc/left/src/Item";
+  import WebApiDocRightContent from "../../web/packages/web-api-doc/right/src/Content";
+  import WebApiDocContent from "../../web/packages/web-api-doc/content/src/Content";
+  import WebApiDocHeadItem from "../../web/packages/web-api-doc/head/src/Item";
 
   import DocConf from '../../examples/docs.config';
-  import WebApiDocLeftGroupTwo from "../../docwebsite/packages/web-api-doc/left/src/GroupTwo";
+  import WebApiDocLeftGroupTwo from "../../web/packages/web-api-doc/left/src/GroupTwo";
 
   const LogoSrc = require('../assets/weview_logo.png');
 
@@ -132,5 +132,5 @@
 </script>
 
 <style lang="less" type="text/less">
-  @import '../../docwebsite/packages/theme-chalk/index';
+  @import '../../web/packages/theme-chalk/index';
 </style>
