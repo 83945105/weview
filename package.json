@@ -19,7 +19,9 @@
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
     "build:file": "node build/build-entry.js",
     "build:theme": "node build/build-theme.js",
-    "build:all": "npm run build:file && npm run build:theme"
+    "build:web-file": "node build/build-web-entry.js",
+    "build:web-theme": "node build/build-web-theme.js",
+    "build:all": "npm run build:file && npm run build:theme && npm run build:web-file && npm run build:web-theme"
   },
   "repository": {
     "type": "git",

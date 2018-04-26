@@ -19,11 +19,11 @@ const webpackConfig = {
   entry: {
     ...function () {
       let entries = {
-        index: './packages/index.js'
+        index: './web/packages/index.js'
       };
-      glob.sync(`./packages/*/index.js`).forEach(f => {
-        let name = f.match(new RegExp(`packages\/(\\S*)\/index.js`))[1];
-        entries[`${name}`] = f;
+      glob.sync(`./web/packages/*/*/index.js`).forEach(f => {
+        let names = f.match(new RegExp(`web/packages\/(\\S*)\/(\\S*)\/index.js`));
+        entries[`${names[1]}-${names[2]}`] = f;
       });
       return entries;
     }()
@@ -31,14 +31,14 @@ const webpackConfig = {
   context: path.resolve(__dirname, '../'),
   devtool: false,
   output: {
-    path: path.resolve(__dirname, '../lib'),
+    path: path.resolve(__dirname, '../lib/web'),
     filename: path.posix.join('', '[name].js'),
     publicPath: '/'
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      '@': resolve('packages'),
+      '@': resolve('web/packages'),
     }
   },
   node: {
@@ -79,7 +79,7 @@ const webpackConfig = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('examples'), resolve('packages'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+        include: [resolve('web/packages'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
