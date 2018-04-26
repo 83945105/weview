@@ -1,0 +1,142 @@
+@import "src/common/var.less";
+@import "src/common/mixins.less";
+
+@api-header-color: #ffffff; //头部背景色
+@api-header-opacity: 50%; //头部透明度
+@api-header-height: 80px; //头部高度
+@api-logo-img-height: 40px; //头部logo图片高度
+@api-logo-font: 22px; //头部logo文字大小
+@api-content-width: 100%; //可视区域宽度
+@api-border: #eeeeee; //模块边框色
+@api-menu-width: 300px; //左侧菜单宽度
+@api-menu-selected: #409eff; //左侧菜单选择色
+@api-menu-hover: #409eff; //左侧菜单悬停色
+@api-menu-background: #ffffff; //左侧背景色
+@api-nav-height: 40px; //头部导航高度
+@api-primary-color: #409eff; //主色调
+
+.menu-padding {
+  padding: 0 20px;
+}
+
+.we-api-header {
+  position: fixed;
+  top: 0;
+  left: calc((100% - @api-content-width) / 2);
+  height: @api-header-height;
+  width: calc(@api-content-width - 60px);
+  z-index: 99;
+  padding: 0 30px;
+  background-color: fade(@api-header-color, @api-header-opacity);
+  border-bottom: 1px solid @api-border;
+}
+
+.we-api-logo {
+  float: left;
+  padding: calc((@api-header-height - @api-logo-img-height) / 2) 20px;
+  margin-left: 10px;
+}
+
+.we-api-logo-img {
+  display: block;
+  height: @api-logo-img-height;
+  float: left;
+}
+
+.we-api-logo-text {
+  float: left;
+  font-size: @api-logo-font;
+  line-height: @api-logo-img-height;
+  margin-left: 10px;
+  color: #333333;
+}
+
+.we-api-main {
+  position: absolute;
+  top: calc(@api-header-height + 1px);
+  bottom: 0;
+  left: calc((100% - @api-content-width) / 2);
+  width: @api-content-width;
+}
+
+.we-api-content {
+  width: 800px;
+  margin: 0px auto;
+}
+
+/*头部导航*/
+.we-api-nav {
+  float: right;
+  .mixin-default;
+}
+
+.we-api-nav > li {
+  .mixin-default;
+  float: left;
+  margin: calc((@api-header-height - @api-nav-height - 3px) / 2) 15px;
+  cursor: pointer;
+  padding: 0 5px;
+  height: @api-nav-height;
+  line-height: @api-nav-height;
+  border-bottom: 3px solid transparent;
+}
+
+.we-api-nav > li.selected {
+  border-bottom-color: @api-primary-color;
+}
+
+.we-api-nav > li:hover {
+  border-bottom-color: @api-primary-color;
+}
+
+.we-api-nav > li a {
+  color: #666666;
+}
+
+.we-api-nav > li a:hover {
+  color: #666666;
+}
+
+/*左侧菜单*/
+.we-api-menu {
+  position: fixed;
+  top: calc(@api-header-height + 1px);
+  bottom: 0;
+  left: calc((100% - @api-content-width) / 2);
+  width: @api-menu-width;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  border-right: 1px solid @api-border;
+}
+
+.we-api-menu-level-one {
+  height: 42px;
+  line-height: 42px;
+  font-size: 18px;
+  .mixin-default;
+  margin-top: 10px;
+  color: #333333;
+  .menu-padding;
+}
+
+.we-api-menu-level-two {
+  .mixin-default;
+  font-size: 12px;
+  margin-top: 10px;
+  height: 30px;
+  line-height: 30px;
+  color: #999999;
+  .menu-padding;
+}
+
+.we-api-menu-list {
+  .mixin-default;
+  & > li {
+    height: 36px;
+    line-height: 36px;
+    .menu-padding;
+    a {
+      .mixin-default-link;
+    }
+  }
+}

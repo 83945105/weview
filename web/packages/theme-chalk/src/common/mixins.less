@@ -1,0 +1,23 @@
+@import "./var";
+
+/*去除内外边距和列表样式*/
+.mixin-default{
+  padding:0;
+  margin:0;
+  list-style-type:none;
+  font-size:14px;
+}
+.mixin-default-link{
+  color:@link-color;
+  text-decoration:none;
+  &:hover{
+    color:@link-hover-color;
+  }
+  &.selected{
+    color:@link-selected-color;
+  }
+  &.disabled{
+    color:@link-hover-color;
+  }
+}
+
