@@ -1,6 +1,6 @@
 <template>
   <div>
-    <test-head></test-head>
+    <!--<test-head></test-head>-->
     <router-view></router-view>
   </div>
 </template>

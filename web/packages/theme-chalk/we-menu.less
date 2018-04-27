@@ -1,0 +1,48 @@
+@import "src/common/var";
+@import "src/common/mixins";
+
+@menu-prefix-css:~"@{css-prefix}menu";
+
+.@{menu-prefix-css}{
+  .mixin-default;
+  padding:0 20px;
+  &-group{
+    &-title{
+      .mixin-h1-default;
+      font-weight:600;
+      height: 40px;
+      line-height: 40px;
+      font-size: @font-size-small;
+      color:@menu-group-title-color;
+      cursor:pointer;
+      &.selected{
+        color:@color-link-selected;
+      }
+      &.spacing{
+        margin-top:10px;
+        cursor:text;
+      }
+    }
+  }
+
+  &-item{
+    &-title{
+      .mixin-h1-default;
+      height:32px;
+      line-height:32px;
+      margin-top:10px;
+      font-size:@font-size-mini;
+      color:@menu-item-title-color;
+    }
+    &-list{
+      .mixin-ul-default;
+      & > li{
+        height:32px;
+        line-height:32px;
+      }
+      & > li > a{
+        .mixin-default-link;
+      }
+    }
+  }
+}
