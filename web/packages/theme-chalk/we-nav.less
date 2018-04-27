@@ -1,0 +1,39 @@
+@import "src/common/var";
+@import "src/common/mixins";
+
+@nav-prefix-css:~"@{css-prefix}nav";
+
+/*头部导航*/
+.@{nav-prefix-css}{
+  .mixin-default;
+  float:right;
+  margin-top:calc((@page-header-height - (@nav-height + @nva-bottom-width)) / 2 - @nva-bottom-width);
+  & > ul{
+    .mixin-ul-default;
+    & > li {
+      float: left;
+      margin: 0 15px;
+      cursor: pointer;
+      padding: 0 5px;
+      height: @nav-height;
+      line-height: @nav-height;
+      border-bottom:@nva-bottom-width solid transparent;
+      &.selected {
+        border-bottom-color:@color-primary;
+      }
+      &.selected > a{
+        color:@nav-link-hover-color;
+      }
+
+      & > a{
+        color:@nav-link-color;
+        text-decoration:none;
+        &:hover {
+          color:@nav-link-hover-color;
+        }
+      }
+    }
+  }
+}
+
+

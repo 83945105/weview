@@ -1,7 +1,7 @@
 [{
   "desc": "614651",
-  "name": "ApiFrameTest",
-  "path": "/apiFrameTest"
+  "name": "ApiTest",
+  "path": "/apiTest"
 },
   {
     "desc": "组件测试",
