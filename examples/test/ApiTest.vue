@@ -1,110 +1,90 @@
 <template>
-  <div class="we-web-main">
+  <div class="we-main">
+    <div class="we-header">
+      <div class="we-header-logo">
+        <img :src="logoSrc" class="we-header-logo-img" />
+        <div class="we-header-logo-text">weview</div>
+      </div>
+      <div class="we-nav">
+        <ul>
+          <li class="selected">
+            <a href="#">指南</a>
+          </li>
+          <li>
+            <a href="#">组件</a>
+          </li>
+          <li>
+            <a href="#">资源</a>
+          </li>
+        </ul>
+      </div>
+    </div>
 
-    <we-web-header-doc :logo-src="logoSrc" title="weview">
-      <we-web-header-doc-item label="首页"></we-web-header-doc-item>
-      <we-web-header-doc-item label="组件" :value="true"></we-web-header-doc-item>
-      <we-web-header-doc-item label="社区"></we-web-header-doc-item>
-    </we-web-header-doc>
+    <div class="we-layout-main">
+      <div class="we-layout-left">
 
-    <we-web-layout>
-
-      <template slot="left">
-
-        <we-web-menu-left>
-          <div class="we-web-menu-group">
-            <h2 class="we-web-menu-group-title">更新日志</h2>
-          </div>
-
-          <div class="we-web-menu-group">
-            <h2 class="we-web-menu-group-title selected">开发指南</h2>
-          </div>
-
-          <div class="we-web-menu-group">
-            <h2 class="we-web-menu-group-title spacing">组件</h2>
-            <div class="we-web-menu-item">
-              <h3 class="we-web-menu-item-title">Basic</h3>
-              <ul class="we-web-menu-item-list">
-                <li>
-                  <a href="#" class="selected">Icon 图标</a>
-                </li>
-                <li>
-                  <a href="#">Button 按钮</a>
-                </li>
-              </ul>
-
-              <h3 class="we-web-menu-item-title">Basic</h3>
-              <ul class="we-web-menu-item-list">
-                <li>
-                  <a href="#" class="selected">Icon 图标</a>
-                </li>
-                <li>
-                  <a href="#">Button 按钮</a>
-                </li>
-              </ul>
+          <div class="we-menu-item">
+            <div class="we-menu-item">
+              <h3 class="we-menu-item-title title-2 link">一級</h3>
             </div>
+
+            <div class="we-menu-item">
+              <h3 class="we-menu-item-title title-2 link selected">一級</h3>
+            </div>
+
+            <div class="we-menu-item spacing">
+              <h3 class="we-menu-item-title title-2"><a>二級</a></h3>
+
+              <div class="we-menu-item spacing-mini">
+                <h3 class="we-menu-item-title title-5 mini-title">二級</h3>
+                <div class="we-menu-item">
+                  <div class="we-menu-item">
+                    <h3 class="we-menu-item-title title-4 link">三級</h3>
+                  </div>
+                  <div class="we-menu-item">
+                    <h3 class="we-menu-item-title title-4 link">三級</h3>
+                  </div>
+                  <div class="we-menu-item">
+                    <h3 class="we-menu-item-title title-4 link">三級</h3>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
           </div>
-        </we-web-menu-left>
 
-      </template>
-
-      <template slot="right">
-        <div style="height:2000px">
-          right
-          right
-          right
-          right
-          right
-          right
-          right
-          right
-          right
-          right
-          right
-          right
-          right
-          right
-          right
-          right
-          right
-          right
-          right
-          right
-          right
-          right
-          right
-          right
-          right
+      </div>
+      <div class="we-layout-right">
+        <div class="we-layout-right-content">
+          <input type="button" class="we-button we-button-default" value="默认按钮" />
+          <input type="button" class="we-button we-button-primary" value="主要按钮" />
+          <input type="button" class="we-button we-button-success" value="成功按钮" />
+          <input type="button" class="we-button we-button-info" value="成功按钮" />
         </div>
-      </template>
-
-    </we-web-layout>
-
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-  const LogoSrc = require('../assets/weview_logo.png');
+    const LogoSrc = require('../assets/weview_logo.png');
+    export default {
+        name: '',
 
-  import {toHumpFormat, toUpperCase} from '../../src/utils/util';
-
-  export default {
-    name: '',
-
-    data() {
-      return {
-        logoSrc: LogoSrc
-      };
-    },
-
-    computed: {},
-
-    created() {
-      // console.log(toUpperCase(toHumpFormat(`we-we-we`), 1))
+        computed: {
+          logoSrc() {
+            return LogoSrc;
+          }
+        }
     }
-  }
-</script>
 
+    // less = {
+    //   globalVars:{
+    //     var1: '"we-web-"'
+    //   }
+    // };
+</script>
 <style lang="less" type="text/less">
   @import "../../web/packages/theme-chalk/index";
 </style>
