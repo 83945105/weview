@@ -22,34 +22,45 @@
 
     <div class="we-layout-main">
       <div class="we-layout-left">
-        <div class="we-menu">
-          <div class="we-menu-group">
-            <h2 class="we-menu-group-title">更新日志</h2>
-          </div>
 
-          <div class="we-menu-group">
-            <h2 class="we-menu-group-title selected">开发指南</h2>
-          </div>
-
-          <div class="we-menu-group">
-            <h2 class="we-menu-group-title spacing">组件</h2>
+          <div class="we-menu-item">
             <div class="we-menu-item">
-              <h3 class="we-menu-item-title">Basic</h3>
-              <ul class="we-menu-item-list">
-                <li>
-                  <a href="#" class="selected">Icon 图标</a>
-                </li>
-                <li>
-                  <a href="#">Button 按钮</a>
-                </li>
-              </ul>
+              <h3 class="we-menu-item-title title-2 link">一級</h3>
             </div>
+
+            <div class="we-menu-item">
+              <h3 class="we-menu-item-title title-2 link selected">一級</h3>
+            </div>
+
+            <div class="we-menu-item spacing">
+              <h3 class="we-menu-item-title title-2"><a>二級</a></h3>
+
+              <div class="we-menu-item spacing-mini">
+                <h3 class="we-menu-item-title title-5 mini-title">二級</h3>
+                <div class="we-menu-item">
+                  <div class="we-menu-item">
+                    <h3 class="we-menu-item-title title-4 link">三級</h3>
+                  </div>
+                  <div class="we-menu-item">
+                    <h3 class="we-menu-item-title title-4 link">三級</h3>
+                  </div>
+                  <div class="we-menu-item">
+                    <h3 class="we-menu-item-title title-4 link">三級</h3>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
           </div>
-        </div>
+
       </div>
       <div class="we-layout-right">
         <div class="we-layout-right-content">
-          <div style="height:2000px">right</div>
+          <input type="button" class="we-button we-button-default" value="默认按钮" />
+          <input type="button" class="we-button we-button-primary" value="主要按钮" />
+          <input type="button" class="we-button we-button-success" value="成功按钮" />
+          <input type="button" class="we-button we-button-info" value="成功按钮" />
         </div>
       </div>
     </div>
@@ -67,8 +78,13 @@
           }
         }
     }
-</script>
 
+    // less = {
+    //   globalVars:{
+    //     var1: '"we-web-"'
+    //   }
+    // };
+</script>
 <style lang="less" type="text/less">
   @import "../../web/packages/theme-chalk/index";
 </style>

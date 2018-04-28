@@ -1,3 +1,5 @@
+@import "../common/var";
+
 .button-size(@padding;@font-size;@border-radius){
   padding: @padding;
   font-size:@font-size;
@@ -32,7 +34,7 @@
   cursor: pointer;
   background-image: none;
   border: 1px solid transparent;
-  .button-size(@button-padding-default;@button-font-size-default;@button-border-radius-default);
+  .button-size(@button-default-padding;@button-default-font-size;@button-default-border-radius);
   &,
   &:active,
   &:focus {
@@ -40,11 +42,11 @@
   }
 
   &-large{
-    .button-size(@button-padding-large;@button-font-size-large;@button-border-radius-default);
+    .button-size(@button-large-padding;@button-large-font-size;@button-large-border-radius);
   }
 
   &-small {
-    .button-size(@button-padding-small;@button-font-size-small;@button-border-radius-default);
+    .button-size(@button-small-padding;@button-small-font-size;@button-default-border-radius);
   }
 }
 
@@ -54,4 +56,20 @@
 
 .btn-primary(){
   .button-variant(@button-primary-color;@button-primary-fill;@button-primary-border);
+}
+
+.btn-success(){
+  .button-variant(@button-success-color;@button-success-fill;@button-success-border);
+}
+
+.btn-info(){
+  .button-variant(@button-info-color;@button-info-fill;@button-info-border);
+}
+
+.btn-warning(){
+  .button-variant(@button-warning-color;@button-warning-fill;@button-warning-border);
+}
+
+.btn-danger(){
+  .button-variant(@button-danger-color;@button-danger-fill;@button-danger-border);
 }
