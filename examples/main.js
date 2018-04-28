@@ -10,6 +10,10 @@ import weview from '../packages/index';
 
 Vue.use(weview);
 
+import weweb from '../web/packages/index';
+
+Vue.use(weweb);
+
 import DemoBlock from './components/demo-block';
 
 Vue.component(DemoBlock.name, DemoBlock);

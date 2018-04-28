@@ -13,8 +13,3 @@
     name: "test"
   }
 </script>
-
-<style lang="less" type="text/less">
-  @import '../../packages/theme-chalk/index.less';
-  @import '../../web/packages/theme-chalk/index';
-</style>

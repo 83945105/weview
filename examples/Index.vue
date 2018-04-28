@@ -11,6 +11,10 @@
 </script>
 
 <style lang="less" type="text/less">
+
+  @import '../packages/theme-chalk/index.less';
+  @import '../web/packages/theme-chalk/index.less';
+
   table.table {
     display: block;
     width: 100%;
