@@ -12,7 +12,7 @@
 
 <style lang="less" type="text/less">
 
-  @import '../packages/theme-chalk/index.less';
+  @import '../packages/theme-chalk/we-index.less';
   @import '../web/packages/theme-chalk/index.less';
 
   table.table {
@@ -20,7 +20,7 @@
     width: 100%;
     background-color: #fff;
     color: #5e6d82;
-    font-size: 14px;
+    font-size: 13px;
     border-collapse: collapse;
     overflow: auto;
     margin-bottom: 50px;

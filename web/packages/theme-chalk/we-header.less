@@ -1,7 +1,7 @@
 @import "src/common/var";
 @import "src/common/mixins";
 
-@header-prefix-css:~"@{css-prefix}";
+@header-prefix-css:~"@{web-css-prefix}";
 
 .@{header-prefix-css}main{
   position:absolute;
@@ -9,63 +9,63 @@
   bottom:0;
   left:0;
   right:0;
-  .mixin-v-scroll;
-  .mixin-scrollbar;
+  .web-mixin-v-scroll;
+  .web-mixin-scrollbar;
 }
 .@{header-prefix-css}header{
-  .mixin-default;
+  .web-mixin-default;
   position: fixed;
   top: 0;
-  left: calc((100% - @page-header-width) / 2);
-  height: @page-header-height;
-  width: calc(@page-header-width - 60px);
+  left: calc((100% - @web-page-header-width) / 2);
+  height: @web-page-header-height;
+  width: calc(@web-page-header-width - 60px);
   z-index: 99;
   padding: 0 20px;
-  background-color: fade(@page-header-color, @page-header-opacity);
+  background-color: fade(@web-page-header-color, @web-page-header-opacity);
 
   &-logo {
     float: left;
-    padding: calc(@page-header-height/2/2) 0;
+    padding: calc(@web-page-header-height/2/2) 0;
 
     &-img {
       display: block;
-      height: @page-header-height/2;
+      height: @web-page-header-height/2;
       float: left;
     }
 
     &-text {
       float: left;
-      font-size: @page-logo-font-size;
-      line-height: @page-header-height/2;
+      font-size: @web-page-logo-font-size;
+      line-height: @web-page-header-height/2;
       margin-left: 10px;
-      color:@page-logo-text-color;
+      color:@web-page-logo-text-color;
     }
   }
 }
 
 .@{header-prefix-css}layout-main {
-  .mixin-default;
+  .web-mixin-default;
   position: absolute;
-  top: calc(@page-header-height + 1px);
+  top: calc(@web-page-header-height + 1px);
   bottom: 0;
-  left: calc((100% - @page-header-width) / 2);
-  width: @page-header-width;
+  left: calc((100% - @web-page-header-width) / 2);
+  width: @web-page-header-width;
 }
 
 .@{header-prefix-css}layout-left{
-  .mixin-scrollbar;
+  .web-mixin-scrollbar;
   position: fixed;
-  top: calc(@page-header-height + 1px);
+  top: calc(@web-page-header-height + 1px);
   bottom: 0;
-  left: calc((100% - @page-header-width) / 2);
-  width: @page-header-width * 0.2;
+  left: calc((100% - @web-page-header-width) / 2);
+  width: @web-page-header-width * 0.2;
   overflow-x: hidden;
   overflow-y: scroll;
-  //border-right: 1px solid @border-color-base;
+  //border-right: 1px solid @web-border-color-base;
 }
 
 .@{header-prefix-css}layout-right{
-  margin-left: @page-header-width * 0.2;
+  margin-left: @web-page-header-width * 0.2;
   &-content{
     width: 800px;
     margin: 0px auto;

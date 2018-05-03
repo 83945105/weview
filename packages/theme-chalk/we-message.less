@@ -1,0 +1,173 @@
+@import "./src/common/var";
+@import "./src/common/mixins";
+
+@message-css-prefix:~"@{css-prefix}message";
+
+.@{message-css-prefix}{
+  .mixin-default;
+  .mixin-border-box;
+  position:fixed;
+  top:50%;
+  left:50%;
+  padding:15px 20px;
+  width:260px;
+  margin-top:-50px;
+  margin-left:-130PX;
+  line-height:@message-line-height;
+  background-color:fade(@message-default-bg,@message-default-fade);
+  color:@message-default-color;
+  border-radius:@message-default-border-radius;
+  -webkit-box-shadow:0 0 10px tint(@color-black,85%);
+  box-shadow:0 0 10px tint(@color-black,85%);
+  z-index:999;
+  &-tac{
+    text-align:center;
+  }
+  &-tar{
+    text-align:right;
+  }
+  &-bg{
+    background-color:@message-bg-1;
+    border:1px solid @message-border-color;
+    color:@color-text-2;
+  }
+  &-icon{
+    float:left;
+    font-size:@message-icon-size;
+    margin-right:8px;
+    height:26px;
+    line-height:26px;
+    &-primary{
+      color: @color-primary;
+    }
+    &-success{
+      color:@color-success;
+    }
+    &-danger{
+      color:@color-danger;
+    }
+    &-warning{
+      color:@color-warning;
+    }
+  }
+  &-text{
+    overflow:hidden;
+  }
+  &-button-close{
+    display:block;
+    width:18px;
+    height:18px;
+    line-height:18px;
+    padding:3px;
+    font-size:16px;
+    text-align:center;
+    font-size:12px;
+    font-weight:bold;
+    position:absolute;
+    top:-14px;
+    right:-14px;
+    z-index:10;
+    cursor:pointer;
+    background-color:@message-button-bg;
+    border:2px solid @message-button-border-color;
+    border-radius:@border-radius-all;
+    -webkit-box-shadow:0 0 8px tint(@color-black,50%);
+    box-shadow:0 0 8px tint(@color-black,50%);
+    color:@color-white;
+    &:hover{
+      background-color:@color-primary;
+    }
+    &:active{
+      background-color:@color-primary-light-2;
+    }
+  }
+}
+
+.@{message-css-prefix}-animation{
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-duration: .3s;
+  animation-duration: .3s;
+
+  &-open{
+    -webkit-animation-name: layer-bounceIn;
+    animation-name: layer-bounceIn;
+  }
+  &-close{
+    -webkit-animation-name: layer-bounceOut;
+    animation-name: layer-bounceOut;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-duration: .3s;
+    animation-duration: .3s;
+  }
+}
+
+@-webkit-keyframes layer-bounceIn {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(.5);
+    transform: scale(.5)
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1)
+  }
+}
+
+@keyframes layer-bounceIn {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(.5);
+    -ms-transform: scale(.5);
+    transform: scale(.5)
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1)
+  }
+}
+
+@-webkit-keyframes layer-bounceOut {
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(.7);
+    transform: scale(.7)
+  }
+
+  30% {
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05)
+  }
+
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1)
+  }
+}
+
+@keyframes layer-bounceOut {
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(.7);
+    -ms-transform: scale(.7);
+    transform: scale(.7)
+  }
+
+  30% {
+    -webkit-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    transform: scale(1.05)
+  }
+
+  0% {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1)
+  }
+}

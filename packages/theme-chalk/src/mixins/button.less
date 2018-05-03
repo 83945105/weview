@@ -1,3 +1,4 @@
+@import "../common/mixins";
 @import "../common/var";
 
 .button-size(@padding;@font-size;@border-radius){
@@ -6,25 +7,55 @@
   border-radius:@border-radius;
 }
 .button-color(@color;@background;@border){
-  color: @color;
   background-color:@background;
   border-color:@border;
+  color:@color;
 }
-.button-variant(@color;@background;@border){
-  .button-color(@color;@background;@border);
+.button-plain(@color,@background){
+  background-color:mix(@color,@background,90%);
+  border-color:mix(@color,@background,60%);
+  color:@background;
+
   &:hover{
-    .button-color(tint(@color,20%);tint(@background,20%);tint(@border,20%));
+    background-color:@background;
+    border-color:@background;
+    color:@color;
+  }
+  &:active{
+    background-color:mix(@color-white,@background,@button-active-shade-percent);
+    border-color:mix(@color-white,@background,@button-active-shade-percent);
+    color:@color;
+  }
+}
+
+.button-variant(@color;@background;@border){
+  background-color:@background;
+  border-color:@border;
+  color:@color;
+
+  &:hover{
+    background-color:mix(@color,@background,@button-hover-tint-percent);
+    border-color:mix(@color,@border,@button-hover-tint-percent);
+    color:@color;
   }
   &:active,
   &.active{
-    .button-color(tint(@color,5%);tint(@background,5%);tint(@border,5%));
+    background-color:mix(@background,@background,@button-active-shade-percent);
+    border-color:mix(@border,@border,@button-active-shade-percent);
+    color:@color;
   }
   &.disabled{
-    .button-color(@button-disable-color;@button-disable-fill;@button-disable-border);
+    background-color:@button-disable-fill;
+    color:@button-disable-color;
+  }
+
+  &.is-plain{
+    .button-plain(@color;@background);
   }
 }
 
 .btn() {
+  .mixin-default;
   display: inline-block;
   margin-bottom: 0;
   font-weight: @button-font-weight;
@@ -35,6 +66,8 @@
   background-image: none;
   border: 1px solid transparent;
   .button-size(@button-default-padding;@button-default-font-size;@button-default-border-radius);
+  transition: color @transition-time linear, background-color @transition-time linear, border @transition-time linear, box-shadow @transition-time linear;
+
   &,
   &:active,
   &:focus {
@@ -52,6 +85,29 @@
 
 .btn-default(){
   .button-variant(@button-default-color;@button-default-fill;@button-default-border);
+
+  &:hover{
+    background-color:@color-primary-light-9;
+    border-color:@color-primary-light-6;
+    color:@button-default-hover-color;
+  }
+  &:active,
+  &.active{
+    background-color:mix(@color-white,@color-primary-light-9,@button-active-shade-percent);
+    border-color:mix(@color-white,@color-primary,@button-active-shade-percent);
+  }
+  &.is-plain{
+    .button-color(@button-default-color;@button-default-fill;@button-default-border);
+    &:hover{
+      background-color:@color-white;
+      border-color:@color-primary-light-6;
+      color:@color-primary;
+    }
+    &:active,
+    &.active{
+      color:@color-primary-light-5;
+    }
+  }
 }
 
 .btn-primary(){
