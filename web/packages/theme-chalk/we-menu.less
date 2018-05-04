@@ -1,38 +1,38 @@
 @import "src/common/var";
 @import "src/common/mixins";
 
-@menu-prefix-css:~"@{css-prefix}menu";
+@menu-prefix-css:~"@{web-css-prefix}menu";
 
 .@{menu-prefix-css}-item{
-  .mixin-default;
+  .web-mixin-default;
 
   &-title{
-    .mixin-h1-default;
+    .web-mixin-h1-default;
     height:36px;
     line-height:36px;
     &.title-1{
-      font-size:@menu-title-font-size-1;
+      font-size:@web-menu-title-font-size-1;
     }
     &.title-2{
-      font-size:@menu-title-font-size-2;
+      font-size:@web-menu-title-font-size-2;
     }
     &.title-3{
-      font-size:@menu-title-font-size-3;
+      font-size:@web-menu-title-font-size-3;
     }
     &.title-4{
-      font-size:@menu-title-font-size-4;
+      font-size:@web-menu-title-font-size-4;
     }
     &.title-5{
-      font-size:@menu-title-font-size-5;
+      font-size:@web-menu-title-font-size-5;
     }
     &.selected{
-      color:@color-primary;
+      color:@web-color-primary;
     }
     &.link{
-      .mixin-default-link;
+      .web-mixin-default-link;
     }
     &.mini-title{
-      color:@menu-item-title-color
+      color:@web-menu-item-title-color
     }
   }
   &.spacing{
@@ -47,7 +47,7 @@
 
 .title(@count,@i:1) when (@i <= @count){
   .@{menu-prefix-css}-item-title-@{i}{
-    .mixin-h1-default;
+    .web-mixin-h1-default;
     padding:0 20px;
     height:32px;
     line-height:32px;
@@ -56,7 +56,7 @@
   .title(@count, (@i + 1));
 }
 
-//.@{menu-prefix-css}{
+//.@web-{menu-prefix-css}{
 //  .mixin-default;
 //  padding:0 20px;
 //  &-group{
@@ -65,11 +65,11 @@
 //      font-weight:600;
 //      height: 40px;
 //      line-height: 40px;
-//      font-size: @font-size-small;
-//      color:@menu-group-title-color;
+//      font-size: @web-font-size-small;
+//      color:@web-menu-group-title-color;
 //      cursor:pointer;
 //      &.selected{
-//        color:@color-link-selected;
+//        color:@web-color-link-selected;
 //      }
 //      &.spacing{
 //        margin-top:10px;
@@ -84,8 +84,8 @@
 //      height:32px;
 //      line-height:32px;
 //      margin-top:10px;
-//      font-size:@font-size-mini;
-//      color:@menu-item-title-color;
+//      font-size:@web-font-size-mini;
+//      color:@web-menu-item-title-color;
 //    }
 //    &-list{
 //      .mixin-ul-default;

@@ -1,7 +1,7 @@
 @import "var";
 
 /*去除内外边距和列表样式*/
-.mixin-default{
+.web-mixin-default{
   padding:0;
   margin:0;
   list-style-type:none;
@@ -9,13 +9,13 @@
   font-weight:500;
   font-family:Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
 }
-.mixin-h1-default{
+.web-mixin-h1-default{
   padding:0;
   margin:0;
   font-weight:500;
   font-family:Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
 }
-.mixin-ul-default{
+.web-mixin-ul-default{
   padding:0;
   margin:0;
   list-style-type:none;
@@ -25,28 +25,28 @@
     list-style-type:none;
   }
 }
-.mixin-default-link{
-  color:@color-link;
+.web-mixin-default-link{
+  color:@web-color-link;
   text-decoration:none;
   cursor:pointer;
   &:hover{
-    color:@color-link-hover;
+    color:@web-color-link-hover;
   }
   &.selected{
-    color:@color-link-selected;
+    color:@web-color-link-selected;
   }
   &.disabled{
-    color:@color-link-active;
+    color:@web-color-link-active;
   }
 }
-.mixin-v-scroll{
+.web-mixin-v-scroll{
   overflow-x:hidden;
   overflow-y:auto;
 }
-.mixin-scrollbar{
+.web-mixin-scrollbar{
   &::-webkit-scrollbar {
-    width:@scrollbar-width;
-    height: @scrollbar-height;
+    width:@web-scrollbar-width;
+    height: @web-scrollbar-height;
   }
 
   &::-webkit-scrollbar-button:vertical {
@@ -55,19 +55,19 @@
 
   &::-webkit-scrollbar-corner,
   &::-webkit-scrollbar-track {
-    background-color:@scrollbar-track-color;
+    background-color:@web-scrollbar-track-color;
   }
 
   &::-webkit-scrollbar-thumb {
-    border-radius:@scrollbar-radius;
-    background-color:@scrollbar-color;
+    border-radius:@web-scrollbar-radius;
+    background-color:@web-scrollbar-color;
   }
 
   &::-webkit-scrollbar-thumb:vertical:hover {
-    background-color:@scrollbar-hover-color;
+    background-color:@web-scrollbar-hover-color;
   }
 
   &::-webkit-scrollbar-thumb:vertical:active {
-    background-color:@scrollbar-active-color;
+    background-color:@web-scrollbar-active-color;
   }
 }
