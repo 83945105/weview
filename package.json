@@ -4,7 +4,7 @@
   "description": "Tools based on Vue",
   "author": "wx_83945105 <18606167809@163.com>",
   "private": false,
-  "main": "packages/index.js",
+  "main": "lib/index.js",
   "files": [
     "src",
     "lib",
