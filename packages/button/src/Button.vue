@@ -1,10 +1,12 @@
 <template>
   <button
-    :class="[buttonClass, sizeClass, typeClass]"
+    :disabled="buttonDisabled"
+    :autofocus="autofocus"
+    :type="nativeType"
+    :class="[buttonClass, sizeClass, typeClass, plainClass]"
     @click="handleClick"
   >
     <span v-if="$slots.default"><slot></slot></span>
-    <i class="we-icon we-audio"></i>
   </button>
 </template>
 
@@ -20,22 +22,20 @@
     mixins: [Conf],
 
     props: {
-      size: {
+      size: String,//small large
+      type: {//default primary success info warning danger
         type: String,
         default: 'default'
       },
-      type: {
+      nativeType: {//button submit reset
         type: String,
-        default: 'default'
+        default: 'button'
       },
-      round: {
-        type: Boolean,
-        default: false
-      },
-      disabled: {
-        type: Boolean,
-        default: false
-      }
+      plain: Boolean,
+      autofocus: Boolean,
+      round: Boolean,
+      disabled: Boolean,
+      loading: Boolean
     },
 
     computed: {
@@ -43,10 +43,16 @@
         return `${this.prefixCls}-button`;
       },
       sizeClass() {
-        return `${this.prefixCls}-button-${this.size}`;
+        return this.size ? `${this.prefixCls}-button-${this.size}` : '';
       },
       typeClass() {
         return `${this.prefixCls}-button-${this.type}`;
+      },
+      plainClass() {
+        return this.plain ? `is-plain` : '';
+      },
+      buttonDisabled() {
+        return this.disabled
       }
     },
 

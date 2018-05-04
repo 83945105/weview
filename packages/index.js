@@ -32,10 +32,15 @@ const WebComponents = [
 
 import LayerFrame from './layer-frame/index';
 import LayerFrameTop from './layer-frame-top/index';
+import Button from './button/index';
+import Message from './message/index';
 
 const components = [
   LayerFrame,
   LayerFrameTop,
+  Button,
+  Message,
+
   WebComponents
 ];
 
@@ -68,6 +73,9 @@ if (typeof window !== 'undefined' && window.Vue) {
 export {
   LayerFrame,
   LayerFrameTop,
+  Button,
+  Message,
+
   WebComponents
 }
 

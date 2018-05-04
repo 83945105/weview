@@ -58,30 +58,32 @@
       <div class="we-layout-right">
         <div class="we-layout-right-content">
           <div>
-            <input type="button" class="we-button we-button-default" value="默认按钮" />
-            <input type="button" class="we-button we-button-primary" value="主要按钮" />
-            <input type="button" class="we-button we-button-success" value="成功按钮" />
-            <input type="button" class="we-button we-button-info" value="信息按钮" />
-            <input type="button" class="we-button we-button-warning" value="警告按钮" />
-            <input type="button" class="we-button we-button-danger" value="危险按钮" />
+            <we-button>默认按钮</we-button>
+            <we-button type="primary" disabled @click="disBtnClick">禁用按钮</we-button>
+            <we-button type="primary">主要按钮</we-button>
+            <we-button type="success">成功按钮</we-button>
+            <we-button type="info">信息按钮</we-button>
+            <we-button type="warning">警告按钮</we-button>
+            <we-button type="danger">危险按钮</we-button>
           </div>
 
           <div style="margin-top:10px">
-            <input type="button" class="we-button we-button-default is-plain" value="默认按钮" />
-            <input type="button" class="we-button we-button-primary is-plain" value="主要按钮" />
-            <input type="button" class="we-button we-button-success is-plain" value="成功按钮" />
-            <input type="button" class="we-button we-button-info is-plain" value="信息按钮" />
-            <input type="button" class="we-button we-button-warning is-plain" value="警告按钮" />
-            <input type="button" class="we-button we-button-danger is-plain" @click="messageOpen()" value="危险按钮" />
+            <we-button>默认按钮</we-button>
+            <we-button type="primary" plain disabled @click="disBtnClick">禁用按钮</we-button>
+            <we-button type="primary" plain>主要按钮</we-button>
+            <we-button type="success" plain>成功按钮</we-button>
+            <we-button type="info" plain>信息按钮</we-button>
+            <we-button type="warning" plain>警告按钮</we-button>
+            <we-button type="danger" plain @click="messageOpen()">危险按钮</we-button>
+          </div>
+
+          <div style="margin-top:10px">
+            <we-button @click="messageVisible = !messageVisible">消息提示</we-button>
           </div>
         </div>
 
-        <div class='we-message we-message-bg we-message-animation we-message-animation-open'>
-          <i class="we-icon we-chenggong we-message-icon we-message-icon-success"></i>
-          <div class="we-message-text">信息提示</div>
-          <i class="we-icon we-shanchu we-message-button-close"></i>
-        </div>
 
+        <we-message v-model="messageVisible" show-close html message="<span style='color:red'>这是一条成功消息</span>"></we-message>
         <!--<div class="we-layer-mask-bg"></div>-->
         <!--<div class="we-layer-prompt">-->
           <!--<div class="we-layer-prompt-top">-->
@@ -108,7 +110,8 @@
         data(){
           return{
             isShow:false,
-            isClose:false
+            isClose:false,
+            messageVisible: false
           }
         },
         methods:{
@@ -116,6 +119,9 @@
             let msg=document.createElement("div");
             msg.innerHTML="<div class='we-message we-message-tac we-message-animation we-message-animation-open'>信息提示</div>";
             document.body.appendChild(msg);
+          },
+          disBtnClick() {
+            alert(`禁用按钮被点击`);
           }
         },
         computed: {
