@@ -1,28 +1,15 @@
 <template>
   <div class="we-main">
-    <div class="we-header">
-      <div class="we-header-logo">
-        <img :src="logoSrc" class="we-header-logo-img"/>
-        <div class="we-header-logo-text">weview</div>
-      </div>
-      <div class="we-nav">
-        <ul>
-          <li class="selected">
-            <a href="#">指南</a>
-          </li>
-          <li>
-            <a href="#">组件</a>
-          </li>
-          <li>
-            <a href="#">资源</a>
-          </li>
-        </ul>
-      </div>
-    </div>
 
-    <div class="we-layout-main">
-      <div class="we-layout-left">
+    <we-header-doc :logo-src="logoSrc" title="weview">
+      <we-header-doc-item label="指南"></we-header-doc-item>
+      <we-header-doc-item label="组件" :value="true"></we-header-doc-item>
+      <we-header-doc-item label="资源"></we-header-doc-item>
+    </we-header-doc>
 
+    <we-layout>
+
+      <template slot="left">
         <div class="we-menu-item">
           <div class="we-menu-item">
             <h3 class="we-menu-item-title title-2 link">一級</h3>
@@ -53,46 +40,45 @@
           </div>
 
         </div>
+      </template>
 
-      </div>
-      <div class="we-layout-right">
-        <div class="we-layout-right-content">
-          <div>
-            <we-button>默认按钮</we-button>
-            <we-button type="primary" disabled @click="disBtnClick">禁用按钮</we-button>
-            <we-button type="primary">主要按钮</we-button>
-            <we-button type="success">成功按钮</we-button>
-            <we-button type="info">信息按钮</we-button>
-            <we-button type="warning">警告按钮</we-button>
-            <we-button type="danger">危险按钮</we-button>
-          </div>
+      <template slot="right">
 
-          <div style="margin-top:10px">
-            <we-button>默认按钮</we-button>
-            <we-button type="primary" plain disabled @click="disBtnClick">禁用按钮</we-button>
-            <we-button type="primary" plain>主要按钮</we-button>
-            <we-button type="success" plain>成功按钮</we-button>
-            <we-button type="info" plain>信息按钮</we-button>
-            <we-button type="warning" plain>警告按钮</we-button>
-            <we-button type="danger" plain>危险按钮</we-button>
-          </div>
+        <div>
+          <we-button>默认按钮</we-button>
+          <we-button type="primary" disabled @click="disBtnClick">禁用按钮</we-button>
+          <we-button type="primary">主要按钮</we-button>
+          <we-button type="success">成功按钮</we-button>
+          <we-button type="info">信息按钮</we-button>
+          <we-button type="warning">警告按钮</we-button>
+          <we-button type="danger">危险按钮</we-button>
+        </div>
 
-          <div style="margin-top:10px">
-            <we-button @click="messageVisible = !messageVisible">消息提示组件</we-button>
-            <we-button @click="$message({
+        <div style="margin-top:10px">
+          <we-button>默认按钮</we-button>
+          <we-button type="primary" plain disabled @click="disBtnClick">禁用按钮</we-button>
+          <we-button type="primary" plain>主要按钮</we-button>
+          <we-button type="success" plain>成功按钮</we-button>
+          <we-button type="info" plain>信息按钮</we-button>
+          <we-button type="warning" plain>警告按钮</we-button>
+          <we-button type="danger" plain>危险按钮</we-button>
+        </div>
+
+        <div style="margin-top:10px">
+          <we-button @click="messageVisible = !messageVisible">消息提示组件</we-button>
+          <we-button @click="$message({
               message: '666',
               showClose: true
             })">默认消息
-            </we-button>
-            <we-button type="success" @click="$message.success({showClose:true})">成功消息</we-button>
-            <we-button type="danger" @click="$message.close()">关闭指定消息</we-button>
-            <we-button type="danger" @click="$message.closeAll()">关闭所有消息</we-button>
-          </div>
+          </we-button>
+          <we-button type="success" @click="$message.success({showClose:true})">成功消息</we-button>
+          <we-button type="danger" @click="$message.close()">关闭指定消息</we-button>
+          <we-button type="danger" @click="$message.closeAll()">关闭所有消息</we-button>
         </div>
-
 
         <we-message type="success" v-model="messageVisible" show-close html
                     message="<span style='color:red'>这是一条成功消息</span>"></we-message>
+
         <!--<div class="we-layer-mask-bg"></div>-->
         <!--<div class="we-layer-prompt">-->
         <!--<div class="we-layer-prompt-top">-->
@@ -107,8 +93,11 @@
         <!--<input type="button" class="we-button we-button-default" value="取消" />-->
         <!--</div>-->
         <!--</div>-->
-      </div>
-    </div>
+
+      </template>
+
+    </we-layout>
+
   </div>
 </template>
 
