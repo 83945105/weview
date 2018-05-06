@@ -78,12 +78,19 @@
           </div>
 
           <div style="margin-top:10px">
-            <we-button @click="messageVisible = !messageVisible">消息提示</we-button>
+            <we-button @click="messageVisible = !messageVisible">消息提示组件</we-button>
+            <we-button @click="$message({
+              message: '666',
+              showClose: true
+            })">默认消息</we-button>
+            <we-button type="success" @click="$message.success({showClose:true})">成功消息</we-button>
+            <we-button type="danger" @click="$message.close()">关闭指定消息</we-button>
+            <we-button type="danger" @click="$message.closeAll()">关闭所有消息</we-button>
           </div>
         </div>
 
 
-        <we-message v-model="messageVisible" show-close html message="<span style='color:red'>这是一条成功消息</span>"></we-message>
+        <we-message type="success" v-model="messageVisible" show-close html message="<span style='color:red'>这是一条成功消息</span>"></we-message>
         <!--<div class="we-layer-mask-bg"></div>-->
         <!--<div class="we-layer-prompt">-->
           <!--<div class="we-layer-prompt-top">-->

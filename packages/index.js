@@ -32,12 +32,15 @@ const WebComponents = [
 
 import LayerFrame from './layer-frame/index';
 import LayerFrameTop from './layer-frame-top/index';
+import LayerFrameBottom from './layer-frame-bottom/index';
 import Button from './button/index';
 import Message from './message/index';
+import {$Message} from './message/index';
 
 const components = [
   LayerFrame,
   LayerFrameTop,
+  LayerFrameBottom,
   Button,
   Message,
 
@@ -63,6 +66,7 @@ const install = function (Vue, opts = {}) {
     size: opts.size || ''
   };
 
+  Vue.prototype.$message = $Message;
   Vue.prototype.$WEVIEW = WEVIEW;
 };
 
@@ -73,6 +77,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 export {
   LayerFrame,
   LayerFrameTop,
+  LayerFrameBottom,
   Button,
   Message,
 

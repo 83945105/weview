@@ -1,4 +1,3 @@
-<!--弹层框架-->
 <template>
   <div>
     <div :class="[maskClass, maskBgClass, customMaskClass]"
@@ -10,6 +9,7 @@
     >
       <slot name="top"></slot>
       <slot></slot>
+      <slot name="bottom"></slot>
     </div>
     <div v-else-if="position === 'top' || position === 'bottom'" style="left:0;right:0;"
          :class="[layerClass, customClass]"
@@ -17,6 +17,7 @@
     >
       <slot name="top"></slot>
       <slot></slot>
+      <slot name="bottom"></slot>
     </div>
   </div>
 </template>
