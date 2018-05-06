@@ -57,7 +57,18 @@ const register = function (Vue, components) {
   });
 };
 
-const install = function (Vue, opts = {}) {
+const WeViewOptions = {
+  size: '',
+  message: {
+    alias: '$message'
+  }
+};
+
+const merge = require('webpack-merge');
+
+const install = function (Vue, options = {}) {
+
+  let opts = merge(WeViewOptions, options);
 
   register(Vue, components);
 
@@ -66,7 +77,17 @@ const install = function (Vue, opts = {}) {
     size: opts.size || ''
   };
 
-  Vue.prototype.$message = $Message;
+  let messageAlias = opts.message.alias;
+  if(typeof messageAlias === 'string') {
+    Vue.prototype[messageAlias] = $Message;
+  }else if(Array.isArray(messageAlias)) {
+    for (let alias of messageAlias) {
+      Vue.prototype[alias] = $Message;
+    }
+  }else {
+    Vue.prototype[WeViewOptions.message.alias] = $Message;
+  }
+
   Vue.prototype.$WEVIEW = WEVIEW;
 };
 
