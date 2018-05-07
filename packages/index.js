@@ -7,6 +7,7 @@
  */
 
 import TemplateDoc from '../web/packages/template-doc/index';
+import TemplateTest from '../web/packages/template-test/index';
 
 import LayerFrame from './layer-frame/index';
 import LayerFrameTop from './layer-frame-top/index';
@@ -18,6 +19,7 @@ import {$Message} from './message/index';
 const components = [
 
   TemplateDoc,
+  TemplateTest,
 
   LayerFrame,
   LayerFrameTop,
@@ -77,6 +79,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 export {
 
   TemplateDoc,
+  TemplateTest,
 
   LayerFrame,
   LayerFrameTop,

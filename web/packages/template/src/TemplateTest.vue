@@ -115,7 +115,6 @@
 
     methods: {
       handleLinkPage({name}) {
-        console.log(name)
         this.$router.push({name: name});
       },
       handleLinkRoute({name}) {
