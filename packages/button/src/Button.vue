@@ -3,7 +3,7 @@
     :disabled="buttonDisabled"
     :autofocus="autofocus"
     :type="nativeType"
-    :class="[buttonClass, sizeClass, typeClass, plainClass]"
+    :class="[buttonClass, sizeClass, typeClass, plainClass,disabledClass]"
     @click="handleClick"
   >
     <span v-if="$slots.default"><slot></slot></span>
@@ -52,7 +52,10 @@
         return this.plain ? `is-plain` : '';
       },
       buttonDisabled() {
-        return this.disabled
+        return this.loading || this.disabled;
+      },
+      disabledClass() {
+        return this.buttonDisabled ? `is-disabled` : '';
       }
     },
 

@@ -26,6 +26,12 @@
     border-color:mix(@color-white,@background,@button-active-shade-percent);
     color:@color;
   }
+  &.is-disabled{
+    cursor:not-allowed;
+    background-color:tint(@background,90%);
+    border-color:tint(@border,80%);
+    color:tint(@background,50%);
+  }
 }
 
 .button-variant(@color;@background;@border){
@@ -39,14 +45,17 @@
     color:@color;
   }
   &:active,
-  &.active{
+  &.is-active{
     background-color:mix(@background,@background,@button-active-shade-percent);
     border-color:mix(@border,@border,@button-active-shade-percent);
     color:@color;
   }
-  &.disabled{
-    background-color:@button-disable-fill;
-    color:@button-disable-color;
+
+  &.is-disabled{
+    cursor:not-allowed;
+    background-color:tint(@background,60%);
+    border-color:tint(@border,60%);
+    color:tint(@color,40%);
   }
 
   &.is-plain{
@@ -85,29 +94,6 @@
 
 .btn-default(){
   .button-variant(@button-default-color;@button-default-fill;@button-default-border);
-
-  &:hover{
-    background-color:@color-primary-light-9;
-    border-color:@color-primary-light-6;
-    color:@button-default-hover-color;
-  }
-  &:active,
-  &.active{
-    background-color:mix(@color-white,@color-primary-light-9,@button-active-shade-percent);
-    border-color:mix(@color-white,@color-primary,@button-active-shade-percent);
-  }
-  &.is-plain{
-    .button-color(@button-default-color;@button-default-fill;@button-default-border);
-    &:hover{
-      background-color:@color-white;
-      border-color:@color-primary-light-6;
-      color:@color-primary;
-    }
-    &:active,
-    &.active{
-      color:@color-primary-light-5;
-    }
-  }
 }
 
 .btn-primary(){
