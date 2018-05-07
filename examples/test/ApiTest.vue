@@ -60,23 +60,23 @@
       <template slot="right">
 
         <div>
-          <we-button>默认按钮</we-button>
+          <we-button disabled>默认按钮</we-button>
           <we-button type="primary" disabled @click="disBtnClick">禁用按钮</we-button>
-          <we-button type="primary">主要按钮</we-button>
-          <we-button type="success">成功按钮</we-button>
-          <we-button type="info">信息按钮</we-button>
-          <we-button type="warning">警告按钮</we-button>
-          <we-button type="danger">危险按钮</we-button>
+          <we-button type="primary" disabled>主要按钮</we-button>
+          <we-button type="success" disabled>成功按钮</we-button>
+          <we-button type="info" disabled>信息按钮</we-button>
+          <we-button type="warning" disabled>警告按钮</we-button>
+          <we-button type="danger" disabled>危险按钮</we-button>
         </div>
 
         <div style="margin-top:10px">
-          <we-button>默认按钮</we-button>
+          <we-button disabled>默认按钮</we-button>
           <we-button type="primary" plain disabled @click="disBtnClick">禁用按钮</we-button>
-          <we-button type="primary" plain>主要按钮</we-button>
-          <we-button type="success" plain>成功按钮</we-button>
-          <we-button type="info" plain>信息按钮</we-button>
-          <we-button type="warning" plain>警告按钮</we-button>
-          <we-button type="danger" plain>危险按钮</we-button>
+          <we-button type="primary" plain disabled>主要按钮</we-button>
+          <we-button type="success" plain disabled>成功按钮</we-button>
+          <we-button type="info" plain disabled>信息按钮</we-button>
+          <we-button type="warning" plain disabled>警告按钮</we-button>
+          <we-button type="danger" plain disabled>危险按钮</we-button>
         </div>
 
         <div style="margin-top:10px">
