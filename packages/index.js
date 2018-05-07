@@ -6,11 +6,6 @@
  * version: v1.0
  */
 
-/*基础组件相关*/
-const WebComponents = [
-];
-/*基础组件相关*/
-
 import LayerFrame from './layer-frame/index';
 import LayerFrameTop from './layer-frame-top/index';
 import LayerFrameBottom from './layer-frame-bottom/index';
@@ -23,9 +18,7 @@ const components = [
   LayerFrameTop,
   LayerFrameBottom,
   Button,
-  Message,
-
-  WebComponents
+  Message
 ];
 
 const register = function (Vue, components) {
@@ -81,9 +74,7 @@ export {
   LayerFrameTop,
   LayerFrameBottom,
   Button,
-  Message,
-
-  WebComponents
+  Message
 }
 
 export default install;

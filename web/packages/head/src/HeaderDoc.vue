@@ -1,6 +1,6 @@
 <template>
   <div :class="[headerClass]">
-    <div :class="[headerLogoClass]">
+    <div :class="[headerLogoClass]" @click="handleClickLogo">
       <slot name="logo">
         <img :src="logoSrc" :class="[headerLogoImgClass]"/>
       </slot>
@@ -53,6 +53,12 @@
       },
       navClass() {
         return `${this.prefixCls}-nav`;
+      }
+    },
+
+    methods: {
+      handleClickLogo(e) {
+        this.$emit('click-logo', e);
       }
     },
 
