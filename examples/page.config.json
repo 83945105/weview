@@ -1,0 +1,12 @@
+[
+  {
+    "desc": "组件",
+    "name": "Component",
+    "path": "/component"
+  },
+  {
+    "desc": "测试",
+    "name": "Test",
+    "path": "/test"
+  }
+]
