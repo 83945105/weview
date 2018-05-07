@@ -10,7 +10,22 @@
     <we-layout>
 
       <template slot="left">
-        <div class="we-menu-item">
+
+        <we-left-doc-nav>
+          <we-left-doc-nav label="组件">
+
+            <we-left-doc-nav label="消息" :label-level="4" label-style="mini">
+              <we-left-doc-nav label="Message" :label-level="3"></we-left-doc-nav>
+              <we-left-doc-nav label="Alert" :label-level="3"></we-left-doc-nav>
+              <we-left-doc-nav label="Confirm" :label-level="3"></we-left-doc-nav>
+            </we-left-doc-nav>
+
+
+          </we-left-doc-nav>
+        </we-left-doc-nav>
+
+
+        <!--<div class="we-menu-item">
           <div class="we-menu-item">
             <h3 class="we-menu-item-title title-2 link">一級</h3>
           </div>
@@ -39,7 +54,7 @@
 
           </div>
 
-        </div>
+        </div>-->
       </template>
 
       <template slot="right">
