@@ -1,15 +1,37 @@
 <template>
-  <div>
-    <!--<test-head></test-head>-->
-    <router-view></router-view>
-  </div>
+  <we-web-template-test
+    logo-text="weview"
+    :logo-src="logoSrc"
+    :left-data="tests"
+    :header-data="pages"
+    page-name="Test"
+    @click-logo="$message.open('首页还没做好...')"
+  ></we-web-template-test>
 </template>
 
 <script>
-  import TestHead from "../test/TestHead";
+
+  import TestConf from '../../examples/test.config';
+  import PageConf from '../../examples/page.config';
+
+  const LogoSrc = require('../assets/weview_logo.png');
 
   export default {
-    components: {TestHead},
-    name: "test"
+
+    name: "test",
+
+    data() {
+      return {
+        projectName: 'weview',
+        tests: TestConf,
+        pages: PageConf
+      };
+    },
+
+    computed: {
+      logoSrc() {
+        return LogoSrc;
+      }
+    }
   }
 </script>

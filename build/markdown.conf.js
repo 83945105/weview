@@ -1,5 +1,6 @@
 'use strict';
 const striptags = require('./strip-tags');
+const slugify = require('transliteration').slugify;
 const md = require('markdown-it')();
 
 function convert(str) {
@@ -28,12 +29,12 @@ const vueMarkdownOption = {
   },
   //配置Markdown-it使用的插件
   use: [
-    /*    [require('markdown-it-anchor'), {
-          level: 2,
-          slugify: slugify,
-          permalink: true,
-          permalinkBefore: true
-        }],*/
+/*    [require('markdown-it-anchor'), {
+      level: 2,
+      slugify: slugify,
+      permalink: true,
+      permalinkBefore: true
+    }],*/
     [require('markdown-it-container'), 'demo', {
       validate: function (params) {
         return params.trim().match(/^demo\s*(.*)$/);

@@ -6,6 +6,8 @@
  * version: v1.0
  */
 
+import TemplateDoc from '../web/packages/template-doc/index';
+
 import LayerFrame from './layer-frame/index';
 import LayerFrameTop from './layer-frame-top/index';
 import LayerFrameBottom from './layer-frame-bottom/index';
@@ -14,6 +16,9 @@ import Message from './message/index';
 import {$Message} from './message/index';
 
 const components = [
+
+  TemplateDoc,
+
   LayerFrame,
   LayerFrameTop,
   LayerFrameBottom,
@@ -70,6 +75,9 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export {
+
+  TemplateDoc,
+
   LayerFrame,
   LayerFrameTop,
   LayerFrameBottom,

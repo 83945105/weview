@@ -1,4 +1,4 @@
-import HeaderDoc from '../head/src/HeaderDoc';
+import HeaderDoc from '../header/src/HeaderDoc';
 
 HeaderDoc.install = function (Vue) {
   Vue.component(HeaderDoc.name, HeaderDoc);

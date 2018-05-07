@@ -7,17 +7,21 @@
  */
 
 import BodyDoc from './body-doc/index.js';
-import HeadDoc from './head-doc/index.js';
-import HeadDocItem from './head-doc-item/index.js';
+import HeadDoc from './header-doc/index.js';
+import HeadDocItem from './header-doc-item/index.js';
 import Layout from './layout/index.js';
 import LeftDocNav from './left-doc-nav/index.js';
+import TemplateDoc from './template-doc/index.js';
+import TemplateTest from './template-test/index.js';
 
 const components = [
   BodyDoc,
   HeadDoc,
   HeadDocItem,
   Layout,
-  LeftDocNav
+  LeftDocNav,
+  TemplateDoc,
+  TemplateTest
 ];
 
 const install = function (Vue, opts = {}) {
@@ -35,7 +39,9 @@ export {
   HeadDoc,
   HeadDocItem,
   Layout,
-  LeftDocNav
+  LeftDocNav,
+  TemplateDoc,
+  TemplateTest
 }
 
 export default install;

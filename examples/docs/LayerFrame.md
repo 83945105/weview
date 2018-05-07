@@ -46,6 +46,18 @@
 ```
 :::
 
+### 配合LayerFrameBottom一起使用
+
+:::demo
+
+```html
+  <we-layer-frame v-model="show">
+    这里写面板要展示的内容
+    <we-layer-frame-bottom slot="bottom" @confirm="(e, close) => {close()}"></we-layer-frame-bottom>
+  </we-layer-frame>
+```
+:::
+
 ### LayerFrame Attributes
 | 参数      | 说明                                 | 类型      | 可选值       | 默认值   |
 |---------- |------------------------------------ |---------- |------------- |-------- |
@@ -78,6 +90,23 @@
 | —— | LayerFrameTop的内容，注意，使用该项默认内容将会消失 |
 
 ### LayerFrameTop Events
-| 事件名称 | 说明 | 回调参数 |
-|---------|--------|---------|
-| close | 点击自带关闭图标时触发 | 事件参数event |
+| 事件名称 | 说明 | 回调参数 | 参数说明 |
+|---------|--------|---------|---------|
+| close | 点击自带关闭图标时触发 | event | 事件参数 |
+
+### LayerFrameBottom Attributes
+| 参数      | 说明                                 | 类型      | 可选值       | 默认值   |
+|---------- |------------------------------------ |---------- |------------- |-------- |
+| confirmButtonText  |	确定按钮文本 | string |	—— | 确定 |
+| cancelButtonText  |	取消按钮文本 | string |	—— | 取消 |
+
+### LayerFrameBottom Slot
+| name      | 说明                                 |
+|---------- |------------------------------------ |
+| —— | LayerFrameBottom的内容，注意，使用该项默认内容(按钮)将会消失 |
+
+### LayerFrameBottom Events
+| 事件名称 | 说明 | 回调参数 | 参数说明 |
+|---------|--------|---------|---------|
+| confirm | 点击自带确定按钮时触发 | event, close | 事件参数, 用于关闭的回调函数 |
+| cancel | 点击自带取消按钮时触发 | event | 事件参数 |

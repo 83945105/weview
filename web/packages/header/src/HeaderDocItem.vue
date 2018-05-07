@@ -56,6 +56,7 @@
       handleClick(e) {
         this.dispatch(`${this.prefixNameCls}HeaderDoc`, 'handleClickItem');
         this.selected = true;
+        this.$emit('click', e);
       }
     },
 

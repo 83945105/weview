@@ -1,5 +1,5 @@
 [{
-  "desc": "614651",
+  "desc": "Api测试",
   "name": "ApiTest",
   "path": "/apiTest"
 },
@@ -14,16 +14,9 @@
         "path": "/basicTest",
         "items": [
           {
-            "desc": "弹层测试",
-            "name": "LayerTest",
-            "path": "/layerTest",
-            "items": [
-              {
-                "desc": "弹层框架测试",
-                "name": "LayerFrameTest",
-                "path": "/layerFrameTest"
-              }
-            ]
+            "desc": "弹层框架测试",
+            "name": "LayerFrameTest",
+            "path": "/layerFrameTest"
           },
           {
             "desc": "按钮测试",
