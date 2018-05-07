@@ -25,7 +25,8 @@ const components = [
   LayerFrameTop,
   LayerFrameBottom,
   Button,
-  Message
+  Message,
+  $Message
 ];
 
 const register = function (Vue, components) {
@@ -85,7 +86,8 @@ export {
   LayerFrameTop,
   LayerFrameBottom,
   Button,
-  Message
+  Message,
+  $Message
 }
 
 export default install;
