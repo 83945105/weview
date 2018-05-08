@@ -11,7 +11,7 @@
     <we-layer-frame v-model="bottom" position="bottom" height="90%"></we-layer-frame>
     <we-layer-frame v-model="all">
       <we-layer-frame-top></we-layer-frame-top>
-      <we-layer-frame-bottom @confirm="(e, close) => {close()}"></we-layer-frame-bottom>
+      <we-layer-frame-bottom slot="bottom" @confirm="(e, close) => {close()}"></we-layer-frame-bottom>
     </we-layer-frame>
   </div>
 </template>

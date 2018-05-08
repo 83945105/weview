@@ -40,7 +40,13 @@
         "desc": "基础",
         "name": "Basic",
         "path": "/basic",
-        "items": []
+        "items": [
+          {
+            "desc": "按钮",
+            "name": "Button",
+            "path": "/button"
+          }
+        ]
       },
       {
         "desc": "弹层",

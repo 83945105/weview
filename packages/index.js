@@ -6,29 +6,8 @@
  * version: v1.0
  */
 
-/*网站组件相关*/
-import WebApiDocContent from '../web/packages/web-api-doc/content/index';
-import WebApiDocHeadItem from '../web/packages/web-api-doc/head-item/index';
-import WebApiDocHeadMenu from '../web/packages/web-api-doc/head-menu/index';
-import WebApiDocLeftGroupOne from '../web/packages/web-api-doc/left-group-one/index';
-import WebApiDocLeftGroupTwo from '../web/packages/web-api-doc/left-group-two/index';
-import WebApiDocLeftItem from '../web/packages/web-api-doc/left-item/index';
-import WebApiDocLeftMenu from '../web/packages/web-api-doc/left-menu/index';
-import WebApiDocRightContent from '../web/packages/web-api-doc/right-content/index';
-/*网站组件相关*/
-
-/*基础组件相关*/
-const WebComponents = [
-  WebApiDocContent,
-  WebApiDocHeadItem,
-  WebApiDocHeadMenu,
-  WebApiDocLeftGroupOne,
-  WebApiDocLeftGroupTwo,
-  WebApiDocLeftItem,
-  WebApiDocLeftMenu,
-  WebApiDocRightContent
-];
-/*基础组件相关*/
+import TemplateDoc from '../web/packages/template-doc/index';
+import TemplateTest from '../web/packages/template-test/index';
 
 import LayerFrame from './layer-frame/index';
 import LayerFrameTop from './layer-frame-top/index';
@@ -38,13 +17,16 @@ import Message from './message/index';
 import {$Message} from './message/index';
 
 const components = [
+
+  TemplateDoc,
+  TemplateTest,
+
   LayerFrame,
   LayerFrameTop,
   LayerFrameBottom,
   Button,
   Message,
-
-  WebComponents
+  $Message
 ];
 
 const register = function (Vue, components) {
@@ -96,13 +78,16 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export {
+
+  TemplateDoc,
+  TemplateTest,
+
   LayerFrame,
   LayerFrameTop,
   LayerFrameBottom,
   Button,
   Message,
-
-  WebComponents
+  $Message
 }
 
 export default install;

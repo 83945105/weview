@@ -3,7 +3,7 @@
     :disabled="buttonDisabled"
     :autofocus="autofocus"
     :type="nativeType"
-    :class="[buttonClass, sizeClass, typeClass, plainClass,disabledClass]"
+    :class="[buttonClass, sizeClass, typeClass, plainClass, disabledClass]"
     @click="handleClick"
   >
     <span v-if="$slots.default"><slot></slot></span>
