@@ -6,14 +6,16 @@
   font-size:@font-size;
   border-radius:@border-radius;
 }
+
 .button-color(@color;@background;@border){
   background-color:@background;
   border-color:@border;
   color:@color;
 }
-.button-plain(@color,@background){
+
+.button-plain(@color;@background;@border){
   background-color:mix(@color,@background,90%);
-  border-color:mix(@color,@background,60%);
+  border-color:mix(@border,@background,60%);
   color:@background;
 
   &:hover{
@@ -27,10 +29,13 @@
     color:@color;
   }
   &.is-disabled{
-    cursor:not-allowed;
-    background-color:tint(@background,90%);
-    border-color:tint(@border,80%);
-    color:tint(@background,50%);
+    &,
+    &:hover,
+    &:active{
+      background-color:mix(@color-white,@border,92%);
+      border-color:mix(@color-white,@border,75%);
+      color:mix(@color-white,@border,30%);
+    }
   }
 }
 
@@ -52,14 +57,21 @@
   }
 
   &.is-disabled{
-    cursor:not-allowed;
-    background-color:tint(@background,60%);
-    border-color:tint(@border,60%);
-    color:tint(@color,40%);
+    &,
+    &:hover,
+    &:active {
+      cursor: not-allowed;
+      background-color:mix(@color-white,@background,70%);
+      border-color:mix(@color-white,@border,70%);
+      color: tint(@color, 70%);
+      //background-color: tint(@background, 60%);
+      //border-color: tint(@border, 60%);
+      //color: tint(@color, 40%);
+    }
   }
 
   &.is-plain{
-    .button-plain(@color;@background);
+    .button-plain(@color;@background;@border);
   }
 }
 
@@ -90,6 +102,7 @@
   &-small {
     .button-size(@button-small-padding;@button-small-font-size;@button-default-border-radius);
   }
+
 }
 
 .btn-default(){
