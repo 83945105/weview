@@ -4,30 +4,35 @@
 @message-css-prefix:~"@{css-prefix}message";
 
 .@{message-css-prefix}{
-  min-width:260px;
+  min-width:380px;
   .mixin-default;
   .mixin-border-box;
-  position:fixed;
-  top:50%;
-  left:50%;
   padding:15px 20px;
-  display:-webkit-box;
-  display:-ms-flexbox;
-  display:flex;
-  -webkit-align-items:center;
-  -ms-flex-align: center;
-  align-items: center;
+  position:fixed;
+  left:50%;
+  top:50%;
+  -webkit-transform:translateX(-50%) translateY(-50%);
+  -ms-transform:translateX(-50%) translateY(-50%);
+  transform:translateX(-50%) translateY(-50%);
   background-color:fade(@message-default-bg,@message-default-fade);
   color:@message-default-color;
   border-radius:@message-default-border-radius;
   -webkit-box-shadow:0 0 10px tint(@color-black,85%);
   box-shadow:0 0 10px tint(@color-black,85%);
   z-index:999;
+  display:-webkit-box;
+  display:-ms-flexbox;
+  display:flex;
+  -webkit-align-items:center;
+  -ms-flex-align: center;
+  align-items: center;
+
   &.is-center{
     -webkit-box-pack:center;
     -ms-flex-pack:center;
     justify-content:center;
   }
+
   &-bg{
     background-color:@message-bg-1;
     border:1px solid @message-border-color;
@@ -37,8 +42,6 @@
     float:left;
     font-size:@message-icon-size;
     margin-right:8px;
-    height:26px;
-    line-height:26px;
     &-primary{
       color: @color-primary;
     }
@@ -55,7 +58,7 @@
   &-text{
     .mixin-wordwrap;
     overflow:hidden;
-    line-height:1.2;
+    line-height:1.4;
     padding:0;
   }
   &-button-close{
@@ -89,8 +92,6 @@
 }
 
 .@{message-css-prefix}-animation{
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
   -webkit-animation-duration: .3s;
   animation-duration: .3s;
 
@@ -111,68 +112,68 @@
 @-webkit-keyframes layer-bounceIn {
   0% {
     opacity: 0;
-    -webkit-transform: scale(.5);
-    transform: scale(.5)
+    -webkit-transform:translateX(-50%) translateY(-50%) scale(.5);
+    transform:translateX(-50%) translateY(-50%) scale(.5)
   }
 
   100% {
     opacity: 1;
-    -webkit-transform: scale(1);
-    transform: scale(1)
+    -webkit-transform:translateX(-50%) translateY(-50%) scale(1);
+    transform:translateX(-50%) translateY(-50%) scale(1)
   }
 }
 
 @keyframes layer-bounceIn {
   0% {
     opacity: 0;
-    -webkit-transform: scale(.5);
-    -ms-transform: scale(.5);
-    transform: scale(.5)
+    -webkit-transform:translateX(-50%) translateY(-50%) scale(.5);
+    -ms-transform:translateX(-50%) translateY(-50%) scale(.5);
+    transform:translateX(-50%) translateY(-50%) scale(.5)
   }
 
   100% {
     opacity: 1;
-    -webkit-transform: scale(1);
-    -ms-transform: scale(1);
-    transform: scale(1)
+    -webkit-transform:translateX(-50%) translateY(-50%) scale(1);
+    -ms-transform:translateX(-50%) translateY(-50%) scale(1);
+    transform:translateX(-50%) translateY(-50%) scale(1)
   }
 }
 
 @-webkit-keyframes layer-bounceOut {
   100% {
     opacity: 0;
-    -webkit-transform: scale(.7);
-    transform: scale(.7)
+    -webkit-transform:translateX(-50%) translateY(-50%) scale(.7);
+    transform:translateX(-50%) translateY(-50%) scale(.7)
   }
 
   30% {
-    -webkit-transform: scale(1.05);
-    transform: scale(1.05)
+    -webkit-transform:translateX(-50%) translateY(-50%) scale(1.05);
+    transform:translateX(-50%) translateY(-50%)  scale(1.05)
   }
 
   0% {
-    -webkit-transform: scale(1);
-    transform: scale(1)
+    -webkit-transform:translateX(-50%) translateY(-50%) scale(1);
+    transform:translateX(-50%) translateY(-50%) scale(1)
   }
 }
 
 @keyframes layer-bounceOut {
   100% {
     opacity: 0;
-    -webkit-transform: scale(.7);
-    -ms-transform: scale(.7);
-    transform: scale(.7)
+    -webkit-transform:translateX(-50%) translateY(-50%) scale(.7);
+    -ms-transform:translateX(-50%) translateY(-50%) scale(.7);
+    transform:translateX(-50%) translateY(-50%) scale(.7)
   }
 
   30% {
-    -webkit-transform: scale(1.05);
-    -ms-transform: scale(1.05);
-    transform: scale(1.05)
+    -webkit-transform:translateX(-50%) translateY(-50%) scale(1.05);
+    -ms-transform:translateX(-50%) translateY(-50%) scale(1.05);
+    transform:translateX(-50%) translateY(-50%) scale(1.05)
   }
 
   0% {
-    -webkit-transform: scale(1);
-    -ms-transform: scale(1);
-    transform: scale(1)
+    -webkit-transform:translateX(-50%) translateY(-50%) scale(1);
+    -ms-transform:translateX(-50%) translateY(-50%) scale(1);
+    transform:translateX(-50%) translateY(-50%) scale(1)
   }
 }

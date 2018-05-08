@@ -29,7 +29,7 @@
             })">默认消息
       </we-button>
       <we-button type="info" @click="$message.open({message: '默认的'})">默认消息</we-button>
-      <we-button type="success" @click="$message.success({message: '成功了',showClose:true})">成功消息</we-button>
+      <we-button type="success" @click="$message.success({message: '成功了',showClose:true,duration:0})">成功消息</we-button>
       <we-button type="danger" @click="$message.fail({message: '失败了',showClose:true})">失败消息</we-button>
       <we-button type="danger" @click="$message.error({message: '错误',showClose:true})">错误消息</we-button>
       <we-button type="info" @click="$message.info({message: '友情提示',showClose:true})">提示消息</we-button>
