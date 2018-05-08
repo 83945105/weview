@@ -1,11 +1,11 @@
 <template>
   <div :class="[headerClass]">
-    <div :class="[headerLogoClass]" @click="handleClickLogo">
+    <a :class="[headerLogoClass]" href="javascript:void(0)" @click="handleClickLogo">
       <slot name="logo">
         <img :src="logoSrc" :class="[headerLogoImgClass]"/>
       </slot>
       <div :class="[headerLogoText]">{{title}}</div>
-    </div>
+    </a>
     <div v-if="$slots.default" :class="[navClass]">
       <ul>
         <slot></slot>

@@ -12,7 +12,7 @@
     </div>
 
     <div style="margin-top:10px">
-      <we-button disabled>默认按钮</we-button>
+      <we-button plain disabled >默认按钮</we-button>
       <we-button type="primary" plain disabled @click="disBtnClick">禁用按钮</we-button>
       <we-button type="primary" plain>主要按钮</we-button>
       <we-button type="success" plain>成功按钮</we-button>
@@ -38,6 +38,26 @@
       <we-button type="danger" @click="$message.closeAll()">关闭所有消息</we-button>
     </div>
 
+    <div>
+      <i class="we-icon we-success-circle-o we-icon-success we-icon-large"></i>
+      <i class="we-icon we-error-circle-o we-icon-danger we-icon-large"></i>
+      <i class="we-icon we-info-circle-o we-icon-info we-icon-large"></i>
+      <i class="we-icon we-warning-circle-o we-icon-warning we-icon-large"></i>
+      <i class="we-icon we-help-circle-o we-icon-primary we-icon-large"></i>
+    </div>
+    <div>
+      <i class="we-icon we-success-circle we-icon-success we-icon-large"></i>
+      <i class="we-icon we-error-circle we-icon-danger we-icon-large"></i>
+      <i class="we-icon we-info-circle we-icon-info we-icon-large"></i>
+      <i class="we-icon we-warning-circle we-icon-warning we-icon-large"></i>
+      <i class="we-icon we-help-circle we-icon-primary we-icon-large"></i>
+    </div>
+    <div>
+      <i class="we-icon we-smiling-face-circle we-icon-primary we-icon-large we-icon-loading"></i>
+      <i class="we-icon we-angle-double-down we-icon-default we-icon-rotate-90"></i>
+      <i class="we-icon we-angle-double-down we-icon-default we-icon-rotate-180"></i>
+      <i class="we-icon we-angle-double-down we-icon-default we-icon-rotate-270"></i>
+    </div>
     <we-message type="success" v-model="messageVisible" show-close html
                 message="<span style='color:red'>这是一条成功消息</span>"></we-message>
 
