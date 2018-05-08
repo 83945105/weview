@@ -4,10 +4,10 @@
 @message-css-prefix:~"@{css-prefix}message";
 
 .@{message-css-prefix}{
-  min-width:380px;
+  min-width:100px;
   .mixin-default;
   .mixin-border-box;
-  padding:15px 20px;
+  padding:12px 20px;
   position:fixed;
   left:50%;
   top:50%;
@@ -34,6 +34,7 @@
   }
 
   &-bg{
+    padding:5px 15px;
     background-color:@message-bg-1;
     border:1px solid @message-border-color;
     color:@color-text-2;
@@ -41,7 +42,7 @@
   &-icon{
     float:left;
     font-size:@message-icon-size;
-    margin-right:8px;
+    margin-right:5px;
     &-primary{
       color: @color-primary;
     }
@@ -63,17 +64,16 @@
   }
   &-button-close{
     display:block;
-    width:18px;
-    height:18px;
-    line-height:18px;
+    width:14px;
+    height:14px;
+    line-height:14px;
     padding:3px;
-    font-size:16px;
-    text-align:center;
     font-size:12px;
+    text-align:center;
     font-weight:bold;
     position:absolute;
-    top:-14px;
-    right:-14px;
+    top:-12px;
+    right:-12px;
     z-index:10;
     cursor:pointer;
     background-color:@message-button-bg;

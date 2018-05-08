@@ -1,7 +1,7 @@
 <template>
   <div
     v-show="visible"
-    :class="[messageClass, messageBgClass, animationClass]"
+    :class="[messageClass, messageBgClass, animationClass, centerClass]"
     @mouseenter="clearTimer"
     @mouseleave="startTimer"
     role="alert"
@@ -62,7 +62,8 @@
           return true;
         }
       },
-      html: Boolean
+      html: Boolean,
+      center: Boolean
     },
 
     computed: {
@@ -105,6 +106,9 @@
       },
       textClass() {
         return `${this.prefixCls}-message-text`;
+      },
+      centerClass() {
+        return this.center ? `is-center` : undefined;
       }
     },
 
