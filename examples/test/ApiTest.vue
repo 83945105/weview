@@ -71,7 +71,7 @@
               showClose: true
             })">默认消息
           </we-button>
-          <we-button type="success" @click="$message.success({showClose:true})">成功消息</we-button>
+          <we-button type="success" @click="$message.success({showClose:true,duration:0})">成功消息</we-button>
           <we-button type="danger" @click="$message.close()">关闭指定消息</we-button>
           <we-button type="danger" @click="$message.closeAll()">关闭所有消息</we-button>
         </div>
