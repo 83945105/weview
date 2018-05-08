@@ -1,10 +1,10 @@
 <template>
   <div>
-    <button @click.stop="right = true">右方弹出</button>
-    <button @click.stop="left = true">左方弹出</button>
-    <button @click.stop="top = true">上方弹出</button>
-    <button @click.stop="bottom = true">下方弹出</button>
-    <button @click.stop="all = true">完整示例</button>
+    <we-button @click.stop="right = true">右方弹出</we-button>
+    <we-button @click.stop="left = true">左方弹出</we-button>
+    <we-button @click.stop="top = true">上方弹出</we-button>
+    <we-button @click.stop="bottom = true">下方弹出</we-button>
+    <we-button @click.stop="all = true">完整示例</we-button>
     <we-layer-frame v-model="right" :custom-class="rightClass" custom-mask-class="right-mask-custom-class" :esc-closeable="false"></we-layer-frame>
     <we-layer-frame v-model="left" position="left" width="90%"></we-layer-frame>
     <we-layer-frame v-model="top" position="top" height="70%"></we-layer-frame>

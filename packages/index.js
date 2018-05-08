@@ -13,6 +13,7 @@ import LayerFrame from './layer-frame/index';
 import LayerFrameTop from './layer-frame-top/index';
 import LayerFrameBottom from './layer-frame-bottom/index';
 import Button from './button/index';
+import Icon from './icon/index';
 import Message from './message/index';
 import {$Message} from './message/index';
 
@@ -25,6 +26,7 @@ const components = [
   LayerFrameTop,
   LayerFrameBottom,
   Button,
+  Icon,
   Message,
   $Message
 ];
@@ -86,6 +88,7 @@ export {
   LayerFrameTop,
   LayerFrameBottom,
   Button,
+  Icon,
   Message,
   $Message
 }

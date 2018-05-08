@@ -1,8 +1,9 @@
-[{
-  "desc": "Api测试",
-  "name": "ApiTest",
-  "path": "/apiTest"
-},
+[
+  {
+    "desc": "Api测试",
+    "name": "ApiTest",
+    "path": "/apiTest"
+  },
   {
     "desc": "组件测试",
     "name": "ComponentTest",
@@ -14,14 +15,26 @@
         "path": "/basicTest",
         "items": [
           {
-            "desc": "弹层框架测试",
-            "name": "LayerFrameTest",
-            "path": "/layerFrameTest"
+            "desc": "图标测试",
+            "name": "IconTest",
+            "path": "/iconTest"
           },
           {
             "desc": "按钮测试",
             "name": "ButtonTest",
             "path": "/buttonTest"
+          }
+        ]
+      },
+      {
+        "desc": "弹层测试",
+        "name": "LayerTest",
+        "path": "/layerTest",
+        "items": [
+          {
+            "desc": "弹层框架测试",
+            "name": "LayerFrameTest",
+            "path": "/layerFrameTest"
           }
         ]
       }
