@@ -49,6 +49,18 @@ export const IconName = [
   "info-circle",
   "info-circle-o",
 
+  "loading-annual-ring",
+  "loading-black-hole",
+  "loading-drop",
+  "loading-drop-circle",
+  "loading-drop-line",
+  "loading-fading",
+  "loading-fading-full",
+  "loading-fading-point",
+  "loading-point-line",
+  "loading-refresh",
+  "loading-snakes",
+
   "lock",
   "lock-o",
 

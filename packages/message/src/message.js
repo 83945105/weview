@@ -96,7 +96,7 @@ export const MessageType = {
   "unLock": {
     method: "unLock",
     cls: `${Conf.prefixCls}-message-bg`,
-    iconName: `unlock`,
+    iconName: `unlock-o`,
     iconType: `info`
   }
 };

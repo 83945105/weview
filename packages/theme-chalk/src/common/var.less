@@ -150,10 +150,15 @@
 @button-hover-tint-percent: 20%;
 @button-active-shade-percent: 10%;
 
-/*layer*/
-@layer-mask-bg:@color-black;
-@layer-bg:@color-white;
-@layer-mask-shade-percent:50%;
+/*global*/
+@global-mask-black:#000000;
+@global-mask-white:#ffffff;
+@global-mask-shade-percent:50%;
+
+  /*layer*/
+@layer-mask-bg:@global-mask-black;
+@layer-bg:@global-mask-white;
+@layer-mask-shade-percent:@global-mask-shade-percent;
 @layer-prompt-width:320px;
 @layer-prompt-height:200px;
 
@@ -181,3 +186,9 @@
 @icon-size-small:22px;
 @icon-size-large:28px;
 @icon-size-mini:12px;
+@icon-loading-duration:1s;
+
+/*Loading*/
+@loading-mask-black:@global-mask-black;
+@loading-mask-white:@global-mask-white;
+@loading-mask-shade-percent:@global-mask-shade-percent;
