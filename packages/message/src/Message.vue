@@ -6,15 +6,12 @@
     @mouseleave="startTimer"
     role="alert"
   >
-    <i :class="[iconClass, iconTypeClass]"></i>
+    <icon :name="iconName" :type="iconType" size="large"></icon>
     <slot>
       <div v-if="!html" :class="[textClass]">{{message}}</div>
       <div v-else v-html="message" :class="[textClass]"></div>
     </slot>
-    <i v-if="showClose"
-       :class="[iconClass, deleteClass]"
-       @click="handleClose"
-    ></i>
+    <icon v-if="showClose" name="close" :class="deleteClass" @click.native="handleClose"></icon>
   </div>
 </template>
 
@@ -23,8 +20,11 @@
   import Conf from '../../../src/mixins/conf';
 
   import {MessageType} from './message.js';
+  import Icon from '../../icon/src/Icon.vue';
 
   export default {
+
+    components: {Icon: Icon},
 
     name: `${Conf.prefixCls}-message`,
 
@@ -88,27 +88,20 @@
           `${this.prefixCls}-message-animation ${this.prefixCls}-message-animation-open` :
           `${this.prefixCls}-message-animation ${this.prefixCls}-message-animation-close`;
       },
-      iconClass() {
-        return `${this.prefixCls}-icon`;
-      },
-      iconTypeClass() {
-        let ic = MessageType.default.icon;
-        for (let type of this.typeKeys) {
-          if (this.type === type) {
-            ic = MessageType[type].icon;
-            break;
-          }
-        }
-        return ic;
-      },
       deleteClass() {
-        return `${this.prefixCls}-shanchu ${this.prefixCls}-message-button-close`;
+        return `${this.prefixCls}-message-button-close`;
       },
       textClass() {
         return `${this.prefixCls}-message-text`;
       },
       centerClass() {
         return this.center ? `is-center` : undefined;
+      },
+      iconName() {
+        return MessageType[this.type].iconName;
+      },
+      iconType() {
+        return MessageType[this.type].iconType;
       }
     },
 

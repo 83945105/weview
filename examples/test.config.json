@@ -37,6 +37,18 @@
             "path": "/layerFrameTest"
           }
         ]
+      },
+      {
+        "desc": "通知测试",
+        "name": "NoticeTest",
+        "path": "/noticeTest",
+        "items": [
+          {
+            "desc": "消息测试",
+            "name": "MessageTest",
+            "path": "/messageTest"
+          }
+        ]
       }
     ]
   }

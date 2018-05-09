@@ -23,6 +23,7 @@
               :key="item.name"
               :value="item.name === $route.name"
               :label="item.desc"
+              :label-level="item.items ? 2 : 3"
               :style="{marginTop: `${15}px`}"
               @click="handleLinkRoute({name: item.name})"
             >

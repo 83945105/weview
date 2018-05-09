@@ -54,42 +54,50 @@ export const MessageType = {
   "default": {
     method: "open",
     cls: `${Conf.prefixCls}-message-tac`,
-    icon: null
+    iconName: null,
+    iconType: null
   },
   "success": {
     method: "success",
     cls: `${Conf.prefixCls}-message-bg`,
-    icon: `${Conf.prefixCls}-chenggong ${Conf.prefixCls}-message-icon ${Conf.prefixCls}-message-icon-success`
+    iconName: `success-circle-o`,
+    iconType: `success`
   },
   "fail": {
     method: "fail",
     cls: `${Conf.prefixCls}-message-bg`,
-    icon: `${Conf.prefixCls}-shibai ${Conf.prefixCls}-message-icon ${Conf.prefixCls}-message-icon-danger`
+    iconName: `crying-face-o`,
+    iconType: `danger`
   },
   "error": {
     method: "error",
     cls: `${Conf.prefixCls}-message-bg`,
-    icon: `${Conf.prefixCls}-shibai ${Conf.prefixCls}-message-icon ${Conf.prefixCls}-message-icon-danger`
+    iconName: `error-circle-o`,
+    iconType: `danger`
   },
   "warn": {
     method: "warn",
     cls: `${Conf.prefixCls}-message-bg`,
-    icon: `${Conf.prefixCls}-chenggong ${Conf.prefixCls}-message-icon ${Conf.prefixCls}-message-icon-warning`
+    iconName: `warning-circle-o`,
+    iconType: `warning`
   },
   "info": {
     method: "info",
     cls: `${Conf.prefixCls}-message-bg`,
-    icon: `${Conf.prefixCls}-chenggong ${Conf.prefixCls}-message-icon`
+    iconName: `info-circle-o`,
+    iconType: `info`
   },
   "lock": {
     method: "lock",
     cls: `${Conf.prefixCls}-message-bg`,
-    icon: `${Conf.prefixCls}-chenggong ${Conf.prefixCls}-message-icon`
+    iconName: `lock-o`,
+    iconType: `info`
   },
   "unLock": {
     method: "unLock",
     cls: `${Conf.prefixCls}-message-bg`,
-    icon: `${Conf.prefixCls}-chenggong ${Conf.prefixCls}-message-icon`
+    iconName: `unlock`,
+    iconType: `info`
   }
 };
 
