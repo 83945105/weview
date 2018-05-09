@@ -1,5 +1,5 @@
 <template>
-  <i :class="[iconClass, nameClass, typeClass, sizeClass]"></i>
+  <i :class="[iconClass, nameClass, typeClass, sizeClass, loadingClass]"></i>
 </template>
 
 <script>
@@ -17,7 +17,7 @@
     props: {
       name: {
         type: String,
-        default: 'success-circle-o'
+        default: ''
       },
       type: {
         type: String,
@@ -26,7 +26,8 @@
       size: {
         type: String,
         default: 'large'
-      }
+      },
+      loading: Boolean
     },
 
     computed: {
@@ -41,6 +42,9 @@
       },
       sizeClass() {
         return `${this.prefixCls}-icon-${this.size}`;
+      },
+      loadingClass() {
+        return this.loading ? `${this.prefixCls}-icon-loading` : undefined;
       }
     }
 

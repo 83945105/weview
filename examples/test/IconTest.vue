@@ -1,8 +1,11 @@
 <template>
   <div>
 
-    <template v-for="(name, idx) in IconName">
-      <we-icon :key="name" :name="IconName[idx]"></we-icon>
+    <template v-for="(name, idx) in names">
+      <span :key="name">
+        <we-icon :key="name" :name="names[idx]"></we-icon>
+      </span>
+      <div :key="name" v-if="(idx + 1)%10 == 0"></div>
     </template>
 
   </div>
@@ -18,7 +21,7 @@
 
     data() {
       return {
-        IconName: IconName
+        names: IconName
       };
     }
   }

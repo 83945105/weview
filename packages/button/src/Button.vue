@@ -6,7 +6,9 @@
     :class="[buttonClass, sizeClass, typeClass, plainClass, disabledClass]"
     @click="handleClick"
   >
+    <icon v-if="iconPosition === 'left'" :name="iconName" :size="size" :type="iconType" :loading="loading"></icon>
     <span v-if="$slots.default"><slot></slot></span>
+    <icon v-if="iconPosition === 'right'" :name="iconName" :size="size" :type="iconType" :loading="loading"></icon>
   </button>
 </template>
 
@@ -14,7 +16,12 @@
 
   import Conf from '../../../src/mixins/conf';
 
+  import Icon from '../../icon/src/Icon.vue';
+
   export default {
+
+    components: {Icon: Icon},
+
     name: `${Conf.prefixCls}-button`,
 
     componentName: `${Conf.prefixNameCls}Button`,
@@ -22,7 +29,10 @@
     mixins: [Conf],
 
     props: {
-      size: String,//small large
+      size: {//default small large
+        type: String,
+        default: 'default'
+      },
       type: {//default primary success info warning danger
         type: String,
         default: 'default'
@@ -35,7 +45,16 @@
       autofocus: Boolean,
       round: Boolean,
       disabled: Boolean,
-      loading: Boolean
+      loading: Boolean,
+      iconName: String,
+      iconType: {
+        type: String,
+        default: 'default'
+      },
+      iconPosition: {
+        type: String,
+        default: 'left'
+      }
     },
 
     computed: {

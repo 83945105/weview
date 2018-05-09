@@ -2,7 +2,7 @@
   <div style="margin: 10px 10px 10px 10px">
     <div style="font-size: 20px;margin: 10px 0px 10px 0px;font-weight: bold">普通风格按钮示例</div>
     <div>
-      <we-button>默认按钮</we-button>
+      <we-button icon-position="right" :loading="true" icon-name="lock">默认按钮</we-button>
       <we-button type="primary">主要按钮</we-button>
       <we-button type="success">成功按钮</we-button>
       <we-button type="info">提示按钮</we-button>
