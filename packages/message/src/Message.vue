@@ -1,7 +1,7 @@
 <template>
   <div
     v-show="visible"
-    :class="[messageClass, messageBgClass, animationClass, centerClass]"
+    :class="[messageClass, messageBgClass, animationClass, centerClass, customClass]"
     @mouseenter="clearTimer"
     @mouseleave="startTimer"
     role="alert"
@@ -63,7 +63,8 @@
         }
       },
       html: Boolean,
-      center: Boolean
+      center: Boolean,
+      customClass: String
     },
 
     computed: {
@@ -132,13 +133,12 @@
           this.animation = false;
           setTimeout(() => {
             this.visible = false;
+            this.onClose(this)
           }, 200);
         }
       },
       handleClose(e) {
-        if (this.onClose(e) !== false) {
-          this.close();
-        }
+        this.close();
       },
       startTimer() {
         if (this.duration > 0) {
