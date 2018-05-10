@@ -1,17 +1,16 @@
 <template>
   <div
     v-show="visible"
-    :class="[messageClass, messageBgClass, animationClass, centerClass]"
+    :class="[messageClass, messageBgClass, animationClass, centerClass, customClass]"
     @mouseenter="clearTimer"
     @mouseleave="startTimer"
     role="alert"
   >
-    <icon v-if="iconPosition === 'left'" :name="iconName" :type="iconType" size="large" :class="[iconClass, iconPositionClass]"></icon>
+    <icon :name="iconName" :type="iconType" size="large"></icon>
     <slot>
       <div v-if="!html" :class="[textClass]">{{message}}</div>
       <div v-else v-html="message" :class="[textClass]"></div>
     </slot>
-    <icon v-if="iconPosition === 'right'" :name="iconName" :type="iconType" size="large" :class="[iconClass, iconPositionClass]"></icon>
     <icon v-if="showClose" name="close" :class="deleteClass" @click.native="handleClose"></icon>
   </div>
 </template>
@@ -65,10 +64,7 @@
       },
       html: Boolean,
       center: Boolean,
-      iconPosition: {
-        type: String,
-        default: 'left'
-      }
+      customClass: String
     },
 
     computed: {
@@ -102,18 +98,11 @@
       centerClass() {
         return this.center ? `is-center` : undefined;
       },
-      iconClass() {
-        return `${this.prefixCls}-message-icon`;
-      },
       iconName() {
         return MessageType[this.type].iconName;
       },
       iconType() {
         return MessageType[this.type].iconType;
-      },
-      iconPositionClass() {
-        return this.iconPosition === 'left' ? `is-left` :
-          this.iconPosition === 'right' ? `is-right` : undefined;
       }
     },
 
@@ -144,13 +133,12 @@
           this.animation = false;
           setTimeout(() => {
             this.visible = false;
+            this.onClose(this)
           }, 200);
         }
       },
       handleClose(e) {
-        if (this.onClose(e) !== false) {
-          this.close();
-        }
+        this.close();
       },
       startTimer() {
         if (this.duration > 0) {
