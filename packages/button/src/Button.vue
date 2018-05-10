@@ -6,9 +6,9 @@
     :class="[buttonClass, sizeClass, typeClass, plainClass, disabledClass]"
     @click="handleClick"
   >
-    <icon v-if="iconPosition === 'left'" :name="iconName" :size="size" :type="iconType" :loading="loading"></icon>
+    <icon v-if="iconPosition === 'left'" :name="_iconName" :size="size" :type="iconType" :loading="loading"></icon>
     <span v-if="$slots.default"><slot></slot></span>
-    <icon v-if="iconPosition === 'right'" :name="iconName" :size="size" :type="iconType" :loading="loading"></icon>
+    <icon v-if="iconPosition === 'right'" :name="_iconName" :size="size" :type="iconType" :loading="loading"></icon>
   </button>
 </template>
 
@@ -46,6 +46,10 @@
       round: Boolean,
       disabled: Boolean,
       loading: Boolean,
+      loadingIconName: {
+        type: String,
+        default: 'loading-drop'
+      },
       iconName: String,
       iconType: {
         type: String,
@@ -75,6 +79,9 @@
       },
       disabledClass() {
         return this.buttonDisabled ? `is-disabled` : '';
+      },
+      _iconName() {
+        return this.loading ? this.loadingIconName : this.iconName;
       }
     },
 
