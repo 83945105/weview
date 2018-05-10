@@ -9,6 +9,7 @@
       <we-button type="warning">警告按钮</we-button>
       <we-button type="danger">危险按钮</we-button>
       <we-button :loading="true">加载中</we-button>
+      <we-button icon-name="lock-o">左边图标</we-button>
     </div>
     <div style="font-size: 20px;margin: 10px 0px 10px 0px;font-weight: bold">普通风格(禁用)按钮示例</div>
     <div style="margin-top: 10px">
