@@ -61,25 +61,26 @@
     <we-message type="success" v-model="messageVisible" show-close html
                 message="<span style='color:red'>这是一条成功消息</span>"></we-message>
 
-    <!--<div class="we-layer-mask-bg"></div>-->
-    <!--<div class="we-layer-prompt">-->
-    <!--<div class="we-layer-prompt-top">-->
-    <!--<div class="we-layer-prompt-top-title">layer-title</div>-->
-    <!--<i class="we-icon we-shanchu we-layer-prompt-top-close"></i>-->
-    <!--</div>-->
-    <!--<div class="we-layer-prompt-content">-->
-    <!--范德萨-->
-    <!--</div>-->
-    <!--<div class="we-layer-prompt-bottom">-->
-    <!--<input type="button" class="we-button we-button-primary" value="确定" />-->
-    <!--<input type="button" class="we-button we-button-default" value="取消" />-->
-    <!--</div>-->
-    <!--</div>-->
+    <div class="we-layer-mask-bg"></div>
+    <div class="we-layer-prompt">
+    <div class="we-layer-prompt-top">
+    <div class="we-layer-prompt-top-title">layer-title</div>
+    <we-icon name="close"></we-icon>
+    </div>
+    <div class="we-layer-prompt-content">
+    范德萨
+    </div>
+    <div class="we-layer-prompt-bottom">
+    <input type="button" class="we-button we-button-primary" value="确定" />
+    <input type="button" class="we-button we-button-default" value="取消" />
+    </div>
+    </div>
 
   </div>
 </template>
 
 <script>
+
   const LogoSrc = require('../assets/weview_logo.png');
   export default {
     name: '',
