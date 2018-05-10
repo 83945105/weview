@@ -30,6 +30,21 @@
         showClose: true
       })">不会自动关闭</we-button>
     </div>
+
+    <div style="height:300px;width:400px;border:1px solid #EEEEEE;position:relative;margin-top:15px;">
+      区域加载
+      <!--
+      is-full:全屏
+      background-color:rgba(0,0,0,0.8)
+      -->
+      <div class="we-loading-mask we-loading-mask-black">
+        <div class="we-loading-content">
+          <we-icon name="loading-drop" type="primary" :loading="true"></we-icon>
+          <h3 class="we-loading-content-text">拼命加载中</h3>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 

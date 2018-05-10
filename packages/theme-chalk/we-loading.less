@@ -1,9 +1,39 @@
 @import "./src/common/var";
+@import "./src/common/mixins";
 
 @loading-css-prefix:~"@{css-prefix}loading";
 
 .@{loading-css-prefix}{
   &-mask{
-    background-color:fade(@loading-mask-black);
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index:999;
+    background-color:fade(@loading-mask-bg,@loading-mask-shade-percent);
+
+    &.is-full{
+      position:fixed;
+    }
+  }
+
+  &-content{
+    position:absolute;
+    top:50%;
+    left:50%;
+    min-width:10px;
+    text-align:center;
+    -webkit-transform:translateX(-50%) translateY(-50%);
+    -moz-transform:translateX(-50%) translateY(-50%);
+    transform:translateX(-50%) translateY(-50%);
+
+    &-text{
+      .mixin-h1-default;
+      margin-top:6px;
+      font-size:@loading-font-size;
+      font-weight:@loading-font-weight;
+      color:@loading-color-primary;
+    }
   }
 }
