@@ -1,7 +1,7 @@
 <template>
-  <div v-if="visible" :class="[maskClass, maskBgClass]" :style="maskBgStyle">
+  <div v-if="visible" :class="[maskClass, maskBgClass, fullscreenClass]" :style="maskBgStyle">
     <div :class="[contentClass]">
-      <icon :name="iconName" type="primary" :loading="true"></icon>
+      <icon :name="iconName" type="primary" :loading="true" :loading-speed="loadingSpeed"></icon>
       <h3 :class="[textClass]">{{text}}</h3>
     </div>
   </div>
@@ -25,7 +25,8 @@
 
     data() {
       return {
-        visible: this.value
+        visible: false,
+        parentPosition: undefined
       };
     },
 
@@ -35,8 +36,12 @@
         type: String,
         default: 'loading-drop'
       },
+      loadingSpeed: Number,
       target: {
-        type: [String]
+        type: [String, HTMLElement],
+        default() {
+          return document.body;
+        }
       },
       text: {
         type: String,
@@ -64,6 +69,9 @@
       },
       textClass() {
         return `${this.prefixCls}-loading-content-text`;
+      },
+      fullscreenClass() {
+        return this.fullscreen ? 'is-full' : undefined;
       }
     },
 
@@ -74,6 +82,16 @@
       visible(v) {
         this.$emit('input', v);
       }
+    },
+
+    mounted() {
+      this.parentPosition = this.$el.parentNode.style.position;
+      this.$el.parentNode.style.position = 'relative';
+      this.visible = this.value;
+    },
+
+    beforeDestroy() {
+      this.$el.parentNode.style.position = this.parentPosition;
     }
 
   }

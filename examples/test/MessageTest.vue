@@ -31,13 +31,13 @@
       })">不会自动关闭</we-button>
     </div>
 
-    <div style="height:300px;width:400px;border:1px solid #EEEEEE;position:relative;margin-top:15px;">
+    <div style="height:300px;width:400px;border:1px solid #EEEEEE;margin-top:15px;">
       区域加载
       <!--
       is-full:全屏
       background-color:rgba(0,0,0,0.8)
       -->
-      <we-loading :value="true" background="rgba(0,0,0,0.8)" text="玩命加载中"></we-loading>
+      <we-loading :value="true" background="rgba(0,0,0,0.8)" text="玩命加载中" :loading-speed="1"></we-loading>
     </div>
 
   </div>
@@ -45,7 +45,10 @@
 
 <script>
   export default {
-    name: "message-test"
+    name: "message-test",
+
+    created() {
+    }
   }
 </script>
 

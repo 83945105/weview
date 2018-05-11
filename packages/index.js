@@ -15,8 +15,9 @@ import LayerFrameBottom from './layer-frame-bottom/index.js';
 import Button from './button/index.js';
 import Icon from './icon/index.js';
 import Message from './message/index.js';
-import Loading from './loading/index.js';
 import {$Message} from './message/index.js';
+import Loading from './loading/index.js';
+import {$Loading} from './loading/index.js';
 
 const components = [
 
@@ -29,8 +30,9 @@ const components = [
   Button,
   Icon,
   Message,
+  $Message,
   Loading,
-  $Message
+  $Loading
 ];
 
 const register = function (Vue, components) {
@@ -92,8 +94,9 @@ export {
   Button,
   Icon,
   Message,
+  $Message,
   Loading,
-  $Message
+  $Loading
 }
 
 export default install;
