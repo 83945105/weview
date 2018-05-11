@@ -7,11 +7,6 @@
   border-radius:@border-radius;
 }
 
-//.button-color(@color;@background;@border;@shade-percent){
-//  background-color:mix(@color,@background,@shade-percent);
-//  border-color:mix(@border,@background,calc(@shade-percent - 30%));
-//  color:@color;
-//}
 .button-color(@color;@background;@border){
   background-color:@background;
   border-color:@border;
@@ -125,6 +120,8 @@
 .btn() {
   .mixin-default;
   display: inline-block;
+  line-height:1;
+  white-space:nowrap;
   margin-bottom: 0;
   font-weight: @button-font-weight;
   text-align: center;
@@ -133,8 +130,8 @@
   cursor: pointer;
   background-image: none;
   border: 1px solid transparent;
-  .button-size(@button-default-padding;@button-default-font-size;@button-default-border-radius);
   transition: color @transition-time linear, background-color @transition-time linear, border @transition-time linear, box-shadow @transition-time linear;
+  .button-size(@button-default-padding;@button-default-font-size;@button-default-border-radius);
 
   &,
   &:active,
@@ -143,15 +140,15 @@
   }
 
   &-large{
-    .button-size(@button-large-padding;@button-large-font-size;@button-large-border-radius);
+    .button-size(@button-large-padding; @button-large-font-size; @button-large-border-radius);
   }
 
   &-small{
-    .button-size(@button-small-padding;@button-small-font-size;@button-default-border-radius);
+    .button-size(@button-small-padding; @button-small-font-size; @button-small-border-radius);
   }
 
   &-mini{
-    .button-size(@button-mini-padding;@button-mini-font-size;@button-mini-border-radius);
+    .button-size(@button-mini-padding; @button-mini-font-size; @button-mini-border-radius);
   }
 
   &.is-round{

@@ -6,9 +6,9 @@
     :class="[buttonClass, sizeClass, typeClass, plainClass, disabledClass, roundClass, circleClass]"
     @click="handleClick"
   >
-    <icon v-if="iconPosition === 'left'" :name="_iconName" :size="size" :type="iconType" :loading="loading"></icon>
+    <icon v-if="iconName && iconPosition === 'left'" :name="_iconName" :type="iconType" :loading="loading"></icon>
     <span v-if="$slots.default"><slot></slot></span>
-    <icon v-if="iconPosition === 'right'" :name="_iconName" :size="size" :type="iconType" :loading="loading"></icon>
+    <icon v-if="iconName && iconPosition === 'right'" :name="_iconName" :type="iconType" :loading="loading"></icon>
   </button>
 </template>
 
@@ -29,7 +29,7 @@
     mixins: [Conf],
 
     props: {
-      size: {//default small large mini
+      size: {//default large small mini
         type: String,
         default: 'default'
       },
@@ -52,10 +52,7 @@
         default: 'loading-drop'
       },
       iconName: String,
-      iconType: {
-        type: String,
-        default: 'default'
-      },
+      iconType: String,
       iconPosition: {
         type: String,
         default: 'left'
@@ -70,7 +67,7 @@
         if(this.size === 'default') {
           return undefined;
         }
-        return  `${this.prefixCls}-button-${this.size}`;
+        return `${this.prefixCls}-button-${this.size}`;
       },
       typeClass() {
         return `${this.prefixCls}-button-${this.type}`;

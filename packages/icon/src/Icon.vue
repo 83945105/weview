@@ -1,10 +1,5 @@
 <template>
-  <i
-    :class="[iconClass, nameClass, typeClass, sizeClass, loadingClass]"
-    :style="{
-      animationDuration: _loadingSpeed
-    }"
-  ></i>
+  <i :class="[iconClass, nameClass, typeClass, sizeClass, loadingClass]"></i>
 </template>
 
 <script>
@@ -28,10 +23,7 @@
         type: String,
         default: 'default'
       },
-      size: {
-        type: String,
-        default: 'large'
-      },
+      size: String,
       loading: Boolean,
       loadingSpeed: Number
     },
@@ -47,7 +39,7 @@
         return `${this.prefixCls}-icon-${this.type}`;
       },
       sizeClass() {
-        return `${this.prefixCls}-icon-${this.size}`;
+        return this.size ? `${this.prefixCls}-icon-${this.size}` : undefined;
       },
       loadingClass() {
         return this.loading ? `${this.prefixCls}-icon-loading` : undefined;
