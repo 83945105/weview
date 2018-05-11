@@ -6,11 +6,12 @@
     @mouseleave="startTimer"
     role="alert"
   >
-    <icon :name="iconName" :type="iconType" size="large"></icon>
+    <icon v-if="iconPosition === 'left'" :name="iconName" :type="iconType" size="large" :class="[iconClass, iconPositionClass]"></icon>
     <slot>
       <div v-if="!html" :class="[textClass]">{{message}}</div>
       <div v-else v-html="message" :class="[textClass]"></div>
     </slot>
+    <icon v-if="iconPosition === 'right'" :name="iconName" :type="iconType" size="large" :class="[iconClass, iconPositionClass]"></icon>
     <icon v-if="showClose" name="close" :class="deleteClass" @click.native="handleClose"></icon>
   </div>
 </template>
@@ -64,7 +65,11 @@
       },
       html: Boolean,
       center: Boolean,
-      customClass: String
+      customClass: String,
+      iconPosition: {
+        type: String,
+        default: 'left'
+      }
     },
 
     computed: {
@@ -98,11 +103,18 @@
       centerClass() {
         return this.center ? `is-center` : undefined;
       },
+      iconClass() {
+        return `${this.prefixCls}-message-icon`;
+      },
       iconName() {
         return MessageType[this.type].iconName;
       },
       iconType() {
         return MessageType[this.type].iconType;
+      },
+      iconPositionClass() {
+        return this.iconPosition === 'left' ? `is-left` :
+          this.iconPosition === 'right' ? `is-right` : undefined;
       }
     },
 
