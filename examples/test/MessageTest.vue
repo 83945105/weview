@@ -37,12 +37,7 @@
       is-full:全屏
       background-color:rgba(0,0,0,0.8)
       -->
-      <div class="we-loading-mask we-loading-mask-black">
-        <div class="we-loading-content">
-          <we-icon name="loading-drop" type="primary" :loading="true"></we-icon>
-          <h3 class="we-loading-content-text">拼命加载中</h3>
-        </div>
-      </div>
+      <we-loading :value="true" background="rgba(0,0,0,0.8)" text="玩命加载中"></we-loading>
     </div>
 
   </div>
