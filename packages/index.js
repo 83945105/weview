@@ -6,16 +6,17 @@
  * version: v1.0
  */
 
-import TemplateDoc from '../web/packages/template-doc/index';
-import TemplateTest from '../web/packages/template-test/index';
+import TemplateDoc from '../web/packages/template-doc/index.js';
+import TemplateTest from '../web/packages/template-test/index.js';
 
-import LayerFrame from './layer-frame/index';
-import LayerFrameTop from './layer-frame-top/index';
-import LayerFrameBottom from './layer-frame-bottom/index';
-import Button from './button/index';
-import Icon from './icon/index';
-import Message from './message/index';
-import {$Message} from './message/index';
+import LayerFrame from './layer-frame/index.js';
+import LayerFrameTop from './layer-frame-top/index.js';
+import LayerFrameBottom from './layer-frame-bottom/index.js';
+import Button from './button/index.js';
+import Icon from './icon/index.js';
+import Message from './message/index.js';
+import Loading from './loading/index.js';
+import {$Message} from './message/index.js';
 
 const components = [
 
@@ -28,6 +29,7 @@ const components = [
   Button,
   Icon,
   Message,
+  Loading,
   $Message
 ];
 
@@ -62,13 +64,13 @@ const install = function (Vue, options = {}) {
   };
 
   let messageAlias = opts.message.alias;
-  if(typeof messageAlias === 'string') {
+  if (typeof messageAlias === 'string') {
     Vue.prototype[messageAlias] = $Message;
-  }else if(Array.isArray(messageAlias)) {
+  } else if (Array.isArray(messageAlias)) {
     for (let alias of messageAlias) {
       Vue.prototype[alias] = $Message;
     }
-  }else {
+  } else {
     Vue.prototype[WeViewOptions.message.alias] = $Message;
   }
 
@@ -90,6 +92,7 @@ export {
   Button,
   Icon,
   Message,
+  Loading,
   $Message
 }
 
