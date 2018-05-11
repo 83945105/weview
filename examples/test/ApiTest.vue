@@ -64,8 +64,10 @@
     <div class="we-layer-mask-bg"></div>
     <div class="we-layer-prompt">
     <div class="we-layer-prompt-top">
-    <div class="we-layer-prompt-top-title">layer-title</div>
-    <we-icon name="close"></we-icon>
+      <div class="we-layer-prompt-top-title">layer-title</div>
+      <div class="we-layer-prompt-top-icon">
+        <we-icon name="close"></we-icon>
+      </div>
     </div>
     <div class="we-layer-prompt-content">
     范德萨

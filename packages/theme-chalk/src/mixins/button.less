@@ -7,13 +7,36 @@
   border-radius:@border-radius;
 }
 
+//.button-color(@color;@background;@border;@shade-percent){
+//  background-color:mix(@color,@background,@shade-percent);
+//  border-color:mix(@border,@background,calc(@shade-percent - 30%));
+//  color:@color;
+//}
 .button-color(@color;@background;@border){
   background-color:@background;
   border-color:@border;
   color:@color;
 }
 
-.button-plain(@color;@background;@border){
+/*plain-default*/
+.mixin-plain-default(@color;@background;@border;@is-default) when (@is-default = 1){
+  background-color:@background;
+  border-color:@border;
+  color:@color;
+
+  &:hover{
+    background-color:@color-white;
+    border-color:@color-primary;
+    color:@color-primary;
+  }
+  &:active{
+    background-color:mix(@color-white,@color-primary,@button-active-shade-percent);
+    border-color:mix(@color-white,@color-primary,@button-active-shade-percent);
+    color:@color;
+  }
+}
+/*plain*/
+.mixin-plain-default(@color;@background;@border;@is-default) when (@is-default = 0){
   background-color:mix(@color,@background,90%);
   border-color:mix(@border,@background,60%);
   color:@background;
@@ -28,6 +51,12 @@
     border-color:mix(@color-white,@background,@button-active-shade-percent);
     color:@color;
   }
+}
+
+.button-plain(@color;@background;@border;@is-default: 0){
+
+  .mixin-plain-default(@color;@background;@border;@is-default);
+
   &.is-disabled{
     &,
     &:hover,
@@ -39,7 +68,25 @@
   }
 }
 
-.button-variant(@color;@background;@border){
+/*default*/
+.mixin-default(@color;@background;@border;@is-default) when (@is-default = 1){
+  background-color:@background;
+  border-color:@border;
+  color:@color;
+
+  &:hover{
+    background-color:tint(@color-primary,92%);
+    border-color:@color-primary;
+    color:@color-primary;
+  }
+  &:active{
+    background-color:mix(@color-white,@color-primary,@button-active-shade-percent);
+    border-color:mix(@color-white,@color-primary,@button-active-shade-percent);
+    color:@color;
+  }
+}
+/*not default*/
+.mixin-default(@color;@background;@border;@is-default) when (@is-default = 0){
   background-color:@background;
   border-color:@border;
   color:@color;
@@ -55,7 +102,10 @@
     border-color:mix(@border,@border,@button-active-shade-percent);
     color:@color;
   }
+}
 
+.button-variant(@color;@background;@border;@is-default: 0){
+  .mixin-default(@color;@background;@border;@is-default);
   &.is-disabled{
     &,
     &:hover,
@@ -64,14 +114,11 @@
       background-color:mix(@color-white,@background,70%);
       border-color:mix(@color-white,@border,70%);
       color: tint(@color, 70%);
-      //background-color: tint(@background, 60%);
-      //border-color: tint(@border, 60%);
-      //color: tint(@color, 40%);
     }
   }
 
   &.is-plain{
-    .button-plain(@color;@background;@border);
+    .button-plain(@color;@background;@border;@is-default);
   }
 }
 
@@ -99,14 +146,28 @@
     .button-size(@button-large-padding;@button-large-font-size;@button-large-border-radius);
   }
 
-  &-small {
+  &-small{
     .button-size(@button-small-padding;@button-small-font-size;@button-default-border-radius);
   }
 
+  &-mini{
+    .button-size(@button-mini-padding;@button-mini-font-size;@button-mini-border-radius);
+  }
+
+  &.is-round{
+    -webkit-border-radius:100px;
+    border-radius:100px;
+  }
+
+  &.is-circle{
+    -webkit-border-radius:50%;
+    border-radius:50%;
+    padding:8px;
+  }
 }
 
 .btn-default(){
-  .button-variant(@button-default-color;@button-default-fill;@button-default-border);
+  .button-variant(@button-default-color;@button-default-fill;@button-default-border;1);
 }
 
 .btn-primary(){
