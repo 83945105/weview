@@ -23,10 +23,7 @@
         type: String,
         default: 'default'
       },
-      size: {
-        type: String,
-        default: 'large'
-      },
+      size: String,
       loading: Boolean
     },
 
@@ -41,7 +38,7 @@
         return `${this.prefixCls}-icon-${this.type}`;
       },
       sizeClass() {
-        return `${this.prefixCls}-icon-${this.size}`;
+        return this.size ? `${this.prefixCls}-icon-${this.size}` : undefined;
       },
       loadingClass() {
         return this.loading ? `${this.prefixCls}-icon-loading` : undefined;

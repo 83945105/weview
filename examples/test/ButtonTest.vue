@@ -83,16 +83,16 @@
     <div class="module-main">
       <div class="module-content">
         <div>
-          <we-button type="primary" size="mini">超小</we-button>
-          <we-button type="primary">默认尺寸</we-button>
-          <we-button type="primary" size="small">中等按钮</we-button>
-          <we-button type="primary" size="large">最大按钮</we-button>
+          <we-button type="primary" size="large" icon-name="search-o">大型按钮</we-button>
+          <we-button type="primary" icon-name="search-o">默认尺寸</we-button>
+          <we-button type="primary" size="small" icon-name="search-o">小型按钮</we-button>
+          <we-button type="primary" size="mini" icon-name="search-o">超小按钮</we-button>
         </div>
         <div style="margin-top:15px;">
-          <we-button plain type="primary" size="mini">超小</we-button>
+          <we-button plain type="primary" size="large">大型按钮</we-button>
           <we-button plain type="primary">默认尺寸</we-button>
-          <we-button plain type="primary" size="small">中等按钮</we-button>
-          <we-button plain type="primary" size="large">最大按钮</we-button>
+          <we-button plain type="primary" size="small">小型按钮</we-button>
+          <we-button plain type="primary" size="mini">超小按钮</we-button>
         </div>
       </div>
     </div>
