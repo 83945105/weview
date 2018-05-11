@@ -29,7 +29,7 @@
     mixins: [Conf],
 
     props: {
-      size: {//default small large
+      size: {//default small large mini
         type: String,
         default: 'default'
       },
@@ -67,7 +67,10 @@
         return `${this.prefixCls}-button`;
       },
       sizeClass() {
-        return this.size ? `${this.prefixCls}-button-${this.size}` : '';
+        if(this.size === 'default') {
+          return undefined;
+        }
+        return  `${this.prefixCls}-button-${this.size}`;
       },
       typeClass() {
         return `${this.prefixCls}-button-${this.type}`;

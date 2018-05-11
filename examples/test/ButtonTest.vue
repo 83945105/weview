@@ -79,6 +79,23 @@
         </div>
       </div>
     </div>
+    <div class="first-title">按钮尺寸</div>
+    <div class="module-main">
+      <div class="module-content">
+        <div>
+          <we-button type="primary" size="mini">超小</we-button>
+          <we-button type="primary">默认尺寸</we-button>
+          <we-button type="primary" size="small">中等按钮</we-button>
+          <we-button type="primary" size="large">最大按钮</we-button>
+        </div>
+        <div style="margin-top:15px;">
+          <we-button plain type="primary" size="mini">超小</we-button>
+          <we-button plain type="primary">默认尺寸</we-button>
+          <we-button plain type="primary" size="small">中等按钮</we-button>
+          <we-button plain type="primary" size="large">最大按钮</we-button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
