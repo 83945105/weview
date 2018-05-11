@@ -97,6 +97,7 @@ export {
   $Message,
   Loading,
   $Loading
+
 }
 
 export default install;
