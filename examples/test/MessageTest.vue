@@ -28,16 +28,12 @@
         message: '我是一条不会自动关闭的消息',
         duration: 0,
         showClose: true
-      })">不会自动关闭</we-button>
-    </div>
-
-    <div style="height:300px;width:400px;border:1px solid #EEEEEE;margin-top:15px;">
-      区域加载
-      <!--
-      is-full:全屏
-      background-color:rgba(0,0,0,0.8)
-      -->
-      <we-loading :value="true" background="rgba(0,0,0,0.8)" text="玩命加载中" :loading-speed="1"></we-loading>
+      })">不会自动关闭
+      </we-button>
+      <we-button plain type="primary" @click="instance = $message.success('我会返回一个实例')">实例消息</we-button>
+      <we-button plain type="danger" @click="instance.close()">关闭实例</we-button>
+      <we-button plain type="danger" @click="$message.close(instance.id)">关闭ID</we-button>
+      <we-button plain type="danger" @click="$message.closeAll()">关闭所有</we-button>
     </div>
 
   </div>
@@ -46,6 +42,12 @@
 <script>
   export default {
     name: "message-test",
+
+    data() {
+      return {
+        instance: undefined
+      };
+    },
 
     created() {
     }

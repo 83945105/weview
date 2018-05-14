@@ -1,7 +1,7 @@
 <template>
-  <div v-if="visible" :class="[maskClass, maskBgClass, fullscreenClass]" :style="maskBgStyle">
+  <div v-show="visible" :class="[maskClass, maskBgClass, fullscreenClass]" :style="maskBgStyle">
     <div :class="[contentClass]">
-      <icon :name="iconName" type="primary" :loading="true" :loading-speed="loadingSpeed"></icon>
+      <icon :name="iconName" type="primary" :loading="true" :loading-speed="loadingSpeed" size="large"></icon>
       <h3 :class="[textClass]">{{text}}</h3>
     </div>
   </div>
@@ -84,14 +84,34 @@
       }
     },
 
+    methods: {
+      close() {
+        if (this.visible) {
+          this.visible = false;
+          this.$emit('close', this);
+        }
+      },
+      destroy() {
+        this.$emit('destroy', this.id);
+        this.$destroy(true);
+        this.$el.parentNode.removeChild(this.$el);
+      }
+    },
+
     mounted() {
-      this.parentPosition = this.$el.parentNode.style.position;
-      this.$el.parentNode.style.position = 'relative';
-      this.visible = this.value;
+      this.$nextTick(() => {
+        if (this.$el.parentNode) {
+          this.parentPosition = this.$el.parentNode.style.position;
+          this.$el.parentNode.style.position = 'relative';
+        }
+        this.visible = this.value;
+      });
     },
 
     beforeDestroy() {
-      this.$el.parentNode.style.position = this.parentPosition;
+      if (this.$el.parentNode) {
+        this.$el.parentNode.style.position = this.parentPosition;
+      }
     }
 
   }

@@ -6,6 +6,15 @@ let seed = 1;
 let instance;
 let instances = [];
 
+function removeInstance(vm) {
+  for (let i = 0; i < instances.length; i++) {
+    if (instances[i].id === vm.id) {
+      instances.splice(i, 1);
+      break;
+    }
+  }
+};
+
 const Message = function (opts = {}) {
   if (Vue.prototype.$isServer) {
     return;
@@ -26,13 +35,9 @@ const Message = function (opts = {}) {
           ...opts
         },
         on: {
-          input(v) {
-            if (!v) {
-              vm.$children[0].destroy();
-            }
-          },
-          destroy(id) {
-            Message.close(id);
+          close(vm) {
+            removeInstance(vm);
+            vm.destroy();
           }
         }
       });
@@ -115,10 +120,14 @@ for (let type in MessageType) {
   };
 }
 
-Message.close = function (id) {
+Message.close = function (target) {
   for (let i = 0; i < instances.length; i++) {
-    if (instances[i].id === id) {
-      instances.splice(i, 1);
+    if (typeof target === 'string' && instances[i].id === target) {
+      instances[i].close();
+      break;
+    }
+    if (target instanceof Vue && instances[i].id === target.id) {
+      instances[i].close();
       break;
     }
   }

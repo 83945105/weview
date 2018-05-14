@@ -47,6 +47,11 @@
             "desc": "消息测试",
             "name": "MessageTest",
             "path": "/messageTest"
+          },
+          {
+            "desc": "加载特效测试",
+            "name": "LoadingTest",
+            "path": "/loadingTest"
           }
         ]
       }

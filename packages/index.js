@@ -17,7 +17,7 @@ import Icon from './icon/index.js';
 import Message from './message/index.js';
 import {$Message} from './message/index.js';
 import Loading from './loading/index.js';
-import {$Loading} from './loading/index.js';
+import {$Loading, LoadingDirective} from './loading/index.js';
 
 const components = [
 
@@ -49,6 +49,9 @@ const WeViewOptions = {
   size: '',
   message: {
     alias: '$message'
+  },
+  loading: {
+    alias: '$loading'
   }
 };
 
@@ -75,6 +78,18 @@ const install = function (Vue, options = {}) {
   } else {
     Vue.prototype[WeViewOptions.message.alias] = $Message;
   }
+
+  let loadingAlias = opts.loading.alias;
+  if (typeof loadingAlias === 'string') {
+    Vue.prototype[loadingAlias] = $Loading;
+  } else if (Array.isArray(loadingAlias)) {
+    for (let alias of loadingAlias) {
+      Vue.prototype[alias] = $Loading;
+    }
+  } else {
+    Vue.prototype[WeViewOptions.loading.alias] = $Loading;
+  }
+  Vue.use(LoadingDirective);
 
   Vue.prototype.$WEVIEW = WEVIEW;
 };
