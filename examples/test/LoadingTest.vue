@@ -22,11 +22,11 @@
     <we-button @click="$loading.close(instance)">实例关闭</we-button>
     <we-button @click="$loading.close(instance.id)">ID关闭</we-button>
 
-    <div v-loading="vl" style="width: 300px;height: 300px;border:1px solid #ee362e;margin-top:15px;">
+    <div v-loading="o" style="width: 300px;height: 300px;border:1px solid #ee362e;margin-top:15px;">
       使用v-loading开启加载特效
     </div>
-    <we-button @click="vl = true">开启</we-button>
-    <we-button @click="vl = false">关闭</we-button>
+    <we-button @click="vl = true;o.value = true">开启</we-button>
+    <we-button @click="vl = false;o.value = false">关闭</we-button>
 
   </div>
 </template>
@@ -39,7 +39,11 @@
       return {
         loading: undefined,
         instance: undefined,
-        vl: true
+        vl: true,
+        o: {
+          value: false,
+          text: '玩命加载中'
+        }
       };
     },
 

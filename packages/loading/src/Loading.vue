@@ -85,6 +85,12 @@
     },
 
     methods: {
+      open() {
+        if (!this.visible) {
+          this.visible = true;
+          this.$emit('open', this);
+        }
+      },
       close() {
         if (this.visible) {
           this.visible = false;

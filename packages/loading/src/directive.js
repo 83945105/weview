@@ -7,26 +7,50 @@ LoadingDirective.install = Vue => {
     return;
   }
 
-  Vue.directive('loading', {
-    bind(el, binding, vnode) {
-      console.log(el)
-      console.log(binding)
-      console.log(vnode)
+  const typeCallback = (opts, objectCallback, booleanCallback) => {
+    if (typeof opts === 'object') {
+      objectCallback();
+    } else if (typeof opts === 'boolean') {
+      booleanCallback();
+    }
+  };
 
-      let opts = {
+  const create = (el, binding) => {
+    let opts = {
+      target: el
+    };
+    typeCallback(binding.value, () => {
+      opts = {
+        target: el,
+        ...binding.value,
+        fullscreen: binding.modifiers.fullscreen || false
+      };
+    }, () => {
+      opts = {
         target: el,
         value: binding.value,
         fullscreen: binding.modifiers.fullscreen || false
       };
-      el.vm = $Loading(opts);
+    });
+    el.vm = $Loading(opts);
+  };
+
+  Vue.directive('loading', {
+    bind(el, binding, vnode) {
+      create(el, binding);
     },
     update(el, binding) {
-      if(binding.value) {
-
-      }else {
-
+      let v = false;
+      typeCallback(binding.value, () => {
+        v = binding.value.value || false;
+      }, () => {
+        v = binding.value;
+      });
+      if (v) {
+        create(el, binding);
+      } else {
+        el.vm.close();
       }
-      console.log(el.vm.id)
     }
   });
 
