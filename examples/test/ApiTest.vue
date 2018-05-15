@@ -62,35 +62,38 @@
                 message="<span style='color:red'>这是一条成功消息</span>"></we-message>
 
     <div class="we-layer-mask-bg"></div>
-    <div class="we-layer-prompt">
-    <div class="we-layer-prompt-top">
-      <div class="we-layer-prompt-top-title">layer-title</div>
-      <div class="we-layer-prompt-top-icon">
-        <we-icon name="close"></we-icon>
+    <div class="we-layer-prompt" v-drag>
+      <div class="we-layer-prompt-top move">
+        <div class="we-layer-prompt-top-title">信息提示</div>
+        <div class="we-layer-prompt-top-close">
+          <we-icon name="close"></we-icon>
+        </div>
+      </div>
+      <div class="we-layer-prompt-content">
+        范德萨
+      </div>
+      <div class="we-layer-prompt-bottom">
+        <input type="button" class="we-button we-button-primary" value="确定" />
+        <input type="button" class="we-button we-button-default" value="取消" />
       </div>
     </div>
-    <div class="we-layer-prompt-content">
-    范德萨
-    </div>
-    <div class="we-layer-prompt-bottom">
-    <input type="button" class="we-button we-button-primary" value="确定" />
-    <input type="button" class="we-button we-button-default" value="取消" />
-    </div>
-    </div>
-
   </div>
 </template>
 
 <script>
 
   const LogoSrc = require('../assets/weview_logo.png');
+
   export default {
     name: '',
     data() {
       return {
         isShow: false,
         isClose: false,
-        messageVisible: false
+        messageVisible: false,
+        messageTotal:0,
+        messageScroll:0,
+        isDrag:false
       }
     },
     methods: {
@@ -102,6 +105,23 @@
       logoSrc() {
         return LogoSrc;
       }
+    },
+    directives:{
+      drag(el,bindings){
+        el.onmousedown = function(e){
+          let disx = e.pageX - el.offsetLeft;
+          let disy = e.pageY - el.offsetTop;
+          document.onmousemove = function (e){
+            el.style.left = e.pageX - disx + el.style.width +'px';
+            el.style.top = e.pageY - disy + el.style.height +'px';
+          }
+          document.onmouseup = function(){
+            document.onmousemove = document.onmouseup = null;
+          }
+        }
+      }
+    },
+    mounted(){
     }
   }
 
