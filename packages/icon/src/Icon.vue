@@ -24,7 +24,8 @@
         default: 'default'
       },
       size: String,
-      loading: Boolean
+      loading: Boolean,
+      loadingSpeed: Number
     },
 
     computed: {
@@ -42,6 +43,9 @@
       },
       loadingClass() {
         return this.loading ? `${this.prefixCls}-icon-loading` : undefined;
+      },
+      _loadingSpeed() {
+        return this.loadingSpeed ? `${this.loadingSpeed}s` : undefined;
       }
     }
 

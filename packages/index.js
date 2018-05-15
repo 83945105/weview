@@ -15,8 +15,9 @@ import LayerFrameBottom from './layer-frame-bottom/index.js';
 import Button from './button/index.js';
 import Icon from './icon/index.js';
 import Message from './message/index.js';
-import Loading from './loading/index.js';
 import {$Message} from './message/index.js';
+import Loading from './loading/index.js';
+import {$Loading, LoadingDirective} from './loading/index.js';
 
 const components = [
 
@@ -29,8 +30,9 @@ const components = [
   Button,
   Icon,
   Message,
+  $Message,
   Loading,
-  $Message
+  $Loading
 ];
 
 const register = function (Vue, components) {
@@ -47,6 +49,9 @@ const WeViewOptions = {
   size: '',
   message: {
     alias: '$message'
+  },
+  loading: {
+    alias: '$loading'
   }
 };
 
@@ -74,6 +79,18 @@ const install = function (Vue, options = {}) {
     Vue.prototype[WeViewOptions.message.alias] = $Message;
   }
 
+  let loadingAlias = opts.loading.alias;
+  if (typeof loadingAlias === 'string') {
+    Vue.prototype[loadingAlias] = $Loading;
+  } else if (Array.isArray(loadingAlias)) {
+    for (let alias of loadingAlias) {
+      Vue.prototype[alias] = $Loading;
+    }
+  } else {
+    Vue.prototype[WeViewOptions.loading.alias] = $Loading;
+  }
+  Vue.use(LoadingDirective);
+
   Vue.prototype.$WEVIEW = WEVIEW;
 };
 
@@ -92,8 +109,10 @@ export {
   Button,
   Icon,
   Message,
+  $Message,
   Loading,
-  $Message
+  $Loading
+
 }
 
 export default install;

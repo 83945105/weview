@@ -145,7 +145,8 @@
           this.animation = false;
           setTimeout(() => {
             this.visible = false;
-            this.onClose(this)
+            this.onClose(this);
+            this.$emit('close', this);
           }, 200);
         }
       },

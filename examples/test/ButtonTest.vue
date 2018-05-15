@@ -10,6 +10,7 @@
         <we-button type="warning">警告按钮</we-button>
         <we-button type="danger">危险按钮</we-button>
         <we-button :loading="true">加载中</we-button>
+        <we-button icon-name="lock-o" type="primary">左边图标</we-button>
       </div>
     </div>
     <div class="first-title">普通风格(禁用)按钮示例</div>
@@ -22,6 +23,7 @@
         <we-button disabled type="warning">警告按钮</we-button>
         <we-button disabled type="danger">危险按钮</we-button>
         <we-button disabled :loading="true">加载中</we-button>
+        <we-button disabled icon-name="lock-o" type="primary">左边图标</we-button>
       </div>
     </div>
     <div class="first-title">朴素风格按钮示例</div>
@@ -34,6 +36,7 @@
         <we-button type="warning" plain>警告按钮</we-button>
         <we-button type="danger" plain>危险按钮</we-button>
         <we-button plain :loading="true">加载中</we-button>
+        <we-button plain icon-name="lock-o" type="primary">左边图标</we-button>
       </div>
     </div>
     <div class="first-title">朴素风格(禁用)按钮示例</div>
@@ -46,6 +49,7 @@
         <we-button disabled type="warning" plain>警告按钮</we-button>
         <we-button disabled type="danger" plain>危险按钮</we-button>
         <we-button disabled plain :loading="true">加载中</we-button>
+        <we-button disabled plain icon-name="lock-o" type="primary">左边图标</we-button>
       </div>
     </div>
     <div class="first-title">圆角按钮示例</div>
