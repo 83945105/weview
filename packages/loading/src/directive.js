@@ -32,7 +32,9 @@ LoadingDirective.install = Vue => {
         fullscreen: binding.modifiers.fullscreen || false
       };
     });
-    el.vm = $Loading(opts);
+    if(opts.value) {
+      el.vm = $Loading(opts);
+    }
   };
 
   Vue.directive('loading', {
