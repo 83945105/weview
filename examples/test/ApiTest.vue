@@ -62,75 +62,115 @@
                 message="<span style='color:red'>这是一条成功消息</span>"></we-message>
 
     <div class="we-layer-mask-bg"></div>
-    <div class="we-layer-prompt" v-drag>
-      <div class="we-layer-prompt-top move">
+    <div class="we-layer-prompt is-position-auto" :style="{height:areaHeight,width:areaWidth}">
+      <div class="we-layer-prompt-top move layer-prompt-top">
         <div class="we-layer-prompt-top-title">信息提示</div>
         <div class="we-layer-prompt-top-close">
           <we-icon name="close"></we-icon>
         </div>
       </div>
-      <div class="we-layer-prompt-content">
-        范德萨
+      <div class="we-layer-prompt-content frame" :style="{height:contentHeight}">
+        <iframe frameborder="0" name="layerFrame" scrolling="auto" width="100%" :height="frameHeight" src="http://wwww.baidu.com"></iframe>
       </div>
-      <div class="we-layer-prompt-bottom">
+      <div class="we-layer-prompt-bottom layer-prompt-bottom">
         <input type="button" class="we-button we-button-primary" value="确定" />
         <input type="button" class="we-button we-button-default" value="取消" />
       </div>
     </div>
+
   </div>
 </template>
 
-<script>
+  <script>
 
-  const LogoSrc = require('../assets/weview_logo.png');
+    const LogoSrc = require('../assets/weview_logo.png');
 
-  export default {
-    name: '',
-    data() {
-      return {
-        isShow: false,
-        isClose: false,
-        messageVisible: false,
-        messageTotal:0,
-        messageScroll:0,
-        isDrag:false
-      }
-    },
-    methods: {
-      disBtnClick() {
-        alert(`禁用按钮被点击`);
-      }
-    },
-    computed: {
-      logoSrc() {
-        return LogoSrc;
-      }
-    },
-    directives:{
-      drag(el,bindings){
-        el.onmousedown = function(e){
-          let disx = e.pageX - el.offsetLeft;
-          let disy = e.pageY - el.offsetTop;
-          document.onmousemove = function (e){
-            el.style.left = e.pageX - disx + el.style.width +'px';
-            el.style.top = e.pageY - disy + el.style.height +'px';
+    export default {
+      name: '',
+      data() {
+        return {
+          isShow: false,
+          isClose: false,
+          messageVisible: false,
+          messageTotal:0,
+          messageScroll:0,
+          isDrag:false,
+          mouseDownX:0,
+          mouseDownY:0,
+          mouseMoveX:0,
+          mouseMoveY:0,
+          initX:0,
+          initY:0,
+          areaHeight:"400px",
+          areaWidth:"700px",
+          frameHeight:100,
+          contentHeight:100
+        }
+      },
+      methods: {
+        disBtnClick() {
+          alert(`禁用按钮被点击`);
+        },
+        downDrag(event){
+          // var el = event.currentTarget;
+          this.mouseDownX = event.pageX;
+          this.mouseDownY = event.pageY;
+
+          //初始位置的X，Y 坐标
+          this.initX = event.offsetLeft;
+          this.initY = event.offsetTop;
+
+          this.isDrag = true;
+        },
+        moveDrag(event){
+          if(this.isDrag){
+            this.mouseMoveX = event.pageX;
+            this.mouseMoveY = event.pageY;
+
+            event.currentTarget.style.left = this.mouseMoveX - this.mouseDownX + this.initX + "px";
+            event.currentTarget.style.top = this.mouseMoveY - this.mouseDownY + this.initY + "px";
           }
-          document.onmouseup = function(){
-            document.onmousemove = document.onmouseup = null;
+        },
+        upDrag(){
+          this.isDrag = false;
+        }
+      },
+      computed: {
+        logoSrc() {
+          return LogoSrc;
+        }
+      },
+      directives:{
+        drag(el,bindings){
+          el.onmousedown = function(e){
+            let disx = e.pageX - el.offsetLeft;
+            let disy = e.pageY - el.offsetTop;
+            document.onmousemove = function (e){
+              el.style.left = e.pageX - disx + el.style.width +'px';
+              el.style.top = e.pageY - disy + el.style.height +'px';
+            }
+            document.onmouseup = function(){
+              document.onmousemove = document.onmouseup = null;
+            }
           }
         }
+      },
+      mounted(){
+        let topHeight = this.$el.querySelector(".layer-prompt-top").clientHeight + 1;
+        let bottomHeight = this.$el.querySelector(".layer-prompt-bottom").clientHeight;
+        let layerPromptHeight = parseInt(this.areaHeight);
+        this.frameHeight = layerPromptHeight - bottomHeight - topHeight;
+        this.contentHeight = layerPromptHeight - bottomHeight - topHeight + "px";
       }
-    },
-    mounted(){
     }
-  }
 
-  // less = {
-  //   globalVars:{
-  //     var1: '"we-web-"'
-  //   }
-  // };
-</script>
+    // less = {
+    //   globalVars:{
+    //     var1: '"we-web-"'
+    //   }
+    // };
+  </script>
+
 
 <style lang="less" type="text/less">
   @import "../../web/packages/theme-chalk/index";
