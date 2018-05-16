@@ -6,9 +6,9 @@
     :class="[buttonClass, sizeClass, typeClass, plainClass, disabledClass, roundClass, circleClass]"
     @click="handleClick"
   >
-    <icon v-if="iconName && iconPosition === 'left'" :name="_iconName" :type="iconType" :loading="loading"></icon>
+    <icon v-if="showLeftIcon" :name="_iconName" :type="iconType" :loading="loading"></icon>
     <span v-if="$slots.default"><slot></slot></span>
-    <icon v-if="iconName && iconPosition === 'right'" :name="_iconName" :type="iconType" :loading="loading"></icon>
+    <icon v-if="showRightIcon" :name="_iconName" :type="iconType" :loading="loading"></icon>
   </button>
 </template>
 
@@ -60,6 +60,12 @@
     },
 
     computed: {
+      showLeftIcon() {
+        return (this.loading && this.iconPosition === 'left') || (this.iconName && this.iconPosition === 'left');
+      },
+      showRightIcon() {
+        return (this.loading && this.iconPosition === 'right') || (this.iconName && this.iconPosition === 'right');
+      },
       buttonClass() {
         return `${this.prefixCls}-button`;
       },

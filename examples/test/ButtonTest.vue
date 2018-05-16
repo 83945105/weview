@@ -9,7 +9,6 @@
         <we-button type="info">提示按钮</we-button>
         <we-button type="warning">警告按钮</we-button>
         <we-button type="danger">危险按钮</we-button>
-        <we-button :loading="true">加载中</we-button>
         <we-button icon-name="lock-o" type="primary">左边图标</we-button>
       </div>
     </div>
@@ -22,7 +21,6 @@
         <we-button disabled type="info">提示按钮</we-button>
         <we-button disabled type="warning">警告按钮</we-button>
         <we-button disabled type="danger">危险按钮</we-button>
-        <we-button disabled :loading="true">加载中</we-button>
         <we-button disabled icon-name="lock-o" type="primary">左边图标</we-button>
       </div>
     </div>
@@ -35,7 +33,6 @@
         <we-button type="info" plain>提示按钮</we-button>
         <we-button type="warning" plain>警告按钮</we-button>
         <we-button type="danger" plain>危险按钮</we-button>
-        <we-button plain :loading="true">加载中</we-button>
         <we-button plain icon-name="lock-o" type="primary">左边图标</we-button>
       </div>
     </div>
@@ -48,7 +45,6 @@
         <we-button disabled type="info" plain>提示按钮</we-button>
         <we-button disabled type="warning" plain>警告按钮</we-button>
         <we-button disabled type="danger" plain>危险按钮</we-button>
-        <we-button disabled plain :loading="true">加载中</we-button>
         <we-button disabled plain icon-name="lock-o" type="primary">左边图标</we-button>
       </div>
     </div>
@@ -81,6 +77,13 @@
           <we-button type="warning" plain round>警告按钮</we-button>
           <we-button type="danger" plain round>危险按钮</we-button>
         </div>
+      </div>
+    </div>
+    <div class="first-title">加载特效</div>
+    <div class="module-main">
+      <div class="module-content">
+        <we-button :loading="true">加载中</we-button>
+        <we-button :loading="true" loading-icon-name="lock">自定义加载图标</we-button>
       </div>
     </div>
     <div class="first-title">按钮尺寸</div>

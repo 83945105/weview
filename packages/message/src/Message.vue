@@ -29,6 +29,8 @@
 
     name: `${Conf.prefixCls}-message`,
 
+    optionName: `message`,
+
     componentName: `${Conf.prefixNameCls}Message`,
 
     mixins: [Conf],

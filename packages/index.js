@@ -17,7 +17,7 @@ import Icon from './icon/index.js';
 import Message from './message/index.js';
 import {$Message} from './message/index.js';
 import Loading from './loading/index.js';
-import {$Loading, LoadingDirective} from './loading/index.js';
+import {$Loading} from './loading/index.js';
 
 const components = [
 
@@ -30,72 +30,19 @@ const components = [
   Button,
   Icon,
   Message,
-  $Message,
-  Loading,
-  $Loading
+  Loading
 ];
-
-const register = function (Vue, components) {
-  components.map(component => {
-    if (Array.isArray(component)) {
-      register(Vue, component);
-    } else {
-      Vue.component(component.name, component);
-    }
-  });
-};
-
-const WeViewOptions = {
-  size: '',
-  message: {
-    alias: '$message'
-  },
-  loading: {
-    alias: '$loading'
-  }
-};
-
-const merge = require('webpack-merge');
 
 const install = function (Vue, options = {}) {
 
-  let opts = merge(WeViewOptions, options);
-
-  register(Vue, components);
-
-  const WEVIEW = {
-    version: '1.0.0',
-    size: opts.size || ''
-  };
-
-  let messageAlias = opts.message.alias;
-  if (typeof messageAlias === 'string') {
-    Vue.prototype[messageAlias] = $Message;
-  } else if (Array.isArray(messageAlias)) {
-    for (let alias of messageAlias) {
-      Vue.prototype[alias] = $Message;
-    }
-  } else {
-    Vue.prototype[WeViewOptions.message.alias] = $Message;
+  for (let component of components) {
+    component.install(Vue, options[component.optionName]);
   }
 
-  let loadingAlias = opts.loading.alias;
-  if (typeof loadingAlias === 'string') {
-    Vue.prototype[loadingAlias] = $Loading;
-  } else if (Array.isArray(loadingAlias)) {
-    for (let alias of loadingAlias) {
-      Vue.prototype[alias] = $Loading;
-    }
-  } else {
-    Vue.prototype[WeViewOptions.loading.alias] = $Loading;
-  }
-  Vue.use(LoadingDirective);
-
-  Vue.prototype.$WEVIEW = WEVIEW;
 };
 
 if (typeof window !== 'undefined' && window.Vue) {
-  install(window.Vue)
+  install(window.Vue);
 }
 
 export {

@@ -21,6 +21,8 @@
 
     componentName: `${Conf.prefixNameCls}Loading`,
 
+    optionName: `loading`,
+
     mixins: [Conf],
 
     data() {

@@ -1,12 +1,15 @@
 <template>
   <div>
-    <h3 class="first-title">图标合集</h3>
+    <h3 class="first-title">
+      图标合集
+      <we-button type="primary" @click="loading = !loading">{{loading ? '关闭加载特效' : '开启加载特效'}}</we-button>
+    </h3>
     <div class="icon-list-main">
       <ul class="icon-list">
       <template v-for="(name, idx) in names">
         <li :key="name">
           <div class="icon-one">
-            <we-icon :key="name" :name="names[idx]"></we-icon>
+            <we-icon :key="name" :name="names[idx]" type="large" :loading="loading"></we-icon>
             <div class="icon-name">{{names[idx]}}</div>
           </div>
         </li>
@@ -26,7 +29,8 @@
 
     data() {
       return {
-        names: IconName
+        names: IconName,
+        loading: false
       };
     }
   }
