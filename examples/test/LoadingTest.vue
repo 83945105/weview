@@ -28,6 +28,19 @@
     <we-button @click="vl = true;o.value = true">开启</we-button>
     <we-button @click="vl = false;o.value = false">关闭</we-button>
 
+    <div id="loadingDom3" style="width: 300px;height: 300px;border:1px solid #52ee47;margin-top:15px;">
+      第一个
+    </div>
+
+    <div id="loadingDom4" style="width: 300px;height: 300px;border:1px solid #8dc7ee;margin-top:15px;">
+      第二个
+    </div>
+
+    <div>
+      <we-button @click="$loading({target: '#loadingDom3'})">开启第一个</we-button>
+      <we-button @click="$loading({target: '#loadingDom4'})">开启第二个</we-button>
+      <we-button @click="$loading.closeAll()">关闭全部</we-button>
+    </div>
   </div>
 </template>
 
