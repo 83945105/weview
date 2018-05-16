@@ -61,23 +61,6 @@
     <we-message type="success" v-model="messageVisible" show-close html
                 message="<span style='color:red'>这是一条成功消息</span>"></we-message>
 
-    <div class="we-layer-mask-bg"></div>
-    <div class="we-layer-prompt is-position-auto" :style="{height:areaHeight,width:areaWidth}">
-      <div class="we-layer-prompt-top move layer-prompt-top">
-        <div class="we-layer-prompt-top-title">信息提示</div>
-        <div class="we-layer-prompt-top-close">
-          <we-icon name="close"></we-icon>
-        </div>
-      </div>
-      <div class="we-layer-prompt-content frame" :style="{height:contentHeight}">
-        <iframe frameborder="0" name="layerFrame" scrolling="auto" width="100%" :height="frameHeight" src="http://wwww.baidu.com"></iframe>
-      </div>
-      <div class="we-layer-prompt-bottom layer-prompt-bottom">
-        <input type="button" class="we-button we-button-primary" value="确定" />
-        <input type="button" class="we-button we-button-default" value="取消" />
-      </div>
-    </div>
-
   </div>
 </template>
 
