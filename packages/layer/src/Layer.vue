@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-show="visible">
     <div :class="[maskBgClass]"></div>
     <div class="is-position-auto"
          :class="[layerClass]"
@@ -20,12 +20,11 @@
         </slot>
       </div>
       <div :class="[contentClass]"
-           style="background-color: #3db670;border: 1px solid red;"
            :style="{
-            height: this._height ? `${this._height - headerHeight - footerHeight - 1}px` : undefined
+            height: __contentHeight
            }"
       >
-        <slot></slot>
+        <slot :width="__width" :height="__contentHeight"></slot>
       </div>
       <div v-if="showFooter"
            :class="[footClass, footAlignClass]">
@@ -59,8 +58,7 @@
 
     data() {
       return {
-        widthUnit: 'px',
-        heightUnit: 'px',
+        visible: this.value,
         isDrag: false,
         left: '50%',
         top: '50%',
@@ -70,6 +68,7 @@
     },
 
     props: {
+      value: Boolean,
       width: {
         type: [Number, String],
         default: 300
@@ -99,13 +98,31 @@
       _width() {
         return this.width ? parseInt(`${this.width}`.replace(/[^0-9]/g, "")) : undefined;
       },
+      __width() {
+        return this._width ? this._width > 100 ? `${this._width}px` : `${this._width}%` : undefined;
+      },
       _height() {
         return this.height ? parseInt(`${this.height}`.replace(/[^0-9]/g, "")) : undefined;
       },
+      __height() {
+        return this._height ? this._height > 100 ? `${this._height}px` : `${this._height}%` : undefined;
+      },
+      __contentHeight() {
+        if (!this._height) {
+          return undefined;
+        }
+        if (this._height > 100) {
+          return `${this._height - this.headerHeight - this.footerHeight - 1}px`;
+        }
+        let wh = this.getWindowHeight() * this._height / 100;
+        let hh = this.headerHeight;
+        let fh = this.footerHeight;
+        return `${(1 - hh/wh - fh/wh) * 100}%`;
+      },
       style() {
         return {
-          width: this._width ? this._width > 100 ? `${this._width}px` : `${this._width}%` : undefined,
-          height: this._height ? this._height > 100 ? `${this._height}px` : `${this._height}%` : undefined,
+          width: this.__width,
+          height: this.__height,
           left: this.left,
           top: this.top
         };
@@ -146,29 +163,9 @@
       }
     },
 
-    watch: {
-      width() {
-        this.initWidthUnit();
-      },
-      height() {
-        this.initHeightUnit();
-      }
-    },
+    watch: {},
 
     methods: {
-      initWidthUnit() {
-        if (typeof this.width === 'string') {
-          this.widthUnit = this.width.replace(/[0-9]/g, "");
-        }
-      },
-      initHeightUnit() {
-        if (typeof this.height === 'string') {
-          this.heightUnit = this.height.replace(/[0-9]/g, "");
-        }
-      },
-      getWindowWidth() {
-        return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-      },
       getWindowHeight() {
         return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
       },
@@ -186,15 +183,9 @@
       }
     },
 
-    created() {
-      this.initWidthUnit();
-      this.initHeightUnit();
-    },
-
     mounted() {
       this.headerDom = this.$el.querySelector(`.${this.headerClass}`);
       this.footerDom = this.$el.querySelector(`.${this.footClass}`);
-      console.log(this.headerHeight)
     }
 
   }

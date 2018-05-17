@@ -4,7 +4,6 @@
 @layer-css-prefix:~"@{css-prefix}layer";
 
 .@{layer-css-prefix}-mask{
-  display:none;
   position:fixed;
   top:0px;
   bottom:0px;
@@ -65,7 +64,6 @@
   &-content{
     .mixin-scrollbar;
     .mixin-border-box;
-    padding:15px;
     overflow-x:auto;
     overflow-y:auto;
 
@@ -80,10 +78,6 @@
   }
 
   &-bottom{
-    position:absolute;
-    bottom:0;
-    left:0;
-    right:0;
     padding:10px 15px;
     text-align: right;
     background-color: @layer-bottom-bg;

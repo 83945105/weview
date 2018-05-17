@@ -1,15 +1,15 @@
 <template>
   <div>
-    <we-layer :height="500">
-      <div style="width: 50px;height: 600px;">+4566+46464646</div>
-      <!--<iframe frameborder="0" name="layerFrame" scrolling="auto" width="100%" :height="frameHeight" src="http://wwww.baidu.com"></iframe>-->
+    <we-layer :width="800" :height="600" :value="true">
 
 
-      <template slot="footer">
-        <we-button>确定</we-button>
-        <we-button>确定</we-button>
-        <we-button>确定</we-button>
-      </template>
+      <div style="width: 5000px;height: 600px;background-color: #00a04d">+4566+46464646</div>
+
+<!--      <template slot-scope="{ width, height }">
+
+        <iframe src="http://wwww.baidu.com" frameborder="0" width="100%" height="98%"></iframe>
+
+      </template>-->
 
     </we-layer>
   </div>
