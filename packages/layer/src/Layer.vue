@@ -1,8 +1,8 @@
 <template>
-  <div v-show="visible">
-    <div v-if="showMask" :class="[maskClass, maskBgClass, customMaskClass]" @click="maskClose"></div>
-    <transition name="fade">
-      <div :class="[layerClass, customClass]"
+  <div :class="[opacityClass]">
+    <div v-if="visible && showMask" :class="[maskClass, maskBgClass, customMaskClass]" @click="maskClose"></div>
+    <we-animation :name="animationName">
+      <div v-show="visible" :class="[layerClass, customClass]"
            :style="style"
       >
         <div v-if="showHeader"
@@ -31,7 +31,7 @@
           </slot>
         </div>
       </div>
-    </transition>
+    </we-animation>
   </div>
 </template>
 
@@ -41,10 +41,11 @@
 
   import WeButton from '../../button/src/Button.vue';
   import WeIcon from '../../icon/src/Icon.vue';
+  import WeAnimation from '../../animation/src/Animation.vue';
 
   export default {
 
-    components: {WeButton: WeButton, Icon: WeIcon},
+    components: {WeButton: WeButton, Icon: WeIcon, WeAnimation: WeAnimation},
 
     name: `${Conf.prefixCls}-layer`,
 
@@ -57,6 +58,7 @@
     data() {
       return {
         visible: true,
+        opacity: !this.value,
         isDrag: false,
         x: 0,
         y: 0,
@@ -130,6 +132,10 @@
         type: Boolean,
         default: true
       },
+      animationName: {
+        type: String,
+        default: 'bounce'
+      }
     },
 
     computed: {
@@ -170,6 +176,9 @@
           left: `${this.x}px`,
           top: `${this.y}px`
         };
+      },
+      opacityClass() {
+        return this.opacity ? `${this.prefixCls}-common-opacity` : undefined;
       },
       maskClass() {
         return `${this.prefixCls}-layer-mask`;
@@ -212,6 +221,9 @@
 
     watch: {
       value(v) {
+        if (v) {
+          this.opacity = false;
+        }
         this.visible = v;
       },
       visible(v) {

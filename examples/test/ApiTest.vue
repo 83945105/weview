@@ -95,64 +95,14 @@
         disBtnClick() {
           alert(`禁用按钮被点击`);
         },
-        downDrag(event){
-          // var el = event.currentTarget;
-          this.mouseDownX = event.pageX;
-          this.mouseDownY = event.pageY;
-
-          //初始位置的X，Y 坐标
-          this.initX = event.offsetLeft;
-          this.initY = event.offsetTop;
-
-          this.isDrag = true;
-        },
-        moveDrag(event){
-          if(this.isDrag){
-            this.mouseMoveX = event.pageX;
-            this.mouseMoveY = event.pageY;
-
-            event.currentTarget.style.left = this.mouseMoveX - this.mouseDownX + this.initX + "px";
-            event.currentTarget.style.top = this.mouseMoveY - this.mouseDownY + this.initY + "px";
-          }
-        },
-        upDrag(){
-          this.isDrag = false;
-        }
       },
       computed: {
         logoSrc() {
           return LogoSrc;
         }
-      },
-      directives:{
-        drag(el,bindings){
-          el.onmousedown = function(e){
-            let disx = e.pageX - el.offsetLeft;
-            let disy = e.pageY - el.offsetTop;
-            document.onmousemove = function (e){
-              el.style.left = e.pageX - disx + el.style.width +'px';
-              el.style.top = e.pageY - disy + el.style.height +'px';
-            }
-            document.onmouseup = function(){
-              document.onmousemove = document.onmouseup = null;
-            }
-          }
-        }
-      },
-      mounted(){
-        let topHeight = this.$el.querySelector(".layer-prompt-top").clientHeight + 1;
-        let bottomHeight = this.$el.querySelector(".layer-prompt-bottom").clientHeight;
-        let layerPromptHeight = parseInt(this.areaHeight);
-        this.frameHeight = layerPromptHeight - bottomHeight - topHeight;
-        this.contentHeight = layerPromptHeight - bottomHeight - topHeight + "px";
       }
     }
 
-    // less = {
-    //   globalVars:{
-    //     var1: '"we-web-"'
-    //   }
-    // };
   </script>
 
 
