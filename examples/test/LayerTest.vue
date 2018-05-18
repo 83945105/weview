@@ -1,6 +1,6 @@
 <template>
   <div>
-    <we-layer v-model="visible" :height="400" drag @click-confirm="confirm">
+    <we-layer v-model="visible" :height="400" drag @click-confirm="confirm" :show-mask="false" position="center">
 
 
       <div style="width: 5000px;height: 600px;">+4566+46464646</div>
@@ -38,5 +38,5 @@
 </script>
 
 <style>
-  
+
 </style>

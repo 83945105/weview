@@ -1,6 +1,6 @@
 <template>
   <div v-show="visible">
-    <div :class="[maskClass, maskBgClass, customMaskClass]" @click="maskClose"></div>
+    <div v-if="showMask" :class="[maskClass, maskBgClass, customMaskClass]" @click="maskClose"></div>
     <transition name="fade">
       <div :class="[layerClass, customClass]"
            :style="style"
@@ -42,7 +42,7 @@
   import WeButton from '../../button/src/Button.vue';
   import WeIcon from '../../icon/src/Icon.vue';
 
-  export default {//is-position-auto 居中样式
+  export default {
 
     components: {WeButton: WeButton, Icon: WeIcon},
 
@@ -58,8 +58,8 @@
       return {
         visible: true,
         isDrag: false,
-        x: 300,
-        y: 200,
+        x: 0,
+        y: 0,
         layerDom: undefined,
         headerDom: undefined,
         footerDom: undefined,
@@ -88,6 +88,10 @@
         default: true
       },
       showFooter: {
+        type: Boolean,
+        default: true
+      },
+      showMask: {
         type: Boolean,
         default: true
       },
@@ -238,17 +242,50 @@
       handleClickConfirmButton(e) {
         this.$emit('click-confirm', e, this.close);
       },
-      initPosition() {
-        let {offsetWidth: w, offsetHeight: h} = this.layerDom;
+      initLeftPosition() {
         if (this.left !== undefined) {
           this.x = this.left;
-        } else {
-          this.x = (this.windowWidth - w) / 2;
+        } else if (this.position === 'center') {
+          this.x = (this.windowWidth - this.layerDom.offsetWidth) / 2;
+        } else if (this.position === 'left') {
+          this.x = 0;
+        } else if (this.position === 'left-top' || this.position === 'top-left') {
+          this.x = 0;
+        } else if (this.position === 'top') {
+          this.x = (this.windowWidth - this.layerDom.offsetWidth) / 2;
+        } else if (this.position === 'right-top' || this.position === 'top-right') {
+          this.x = this.windowWidth - this.layerDom.offsetWidth;
+        } else if (this.position === 'right') {
+          this.x = this.windowWidth - this.layerDom.offsetWidth;
+        } else if (this.position === 'right-bottom' || this.position === 'bottom-right') {
+          this.x = this.windowWidth - this.layerDom.offsetWidth;
+        } else if (this.position === 'bottom') {
+          this.x = (this.windowWidth - this.layerDom.offsetWidth) / 2;
+        } else if (this.position === 'left-bottom' || this.position === 'bottom-left') {
+          this.x = 0;
         }
+      },
+      initTopPosition() {
         if (this.top !== undefined) {
           this.y = this.top;
-        } else {
-          this.y = (this.windowHeight - h) / 2;
+        } else if (this.position === 'center') {
+          this.y = (this.windowHeight - this.layerDom.offsetHeight) / 2;
+        } else if (this.position === 'left') {
+          this.y = (this.windowHeight - this.layerDom.offsetHeight) / 2;
+        } else if (this.position === 'left-top' || this.position === 'top-left') {
+          this.y = 0;
+        } else if (this.position === 'top') {
+          this.y = 0;
+        } else if (this.position === 'right-top' || this.position === 'top-right') {
+          this.y = 0;
+        } else if (this.position === 'right') {
+          this.y = (this.windowHeight - this.layerDom.offsetHeight) / 2;
+        } else if (this.position === 'right-bottom' || this.position === 'bottom-right') {
+          this.y = this.windowHeight - this.layerDom.offsetHeight;
+        } else if (this.position === 'bottom') {
+          this.y = this.windowHeight - this.layerDom.offsetHeight;
+        } else if (this.position === 'left-bottom' || this.position === 'bottom-left') {
+          this.y = this.windowHeight - this.layerDom.offsetHeight;
         }
       },
       mousedown(e) {
@@ -274,9 +311,16 @@
         this.y = e.clientY - this.cy;
       },
       windowResizeEvent(e) {
-        this.windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-        this.windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-        this.initPosition();
+        let w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        let h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+        if (this.windowWidth !== w) {
+          this.windowWidth = w;
+          this.initLeftPosition();
+        }
+        if (this.windowHeight !== h) {
+          this.windowHeight = h;
+          this.initTopPosition();
+        }
       }
     },
 
@@ -290,7 +334,8 @@
       this.layerDom = this.$el.querySelector(`.${this.layerClass}`);
       this.headerDom = this.$el.querySelector(`.${this.headerClass}`);
       this.footerDom = this.$el.querySelector(`.${this.footClass}`);
-      this.initPosition();
+      this.initLeftPosition();
+      this.initTopPosition();
       this.visible = this.value;
     },
 
