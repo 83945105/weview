@@ -1,6 +1,6 @@
 <template>
   <div v-show="visible">
-    <div class="we-layer-mask" :class="[maskBgClass, customMaskClass]" @click="maskClose"></div>
+    <div :class="[maskClass, maskBgClass, customMaskClass]" @click="maskClose"></div>
     <transition name="fade">
       <div :class="[layerClass, customClass]"
            :style="style"
@@ -167,6 +167,9 @@
           top: `${this.y}px`
         };
       },
+      maskClass() {
+        return `${this.prefixCls}-layer-mask`;
+      },
       maskBgClass() {
         return `${this.prefixCls}-layer-mask-bg`;
       },
@@ -255,12 +258,14 @@
         e = e || window.event;
         this.cx = e.clientX - this.x;
         this.cy = e.clientY - this.y;
+        document.body.className += ` ${this.prefixCls}-common-select-none`;
         document.addEventListener('mousemove', this.documentMousemoveEvent);
       },
       documentMouseupEvent(e) {
         if (!this.visible || !this.drag) {
           return;
         }
+        document.body.className = document.body.className.replace(` ${this.prefixCls}-common-select-none`, "");
         document.removeEventListener('mousemove', this.documentMousemoveEvent);
       },
       documentMousemoveEvent(e) {
