@@ -1,0 +1,46 @@
+@import "./src/common/var";
+@import "./src/common/mixins";
+
+@animation-css-prefix:~"@{css-prefix}animation";
+
+.@{animation-css-prefix}-bounce-enter{
+  &-active {
+    animation: bounce .5s;
+  }
+
+  &-to {
+  }
+}
+
+.@{animation-css-prefix}-bounce-leave{
+  &-active {
+    animation: bounce .5s reverse;
+  }
+
+  &-to {
+  }
+}
+
+@-webkit-keyframes bounce{
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes bounce{
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
