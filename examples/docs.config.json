@@ -86,6 +86,18 @@
             "path": "/confirm"
           }
         ]
+      },
+      {
+        "desc": "过渡效果",
+        "name": "Transition",
+        "path": "/transition",
+        "items": [
+          {
+            "desc": "动画",
+            "name": "Animation",
+            "path": "/animation"
+          }
+        ]
       }
     ]
   }

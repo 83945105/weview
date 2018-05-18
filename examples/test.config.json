@@ -59,6 +59,18 @@
             "path": "/loadingTest"
           }
         ]
+      },
+      {
+        "desc": "过渡效果测试",
+        "name": "TransitionTest",
+        "path": "/transitionTest",
+        "items": [
+          {
+            "desc": "动画测试",
+            "name": "AnimationTest",
+            "path": "/animationTest"
+          }
+        ]
       }
     ]
   }
