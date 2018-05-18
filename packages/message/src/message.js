@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import WeMessage from './Message.vue';
-import Conf from '../../../src/mixins/conf';
+import Conf from '../../../src/mixins/conf.js';
 
 let seed = 1;
 let instance;

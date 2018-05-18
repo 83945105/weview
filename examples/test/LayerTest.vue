@@ -1,6 +1,6 @@
 <template>
   <div>
-    <we-layer v-model="visible" :height="400" drag @click-confirm="confirm" :show-mask="false" position="center">
+    <we-layer v-model="visible" :height="400" drag @click-confirm="confirm" :show-mask="false" position="center" title="点我可拖拽">
 
 
       <div style="width: 5000px;height: 600px;">+4566+46464646</div>
@@ -13,8 +13,10 @@
 
     </we-layer>
 
-    <we-button @click="visible = true">打开弹层</we-button>
-    <we-button @click="visible = false">关闭弹层</we-button>
+    <we-button @click="visible = true">使用组件打开弹层</we-button>
+    <we-button @click="$layer('#dom1')">使用$layer打开弹层</we-button>
+    <div id="dom1" style="width: 5000px;height: 600px;display: none">+4566+46464646</div>
+
 
   </div>
 </template>
@@ -25,7 +27,7 @@
 
     data() {
       return {
-        visible: true
+        visible: false
       };
     },
 
