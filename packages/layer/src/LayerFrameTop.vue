@@ -1,10 +1,10 @@
 <template>
   <div :class="[topClass]">
     <slot>
-      <h3>{{label}}</h3>
-      <i v-if="showCloseIcon" :class="[`${prefixCls}-icon`, `${prefixCls}-shanchu`, `${prefixCls}-layer-frame-close`]"
-         @click.stop="handleClose"
-      ></i>
+      <h3 :class="[titleClass]">{{label}}</h3>
+      <div v-if="showCloseIcon" class="we-layer-frame-header-close" @click.stop="handleClose">
+        <icon name="close"></icon>
+      </div>
     </slot>
   </div>
 </template>
@@ -15,11 +15,14 @@
 
   import Emitter from '../../../src/mixins/emitter';
 
+  import WeIcon from '../../icon/src/Icon.vue';
+
   export default {
+    components:{Icon: WeIcon},
 
-    name: `${Conf.prefixCls}-layer-frame-top`,
+    name: `${Conf.prefixCls}-layer-frame-header`,
 
-    componentName: `${Conf.prefixNameCls}LayerFrameTop`,
+    componentName: `${Conf.prefixNameCls}LayerFrameHeader`,
 
     mixins: [Conf, Emitter],
 
@@ -36,7 +39,10 @@
 
     computed: {
       topClass() {
-        return `${this.prefixCls}-layer-frame-title`;
+        return `${this.prefixCls}-layer-frame-header`;
+      },
+      titleClass(){
+        return `${this.prefixCls}-layer-frame-header-title`;
       }
     },
 
