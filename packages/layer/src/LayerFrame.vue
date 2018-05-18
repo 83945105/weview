@@ -85,10 +85,10 @@
 
     computed: {
       maskClass() {
-        return `${this.prefixCls}-layer-mask`;
+        return `${this.prefixCls}-layer-frame-mask`;
       },
       maskBgClass() {
-        return `${this.prefixCls}-layer-mask-bg`;
+        return `${this.prefixCls}-layer-frame-mask-bg`;
       },
       layerClass() {
         return `${this.prefixCls}-layer-frame`;
@@ -238,7 +238,7 @@
     mounted() {
       // ESC close
       document.addEventListener('keydown', this.EscClose);
-      this.maskDom = this.$el.querySelector(`.${this.prefixCls}-layer-mask`);
+      this.maskDom = this.$el.querySelector(`.${this.prefixCls}-layer-frame-mask`);
       this.layerDom = this.$el.querySelector(`.${this.prefixCls}-layer-frame`);
       this.init();
     },

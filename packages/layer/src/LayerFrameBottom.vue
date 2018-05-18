@@ -21,7 +21,7 @@
 
     components: {WeButton},
 
-    name: `${Conf.prefixCls}-layer-frame-bottom`,
+    name: `${Conf.prefixCls}-layer-frame-footer`,
 
     componentName: `${Conf.prefixNameCls}LayerFrameBottom`,
 
@@ -40,7 +40,7 @@
 
     computed: {
       bottomClass() {
-        return `${this.prefixCls}-layer-frame-btn ${this.prefixCls}-tac`;
+        return `${this.prefixCls}-layer-frame-footer ${this.prefixCls}-tac`;
       }
     },
 

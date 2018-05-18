@@ -36,6 +36,10 @@
       <we-button plain type="danger" @click="$message.closeAll()">关闭所有</we-button>
     </div>
 
+    <we-button type="info" @click="isShow = !isShow">动画测试</we-button>
+    <transition name="fade" v-enter="enter">
+      <p v-if="isShow">hello</p>
+    </transition>
   </div>
 </template>
 
@@ -45,15 +49,30 @@
 
     data() {
       return {
-        instance: undefined
+        instance: undefined,
+        isShow:false
       };
     },
 
     created() {
+    },
+
+    methods:{
+      enter: function (el, done) {
+
+        done();
+      }
     }
   }
 </script>
 
 <style scoped>
-
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+    background-color:#ff0000;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+    background-color: #cccccc;
+  }
 </style>

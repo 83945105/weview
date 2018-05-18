@@ -61,6 +61,7 @@
     <we-message type="success" v-model="messageVisible" show-close html
                 message="<span style='color:red'>这是一条成功消息</span>"></we-message>
 
+    <we-layer></we-layer>
   </div>
 </template>
 
@@ -157,4 +158,11 @@
 
 <style lang="less" type="text/less">
   @import "../../web/packages/theme-chalk/index";
+
+  .adc-enter-active, .adc-leave-active {
+    transition: all 2s ease-out;
+  }
+  .adc-enter, .adc-leave-to {
+    opacity: 0;
+  }
 </style>
