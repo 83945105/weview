@@ -11,6 +11,10 @@
     <we-layer-frame v-model="bottom" position="bottom" height="90%"></we-layer-frame>
     <we-layer-frame v-model="all">
       <we-layer-frame-top></we-layer-frame-top>
+
+
+      <div style="width: 1000px;height: 1000px;background-color: red">5454556</div>
+
       <we-layer-frame-bottom slot="bottom" @confirm="(e, close) => {close()}"></we-layer-frame-bottom>
     </we-layer-frame>
   </div>

@@ -1,39 +1,37 @@
 <template>
   <div v-show="visible">
     <div :class="[maskBgClass]"></div>
-    <div class="is-position-auto"
-         :class="[layerClass]"
-         :style="style"
-    >
-      <div v-if="showHeader"
-           class="move"
-           :class="[headerClass]"
-           @mousedown="mousedown"
-           @mouseup="mouseup"
-           @mousemove="mousemove"
+    <transition name="fade">
+      <div :class="[layerClass]"
+           :style="style"
       >
-        <slot name="header">
-          <div :class="[titleClass]">{{title}}</div>
-          <div class="we-layer-prompt-top-close">
-            <icon name="close"></icon>
-          </div>
-        </slot>
-      </div>
-      <div :class="[contentClass]"
-           :style="{
+        <div v-if="showHeader"
+             :class="[headerClass, dragClass]"
+             @mousedown="mousedown"
+        >
+          <slot name="header">
+            <div :class="[titleClass]">{{title}}</div>
+            <div class="we-layer-prompt-top-close">
+              <icon name="close"></icon>
+            </div>
+          </slot>
+        </div>
+        <div :class="[contentClass]"
+             :style="{
             height: __contentHeight
            }"
-      >
-        <slot :width="__width" :height="__contentHeight"></slot>
+        >
+          <slot :width="__width" :height="__contentHeight"></slot>
+        </div>
+        <div v-if="showFooter"
+             :class="[footClass, footAlignClass]">
+          <slot name="footer">
+            <we-button type="primary">确定</we-button>
+            <we-button>取消</we-button>
+          </slot>
+        </div>
       </div>
-      <div v-if="showFooter"
-           :class="[footClass, footAlignClass]">
-        <slot name="footer">
-          <we-button type="primary">确定</we-button>
-          <we-button>取消</we-button>
-        </slot>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -44,7 +42,7 @@
   import WeButton from '../../button/src/Button.vue';
   import WeIcon from '../../icon/src/Icon.vue';
 
-  export default {
+  export default {//is-position-auto 居中样式
 
     components: {WeButton: WeButton, Icon: WeIcon},
 
@@ -58,12 +56,19 @@
 
     data() {
       return {
-        visible: this.value,
+        visible: true,
         isDrag: false,
-        left: '50%',
-        top: '50%',
+        x: 300,
+        y: 200,
+        layerDom: undefined,
         headerDom: undefined,
-        footerDom: undefined
+        footerDom: undefined,
+
+        windowWidth: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+        windowHeight: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
+
+        cx: 0,
+        cy: 0
       };
     },
 
@@ -76,6 +81,8 @@
       height: {
         type: [Number, String]
       },
+/*      left: Number,
+      top: Number,*/
       showHeader: {
         type: Boolean,
         default: true
@@ -91,7 +98,8 @@
       footerAlign: {//left center right
         type: String,
         default: 'right'
-      }
+      },
+      drag: Boolean
     },
 
     computed: {
@@ -114,17 +122,17 @@
         if (this._height > 100) {
           return `${this._height - this.headerHeight - this.footerHeight - 1}px`;
         }
-        let wh = this.getWindowHeight() * this._height / 100;
+        let wh = this.windowHeight * this._height / 100;
         let hh = this.headerHeight;
         let fh = this.footerHeight;
-        return `${(1 - hh/wh - fh/wh) * 100}%`;
+        return `${(1 - hh / wh - fh / wh) * 100}%`;
       },
       style() {
         return {
           width: this.__width,
           height: this.__height,
-          left: this.left,
-          top: this.top
+          left: `${this.x}px`,
+          top: `${this.y}px`
         };
       },
       headerHeight() {
@@ -160,32 +168,63 @@
           default:
             return undefined;
         }
+      },
+      dragClass() {
+        return this.drag ? 'move' : undefined;
       }
     },
 
-    watch: {},
+    watch: {
+      value(v) {
+        this.visible = v;
+      },
+      visible(v) {
+        this.$emit('input', v);
+      }
+    },
 
     methods: {
-      getWindowHeight() {
-        return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+      initCenterPosition() {
+        let {offsetWidth: w, offsetHeight: h} = this.layerDom;
+        this.x = (this.windowWidth - w) / 2;
+        this.y = (this.windowHeight - h) / 2;
       },
       mousedown(e) {
-        this.isDrag = true;
-      },
-      mouseup(e) {
-        this.isDrag = false;
-      },
-      mousemove(e) {
-        if (this.isDrag) {
-
+        if (!this.visible || !this.drag) {
+          return;
         }
-
+        e = e || window.event;
+        this.cx = e.clientX - this.x;
+        this.cy = e.clientY - this.y;
+        document.addEventListener('mousemove', this.documentMousemoveEvent);
+      },
+      documentMouseupEvent(e) {
+        if (!this.visible || !this.drag) {
+          return;
+        }
+        document.removeEventListener('mousemove', this.documentMousemoveEvent);
+      },
+      documentMousemoveEvent(e) {
+        e = e || window.event;
+        this.x = e.clientX - this.cx;
+        this.y = e.clientY - this.cy;
       }
+    },
+
+    created() {
+      document.addEventListener('mouseup', this.documentMouseupEvent);
     },
 
     mounted() {
+      this.layerDom = this.$el.querySelector(`.${this.layerClass}`);
       this.headerDom = this.$el.querySelector(`.${this.headerClass}`);
       this.footerDom = this.$el.querySelector(`.${this.footClass}`);
+      this.initCenterPosition();
+      this.visible = this.value;
+    },
+
+    beforeDestroy() {
+      document.removeEventListener('mouseup', this.documentMouseupEvent);
     }
 
   }
