@@ -1,6 +1,6 @@
 <template>
   <div v-show="visible">
-    <div :class="[maskBgClass, customMaskClass]"></div>
+    <div class="we-layer-mask" :class="[maskBgClass, customMaskClass]"></div>
     <transition name="fade">
       <div :class="[layerClass, customClass]"
            :style="style"
