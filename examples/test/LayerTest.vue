@@ -1,6 +1,6 @@
 <template>
   <div>
-    <we-layer v-model="visible" :height="400" drag>
+    <we-layer v-model="visible" :height="400" drag @click-confirm="confirm">
 
 
       <div style="width: 5000px;height: 600px;">+4566+46464646</div>
@@ -27,6 +27,12 @@
       return {
         visible: true
       };
+    },
+
+    methods: {
+      confirm(e, close) {
+        close();
+      }
     }
   }
 </script>

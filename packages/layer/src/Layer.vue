@@ -1,6 +1,6 @@
 <template>
   <div v-show="visible">
-    <div :class="[maskBgClass, customMaskClass]"></div>
+    <div :class="[maskBgClass, customMaskClass]" @click="maskClose"></div>
     <transition name="fade">
       <div :class="[layerClass, customClass]"
            :style="style"
@@ -11,8 +11,8 @@
         >
           <slot name="header">
             <div :class="[titleClass]">{{title}}</div>
-            <div class="we-layer-prompt-top-close">
-              <icon name="close"></icon>
+            <div v-if="showClose" :class="closeIconClass">
+              <icon name="close" @click.native="close"></icon>
             </div>
           </slot>
         </div>
@@ -26,8 +26,8 @@
         <div v-if="showFooter"
              :class="[footClass, footAlignClass]">
           <slot name="footer">
-            <we-button type="primary">{{confirmButtonText}}</we-button>
-            <we-button>{{cancelButtonText}}</we-button>
+            <we-button @click="handleClickCancelButton">{{cancelButtonText}}</we-button>
+            <we-button type="primary" @click="handleClickConfirmButton">{{confirmButtonText}}</we-button>
           </slot>
         </div>
       </div>
@@ -93,7 +93,7 @@
       },
       title: {
         type: String,
-        default: '提示'
+        default: '标题'
       },
       footerAlign: {//left center right
         type: String,
@@ -113,7 +113,19 @@
       cancelButtonText: {
         type: String,
         default: '取消'
-      }
+      },
+      showClose: {
+        type: Boolean,
+        default: true
+      },
+      maskClosable: {
+        type: Boolean,
+        default: true
+      },
+      escCloseable: {
+        type: Boolean,
+        default: true
+      },
     },
 
     computed: {
@@ -167,6 +179,9 @@
       titleClass() {
         return `${this.prefixCls}-layer-prompt-top-title`;
       },
+      closeIconClass() {
+        return `${this.prefixCls}-layer-prompt-top-close`;
+      },
       contentClass() {
         return `${this.prefixCls}-layer-prompt-content`;
       },
@@ -198,6 +213,28 @@
     },
 
     methods: {
+      close() {
+        this.$emit('input', false);
+      },
+      maskClose() {
+        if (this.maskClosable) {
+          this.close();
+        }
+      },
+      EscClose(e) {
+        if (this.visible && this.escCloseable) {
+          if (e.keyCode === 27) {
+            this.close();
+          }
+        }
+      },
+      handleClickCancelButton(e) {
+        this.$emit('click-cancel', e);
+        this.close();
+      },
+      handleClickConfirmButton(e) {
+        this.$emit('click-confirm', e, this.close);
+      },
       initPosition() {
         let {offsetWidth: w, offsetHeight: h} = this.layerDom;
         if (this.left !== undefined) {
@@ -241,6 +278,7 @@
     created() {
       document.addEventListener('mouseup', this.documentMouseupEvent);
       window.addEventListener('resize', this.windowResizeEvent);
+      document.addEventListener('keydown', this.EscClose);
     },
 
     mounted() {
@@ -254,6 +292,7 @@
     beforeDestroy() {
       document.removeEventListener('mouseup', this.documentMouseupEvent);
       window.removeEventListener('resize', this.windowResizeEvent);
+      document.removeEventListener('keydown', this.EscClose);
     }
 
   }
