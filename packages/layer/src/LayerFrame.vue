@@ -3,21 +3,51 @@
     <div :class="[maskClass, maskBgClass, customMaskClass]"
          @click.stop="maskClose"
     ></div>
+
     <div v-if="position === 'right' || position === 'left'" style="top:0;bottom:0;"
          :class="[layerClass, customClass]"
          :style="[transition]"
     >
-      <slot name="top"></slot>
-      <slot></slot>
-      <slot name="bottom"></slot>
+      <div :class="[headerClass]">
+        <slot name="header">
+          <h3 :class="[titleClass]">{{title}}</h3>
+          <div :class="[closeIconClass]" @click.stop="close">
+            <icon name="close"></icon>
+          </div>
+        </slot>
+      </div>
+      <div :class="[contentClass]">
+        <slot></slot>
+      </div>
+      <div :class="[bottomClass]">
+        <slot name="footer">
+          <we-button type="primary" @click="$emit('confirm', e)">{{confirmButtonText}}</we-button>
+          <we-button @click="$emit('cancel', e)">{{cancelButtonText}}</we-button>
+        </slot>
+      </div>
     </div>
+
     <div v-else-if="position === 'top' || position === 'bottom'" style="left:0;right:0;"
          :class="[layerClass, customClass]"
          :style="[transition]"
     >
-      <slot name="top"></slot>
-      <slot></slot>
-      <slot name="bottom"></slot>
+      <div :class="[headerClass]">
+        <slot name="header">
+          <h3 :class="[titleClass]">{{title}}</h3>
+          <div :class="[closeIconClass]" @click.stop="close">
+            <icon name="close"></icon>
+          </div>
+        </slot>
+      </div>
+      <div :class="[contentClass]">
+        <slot></slot>
+      </div>
+      <div :class="[bottomClass]">
+        <slot name="footer">
+          <we-button type="primary" @click="$emit('confirm', e)">{{confirmButtonText}}</we-button>
+          <we-button @click="$emit('cancel', e)">{{cancelButtonText}}</we-button>
+        </slot>
+      </div>
     </div>
   </div>
 </template>
@@ -26,7 +56,13 @@
 
   import Conf from '../../../src/mixins/conf';
 
+  import WeIcon from '../../icon/src/Icon.vue';
+  import WeButton from '../../button/src/Button';
+
   export default {
+
+    components: {Icon: WeIcon, WeButton: WeButton},
+
     name: `${Conf.prefixCls}-layer-frame`,
 
     componentName: `${Conf.prefixNameCls}LayerFrame`,
@@ -43,9 +79,10 @@
     },
 
     props: {
-      value: {
-        type: Boolean,
-        default: false
+      value: Boolean,
+      title: {
+        type: String,
+        default: '标题'
       },
       width: {
         type: [String, Number],
@@ -75,11 +112,15 @@
         type: Number,
         default: 100
       },
-      customClass: {
-        type: String
+      customClass: String,
+      customMaskClass: String,
+      confirmButtonText: {
+        type: String,
+        default: '确定'
       },
-      customMaskClass: {
-        type: String
+      cancelButtonText: {
+        type: String,
+        default: '取消'
       }
     },
 
@@ -92,6 +133,21 @@
       },
       layerClass() {
         return `${this.prefixCls}-layer-frame`;
+      },
+      headerClass() {
+        return `${this.prefixCls}-layer-frame-header`;
+      },
+      titleClass() {
+        return `${this.prefixCls}-layer-frame-header-title`;
+      },
+      closeIconClass() {
+        return `${this.prefixCls}-layer-frame-header-close`;
+      },
+      contentClass() {
+        return `${this.prefixCls}-layer-frame-content`;
+      },
+      bottomClass() {
+        return `${this.prefixCls}-layer-frame-footer ${this.prefixCls}-tac`;
       },
       transition() {
         return {
@@ -227,12 +283,6 @@
             break;
         }
       }
-    },
-
-    created() {
-      this.$on('handleClose', (e) => {
-        this.close();
-      });
     },
 
     mounted() {

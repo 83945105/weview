@@ -10,9 +10,9 @@
     <we-layer-frame v-model="top" position="top" height="70%"></we-layer-frame>
     <we-layer-frame v-model="bottom" position="bottom" height="90%"></we-layer-frame>
     <we-layer-frame v-model="all">
-      <we-layer-frame-header></we-layer-frame-header>
-      <div class="we-layer-frame-content">1111111</div>
-      <we-layer-frame-footer slot="bottom" @confirm="(e, close) => {close()}"></we-layer-frame-footer>
+
+      <div style="width: 1000px;height: 1000px;background-color: #00a04d"></div>
+
     </we-layer-frame>
   </div>
 </template>

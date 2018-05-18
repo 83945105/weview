@@ -1,8 +1,8 @@
 <template>
   <div v-show="visible">
-    <div :class="[maskBgClass]"></div>
+    <div :class="[maskBgClass, customMaskClass]"></div>
     <transition name="fade">
-      <div :class="[layerClass]"
+      <div :class="[layerClass, customClass]"
            :style="style"
       >
         <div v-if="showHeader"
@@ -26,8 +26,8 @@
         <div v-if="showFooter"
              :class="[footClass, footAlignClass]">
           <slot name="footer">
-            <we-button type="primary">确定</we-button>
-            <we-button>取消</we-button>
+            <we-button type="primary">{{confirmButtonText}}</we-button>
+            <we-button>{{cancelButtonText}}</we-button>
           </slot>
         </div>
       </div>
@@ -103,7 +103,17 @@
         type: String,
         default: 'center'
       },
-      drag: Boolean
+      drag: Boolean,
+      customClass: String,
+      customMaskClass: String,
+      confirmButtonText: {
+        type: String,
+        default: '确定'
+      },
+      cancelButtonText: {
+        type: String,
+        default: '取消'
+      }
     },
 
     computed: {
@@ -118,6 +128,12 @@
       },
       __height() {
         return this._height ? this._height > 100 ? `${this._height}px` : `${this._height}%` : undefined;
+      },
+      headerHeight() {
+        return (this.showHeader && this.headerDom) ? this.headerDom.clientHeight : 0;
+      },
+      footerHeight() {
+        return (this.showFooter && this.footerDom) ? this.footerDom.clientHeight : 0;
       },
       __contentHeight() {
         if (!this._height) {
@@ -138,12 +154,6 @@
           left: `${this.x}px`,
           top: `${this.y}px`
         };
-      },
-      headerHeight() {
-        return (this.showHeader && this.headerDom) ? this.headerDom.clientHeight : 0;
-      },
-      footerHeight() {
-        return (this.showFooter && this.footerDom) ? this.footerDom.clientHeight : 0;
       },
       maskBgClass() {
         return `${this.prefixCls}-layer-mask-bg`;
@@ -190,8 +200,16 @@
     methods: {
       initPosition() {
         let {offsetWidth: w, offsetHeight: h} = this.layerDom;
-        this.x = this.left || (this.windowWidth - w) / 2;
-        this.y = this.top || (this.windowHeight - h) / 2;
+        if (this.left !== undefined) {
+          this.x = this.left;
+        } else {
+          this.x = (this.windowWidth - w) / 2;
+        }
+        if (this.top !== undefined) {
+          this.y = this.top;
+        } else {
+          this.y = (this.windowHeight - h) / 2;
+        }
       },
       mousedown(e) {
         if (!this.visible || !this.drag) {
@@ -212,11 +230,17 @@
         e = e || window.event;
         this.x = e.clientX - this.cx;
         this.y = e.clientY - this.cy;
+      },
+      windowResizeEvent(e) {
+        this.windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        this.windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+        this.initPosition();
       }
     },
 
     created() {
       document.addEventListener('mouseup', this.documentMouseupEvent);
+      window.addEventListener('resize', this.windowResizeEvent);
     },
 
     mounted() {
@@ -229,6 +253,7 @@
 
     beforeDestroy() {
       document.removeEventListener('mouseup', this.documentMouseupEvent);
+      window.removeEventListener('resize', this.windowResizeEvent);
     }
 
   }
