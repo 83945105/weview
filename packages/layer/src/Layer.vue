@@ -81,8 +81,8 @@
       height: {
         type: [Number, String]
       },
-/*      left: Number,
-      top: Number,*/
+      left: Number,
+      top: Number,
       showHeader: {
         type: Boolean,
         default: true
@@ -98,6 +98,10 @@
       footerAlign: {//left center right
         type: String,
         default: 'right'
+      },
+      position: {
+        type: String,
+        default: 'center'
       },
       drag: Boolean
     },
@@ -184,10 +188,10 @@
     },
 
     methods: {
-      initCenterPosition() {
+      initPosition() {
         let {offsetWidth: w, offsetHeight: h} = this.layerDom;
-        this.x = (this.windowWidth - w) / 2;
-        this.y = (this.windowHeight - h) / 2;
+        this.x = this.left || (this.windowWidth - w) / 2;
+        this.y = this.top || (this.windowHeight - h) / 2;
       },
       mousedown(e) {
         if (!this.visible || !this.drag) {
@@ -219,7 +223,7 @@
       this.layerDom = this.$el.querySelector(`.${this.layerClass}`);
       this.headerDom = this.$el.querySelector(`.${this.headerClass}`);
       this.footerDom = this.$el.querySelector(`.${this.footClass}`);
-      this.initCenterPosition();
+      this.initPosition();
       this.visible = this.value;
     },
 
