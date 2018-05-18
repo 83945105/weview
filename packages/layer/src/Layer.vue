@@ -178,22 +178,22 @@
         return `${this.prefixCls}-layer-mask-bg`;
       },
       layerClass() {
-        return `${this.prefixCls}-layer-prompt`;
+        return `${this.prefixCls}-layer`;
       },
       headerClass() {
-        return `${this.prefixCls}-layer-prompt-top`;
+        return `${this.prefixCls}-layer-header`;
       },
       titleClass() {
-        return `${this.prefixCls}-layer-prompt-top-title`;
+        return `${this.prefixCls}-layer-header-title`;
       },
       closeIconClass() {
-        return `${this.prefixCls}-layer-prompt-top-close`;
+        return `${this.prefixCls}-layer-header-close`;
       },
       contentClass() {
-        return `${this.prefixCls}-layer-prompt-content`;
+        return `${this.prefixCls}-layer-content`;
       },
       footClass() {
-        return `${this.prefixCls}-layer-prompt-bottom`;
+        return `${this.prefixCls}-layer-footer`;
       },
       footAlignClass() {
         switch (this.footerAlign) {

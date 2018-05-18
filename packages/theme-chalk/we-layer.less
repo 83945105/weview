@@ -17,7 +17,7 @@
   }
 }
 
-.@{layer-css-prefix}-prompt{
+.@{layer-css-prefix}{
   position:fixed;
   top:0;
   left:0;
@@ -27,13 +27,55 @@
   box-shadow:0 6px 18px 2px rgba(0,0,0,.2);
   color:@color-text-1;
 
+  &-frame{
+    position:fixed;
+    top:auto;
+    bottom:auto;
+    left:auto;
+    right:auto;
+    width:auto;
+    height:auto;
+    transition:all 0.45s ease;
+    -moz-transition:all 0.45s ease;
+    -webkit-transition:all 0.45s ease;
+    -o-transition:all 0.45s ease;
+  }
+
   &.is-position-auto{
     -webkit-transform:translateX(-50%) translateY(-50%);
     -moz-transform:translateX(-50%) translateY(-50%);
     transform:translateX(-50%) translateY(-50%);
   }
 
-  &-top{
+  &-close{
+    display:block;
+    width:14px;
+    height:14px;
+    line-height:14px;
+    padding:3px;
+    font-size:12px;
+    text-align:center;
+    font-weight:bold;
+    position:absolute;
+    top:-12px;
+    right:-12px;
+    z-index:10;
+    cursor:pointer;
+    background-color:@message-button-bg;
+    border:2px solid @message-button-border-color;
+    border-radius:@border-radius-all;
+    -webkit-box-shadow:0 0 8px tint(@color-black,50%);
+    box-shadow:0 0 8px tint(@color-black,50%);
+    color:@color-white;
+    &:hover{
+      background-color:@color-primary;
+    }
+    &:active{
+      background-color:@color-primary-light-2;
+    }
+  }
+
+  &-header{
     height:46px;
     line-height:46px;
     padding:0px 15px;
@@ -78,14 +120,14 @@
     }
   }
 
-  &-bottom{
-    padding:10px 15px;
+  &-footer {
+    padding: 10px 15px;
     text-align: right;
     background-color: @layer-bottom-bg;
-    &.tac{
+    &.tac {
       text-align: center;
     }
-    &.tal{
+    &.tal {
       text-align: left;
     }
   }
