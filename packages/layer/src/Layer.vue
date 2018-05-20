@@ -1,7 +1,7 @@
 <template>
   <div :class="[opacityClass]">
     <div v-if="visible && showMask" :class="[maskClass, maskBgClass, customMaskClass]" @click="maskClose"></div>
-    <we-animation :name="animationName">
+    <we-animation :name="animationName" @after-leave="animationAfterLeave">
       <div v-show="visible" :class="[layerClass, customClass]"
            :style="style"
       >
@@ -60,8 +60,8 @@
         visible: true,
         opacity: !this.value,
         isDrag: false,
-        x: 0,
-        y: 0,
+        x: -10000,
+        y: -10000,
         layerDom: undefined,
         headerDom: undefined,
         footerDom: undefined,
@@ -221,9 +221,6 @@
 
     watch: {
       value(v) {
-        if (v) {
-          this.opacity = false;
-        }
         this.visible = v;
       },
       visible(v) {
@@ -232,8 +229,17 @@
     },
 
     methods: {
+      open() {
+        if (!this.visible) {
+          this.visible = true;
+          this.$emit('open', this);
+        }
+      },
       close() {
-        this.$emit('input', false);
+        if (this.visible) {
+          this.visible = false;
+          this.$emit('close', this);
+        }
       },
       maskClose() {
         if (this.maskClosable) {
@@ -246,6 +252,11 @@
             this.close();
           }
         }
+      },
+      destroy() {
+        this.$emit('destroy', this.id);
+        this.$destroy(true);
+        this.$el.parentNode.removeChild(this.$el);
       },
       handleClickCancelButton(e) {
         this.$emit('click-cancel', e);
@@ -333,6 +344,11 @@
           this.windowHeight = h;
           this.initTopPosition();
         }
+      },
+      animationAfterLeave(target) {
+        if(this.opacity) {
+          this.opacity = false;
+        }
       }
     },
 
@@ -346,9 +362,11 @@
       this.layerDom = this.$el.querySelector(`.${this.layerClass}`);
       this.headerDom = this.$el.querySelector(`.${this.headerClass}`);
       this.footerDom = this.$el.querySelector(`.${this.footClass}`);
-      this.initLeftPosition();
-      this.initTopPosition();
-      this.visible = this.value;
+      this.$nextTick(() => {
+        this.initLeftPosition();
+        this.initTopPosition();
+        this.visible = this.value;
+      });
     },
 
     beforeDestroy() {
