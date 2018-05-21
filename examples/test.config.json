@@ -23,6 +23,11 @@
             "desc": "按钮测试",
             "name": "ButtonTest",
             "path": "/buttonTest"
+          },
+          {
+            "desc": "输入框测试",
+            "name": "TextTest",
+            "path": "/textTest"
           }
         ]
       },

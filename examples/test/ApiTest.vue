@@ -62,6 +62,11 @@
                 message="<span style='color:red'>这是一条成功消息</span>"></we-message>
 
     <we-layer></we-layer>
+
+    <div class="we-common-e-resize resize-div">we-common-e-resize</div>
+    <div class="we-common-s-resize resize-div">we-common-s-resize</div>
+    <div class="we-common-ne-resize resize-div">we-common-ne-resize</div>
+    <div class="we-common-nw-resize resize-div">we-common-nw-resize</div>
   </div>
 </template>
 
@@ -114,5 +119,13 @@
   }
   .adc-enter, .adc-leave-to {
     opacity: 0;
+  }
+
+  .resize-div{
+    height:40px;
+    line-height:40px;
+    width:200px;
+    margin-top:15px;
+    background-color:#f9f9f9;
   }
 </style>

@@ -26,6 +26,36 @@
         fadeDown
       </div>
     </we-animation>
+    <we-animation name="fadeTopLeft">
+      <div v-if="isShow" style="position:fixed;top:0;left:0;height:200px;width:200px;z-index:999;background-color:#009966">
+        fadeDown
+      </div>
+    </we-animation>
+    <we-animation name="fadeTopRight">
+      <div v-if="isShow" style="position:fixed;top:0;right:0;height:200px;width:200px;z-index:999;background-color:#009966">
+        fadeDown
+      </div>
+    </we-animation>
+    <we-animation name="fadeTopLeft">
+      <div v-if="isShow" style="position:fixed;top:0;left:0;height:250px;width:250px;z-index:999;background-color:#009966">
+        fadeDown
+      </div>
+    </we-animation>
+    <we-animation name="fadeTopRight">
+      <div v-if="isShow" style="position:fixed;top:0;right:0;height:250px;width:250px;z-index:999;background-color:#009966">
+        fadeDown
+      </div>
+    </we-animation>
+    <we-animation name="fadeDownLeft">
+      <div v-if="isShow" style="position:fixed;bottom:0;left:0;height:250px;width:250px;z-index:999;background-color:#009966">
+        fadeDown
+      </div>
+    </we-animation>
+    <we-animation name="fadeDownRight">
+      <div v-if="isShow" style="position:fixed;bottom:0;right:0;height:250px;width:250px;z-index:999;background-color:#009966">
+        fadeDown
+      </div>
+    </we-animation>
   </div>
 </template>
 
