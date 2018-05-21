@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import WeMessage from './Message.vue';
 import Conf from '../../../src/mixins/conf.js';
+import {isObject, isString} from "../../../web/src/utils/util";
 
 let seed = 1;
 let instance;
@@ -15,14 +16,22 @@ function removeInstance(vm) {
   }
 };
 
+const Default = {message: ''};
+const merge = require('webpack-merge');
+
 const Message = function (opts = {}) {
   if (Vue.prototype.$isServer) {
     return;
   }
-  if (typeof opts === 'string') {
-    opts = {
+
+  if (isString(opts)) {
+    opts = merge(Default, {
       message: opts
-    };
+    });
+  } else if (isObject(opts)) {
+    opts = merge(Default, opts);
+  }else {
+    opts = merge(Default, {});
   }
 
   let id = `message-${seed++}`;

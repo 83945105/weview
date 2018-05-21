@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import WeLoading from './Loading.vue';
+import {isObject, isString} from "../../../web/src/utils/util";
 
 const merge = require('webpack-merge');
 
@@ -28,16 +29,32 @@ const Loading = function (opts = {}) {
   if (Vue.prototype.$isServer) {
     return;
   }
-  opts = merge(Default, opts);
 
-  if (typeof opts.target === 'string') {
-    opts = {
-      target: document.querySelector(opts.target) || document.body
-    };
+  let target;
+
+  if (isString(opts)) {
+    target = document.querySelector(`${opts}`);
+    opts = merge(Default, {
+      target: target
+    });
   } else if (opts instanceof HTMLElement) {
-    opts = {
+    opts = merge(Default, {
       target: opts
-    };
+    });
+  } else if (isObject(opts)) {
+    target = opts.target;
+    if (isString(target)) {
+      target = document.querySelector(`${target}`);
+    } else if (target instanceof HTMLElement) {
+      target = target;
+    } else {
+      target = undefined;
+    }
+    opts = merge(Default, opts, {
+      target: target
+    });
+  } else {
+    opts = merge(Default, {});
   }
 
   if (opts.target === document.body) {

@@ -1,10 +1,7 @@
 <template>
   <div :class="[opacityClass]">
     <div v-if="visible && showMask" :class="[maskClass, maskBgClass, customMaskClass]" @click="maskClose"></div>
-    <we-animation :name="animationName"
-                  @before-enter="animationBeforeEnter"
-                  @enter="animationEnter"
-                  @after-enter="animationAfterEnter"
+    <we-animation :name="_animationName"
                   @after-leave="animationAfterLeave"
     >
       <div v-show="visible" :class="[layerClass, customClass]"
@@ -26,6 +23,7 @@
             height: __contentHeight
            }"
         >
+          <icon v-if="showClose && !showHeader" name="close" :class="deleteClass" @click.native="close"></icon>
           <slot :width="__width" :height="__contentHeight"></slot>
         </div>
         <div v-if="showFooter"
@@ -74,8 +72,12 @@
         windowWidth: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
         windowHeight: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
 
+        layerDomWidth: 0,
+        layerDomHeight: 0,
+
         cx: 0,
         cy: 0
+
       };
     },
 
@@ -115,6 +117,7 @@
         default: 'center'
       },
       drag: Boolean,
+      dragOutTheScreen: Boolean,
       customClass: String,
       customMaskClass: String,
       confirmButtonText: {
@@ -137,10 +140,8 @@
         type: Boolean,
         default: true
       },
-      animationName: {
-        type: String,
-        default: 'bounce'
-      }
+      onClose: Function,
+      animationName: String
     },
 
     computed: {
@@ -203,6 +204,9 @@
       closeIconClass() {
         return `${this.prefixCls}-layer-header-close`;
       },
+      deleteClass() {
+        return `${this.prefixCls}-message-button-close`;
+      },
       contentClass() {
         return `${this.prefixCls}-layer-content`;
       },
@@ -221,6 +225,27 @@
       },
       dragClass() {
         return this.drag ? 'move' : undefined;
+      },
+      _animationName() {
+        if (this.position === 'left') {
+          return 'fadeLeft';
+        } else if (this.position === 'left-top' || this.position === 'top-left') {
+          return 'bounce';
+        } else if (this.position === 'top') {
+          return 'fadeUp';
+        } else if (this.position === 'right-top' || this.position === 'top-right') {
+          return 'bounce';
+        } else if (this.position === 'right') {
+          return 'fadeRight';
+        } else if (this.position === 'right-bottom' || this.position === 'bottom-right') {
+          return 'bounce';
+        } else if (this.position === 'bottom') {
+          return 'fadeDown';
+        } else if (this.position === 'left-bottom' || this.position === 'bottom-left') {
+          return 'bounce';
+        } else {
+          return 'bounce';
+        }
       }
     },
 
@@ -243,6 +268,7 @@
       close() {
         if (this.visible) {
           this.visible = false;
+          this.onClose && this.onClose();
           this.$emit('close', this);
         }
       },
@@ -271,35 +297,37 @@
         this.$emit('click-confirm', e, this.close);
       },
       initLeftPosition() {
+        this.layerDomWidth = this.layerDom.offsetWidth;
         if (this.left !== undefined) {
           this.x = this.left;
         } else if (this.position === 'center') {
-          this.x = (this.windowWidth - this.layerDom.offsetWidth) / 2;
+          this.x = (this.windowWidth - this.layerDomWidth) / 2;
         } else if (this.position === 'left') {
           this.x = 0;
         } else if (this.position === 'left-top' || this.position === 'top-left') {
           this.x = 0;
         } else if (this.position === 'top') {
-          this.x = (this.windowWidth - this.layerDom.offsetWidth) / 2;
+          this.x = (this.windowWidth - this.layerDomWidth) / 2;
         } else if (this.position === 'right-top' || this.position === 'top-right') {
-          this.x = this.windowWidth - this.layerDom.offsetWidth;
+          this.x = this.windowWidth - this.layerDomWidth;
         } else if (this.position === 'right') {
-          this.x = this.windowWidth - this.layerDom.offsetWidth;
+          this.x = this.windowWidth - this.layerDomWidth;
         } else if (this.position === 'right-bottom' || this.position === 'bottom-right') {
-          this.x = this.windowWidth - this.layerDom.offsetWidth;
+          this.x = this.windowWidth - this.layerDomWidth;
         } else if (this.position === 'bottom') {
-          this.x = (this.windowWidth - this.layerDom.offsetWidth) / 2;
+          this.x = (this.windowWidth - this.layerDomWidth) / 2;
         } else if (this.position === 'left-bottom' || this.position === 'bottom-left') {
           this.x = 0;
         }
       },
       initTopPosition() {
+        this.layerDomHeight = this.layerDom.offsetHeight;
         if (this.top !== undefined) {
           this.y = this.top;
         } else if (this.position === 'center') {
-          this.y = (this.windowHeight - this.layerDom.offsetHeight) / 2;
+          this.y = (this.windowHeight - this.layerDomHeight) / 2;
         } else if (this.position === 'left') {
-          this.y = (this.windowHeight - this.layerDom.offsetHeight) / 2;
+          this.y = (this.windowHeight - this.layerDomHeight) / 2;
         } else if (this.position === 'left-top' || this.position === 'top-left') {
           this.y = 0;
         } else if (this.position === 'top') {
@@ -307,13 +335,13 @@
         } else if (this.position === 'right-top' || this.position === 'top-right') {
           this.y = 0;
         } else if (this.position === 'right') {
-          this.y = (this.windowHeight - this.layerDom.offsetHeight) / 2;
+          this.y = (this.windowHeight - this.layerDomHeight) / 2;
         } else if (this.position === 'right-bottom' || this.position === 'bottom-right') {
-          this.y = this.windowHeight - this.layerDom.offsetHeight;
+          this.y = this.windowHeight - this.layerDomHeight;
         } else if (this.position === 'bottom') {
-          this.y = this.windowHeight - this.layerDom.offsetHeight;
+          this.y = this.windowHeight - this.layerDomHeight;
         } else if (this.position === 'left-bottom' || this.position === 'bottom-left') {
-          this.y = this.windowHeight - this.layerDom.offsetHeight;
+          this.y = this.windowHeight - this.layerDomHeight;
         }
       },
       mousedown(e) {
@@ -335,8 +363,22 @@
       },
       documentMousemoveEvent(e) {
         e = e || window.event;
-        this.x = e.clientX - this.cx;
-        this.y = e.clientY - this.cy;
+        let x = e.clientX - this.cx;
+        let y = e.clientY - this.cy;
+        if (!this.dragOutTheScreen && x < 0) {
+          this.x = 0;
+        } else if (!this.dragOutTheScreen && x + this.layerDomWidth > this.windowWidth) {
+          this.x = this.windowWidth - this.layerDomWidth;
+        } else {
+          this.x = x;
+        }
+        if (!this.dragOutTheScreen && y < 0) {
+          this.y = 0;
+        } else if (!this.dragOutTheScreen && y + this.layerDomHeight > this.windowHeight) {
+          this.y = this.windowHeight - this.layerDomHeight;
+        } else {
+          this.y = y;
+        }
       },
       windowResizeEvent(e) {
         let w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -350,17 +392,8 @@
           this.initTopPosition();
         }
       },
-      animationBeforeEnter(el) {
-        console.log(el)
-      },
-      animationEnter(el) {
-        console.log(el)
-      },
-      animationAfterEnter(el) {
-        console.log(el)
-      },
       animationAfterLeave(el) {
-        if(this.opacity) {
+        if (this.opacity) {
           this.opacity = false;
         }
       }

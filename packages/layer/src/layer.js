@@ -4,6 +4,7 @@ import WeAnimation from '../../animation/src/Animation.vue';
 import Conf from '../../../src/mixins/conf.js';
 import {isString} from "../../../web/src/utils/util.js";
 import {isObject} from "../../../web/src/utils/util";
+import Message from "../../message/src/message";
 
 const merge = require('webpack-merge');
 
@@ -20,18 +21,46 @@ function removeInstance(vm) {
   }
 };
 
-const Default = {};
+const Default = {
+  target: ''
+};
 
 const Layer = function (opts = {}) {
-  if (!isObject(opts)) {
-    throw new Error('Layer options must be an object');
-  }
   if (Vue.prototype.$isServer) {
     return;
   }
 
-  let target = isString(opts.target) ? document.querySelector(opts.target) : opts.target;
-  opts = merge(Default, opts);
+  let target;
+  if (isString(opts)) {
+    opts = merge(Default, {
+      target: opts
+    });
+  } else if (opts instanceof HTMLElement) {
+    opts = merge(Default, {
+      target: opts
+    });
+  } else if (isObject(opts)) {
+    target = opts.target;
+    if (isString(target)) {
+      target = document.querySelector(`${target}`);
+    } else if (target instanceof HTMLElement) {
+      target = target;
+    } else {
+      target = undefined;
+    }
+    opts = merge(Default, opts, {
+      target: target
+    });
+  } else {
+    opts = merge(Default, {});
+  }
+
+  let html;
+  if (isString(opts.target)) {
+    html = opts.target;
+  } else {
+    html = opts.target.innerHTML;
+  }
 
   let id = `layer-${seed++}`;
 
@@ -49,8 +78,15 @@ const Layer = function (opts = {}) {
           }
         },
         scopedSlots: {
+          header: (props) => {
+            return opts.headerRender ? opts.headerRender(h, props) : undefined;
+          },
           default: (props) => {
-            return opts.render ? opts.render(h, props) : h('div', {domProps: {innerHTML: target ? target.innerHTML : ''}});
+            return opts.render ? opts.render(h, props) : h('div', {
+              domProps: {
+                innerHTML: html
+              }
+            });
           },
           footer: (props) => {
             return opts.footerRender ? opts.footerRender(h, props) : undefined;
@@ -66,7 +102,7 @@ const Layer = function (opts = {}) {
   // vm.$el.querySelector('.we-layer').className += ` ${cls}-enter ${cls}-active`;
 
   let parent = document.body;
-  if (target) {
+  if (target && target.parentNode) {
     parent = target.parentNode;
   }
 
@@ -79,6 +115,25 @@ const Layer = function (opts = {}) {
   instances.push(instance);
 
   return instance;
+};
+
+Layer.close = function (target) {
+  for (let i = 0; i < instances.length; i++) {
+    if (typeof target === 'string' && instances[i].id === target) {
+      instances[i].close();
+      break;
+    }
+    if (target instanceof Vue && instances[i].id === target.id) {
+      instances[i].close();
+      break;
+    }
+  }
+};
+
+Layer.closeAll = function () {
+  for (let ist of instances) {
+    ist.close();
+  }
 };
 
 export default Layer;
