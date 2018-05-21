@@ -2,6 +2,21 @@ import Conf from '../../../src/mixins/conf.js';
 
 export const AnimationType = {
   bounce: {
-    name: `${Conf.prefixCls}-animation-bounce`
+    name: `${Conf.prefixCls}-animation-bounce`,
+  },
+  fadeIn: {
+    name: `${Conf.prefixCls}-animation-fade-in`,
+  },
+  fadeRight: {
+    name: `${Conf.prefixCls}-animation-fade-right`,
+  },
+  fadeLeft: {
+    name: `${Conf.prefixCls}-animation-fade-left`,
+  },
+  fadeUp: {
+    name: `${Conf.prefixCls}-animation-fade-up`,
+  },
+  fadeDown: {
+    name: `${Conf.prefixCls}-animation-fade-down`,
   }
 };
