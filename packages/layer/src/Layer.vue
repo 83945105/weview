@@ -1,16 +1,9 @@
 <template>
   <div :class="[opacityClass]">
     <div v-if="visible && showMask" :class="[maskClass, maskBgClass, customMaskClass]" @click="maskClose"></div>
-    <we-animation :name="_animationName"
-                  @after-leave="animationAfterLeave"
-    >
-      <div v-show="visible" :class="[layerClass, customClass]"
-           :style="style"
-      >
-        <div v-if="showHeader"
-             :class="[headerClass, dragClass]"
-             @mousedown="mousedown"
-        >
+    <animation :name="_animationName" @after-leave="animationAfterLeave">
+      <div v-show="visible" :class="[layerClass, customClass]" :style="style">
+        <div v-if="showHeader" :class="[headerClass, dragClass]" @mousedown="mousedown">
           <slot name="header">
             <div :class="[titleClass]">{{title}}</div>
             <div v-if="showClose" :class="closeIconClass">
@@ -18,23 +11,18 @@
             </div>
           </slot>
         </div>
-        <div :class="[contentClass]"
-             :style="{
-            height: __contentHeight
-           }"
-        >
+        <div :class="[contentClass]" :style="{height: __contentHeight}">
           <icon v-if="showClose && !showHeader" name="close" :class="deleteClass" @click.native="close"></icon>
           <slot :width="__width" :height="__contentHeight"></slot>
         </div>
-        <div v-if="showFooter"
-             :class="[footClass, footAlignClass]">
+        <div v-if="showFooter" :class="[footClass, footAlignClass]">
           <slot name="footer">
             <we-button @click="handleClickCancelButton">{{cancelButtonText}}</we-button>
             <we-button type="primary" @click="handleClickConfirmButton">{{confirmButtonText}}</we-button>
           </slot>
         </div>
       </div>
-    </we-animation>
+    </animation>
   </div>
 </template>
 
@@ -44,11 +32,11 @@
 
   import WeButton from '../../button/src/Button.vue';
   import WeIcon from '../../icon/src/Icon.vue';
-  import WeAnimation from '../../animation/src/Animation.vue';
+  import Animation from '../../animation/src/Animation.vue';
 
   export default {
 
-    components: {WeButton: WeButton, Icon: WeIcon, WeAnimation: WeAnimation},
+    components: {WeButton: WeButton, Icon: WeIcon, Animation: Animation},
 
     name: `${Conf.prefixCls}-layer`,
 
@@ -261,17 +249,11 @@
     },
 
     methods: {
-      open() {
-        if (!this.visible) {
-          this.visible = true;
-          this.$emit('open', this);
-        }
-      },
       close() {
         if (this.visible) {
           this.visible = false;
           this.onClose && this.onClose();
-          this.$emit('close', this);
+          this.$emit('close');
         }
       },
       maskClose() {
@@ -398,6 +380,7 @@
         if (this.opacity) {
           this.opacity = false;
         }
+        this.$emit('animationAfterLeave', el, this);
       }
     },
 
@@ -411,6 +394,7 @@
       this.layerDom = this.$el.querySelector(`.${this.layerClass}`);
       this.headerDom = this.$el.querySelector(`.${this.headerClass}`);
       this.footerDom = this.$el.querySelector(`.${this.footClass}`);
+      this.visible = false;
       this.$nextTick(() => {
         this.initLeftPosition();
         this.initTopPosition();

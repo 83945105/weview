@@ -49,31 +49,19 @@
         ]
       },
       {
-        "desc": "弹层",
-        "name": "Layer",
-        "path": "/layer",
-        "items": [
-          {
-            "desc": "弹层框架",
-            "name": "LayerFrame",
-            "path": "/layerFrame"
-          }
-        ]
-      },
-      {
         "desc": "通知",
         "name": "Notice",
         "path": "/notice",
         "items": [
           {
-            "desc": "警告",
-            "name": "Alert",
-            "path": "/alert"
-          },
-          {
             "desc": "加载",
             "name": "Loading",
             "path": "/loading"
+          },
+          {
+            "desc": "警告",
+            "name": "Alert",
+            "path": "/alert"
           },
           {
             "desc": "消息提示",
@@ -96,6 +84,18 @@
             "desc": "动画",
             "name": "Animation",
             "path": "/animation"
+          }
+        ]
+      },
+      {
+        "desc": "其它",
+        "name": "Other",
+        "path": "/other",
+        "items": [
+          {
+            "desc": "弹层",
+            "name": "Layer",
+            "path": "/layer"
           }
         ]
       }

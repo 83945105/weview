@@ -1,19 +1,22 @@
 <template>
-  <div
-    v-show="visible"
-    :class="[messageClass, messageBgClass, animationClass, centerClass, customClass]"
-    @mouseenter="clearTimer"
-    @mouseleave="startTimer"
-    role="alert"
-  >
-    <icon v-if="iconPosition === 'left'" :name="iconName" :type="iconType" size="large" :class="[iconClass, iconPositionClass]"></icon>
-    <slot>
-      <div v-if="!html" :class="[textClass]">{{message}}</div>
-      <div v-else v-html="message" :class="[textClass]"></div>
-    </slot>
-    <icon v-if="iconPosition === 'right'" :name="iconName" :type="iconType" size="large" :class="[iconClass, iconPositionClass]"></icon>
-    <icon v-if="showClose" name="close" :class="deleteClass" @click.native="handleClose"></icon>
-  </div>
+  <animation :name="_animationName" @after-leave="animationAfterLeave">
+    <div v-show="visible"
+         :class="[messageClass, messageBgClass, centerClass, customClass]"
+         @mouseenter="clearTimer"
+         @mouseleave="startTimer"
+         role="alert"
+    >
+      <icon v-if="iconPosition === 'left'" :name="iconName" :type="iconType" size="large"
+            :class="[iconClass, iconPositionClass]"></icon>
+      <slot>
+        <div v-if="!html" :class="[textClass]">{{message}}</div>
+        <div v-else v-html="message" :class="[textClass]"></div>
+      </slot>
+      <icon v-if="iconPosition === 'right'" :name="iconName" :type="iconType" size="large"
+            :class="[iconClass, iconPositionClass]"></icon>
+      <icon v-if="showClose" name="close" :class="[deleteClass]" @click.native="handleClose"></icon>
+    </div>
+  </animation>
 </template>
 
 <script>
@@ -22,10 +25,11 @@
 
   import {MessageType} from './message.js';
   import Icon from '../../icon/src/Icon.vue';
+  import Animation from '../../animation/src/Animation.vue';
 
   export default {
 
-    components: {Icon: Icon},
+    components: {Icon: Icon, Animation: Animation},
 
     name: `${Conf.prefixCls}-message`,
 
@@ -37,7 +41,6 @@
 
     data() {
       return {
-        animation: false,
         visible: false,
         timer: undefined
       };
@@ -59,19 +62,15 @@
         type: Boolean,
         default: true
       },
-      onClose: {
-        type: Function,
-        default() {
-          return true;
-        }
-      },
+      onClose: Function,
       html: Boolean,
       center: Boolean,
       customClass: String,
       iconPosition: {
         type: String,
         default: 'left'
-      }
+      },
+      animationName: String
     },
 
     computed: {
@@ -90,11 +89,6 @@
           }
         }
         return cls;
-      },
-      animationClass() {
-        return this.animation ?
-          `${this.prefixCls}-message-animation ${this.prefixCls}-message-animation-open` :
-          `${this.prefixCls}-message-animation ${this.prefixCls}-message-animation-close`;
       },
       deleteClass() {
         return `${this.prefixCls}-message-button-close`;
@@ -117,39 +111,36 @@
       iconPositionClass() {
         return this.iconPosition === 'left' ? `is-left` :
           this.iconPosition === 'right' ? `is-right` : undefined;
+      },
+      _animationName() {
+        if (this.animationName !== undefined) {
+          return this.animationName;
+        } else {
+          return 'bounce';
+        }
       }
     },
 
     watch: {
       value(v) {
-        if (v) {
-          this.open();
-        } else {
-          this.close();
-        }
+        this.visible = v;
       },
       visible(v) {
         this.$emit('input', v);
+        if (v) {
+          this.startTimer();
+        } else {
+          this.clearTimer();
+        }
       }
     },
 
     methods: {
-      open() {
-        if (!this.visible) {
-          this.animation = true;
-          this.visible = true;
-          this.startTimer();
-        }
-      },
       close() {
         if (this.visible) {
-          this.clearTimer();
-          this.animation = false;
-          setTimeout(() => {
-            this.visible = false;
-            this.onClose(this);
-            this.$emit('close', this);
-          }, 200);
+          this.visible = false;
+          this.onClose && this.onClose();
+          this.$emit('close');
         }
       },
       handleClose(e) {
@@ -176,17 +167,15 @@
         this.$emit('destroy', this.id);
         this.$destroy(true);
         this.$el.parentNode.removeChild(this.$el);
-      }
-    },
-
-    created() {
-      if (this.value) {
-        this.open();
+      },
+      animationAfterLeave(el) {
+        this.$emit('animationAfterLeave', el, this);
       }
     },
 
     mounted() {
       document.addEventListener('keydown', this.EscClose);
+      this.visible = this.value;
     },
 
     beforeDestroy() {

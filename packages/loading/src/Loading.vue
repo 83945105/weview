@@ -1,5 +1,5 @@
 <template>
-  <animation :name="_animationName">
+  <animation :name="_animationName" @after-leave="animationAfterLeave">
     <div v-show="visible" :class="[maskClass, maskBgClass, fullscreenClass]" :style="maskBgStyle">
       <div :class="[contentClass]">
         <icon :name="iconName" type="primary" :loading="true" :loading-speed="loadingSpeed" size="large"></icon>
@@ -98,22 +98,18 @@
     },
 
     methods: {
-      open() {
-        if (!this.visible) {
-          this.visible = true;
-          this.$emit('open', this);
-        }
-      },
       close() {
         if (this.visible) {
           this.visible = false;
-          this.$emit('close', this);
         }
       },
       destroy() {
         this.$emit('destroy', this.id);
         this.$destroy(true);
         this.$el.parentNode.removeChild(this.$el);
+      },
+      animationAfterLeave(el) {
+        this.$emit('animationAfterLeave', el, this);
       }
     },
 

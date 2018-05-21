@@ -19,7 +19,7 @@ let DocRoutes = {
 let TestRoutes = {
   path: '/test',
   name: "Test",
-  redirect: {name: 'LayerFrameTest'},
+  redirect: {name: 'IconTest'},
   component: r => require.ensure([], () => r(require(`../components/Test.vue`))),
   children: []
 };

@@ -9,7 +9,6 @@
 import TemplateDoc from '../web/packages/template-doc/index.js';
 import TemplateTest from '../web/packages/template-test/index.js';
 
-import LayerFrame from './layer-frame/index.js';
 import Button from './button/index.js';
 import Icon from './icon/index.js';
 import Message from './message/index.js';
@@ -28,7 +27,6 @@ const components = [
   TemplateDoc,
   TemplateTest,
 
-  LayerFrame,
   Button,
   Icon,
   Message,
@@ -55,7 +53,6 @@ export {
   TemplateDoc,
   TemplateTest,
 
-  LayerFrame,
   Button,
   Icon,
   Message,

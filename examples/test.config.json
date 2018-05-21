@@ -32,36 +32,19 @@
         ]
       },
       {
-        "desc": "弹层测试",
-        "name": "LayerTest",
-        "path": "/layerTest",
-        "items": [
-          {
-            "desc": "弹层测试",
-            "name": "LayerTest",
-            "path": "/layerTest"
-          },
-          {
-            "desc": "弹层框架测试",
-            "name": "LayerFrameTest",
-            "path": "/layerFrameTest"
-          }
-        ]
-      },
-      {
         "desc": "通知测试",
         "name": "NoticeTest",
         "path": "/noticeTest",
         "items": [
           {
-            "desc": "消息测试",
-            "name": "MessageTest",
-            "path": "/messageTest"
-          },
-          {
             "desc": "加载特效测试",
             "name": "LoadingTest",
             "path": "/loadingTest"
+          },
+          {
+            "desc": "消息测试",
+            "name": "MessageTest",
+            "path": "/messageTest"
           }
         ]
       },
@@ -74,6 +57,18 @@
             "desc": "动画测试",
             "name": "AnimationTest",
             "path": "/animationTest"
+          }
+        ]
+      },
+      {
+        "desc": "其它测试",
+        "name": "OtherTest",
+        "path": "/otherTest",
+        "items": [
+          {
+            "desc": "弹层测试",
+            "name": "LayerTest",
+            "path": "/layerTest"
           }
         ]
       }

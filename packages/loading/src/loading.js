@@ -75,7 +75,7 @@ const Loading = function (opts = {}) {
           ...opts
         },
         on: {
-          close(vm) {
+          animationAfterLeave(el, vm) {
             removeInstance(vm);
             vm.destroy();
           }

@@ -1,10 +1,7 @@
 import Vue from 'vue';
 import WeLayer from './Layer.vue';
-import WeAnimation from '../../animation/src/Animation.vue';
-import Conf from '../../../src/mixins/conf.js';
 import {isString} from "../../../web/src/utils/util.js";
 import {isObject} from "../../../web/src/utils/util";
-import Message from "../../message/src/message";
 
 const merge = require('webpack-merge');
 
@@ -72,7 +69,7 @@ const Layer = function (opts = {}) {
           ...opts
         },
         on: {
-          close(vm) {
+          animationAfterLeave(el, vm) {
             removeInstance(vm);
             vm.destroy();
           }
@@ -95,11 +92,6 @@ const Layer = function (opts = {}) {
       });
     }
   }).$mount();
-
-
-  // let cls = `${WeAnimation.name}-${vm.$children[0].animationName}`;
-
-  // vm.$el.querySelector('.we-layer').className += ` ${cls}-enter ${cls}-active`;
 
   let parent = document.body;
   if (target && target.parentNode) {

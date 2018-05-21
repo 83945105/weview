@@ -36,10 +36,11 @@
       <we-button plain type="danger" @click="$message.closeAll()">关闭所有</we-button>
     </div>
 
-    <we-button type="info" @click="isShow = !isShow">动画测试</we-button>
-    <transition name="fade" v-enter="enter">
-      <p v-if="isShow">hello</p>
-    </transition>
+    <we-message v-model="show">组件方式打开消息</we-message>
+
+    <we-button @click="show = !show">组件方式打开消息</we-button>
+
+
   </div>
 </template>
 
@@ -50,7 +51,8 @@
     data() {
       return {
         instance: undefined,
-        isShow:false
+        isShow:false,
+        show: false
       };
     },
 
