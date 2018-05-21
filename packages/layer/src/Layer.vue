@@ -23,6 +23,7 @@
             height: __contentHeight
            }"
         >
+          <icon v-if="showClose && !showHeader" name="close" :class="deleteClass" @click.native="close"></icon>
           <slot :width="__width" :height="__contentHeight"></slot>
         </div>
         <div v-if="showFooter"
@@ -202,6 +203,9 @@
       },
       closeIconClass() {
         return `${this.prefixCls}-layer-header-close`;
+      },
+      deleteClass() {
+        return `${this.prefixCls}-message-button-close`;
       },
       contentClass() {
         return `${this.prefixCls}-layer-content`;

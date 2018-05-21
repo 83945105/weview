@@ -6,9 +6,9 @@ const DefaultAlertOptions = {
 
 const merge = require('webpack-merge');
 
-const Layer = {};
+const Alert = {};
 
-Layer.install = function (Vue, options = DefaultAlertOptions) {
+Alert.install = function (Vue, options = DefaultAlertOptions) {
 
   let opts = merge(DefaultAlertOptions, options);
 
@@ -25,6 +25,6 @@ Layer.install = function (Vue, options = DefaultAlertOptions) {
 
 };
 
-export default Layer;
+export default Alert;
 
 export {$Alert}

@@ -78,6 +78,9 @@ const Layer = function (opts = {}) {
           }
         },
         scopedSlots: {
+          header: (props) => {
+            return opts.headerRender ? opts.headerRender(h, props) : undefined;
+          },
           default: (props) => {
             return opts.render ? opts.render(h, props) : h('div', {
               domProps: {
