@@ -1,7 +1,12 @@
 <template>
   <div :class="[opacityClass]">
     <div v-if="visible && showMask" :class="[maskClass, maskBgClass, customMaskClass]" @click="maskClose"></div>
-    <we-animation :name="animationName" @after-leave="animationAfterLeave">
+    <we-animation :name="animationName"
+                  @before-enter="animationBeforeEnter"
+                  @enter="animationEnter"
+                  @after-enter="animationAfterEnter"
+                  @after-leave="animationAfterLeave"
+    >
       <div v-show="visible" :class="[layerClass, customClass]"
            :style="style"
       >
@@ -345,7 +350,16 @@
           this.initTopPosition();
         }
       },
-      animationAfterLeave(target) {
+      animationBeforeEnter(el) {
+        console.log(el)
+      },
+      animationEnter(el) {
+        console.log(el)
+      },
+      animationAfterEnter(el) {
+        console.log(el)
+      },
+      animationAfterLeave(el) {
         if(this.opacity) {
           this.opacity = false;
         }
