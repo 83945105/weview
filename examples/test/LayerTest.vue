@@ -32,6 +32,8 @@
       <div style="width: 5000px;height: 100px;">+4566+46464646</div>
     </div>
 
+    <we-button @click="layer01">弹出指定文本</we-button>
+
     <we-button @click="alert">警告框</we-button>
 
   </div>
@@ -51,48 +53,15 @@
       confirm(e, close) {
         close();
       },
+      layer01() {
+        this.$layer('<div style="color: red">这是一段HTML文本</div>')
+      },
       alert() {
-        this.$layer({
-          render(h, props) {
-            return h('div', {
-              style: {
-                padding: '15px'
-              }
-            }, '2');
-          },
-          footerRender(h, props) {
-            return h('div', [
-              h('we-button', {
-                style: {
-                  marginRight: '3px'
-                },
-                props: {
-                  type: 'primary',
-                  plain: false
-                }
-              }, '按钮一'),
-              h('we-button', {
-                style: {
-                  margin: '3px'
-                },
-                props: {
-                  type: 'primary',
-                  plain: false
-                }
-              }, '按钮二'),
-              h('we-button', {
-                style: {
-                  marginLeft: '3px'
-                },
-                props: {
-                  type: 'primary',
-                  plain: false
-                }
-              }, '按钮二')
-            ]);
-          }
-        });
+        this.$alert();
       }
+    },
+
+    created() {
     }
   }
 </script>

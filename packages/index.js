@@ -18,6 +18,8 @@ import Loading from './loading/index.js';
 import {$Loading} from './loading/index.js';
 import Layer from './layer/index.js';
 import {$Layer} from './layer/index.js';
+import Alert from './alert/index.js';
+import {$Alert} from './alert/index.js';
 
 const components = [
 
@@ -29,7 +31,8 @@ const components = [
   Icon,
   Message,
   Loading,
-  Layer
+  Layer,
+  Alert
 ];
 
 const install = function (Vue, options = {}) {
@@ -57,7 +60,8 @@ export {
   Loading,
   $Loading,
   Layer,
-  $Layer
+  $Layer,
+  $Alert
 }
 
 export default install;
