@@ -40,7 +40,7 @@
       },
       name: {
         type: String,
-        default: 'fade'
+        default: 'fadeIn'
       }
     },
 

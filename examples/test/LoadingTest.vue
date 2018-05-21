@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="width: 300px;height: 300px;border:1px solid #57ee36;">
-      <we-loading :value="true"></we-loading>
+      <we-loading :value="true" animation-name="fadeRight"></we-loading>
     </div>
 
     <div style="height:300px;width:300px;border:1px solid #246aee;margin-top:15px;">
@@ -66,7 +66,7 @@
           this.loading = this.loading.close();
           this.loading = undefined;
         } else {
-          this.loading = this.$loading({target: '#loadingDom'});
+          this.loading = this.$loading({target: '#loadingDom', animationName: 'fadeRight'});
         }
       }
     },

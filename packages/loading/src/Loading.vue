@@ -1,10 +1,12 @@
 <template>
-  <div v-show="visible" :class="[maskClass, maskBgClass, fullscreenClass]" :style="maskBgStyle">
-    <div :class="[contentClass]">
-      <icon :name="iconName" type="primary" :loading="true" :loading-speed="loadingSpeed" size="large"></icon>
-      <h3 :class="[textClass]">{{text}}</h3>
+  <animation :name="_animationName">
+    <div v-show="visible" :class="[maskClass, maskBgClass, fullscreenClass]" :style="maskBgStyle">
+      <div :class="[contentClass]">
+        <icon :name="iconName" type="primary" :loading="true" :loading-speed="loadingSpeed" size="large"></icon>
+        <h3 :class="[textClass]">{{text}}</h3>
+      </div>
     </div>
-  </div>
+  </animation>
 </template>
 
 <script>
@@ -12,10 +14,11 @@
   import Conf from '../../../src/mixins/conf';
 
   import Icon from '../../icon/src/Icon.vue';
+  import Animation from '../../animation/src/Animation.vue';
 
   export default {
 
-    components: {Icon: Icon},
+    components: {Icon: Icon, Animation: Animation},
 
     name: `${Conf.prefixCls}-loading`,
 
@@ -51,7 +54,8 @@
       },
       background: String,
       customClass: String,
-      fullscreen: Boolean
+      fullscreen: Boolean,
+      animationName: String
     },
 
     computed: {
@@ -74,6 +78,13 @@
       },
       fullscreenClass() {
         return this.fullscreen ? 'is-full' : undefined;
+      },
+      _animationName() {
+        if (this.animationName !== undefined) {
+          return this.animationName;
+        } else {
+          return 'fadeIn';
+        }
       }
     },
 

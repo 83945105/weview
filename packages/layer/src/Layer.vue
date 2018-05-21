@@ -227,7 +227,9 @@
         return this.drag ? 'move' : undefined;
       },
       _animationName() {
-        if (this.position === 'left') {
+        if (this.animationName !== undefined) {
+          return this.animationName;
+        } else if (this.position === 'left') {
           return 'fadeLeft';
         } else if (this.position === 'left-top' || this.position === 'top-left') {
           return 'bounce';
