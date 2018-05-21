@@ -4,6 +4,7 @@ import WeAnimation from '../../animation/src/Animation.vue';
 import Conf from '../../../src/mixins/conf.js';
 import {isString} from "../../../web/src/utils/util.js";
 import {isObject} from "../../../web/src/utils/util";
+import Message from "../../message/src/message";
 
 const merge = require('webpack-merge');
 
@@ -111,6 +112,25 @@ const Layer = function (opts = {}) {
   instances.push(instance);
 
   return instance;
+};
+
+Layer.close = function (target) {
+  for (let i = 0; i < instances.length; i++) {
+    if (typeof target === 'string' && instances[i].id === target) {
+      instances[i].close();
+      break;
+    }
+    if (target instanceof Vue && instances[i].id === target.id) {
+      instances[i].close();
+      break;
+    }
+  }
+};
+
+Layer.closeAll = function () {
+  for (let ist of instances) {
+    ist.close();
+  }
 };
 
 export default Layer;

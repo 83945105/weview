@@ -57,7 +57,16 @@
         this.$layer('<div style="color: red">这是一段HTML文本</div>')
       },
       alert() {
-        this.$alert();
+        this.$alert({
+          title: '提示',
+          showHeader: true,
+          message: '<div style="color: red">这是一个警告内容</div>',
+          showClose: false,
+          confirmButtonText: '知道啦',
+          onClose() {
+            this.$message('警告框关闭');
+          }
+        });
       }
     },
 
