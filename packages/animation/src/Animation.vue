@@ -1,7 +1,15 @@
 <template>
   <transition
     :name="tName"
+    @before-enter="beforeEnter"
+    @enter="enter"
+    @after-enter="afterEnter"
+    @enter-cancelled="enterCancelled"
+
+    @before-leave="beforeLeave"
+    @leave="leave"
     @after-leave="afterLeave"
+    @leave-cancelled="leaveCancelled"
   >
     <slot></slot>
   </transition>
@@ -52,8 +60,29 @@
     },
 
     methods: {
-      afterLeave(target) {
-        this.$emit('after-leave', target);
+      beforeEnter(el) {
+        this.$emit('before-enter', el);
+      },
+      enter(el) {
+        this.$emit('enter', el);
+      },
+      afterEnter(el) {
+        this.$emit('after-enter', el);
+      },
+      enterCancelled(el) {
+        this.$emit('enter-cancelled', el);
+      },
+      beforeLeave(el) {
+        this.$emit('before-leave', el);
+      },
+      leave(el) {
+        this.$emit('leave', el);
+      },
+      afterLeave(el) {
+        this.$emit('after-leave', el);
+      },
+      leaveCancelled(el) {
+        this.$emit('leave-cancelled', el);
       }
     }
   }

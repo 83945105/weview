@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import WeLayer from './Layer.vue';
+import WeAnimation from '../../animation/src/Animation.vue';
 import Conf from '../../../src/mixins/conf.js';
 import {isString} from "../../../web/src/utils/util.js";
 import {isObject} from "../../../web/src/utils/util";
@@ -22,19 +23,15 @@ function removeInstance(vm) {
 const Default = {};
 
 const Layer = function (opts = {}) {
+  if (!isObject(opts)) {
+    throw new Error('Layer options must be an object');
+  }
   if (Vue.prototype.$isServer) {
     return;
   }
 
-  let target;
-
-  if (isString(opts)) {
-    target = document.querySelector(opts);
-    opts = merge(Default, {});
-  } else if (isObject(opts)) {
-    target = isString(opts.target) ? document.querySelector(opts.target) : opts.target;
-    opts = merge(Default, opts);
-  }
+  let target = isString(opts.target) ? document.querySelector(opts.target) : opts.target;
+  opts = merge(Default, opts);
 
   let id = `layer-${seed++}`;
 
@@ -53,12 +50,20 @@ const Layer = function (opts = {}) {
         },
         scopedSlots: {
           default: (props) => {
-            return h('div', {domProps: {innerHTML: target.innerHTML}})
+            return opts.render ? opts.render(h, props) : h('div', {domProps: {innerHTML: target ? target.innerHTML : ''}});
+          },
+          footer: (props) => {
+            return opts.footerRender ? opts.footerRender(h, props) : undefined;
           }
         }
       });
     }
   }).$mount();
+
+
+  // let cls = `${WeAnimation.name}-${vm.$children[0].animationName}`;
+
+  // vm.$el.querySelector('.we-layer').className += ` ${cls}-enter ${cls}-active`;
 
   let parent = document.body;
   if (target) {
