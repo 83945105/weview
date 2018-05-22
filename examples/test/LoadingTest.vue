@@ -25,8 +25,8 @@
     <div v-loading="o" style="width: 300px;height: 300px;border:1px solid #ee362e;margin-top:15px;">
       使用v-loading开启加载特效
     </div>
-    <we-button @click="vl = true;o.value = true">开启</we-button>
-    <we-button @click="vl = false;o.value = false">关闭</we-button>
+    <we-button @click="o.value = true">开启</we-button>
+    <we-button @click="o.value = false">关闭</we-button>
 
     <div id="loadingDom3" style="width: 300px;height: 300px;border:1px solid #52ee47;margin-top:15px;">
       第一个
@@ -52,12 +52,20 @@
       return {
         loading: undefined,
         instance: undefined,
-        vl: true,
         o: {
           value: false,
           text: '玩命加载中'
         }
       };
+    },
+
+    watch: {
+      'o.value': {
+        handler(v) {
+          console.log(v)
+        },
+        deep:true
+      }
     },
 
     methods: {

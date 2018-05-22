@@ -24,7 +24,25 @@
 
     </we-layer>
 
+    <we-layer
+      v-model="visible2"
+      :width="50"
+      :height="40"
+      drag
+      :drag-out-the-screen="false"
+      :show-header="true"
+      :show-mask="true"
+      position="center"
+      title="点我可拖拽"
+      @click-confirm="confirm"
+    >
+
+      <div>6666</div>
+
+    </we-layer>
+
     <we-button @click="visible = true">使用组件打开弹层</we-button>
+    <we-button @click="visible2 = true">使用组件打开弹层2</we-button>
     <we-button @click="$layer({target:'#dom1', drag: true, height: 400})">使用$layer打开弹层</we-button>
     <div id="dom1" style="display: none">
       <div style="width: 5000px;height: 100px;">+4566+46464646</div>
@@ -39,11 +57,6 @@
     <we-button @click="alert">警告框</we-button>
     <we-button @click="showConfirm">确认框</we-button>
 
-    <div style="display: none">
-      666
-    </div>
-
-    <we-button @click="o.value = true">使用v-layer控制弹层</we-button>
 
   </div>
 </template>
@@ -55,6 +68,7 @@
     data() {
       return {
         visible: false,
+        visible2: false,
         o: {
           value: false
         }

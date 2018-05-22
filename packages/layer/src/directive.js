@@ -18,7 +18,6 @@ LayerDirective.install = Vue => {
   };
 
   const create = (el, binding) => {
-    console.log(el)
     let opts = {
       target: el
     };
@@ -45,13 +44,13 @@ LayerDirective.install = Vue => {
       create(el, binding);
     },
     update(el, binding) {
-      console.log(binding)
       let v = false;
       typeCallback(binding.value, () => {
         v = binding.value.value || false;
       }, () => {
         v = binding.value;
       });
+      console.log(`====>${v}`)
       if (v) {
         create(el, binding);
       } else {

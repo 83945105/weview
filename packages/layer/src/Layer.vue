@@ -5,7 +5,10 @@
       <div v-show="visible" :class="[layerClass, customClass]" :style="style">
         <div v-if="showHeader" :class="[headerClass, dragClass]" @mousedown="mousedown">
           <slot name="header">
-            <div :class="[titleClass]">{{title}}</div>
+            <div :class="[titleClass]">
+              <icon v-if="iconName" :name="iconName"></icon>
+              <span>{{title}}</span>
+            </div>
             <div v-if="showClose" :class="closeIconClass">
               <icon name="close" @click.native="close"></icon>
             </div>
@@ -131,7 +134,8 @@
         default: true
       },
       onClose: Function,
-      animationName: String
+      animationName: String,
+      iconName: String
     },
 
     computed: {
@@ -219,19 +223,19 @@
         } else if (this.position === 'left') {
           return 'fadeLeft';
         } else if (this.position === 'left-top' || this.position === 'top-left') {
-          return 'bounce';
+          return 'fadeTopLeft';
         } else if (this.position === 'top') {
           return 'fadeUp';
         } else if (this.position === 'right-top' || this.position === 'top-right') {
-          return 'bounce';
+          return 'fadeTopRight';
         } else if (this.position === 'right') {
           return 'fadeRight';
         } else if (this.position === 'right-bottom' || this.position === 'bottom-right') {
-          return 'bounce';
+          return 'fadeDownRight';
         } else if (this.position === 'bottom') {
           return 'fadeDown';
         } else if (this.position === 'left-bottom' || this.position === 'bottom-left') {
-          return 'bounce';
+          return 'fadeDownLeft';
         } else {
           return 'bounce';
         }

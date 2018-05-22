@@ -36,7 +36,6 @@ LoadingDirective.install = Vue => {
     });
     if(opts.value) {
       el.vm = $Loading(opts);
-
     }
   };
 

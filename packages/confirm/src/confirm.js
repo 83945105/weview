@@ -12,7 +12,8 @@ const Default = {
   clickCancel: undefined,
   onClose: undefined,
   escCloseable: false,
-  maskClosable: false
+  maskClosable: false,
+  iconName: 'help-circle-o'
 };
 
 const merge = require('webpack-merge');

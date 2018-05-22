@@ -9,7 +9,8 @@ const Default = {
   confirmButtonText: '确定',
   onClose: undefined,
   escCloseable: false,
-  maskClosable: false
+  maskClosable: false,
+  iconName: 'warning-circle-o'
 };
 
 const merge = require('webpack-merge');

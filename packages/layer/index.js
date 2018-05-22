@@ -12,7 +12,7 @@ Layer.install = function (Vue, options = DefaultLayerOptions) {
 
   Vue.component(Layer.name, Layer);
 
-  Vue.use(LayerDirective);
+  // Vue.use(LayerDirective);
 
   let opts = merge(DefaultLayerOptions, options);
 
