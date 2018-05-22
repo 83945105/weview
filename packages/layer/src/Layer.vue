@@ -3,7 +3,7 @@
     <div v-if="visible && showMask" :class="[maskClass, maskBgClass, customMaskClass]" @click="maskClose"></div>
     <animation :name="_animationName" @before-enter="animationBeforeEnter" @after-leave="animationAfterLeave">
       <div v-show="visible" :class="[layerClass, customClass]" :style="style">
-        <div v-if="showHeader" :class="[headerClass, dragClass]" @mousedown="mousedown">
+        <div v-if="showHeader" :class="[headerClass, dragClass]" @mousedown="dragMousedown">
           <slot name="header">
             <div :class="[titleClass]">
               <icon v-if="iconName" :name="iconName"></icon>
@@ -25,14 +25,14 @@
           </slot>
         </div>
 
-        <div class="we-layer-drag drag-up-left"></div>
-        <div class="we-layer-drag drag-up"></div>
-        <div class="we-layer-drag drag-up-right"></div>
-        <div class="we-layer-drag drag-left"></div>
-        <div class="we-layer-drag drag-right"></div>
-        <div class="we-layer-drag drag-down-left"></div>
-        <div class="we-layer-drag drag-down"></div>
-        <div class="we-layer-drag drag-down-right"></div>
+        <div v-if="resize" :class="[resizeClass]" class="drag-up-left" @mousedown="resizeLeftUpMousedown"></div>
+        <div v-if="resize" :class="[resizeClass]" class="drag-up" @mousedown="resizeUpMousedown"></div>
+        <div v-if="resize" :class="[resizeClass]" class="drag-up-right" @mousedown="resizeRightUpMousedown"></div>
+        <div v-if="resize" :class="[resizeClass]" class="drag-left" @mousedown="resizeLeftMousedown"></div>
+        <div v-if="resize" :class="[resizeClass]" class="drag-right" @mousedown="resizeRightMousedown"></div>
+        <div v-if="resize" :class="[resizeClass]" class="drag-down-left" @mousedown="resizeLeftDownMousedown"></div>
+        <div v-if="resize" :class="[resizeClass]" class="drag-down" @mousedown="resizeDownMousedown"></div>
+        <div v-if="resize" :class="[resizeClass]" class="drag-down-right" @mousedown="resizeRightDownMousedown"></div>
       </div>
     </animation>
   </div>
@@ -63,6 +63,8 @@
       return {
         visible: true,
         isDrag: false,
+        layerWidth: this.width,
+        layerHeight: this.height,
         w: 0,
         h: 0,
         x: -10000,
@@ -120,6 +122,8 @@
       },
       drag: Boolean,
       dragOutTheScreen: Boolean,
+      resize: Boolean,
+      resizeOutTheScreen: Boolean,
       customClass: String,
       customMaskClass: String,
       confirmButtonText: {
@@ -149,13 +153,13 @@
 
     computed: {
       _width() {
-        return this.width ? parseInt(`${this.width}`.replace(/[^0-9]/g, "")) : undefined;
+        return this.layerWidth ? parseInt(`${this.layerWidth}`.replace(/[^0-9]/g, "")) : undefined;
       },
       __width() {
         return this._width ? this._width > 100 ? `${this._width}px` : `${this._width}%` : undefined;
       },
       _height() {
-        return this.height ? parseInt(`${this.height}`.replace(/[^0-9]/g, "")) : undefined;
+        return this.layerHeight ? parseInt(`${this.layerHeight}`.replace(/[^0-9]/g, "")) : undefined;
       },
       __height() {
         return this._height ? this._height > 100 ? `${this._height}px` : `${this._height}%` : undefined;
@@ -213,6 +217,9 @@
       footClass() {
         return `${this.prefixCls}-layer-footer`;
       },
+      resizeClass() {
+        return `${this.prefixCls}-layer-drag`;
+      },
       footAlignClass() {
         switch (this.footerAlign) {
           case 'left':
@@ -254,6 +261,12 @@
     watch: {
       value(v) {
         this.visible = v;
+      },
+      width(v) {
+        this.layerWidth = v;
+      },
+      height(v) {
+        this.layerHeight = v;
       }
     },
 
@@ -338,7 +351,7 @@
           this.y = this.windowHeight - this.layerDomHeight;
         }
       },
-      mousedown(e) {
+      dragMousedown(e) {
         if (!this.visible || !this.drag) {
           return;
         }
@@ -346,16 +359,9 @@
         this.cx = e.clientX - this.x;
         this.cy = e.clientY - this.y;
         document.body.className += ` ${this.prefixCls}-common-select-none`;
-        document.addEventListener('mousemove', this.documentMousemoveEvent);
+        document.addEventListener('mousemove', this.documentDragMousemoveEvent);
       },
-      documentMouseupEvent(e) {
-        if (!this.visible || !this.drag) {
-          return;
-        }
-        document.body.className = document.body.className.replace(` ${this.prefixCls}-common-select-none`, "");
-        document.removeEventListener('mousemove', this.documentMousemoveEvent);
-      },
-      documentMousemoveEvent(e) {
+      documentDragMousemoveEvent(e) {
         e = e || window.event;
         let x = e.clientX - this.cx;
         let y = e.clientY - this.cy;
@@ -373,6 +379,143 @@
         } else {
           this.y = y;
         }
+      },
+      resizeLeftMousedown(e) {
+        if (!this.visible || !this.resize) {
+          return;
+        }
+        document.body.className += ` ${this.prefixCls}-common-select-none`;
+        document.addEventListener('mousemove', this.documentResizeLeftMousemoveEvent);
+      },
+      resizeRightMousedown(e) {
+        if (!this.visible || !this.resize) {
+          return;
+        }
+        document.body.className += ` ${this.prefixCls}-common-select-none`;
+        document.addEventListener('mousemove', this.documentResizeRightMousemoveEvent);
+      },
+      resizeUpMousedown(e) {
+        if (!this.visible || !this.resize) {
+          return;
+        }
+        document.body.className += ` ${this.prefixCls}-common-select-none`;
+        document.addEventListener('mousemove', this.documentResizeUpMousemoveEvent);
+      },
+      resizeDownMousedown(e) {
+        if (!this.visible || !this.resize) {
+          return;
+        }
+        document.body.className += ` ${this.prefixCls}-common-select-none`;
+        document.addEventListener('mousemove', this.documentResizeDownMousemoveEvent);
+      },
+      resizeLeftUpMousedown(e) {
+        if (!this.visible || !this.resize) {
+          return;
+        }
+        document.body.className += ` ${this.prefixCls}-common-select-none`;
+        document.addEventListener('mousemove', this.documentResizeLeftMousemoveEvent);
+        document.addEventListener('mousemove', this.documentResizeUpMousemoveEvent);
+      },
+      resizeRightUpMousedown(e) {
+        if (!this.visible || !this.resize) {
+          return;
+        }
+        document.body.className += ` ${this.prefixCls}-common-select-none`;
+        document.addEventListener('mousemove', this.documentResizeRightMousemoveEvent);
+        document.addEventListener('mousemove', this.documentResizeUpMousemoveEvent);
+      },
+      resizeLeftDownMousedown(e) {
+        if (!this.visible || !this.resize) {
+          return;
+        }
+        document.body.className += ` ${this.prefixCls}-common-select-none`;
+        document.addEventListener('mousemove', this.documentResizeLeftMousemoveEvent);
+        document.addEventListener('mousemove', this.documentResizeDownMousemoveEvent);
+      },
+      resizeRightDownMousedown(e) {
+        if (!this.visible || !this.resize) {
+          return;
+        }
+        document.body.className += ` ${this.prefixCls}-common-select-none`;
+        document.addEventListener('mousemove', this.documentResizeRightMousemoveEvent);
+        document.addEventListener('mousemove', this.documentResizeDownMousemoveEvent);
+      },
+      documentResizeLeftMousemoveEvent(e) {
+        e = e || window.event;
+        if (e.clientX < 0 && !this.resizeOutTheScreen) {
+          this.layerWidth = this.x + this.layerDom.offsetWidth;
+          this.x = 0;
+          return;
+        }
+        if (e.clientX + 200 > this.x + this.layerDom.offsetWidth) {
+          this.layerWidth = 200;
+          this.x = this.x + this.layerDom.offsetWidth - 200;
+          return;
+        }
+        if (e.clientX < this.x) {
+          this.layerWidth = this.x - e.clientX + this.layerDom.offsetWidth;
+        } else if (e.clientX > this.x) {
+          this.layerWidth = this.layerDom.offsetWidth - e.clientX + this.x;
+        }
+        this.x = e.clientX;
+      },
+      documentResizeRightMousemoveEvent(e) {
+        e = e || window.event;
+        if (e.clientX > this.windowWidth && !this.resizeOutTheScreen) {
+          this.layerWidth = this.windowWidth - this.x;
+          return;
+        }
+        let w = e.clientX - this.x;
+        if (w < 200) {
+          this.layerWidth = 200;
+          return;
+        }
+        this.layerWidth = w;
+      },
+      documentResizeUpMousemoveEvent(e) {
+        e = e || window.event;
+        if (e.clientY < 0 && !this.resizeOutTheScreen) {
+          this.layerHeight = this.y + this.layerDom.offsetHeight;
+          this.y = 0;
+          return;
+        }
+        if (e.clientY + 200 > this.y + this.layerDom.offsetHeight) {
+          this.layerHeight = 200;
+          this.y = this.y + this.layerDom.offsetHeight - 200;
+          return;
+        }
+        if (e.clientY < this.y) {
+          this.layerHeight = this.y - e.clientY + this.layerDom.offsetHeight;
+        } else if (e.clientY > this.y) {
+          this.layerHeight = this.layerDom.offsetHeight - e.clientY + this.y;
+        }
+        this.y = e.clientY;
+      },
+      documentResizeDownMousemoveEvent(e) {
+        e = e || window.event;
+        if (e.clientY > this.windowHeight && !this.resizeOutTheScreen) {
+          this.layerHeight = this.windowHeight - this.y;
+          return;
+        }
+        let h = e.clientY - this.y;
+        if (h < 200) {
+          this.layerHeight = 200;
+          return;
+        }
+        this.layerHeight = h;
+      },
+      documentMouseupEvent(e) {
+        if (!this.visible || !this.drag) {
+          return;
+        }
+        document.body.className = document.body.className.replace(` ${this.prefixCls}-common-select-none`, "");
+        document.removeEventListener('mousemove', this.documentDragMousemoveEvent);
+        document.removeEventListener('mousemove', this.documentResizeLeftMousemoveEvent);
+        document.removeEventListener('mousemove', this.documentResizeRightMousemoveEvent);
+        document.removeEventListener('mousemove', this.documentResizeUpMousemoveEvent);
+        document.removeEventListener('mousemove', this.documentResizeDownMousemoveEvent);
+        this.layerDomWidth = this.layerDom.offsetWidth;
+        this.layerDomHeight = this.layerDom.offsetHeight;
       },
       windowResizeEvent(e) {
         let w = this.getWindowWidth();

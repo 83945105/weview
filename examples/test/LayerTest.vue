@@ -5,6 +5,7 @@
       :width="50"
       :height="40"
       drag
+      resize
       :drag-out-the-screen="false"
       :show-header="true"
       :show-mask="true"
@@ -43,7 +44,7 @@
 
     <we-button @click="visible = true">使用组件打开弹层</we-button>
     <we-button @click="visible2 = true">使用组件打开弹层2</we-button>
-    <we-button @click="$layer({target:'#dom1', drag: true, height: 400})">使用$layer打开弹层</we-button>
+    <we-button @click="$layer({target:'#dom1', drag: true, resize: true, height: 400})">使用$layer打开弹层</we-button>
     <div id="dom1" style="display: none">
       <div style="width: 5000px;height: 100px;">+4566+46464646</div>
       <div style="width: 5000px;height: 100px;">+4566+46464646</div>
