@@ -21,6 +21,15 @@
             <we-button type="primary" @click="handleClickConfirmButton">{{confirmButtonText}}</we-button>
           </slot>
         </div>
+
+        <div class="we-layer-drag drag-up-left"></div>
+        <div class="we-layer-drag drag-up"></div>
+        <div class="we-layer-drag drag-up-right"></div>
+        <div class="we-layer-drag drag-left"></div>
+        <div class="we-layer-drag drag-right"></div>
+        <div class="we-layer-drag drag-down-left"></div>
+        <div class="we-layer-drag drag-down"></div>
+        <div class="we-layer-drag drag-down-right"></div>
       </div>
     </animation>
   </div>

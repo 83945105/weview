@@ -27,6 +27,70 @@
   box-shadow:0 6px 18px 2px rgba(0,0,0,.2);
   color:@color-text-1;
 
+  &-drag{
+    position:absolute;
+    z-index:999;
+    background-color: transparent;
+
+    &.drag-up-left{
+      top:-2px;
+      left:-2px;
+      height:5px;
+      width:5px;
+      cursor:nw-resize;
+    }
+    &.drag-up{
+      top:-2px;
+      right:2px;
+      left:2px;
+      height:5px;
+      cursor:s-resize;
+    }
+    &.drag-up-right{
+      top:-2px;
+      right:-2px;
+      height:5px;
+      width:5px;
+      cursor:ne-resize;
+    }
+    &.drag-left{
+      top:2px;
+      bottom:2px;
+      left:-5px;
+      width:5px;
+      cursor:e-resize;
+    }
+    &.drag-right{
+      top:2px;
+      bottom:2px;
+      right:-5px;
+      width:5px;
+      cursor:e-resize;
+    }
+
+    &.drag-down-left{
+      bottom:-2px;
+      left:-2px;
+      height:5px;
+      width:5px;
+      cursor:ne-resize;
+    }
+    &.drag-down{
+      bottom:-2px;
+      right:5px;
+      left:2px;
+      height:5px;
+      cursor:s-resize;
+    }
+    &.drag-down-right{
+      bottom:-2px;
+      right:-2px;
+      height:5px;
+      width:5px;
+      cursor:nw-resize;
+    }
+  }
+
   &-frame{
     position:fixed;
     top:auto;
