@@ -153,13 +153,13 @@
 
     computed: {
       _width() {
-        return this.layerWidth ? parseInt(`${this.layerWidth}`.replace(/[^0-9]/g, "")) : undefined;
+        return this.layerWidth ? parseFloat(`${this.layerWidth}`.replace(/[^0-9,.]/g, "")) : undefined;
       },
       __width() {
         return this._width ? this._width > 100 ? `${this._width}px` : `${this._width}%` : undefined;
       },
       _height() {
-        return this.layerHeight ? parseInt(`${this.layerHeight}`.replace(/[^0-9]/g, "")) : undefined;
+        return this.layerHeight ? parseFloat(`${this.layerHeight}`.replace(/[^0-9,.]/g, "")) : undefined;
       },
       __height() {
         return this._height ? this._height > 100 ? `${this._height}px` : `${this._height}%` : undefined;
