@@ -516,6 +516,8 @@
         document.removeEventListener('mousemove', this.documentResizeDownMousemoveEvent);
         this.layerDomWidth = this.layerDom.offsetWidth;
         this.layerDomHeight = this.layerDom.offsetHeight;
+        this.w = this.layerDom.offsetWidth;
+        this.h = this.layerDom.offsetHeight;
       },
       windowResizeEvent(e) {
         let w = this.getWindowWidth();
@@ -530,6 +532,8 @@
         }
       },
       animationBeforeEnter(el) {
+        this.layerWidth = this.width;
+        this.layerHeight = this.height;
         this.initLeftPosition(el.offsetWidth);
         this.initTopPosition(el.offsetHeight);
       },
