@@ -1,5 +1,6 @@
 import Layer from './src/Layer.vue';
 import $Layer from './src/layer.js';
+import LayerDirective from "./src/directive.js";
 
 const DefaultLayerOptions = {
   alias: '$layer'
@@ -10,6 +11,8 @@ const merge = require('webpack-merge');
 Layer.install = function (Vue, options = DefaultLayerOptions) {
 
   Vue.component(Layer.name, Layer);
+
+  Vue.use(LayerDirective);
 
   let opts = merge(DefaultLayerOptions, options);
 

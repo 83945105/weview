@@ -27,7 +27,6 @@
     <we-button @click="visible = true">使用组件打开弹层</we-button>
     <we-button @click="$layer({target:'#dom1', drag: true, height: 400})">使用$layer打开弹层</we-button>
     <div id="dom1" style="display: none">
-
       <div style="width: 5000px;height: 100px;">+4566+46464646</div>
       <div style="width: 5000px;height: 100px;">+4566+46464646</div>
       <div style="width: 5000px;height: 100px;">+4566+46464646</div>
@@ -40,6 +39,12 @@
     <we-button @click="alert">警告框</we-button>
     <we-button @click="showConfirm">确认框</we-button>
 
+    <div style="display: none">
+      666
+    </div>
+
+    <we-button @click="o.value = true">使用v-layer控制弹层</we-button>
+
   </div>
 </template>
 
@@ -49,8 +54,20 @@
 
     data() {
       return {
-        visible: false
+        visible: false,
+        o: {
+          value: false
+        }
       };
+    },
+
+    watch: {
+      'o.value': {
+        handler(v) {
+          console.log(v)
+        },
+        deep: true
+      }
     },
 
     methods: {

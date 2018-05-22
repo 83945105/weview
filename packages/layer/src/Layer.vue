@@ -1,7 +1,7 @@
 <template>
-  <div :class="[opacityClass]">
+  <div>
     <div v-if="visible && showMask" :class="[maskClass, maskBgClass, customMaskClass]" @click="maskClose"></div>
-    <animation :name="_animationName" @after-leave="animationAfterLeave">
+    <animation :name="_animationName" @before-enter="animationBeforeEnter" @after-leave="animationAfterLeave">
       <div v-show="visible" :class="[layerClass, customClass]" :style="style">
         <div v-if="showHeader" :class="[headerClass, dragClass]" @mousedown="mousedown">
           <slot name="header">
@@ -29,6 +29,7 @@
 <script>
 
   import Conf from '../../../src/mixins/conf.js';
+  import Global from '../../../src/mixins/global.js';
 
   import WeButton from '../../button/src/Button.vue';
   import WeIcon from '../../icon/src/Icon.vue';
@@ -44,21 +45,22 @@
 
     optionName: `layer`,
 
-    mixins: [Conf],
+    mixins: [Conf, Global],
 
     data() {
       return {
         visible: true,
-        opacity: !this.value,
         isDrag: false,
+        w: 0,
+        h: 0,
         x: -10000,
         y: -10000,
         layerDom: undefined,
         headerDom: undefined,
         footerDom: undefined,
 
-        windowWidth: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
-        windowHeight: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
+        windowWidth: this.getWindowWidth(),
+        windowHeight: this.getWindowHeight(),
 
         layerDomWidth: 0,
         layerDomHeight: 0,
@@ -171,9 +173,6 @@
           top: `${this.y}px`
         };
       },
-      opacityClass() {
-        return this.opacity ? `${this.prefixCls}-common-opacity` : undefined;
-      },
       maskClass() {
         return `${this.prefixCls}-layer-mask`;
       },
@@ -242,9 +241,6 @@
     watch: {
       value(v) {
         this.visible = v;
-      },
-      visible(v) {
-        this.$emit('input', v);
       }
     },
 
@@ -252,6 +248,7 @@
       close() {
         if (this.visible) {
           this.visible = false;
+          this.$emit('input', false);
           this.onClose && this.onClose();
           this.$emit('close');
         }
@@ -280,8 +277,8 @@
       handleClickConfirmButton(e) {
         this.$emit('click-confirm', e, this.close);
       },
-      initLeftPosition() {
-        this.layerDomWidth = this.layerDom.offsetWidth;
+      initLeftPosition(width) {
+        this.layerDomWidth = width ? width : this.w;
         if (this.left !== undefined) {
           this.x = this.left;
         } else if (this.position === 'center') {
@@ -304,8 +301,8 @@
           this.x = 0;
         }
       },
-      initTopPosition() {
-        this.layerDomHeight = this.layerDom.offsetHeight;
+      initTopPosition(height) {
+        this.layerDomHeight = height ? height : this.h;
         if (this.top !== undefined) {
           this.y = this.top;
         } else if (this.position === 'center') {
@@ -365,21 +362,22 @@
         }
       },
       windowResizeEvent(e) {
-        let w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-        let h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+        let w = this.getWindowWidth();
+        let h = this.getWindowHeight();
         if (this.windowWidth !== w) {
           this.windowWidth = w;
-          this.initLeftPosition();
+          this.initLeftPosition(this.layerDom.offsetWidth);
         }
         if (this.windowHeight !== h) {
           this.windowHeight = h;
-          this.initTopPosition();
+          this.initTopPosition(this.layerDom.offsetHeight);
         }
       },
+      animationBeforeEnter(el) {
+        this.initLeftPosition(el.offsetWidth);
+        this.initTopPosition(el.offsetHeight);
+      },
       animationAfterLeave(el) {
-        if (this.opacity) {
-          this.opacity = false;
-        }
         this.$emit('animationAfterLeave', el, this);
       }
     },
@@ -392,12 +390,12 @@
 
     mounted() {
       this.layerDom = this.$el.querySelector(`.${this.layerClass}`);
+      this.w = this.layerDom.offsetWidth;
+      this.h = this.layerDom.offsetHeight;
       this.headerDom = this.$el.querySelector(`.${this.headerClass}`);
       this.footerDom = this.$el.querySelector(`.${this.footClass}`);
       this.visible = false;
       this.$nextTick(() => {
-        this.initLeftPosition();
-        this.initTopPosition();
         this.visible = this.value;
       });
     },

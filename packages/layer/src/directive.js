@@ -1,10 +1,10 @@
-import {$Loading} from '../index.js';
+import {$Layer} from '../index.js';
 
-const LoadingDirective = {};
+const LayerDirective = {};
 
 const merge = require('webpack-merge');
 
-LoadingDirective.install = Vue => {
+LayerDirective.install = Vue => {
   if (Vue.prototype.$isServer) {
     return;
   }
@@ -18,6 +18,7 @@ LoadingDirective.install = Vue => {
   };
 
   const create = (el, binding) => {
+    console.log(el)
     let opts = {
       target: el
     };
@@ -34,17 +35,17 @@ LoadingDirective.install = Vue => {
       };
       opts = merge(opts, binding.modifiers);
     });
-    if(opts.value) {
-      el.vm = $Loading(opts);
-
+    if (opts.value) {
+      el.vm = $Layer(opts);
     }
   };
 
-  Vue.directive('loading', {
+  Vue.directive('layer', {
     bind(el, binding, vnode) {
       create(el, binding);
     },
-    update(el, binding, vnode, oldVnode) {
+    update(el, binding) {
+      console.log(binding)
       let v = false;
       typeCallback(binding.value, () => {
         v = binding.value.value || false;
@@ -54,6 +55,7 @@ LoadingDirective.install = Vue => {
       if (v) {
         create(el, binding);
       } else {
+        console.log(el)
         el.vm.close();
       }
     }
@@ -61,4 +63,4 @@ LoadingDirective.install = Vue => {
 
 };
 
-export default LoadingDirective;
+export default LayerDirective;
