@@ -1,7 +1,8 @@
 <template>
-  <animation :name="_animationName" @after-leave="animationAfterLeave">
+  <animation :name="_animationName" @before-enter="animationBeforeEnter" @after-leave="animationAfterLeave">
     <div v-show="visible"
          :class="[messageClass, messageBgClass, centerClass, customClass]"
+         :style="style"
          @mouseenter="clearTimer"
          @mouseleave="startTimer"
          role="alert"
@@ -21,7 +22,8 @@
 
 <script>
 
-  import Conf from '../../../src/mixins/conf';
+  import Conf from '../../../src/mixins/conf.js';
+  import Global from '../../../src/mixins/global.js';
 
   import {MessageType} from './message.js';
   import Icon from '../../icon/src/Icon.vue';
@@ -37,12 +39,16 @@
 
     componentName: `${Conf.prefixNameCls}Message`,
 
-    mixins: [Conf],
+    mixins: [Conf, Global],
 
     data() {
       return {
-        visible: false,
-        timer: undefined
+        visible: true,
+        timer: undefined,
+        w: 0,
+        h: 0,
+        x: -10000,
+        y: -10000
       };
     },
 
@@ -76,6 +82,12 @@
     computed: {
       typeKeys() {
         return Object.keys(MessageType);
+      },
+      style() {
+        return {
+          left: `${this.x}px`,
+          top: `${this.y}px`
+        };
       },
       messageClass() {
         return `${this.prefixCls}-message`;
@@ -126,7 +138,6 @@
         this.visible = v;
       },
       visible(v) {
-        this.$emit('input', v);
         if (v) {
           this.startTimer();
         } else {
@@ -139,6 +150,7 @@
       close() {
         if (this.visible) {
           this.visible = false;
+          this.$emit('input', false);
           this.onClose && this.onClose();
           this.$emit('close');
         }
@@ -168,6 +180,10 @@
         this.$destroy(true);
         this.$el.parentNode.removeChild(this.$el);
       },
+      animationBeforeEnter(el) {
+        this.x = (this.getWindowWidth() - (this.w ? this.w : el.offsetWidth)) / 2;
+        this.y = (this.getWindowHeight() - (this.h ? this.h : el.offsetHeight)) / 2;
+      },
       animationAfterLeave(el) {
         this.$emit('animationAfterLeave', el, this);
       }
@@ -175,7 +191,12 @@
 
     mounted() {
       document.addEventListener('keydown', this.EscClose);
-      this.visible = this.value;
+      this.w = this.$el.offsetWidth;
+      this.h = this.$el.offsetHeight;
+      this.visible = false;
+      this.$nextTick(() => {
+        this.visible = this.value;
+      });
     },
 
     beforeDestroy() {

@@ -26,7 +26,6 @@ const Layer = function (opts = {}) {
   if (Vue.prototype.$isServer) {
     return;
   }
-
   let target;
   if (isString(opts)) {
     opts = merge(Default, {
