@@ -505,7 +505,7 @@
         this.layerHeight = h;
       },
       documentMouseupEvent(e) {
-        if (!this.visible || !this.drag) {
+        if (!this.visible || (!this.drag && !this.resize)) {
           return;
         }
         document.body.className = document.body.className.replace(` ${this.prefixCls}-common-select-none`, "");
