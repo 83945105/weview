@@ -55,10 +55,6 @@
 
     <we-button @click="layer01">弹出指定文本</we-button>
 
-    <we-button @click="alert">警告框</we-button>
-    <we-button @click="showConfirm">确认框</we-button>
-
-
   </div>
 </template>
 
@@ -91,26 +87,6 @@
       },
       layer01() {
         this.$layer('<div style="color: red">这是一段HTML文本</div>')
-      },
-      alert() {
-        this.$alert({
-          title: '提示',
-          showHeader: true,
-          message: '<div style="color: red">这是一个警告内容</div>',
-          showClose: false,
-          confirmButtonText: '知道啦',
-          onClose() {
-            this.$message('警告框关闭');
-          }
-        });
-      },
-      showConfirm() {
-        this.$confirm({
-          message: '<div style="color: red">这是一个询问内容</div>',
-          clickConfirm(e, close) {
-            close();
-          }
-        });
       }
     },
 

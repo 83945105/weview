@@ -38,6 +38,14 @@ const webpackConfig = {
     libraryTarget: 'umd',
     umdNamedDefine: true
   },
+  externals: {
+    vue: {
+      root: 'Vue',
+      commonjs: 'vue',
+      commonjs2: 'vue',
+      amd: 'vue'
+    }
+  },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {

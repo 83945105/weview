@@ -67,9 +67,8 @@ const Confirm = function (opts) {
     };
   }
 
-  instance = $Layer({
-    ...opts,
-    render(h, props) {
+  if (!opts.render) {
+    opts.render = function (h) {
       return h('div', {
         style: {
           padding: '15px'
@@ -78,7 +77,11 @@ const Confirm = function (opts) {
           innerHTML: opts.message
         }
       });
-    }
+    };
+  }
+
+  instance = $Layer({
+    ...opts
   });
 
   return instance;

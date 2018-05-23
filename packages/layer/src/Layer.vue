@@ -6,7 +6,7 @@
         <div v-if="showHeader" :class="[headerClass, dragClass]" @mousedown="dragMousedown">
           <slot name="header">
             <div :class="[titleClass]">
-              <icon v-if="iconName" :name="iconName"></icon>
+              <icon v-if="iconName" :name="iconName" :type="iconType"></icon>
               <span>{{title}}</span>
             </div>
             <div v-if="showClose" :class="closeIconClass">
@@ -148,7 +148,8 @@
       },
       onClose: Function,
       animationName: String,
-      iconName: String
+      iconName: String,
+      iconType: String
     },
 
     computed: {
