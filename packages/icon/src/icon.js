@@ -12,6 +12,7 @@ export const IconName = [
   "arrow-right",
   "arrow-down",
 
+  "calendar",
   "caret-left",
   "caret-up",
   "caret-right",
