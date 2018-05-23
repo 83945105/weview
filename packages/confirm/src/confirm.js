@@ -87,4 +87,12 @@ const Confirm = function (opts) {
   return instance;
 };
 
+Confirm.close = function (target) {
+  $Layer.close(target);
+};
+
+Confirm.closeAll = function () {
+  $Layer.closeAll();
+};
+
 export default Confirm;
