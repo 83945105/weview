@@ -54,19 +54,19 @@
         "path": "/notice",
         "items": [
           {
-            "desc": "加载",
+            "desc": "加载特效",
             "name": "Loading",
             "path": "/loading"
-          },
-          {
-            "desc": "警告",
-            "name": "Alert",
-            "path": "/alert"
           },
           {
             "desc": "消息提示",
             "name": "Message",
             "path": "/message"
+          },
+          {
+            "desc": "警告框",
+            "name": "Alert",
+            "path": "/alert"
           },
           {
             "desc": "询问框",

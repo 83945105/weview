@@ -30,7 +30,7 @@ const Message = function (opts = {}) {
     });
   } else if (isObject(opts)) {
     opts = merge(Default, opts);
-  }else {
+  } else {
     opts = merge(Default, {});
   }
 

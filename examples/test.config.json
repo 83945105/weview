@@ -42,9 +42,19 @@
             "path": "/loadingTest"
           },
           {
-            "desc": "消息测试",
+            "desc": "消息提示测试",
             "name": "MessageTest",
             "path": "/messageTest"
+          },
+          {
+            "desc": "警告框测试",
+            "name": "AlertTest",
+            "path": "/alertTest"
+          },
+          {
+            "desc": "询问框测试",
+            "name": "ConfirmTest",
+            "path": "/confirmTest"
           }
         ]
       },
