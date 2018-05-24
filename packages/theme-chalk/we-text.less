@@ -60,40 +60,32 @@
   position:relative;
 
   &-prefix{
+    .mixin-horizontal-vertical;
     position:absolute;
-    top:0px;
-    left:0px;
-    height: @text-default-height;
-    line-height: @text-default-height;
-    width: calc(@text-default-height - 6px);
-    text-align: center;
+    top:0;
+    left:0;
+    bottom:0;
+    width: 30px;
   }
 
   &-suffix{
+    .mixin-horizontal-vertical;
     position:absolute;
     top:0px;
     right:0px;
-    height: @text-default-height;
-    line-height: @text-default-height;
-    width: calc(@text-default-height - 6px);
-    text-align: center;
+    bottom:0;
+    width: 30px;
   }
 
   &-large{
-    height: @text-large-height;
-    line-height: @text-large-height;
     font-size: @text-large-font-size;
   }
 
   &-small{
-    height: @text-small-height;
-    line-height: @text-small-height;
     font-size: @text-small-font-size;
   }
 
   &-mini{
-    height: @text-mini-height;
-    line-height: @text-mini-height;
     font-size: @text-mini-font-size;
   }
 
