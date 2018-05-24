@@ -91,7 +91,7 @@
 </template>
 
 <script>
-  import WeIcon from "../../packages/icon/src/icon.vue";
+  import WeIcon from '../../packages/icon/src/Icon.vue';
   import WeButton from "../../packages/button/src/Button";
   export default {
     components:{
