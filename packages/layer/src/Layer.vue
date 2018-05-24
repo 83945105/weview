@@ -6,10 +6,10 @@
         <div v-if="showHeader" :class="[headerClass, dragClass]" @mousedown="dragMousedown">
           <slot name="header">
             <div :class="[titleClass]">
-              <div :class="[titleIconClass]">
-                <icon v-if="iconName" :name="iconName" :type="iconType" :size="iconSize"></icon>
+              <div v-if="iconName" :class="[titleIconClass]">
+                <icon :name="iconName" :type="iconType" :size="iconSize"></icon>
               </div>
-              <div :class="[titleTextClass]">{{title}}</div>
+              <div :class="[titleTextClass]" :title="title">{{title}}</div>
             </div>
             <div v-if="showClose" :class="closeIconClass">
               <icon name="close" @click.native="close"></icon>

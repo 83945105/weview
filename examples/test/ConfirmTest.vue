@@ -16,7 +16,12 @@
         this.$confirm({
           message: '请选择一个',
           footerRender(h) {
-            return h('div', [
+            return h('div', {
+              style: {
+                textAlign: 'right',
+                padding: '3px'
+              }
+            }, [
               h('we-button', {
                 props: {
                   type: 'danger'
