@@ -81,6 +81,18 @@
             "path": "/layerTest"
           }
         ]
+      },
+      {
+        "desc": "数据测试",
+        "name": "DataTest",
+        "path": "/dataTest",
+        "items": [
+          {
+            "desc": "表格测试",
+            "name": "TableTest",
+            "path": "/tableTest"
+          }
+        ]
       }
     ]
   }

@@ -3,7 +3,7 @@
     :disabled="buttonDisabled"
     :autofocus="autofocus"
     :type="nativeType"
-    :class="[buttonClass, sizeClass, typeClass, plainClass, disabledClass, roundClass, circleClass]"
+    :class="[buttonClass, sizeClass, typeClass, plainClass, disabledClass, shapeClass]"
     @click="handleClick"
   >
     <icon v-if="showLeftIcon" :name="_iconName" :type="iconType" :loading="loading"></icon>
@@ -42,6 +42,7 @@
         default: 'button'
       },
       plain: Boolean,
+      shape: String,//rectangle round circle
       autofocus: Boolean,
       round: Boolean,
       circle: Boolean,
@@ -90,11 +91,17 @@
       _iconName() {
         return this.loading ? this.loadingIconName : this.iconName;
       },
-      roundClass(){
-        return this.round ? `is-round` : '';
-      },
-      circleClass(){
-        return this.circle ? `is-circle` : '';
+      shapeClass() {
+        switch (this.shape) {
+          case 'rectangle':
+            return 'is-rectangle';
+          case 'round':
+            return 'is-round';
+          case 'circle':
+            return 'is-circle';
+          default:
+            return undefined;
+        }
       }
     },
 

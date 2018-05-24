@@ -5,20 +5,20 @@
 
 .text-size(@height;@font-size;@border-radius){
   height: @height;
-  font-size:@font-size;
-  border-radius:@border-radius;
+  font-size: @font-size;
+  border-radius: @border-radius;
 }
 
 .text-color(@color; @background; @border){
-  background-color:tint(@background,50%);
-  border-color:@border;
-  color:@color;
+  background-color: tint(@background,50%);
+  border-color: @border;
+  color: @color;
 }
 
 .text-variant(@color; @background; @border){
-  background-color:tint(@background, 100%);
-  border-color:tint(@border, 50%);
-  color:@color;
+  background-color: tint(@background, 100%);
+  border-color: tint(@border, 50%);
+  color: @color;
 
   &.tac{
     text-align: center;
@@ -54,26 +54,26 @@
 
 .@{text-css-prefix}{
   .mixin-border-box;
-  width:180px;
+  width: 180px;
   display: inline-block;
   line-height:normal;
   position:relative;
 
   &-prefix{
     .mixin-horizontal-vertical;
-    position:absolute;
-    top:0;
-    left:0;
-    bottom:0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
     width: 30px;
   }
 
   &-suffix{
     .mixin-horizontal-vertical;
-    position:absolute;
-    top:0px;
-    right:0px;
-    bottom:0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
     width: 30px;
   }
 
@@ -93,19 +93,19 @@
     .mixin-border-box;
     .mixin-default;
     display: inline-block;
-    line-height:1;
-    white-space:nowrap;
+    line-height: 1;
+    white-space: nowrap;
     margin-bottom: 0;
-    width:100%;
+    width: 100%;
     font-weight: @text-font-weight;
     vertical-align: middle;
     touch-action: manipulation;
     background-image: none;
     border: 1px solid @text-default-border;
-    color:@text-default-color;
+    color: @text-default-color;
     padding:0 10px;
 
-    .text-size(@text-default-height;@text-default-font-size;@text-default-border-radius);
+    .text-size(@text-default-height; @text-default-font-size; @text-default-border-radius);
 
     &:focus {
       outline: 0;
@@ -124,16 +124,26 @@
     }
 
     &-prefix{
-      padding-left:30px;
+      padding-left: 30px;
     }
     &-suffix{
-      padding-right:30px;
+      padding-right: 30px;
+    }
+
+    &.is-rectangle{
+      -webkit-border-radius: 0;
+      border-radius: 0;
+    }
+
+    &.is-round{
+      -webkit-border-radius: 100px;
+      border-radius: 100px;
     }
 
     &-default{
-      background-color:@text-default-fill;
-      border-color:@text-default-border;
-      color:@text-default-color;
+      background-color: @text-default-fill;
+      border-color: @text-default-border;
+      color: @text-default-color;
 
       &.tac{
         text-align: center;
@@ -143,7 +153,7 @@
       }
 
       &:focus {
-        border-color:tint(@text-default-focus-border,60%);
+        border-color:tint(@text-default-focus-border, 60%);
       }
 
       &.is-disabled{
