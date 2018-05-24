@@ -9,7 +9,7 @@
               <div :class="[titleIconClass]">
                 <icon v-if="iconName" :name="iconName" :type="iconType" :size="iconSize"></icon>
               </div>
-              <div :class="[titleTextClass]">{{title}}</div>
+              <div :class="[titleTextClass]" :title="title">{{title}}</div>
             </div>
             <div v-if="showClose" :class="closeIconClass">
               <icon name="close" @click.native="close"></icon>
