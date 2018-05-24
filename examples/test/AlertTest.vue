@@ -41,7 +41,7 @@
                 type: 'primary'
               },
               style: {
-                margin: '15px 0 0 15px'
+                margin: '5px 5px'
               }
             }, '我来组成身体');
           },

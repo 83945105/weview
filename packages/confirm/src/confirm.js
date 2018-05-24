@@ -2,6 +2,7 @@ import Vue from 'vue';
 import $Layer from '../../layer/src/layer.js';
 import WeButton from '../../button/src/Button.vue';
 import {isObject, isString} from "../../../web/src/utils/util.js";
+import Conf from "../../../src/mixins/conf";
 
 const Default = {
   title: '确认',
@@ -13,7 +14,8 @@ const Default = {
   onClose: undefined,
   escCloseable: false,
   maskClosable: false,
-  iconName: 'help-circle-o'
+  iconName: 'help-circle-o',
+  footerAlign: 'right'
 };
 
 const merge = require('webpack-merge');
@@ -38,11 +40,21 @@ const Confirm = function (opts) {
   let instance;
 
   if (!opts.footerRender) {
+    let cls={};
+    cls[`${Conf.prefixCls}-layer-footer-inner`] = true;
+    if(opts.footerAlign === "right"){
+      cls[`${Conf.prefixCls}-layer-footer-inner tar`] = true;
+    }else if(opts.footerAlign === "center"){
+      cls[`${Conf.prefixCls}-layer-footer-inner tac`] = true;
+    }else if(opts.footerAlign === "left"){
+      cls[`${Conf.prefixCls}-layer-footer-inner tal`] = true;
+    }
+
     opts.footerRender = function (h) {
       let btn = [];
       btn.push(h(WeButton, {
         style: {
-          marginRight: '3px'
+          marginRight: '8px'
         },
         on: {
           click(e) {
@@ -63,7 +75,10 @@ const Confirm = function (opts) {
           }
         }
       }, opts.confirmButtonText));
-      return h('div', [btn]);
+      return h('div', {
+        'class': cls
+      },
+        [btn]);
     };
   }
 

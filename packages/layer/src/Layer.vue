@@ -6,8 +6,10 @@
         <div v-if="showHeader" :class="[headerClass, dragClass]" @mousedown="dragMousedown">
           <slot name="header">
             <div :class="[titleClass]">
-              <icon v-if="iconName" :name="iconName" :type="iconType"></icon>
-              <span>{{title}}</span>
+              <div :class="[titleIconClass]">
+                <icon v-if="iconName" :name="iconName" :type="iconType" :size="iconSize"></icon>
+              </div>
+              <div :class="[titleTextClass]">{{title}}</div>
             </div>
             <div v-if="showClose" :class="closeIconClass">
               <icon name="close" @click.native="close"></icon>
@@ -18,10 +20,12 @@
           <icon v-if="showClose && !showHeader" name="close" :class="deleteClass" @click.native="close"></icon>
           <slot :width="__width" :height="__contentHeight"></slot>
         </div>
-        <div v-if="showFooter" :class="[footClass, footAlignClass]">
+        <div v-if="showFooter" :class="[footerClass]">
           <slot name="footer">
-            <we-button @click="handleClickCancelButton">{{cancelButtonText}}</we-button>
-            <we-button type="primary" @click="handleClickConfirmButton">{{confirmButtonText}}</we-button>
+            <div :class="[footerInnerClass, footerAlignClass]">
+              <we-button @click="handleClickCancelButton" style="margin-right:5px;">{{cancelButtonText}}</we-button>
+              <we-button type="primary" @click="handleClickConfirmButton">{{confirmButtonText}}</we-button>
+            </div>
           </slot>
         </div>
 
@@ -149,7 +153,11 @@
       onClose: Function,
       animationName: String,
       iconName: String,
-      iconType: String
+      iconType: String,
+      iconSize: {
+        type: String,
+        default: "large"
+      }
     },
 
     computed: {
@@ -206,6 +214,12 @@
       titleClass() {
         return `${this.prefixCls}-layer-header-title`;
       },
+      titleIconClass() {
+        return `${this.prefixCls}-layer-header-title-icon`;
+      },
+      titleTextClass(){
+        return `${this.prefixCls}-layer-header-title-text`;
+      },
       closeIconClass() {
         return `${this.prefixCls}-layer-header-close`;
       },
@@ -215,18 +229,23 @@
       contentClass() {
         return `${this.prefixCls}-layer-content`;
       },
-      footClass() {
+      footerClass() {
         return `${this.prefixCls}-layer-footer`;
       },
       resizeClass() {
         return `${this.prefixCls}-layer-drag`;
       },
-      footAlignClass() {
+      footerInnerClass(){
+        return `${this.prefixCls}-layer-footer-inner`;
+      },
+      footerAlignClass() {
         switch (this.footerAlign) {
           case 'left':
             return 'tal';
           case 'center':
             return 'tac';
+          case 'right':
+            return 'tar';
           default:
             return undefined;
         }
@@ -554,7 +573,7 @@
       this.w = this.layerDom.offsetWidth;
       this.h = this.layerDom.offsetHeight;
       this.headerDom = this.$el.querySelector(`.${this.headerClass}`);
-      this.footerDom = this.$el.querySelector(`.${this.footClass}`);
+      this.footerDom = this.$el.querySelector(`.${this.footerClass}`);
       this.visible = false;
       this.$nextTick(() => {
         this.visible = this.value;

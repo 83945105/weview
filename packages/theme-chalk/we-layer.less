@@ -141,8 +141,6 @@
 
   &-header{
     height:46px;
-    line-height:46px;
-    padding:0px 15px;
     background-color:@layer-title-bg;
     border-bottom:1px solid @layer-border-color;
 
@@ -151,13 +149,27 @@
     }
 
     &-title{
-      .mixin-ellipsis;
+      .mixin-vertical;
       float:left;
-      max-width:85%;
+      max-width:75%;
+      margin-left:15px;
+      height:46px;
+
+      &-icon{
+        margin-right:5px;
+      }
+
+      &-text{
+        .mixin-ellipsis;
+        width:80%;
+      }
     }
     &-close{
+      .mixin-vertical;
+      height:46px;
       float:right;
       cursor:pointer;
+      margin-right:15px;
 
       &:hover{
         color:tint(@color-text-1,50%);
@@ -187,14 +199,20 @@
   }
 
   &-footer {
-    padding: 10px 15px;
-    text-align: right;
     background-color: @layer-bottom-bg;
-    &.tac {
-      text-align: center;
-    }
-    &.tal {
-      text-align: left;
+
+    &-inner{
+      padding: 10px 15px;
+
+      &.tac {
+        text-align: center;
+      }
+      &.tal {
+        text-align: left;
+      }
+      &.tar{
+        text-align: right;
+      }
     }
   }
 }

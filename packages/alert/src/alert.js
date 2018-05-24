@@ -11,6 +11,7 @@ const Default = {
   onClose: undefined,
   escCloseable: false,
   maskClosable: false,
+  footerAlign: 'right',
   iconName: 'warning-circle-o'
 };
 
@@ -36,8 +37,20 @@ const Alert = function (opts) {
   let instance;
 
   if (!opts.footerRender) {
+    let cls={};
+    cls[`${Conf.prefixCls}-layer-footer-inner`] = true;
+    if(opts.footerAlign === "right"){
+      cls[`${Conf.prefixCls}-layer-footer-inner tar`] = true;
+    }else if(opts.footerAlign === "center"){
+      cls[`${Conf.prefixCls}-layer-footer-inner tac`] = true;
+    }else if(opts.footerAlign === "left"){
+      cls[`${Conf.prefixCls}-layer-footer-inner tal`] = true;
+    }
+
     opts.footerRender = function (h) {
-      return h('div', [
+      return h('div', {
+        'class': cls
+      },[
         h(WeButton, {
           props: {
             type: 'primary'
