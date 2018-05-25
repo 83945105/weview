@@ -51,31 +51,52 @@
     <div class="first-title">圆角按钮示例</div>
     <div class="module-main">
       <div class="module-content">
-        <we-button circle icon-name="search-o"></we-button>
-        <we-button circle type="primary" icon-name="search-o"></we-button>
-        <we-button circle type="success" icon-name="search-o"></we-button>
-        <we-button circle type="info" icon-name="search-o"></we-button>
-        <we-button circle type="warning" icon-name="search-o"></we-button>
+        <we-button shape="circle" icon-name="search-o"></we-button>
+        <we-button shape="circle" type="primary" icon-name="search-o"></we-button>
+        <we-button shape="circle" type="success" icon-name="search-o"></we-button>
+        <we-button shape="circle" type="info" icon-name="search-o"></we-button>
+        <we-button shape="circle" type="warning" icon-name="search-o"></we-button>
       </div>
     </div>
     <div class="first-title">圆形按钮示例</div>
     <div class="module-main">
       <div class="module-content">
         <div>
-          <we-button round>默认按钮</we-button>
-          <we-button round type="primary">主要按钮</we-button>
-          <we-button round type="success">成功按钮</we-button>
-          <we-button round type="info">提示按钮</we-button>
-          <we-button round type="warning">警告按钮</we-button>
-          <we-button round type="danger">危险按钮</we-button>
+          <we-button shape="round">默认按钮</we-button>
+          <we-button type="primary" shape="round">主要按钮</we-button>
+          <we-button type="success" shape="round">成功按钮</we-button>
+          <we-button type="info" shape="round">提示按钮</we-button>
+          <we-button type="warning" shape="round">警告按钮</we-button>
+          <we-button type="danger" shape="round">危险按钮</we-button>
         </div>
         <div style="margin-top:15px;">
-          <we-button plain round>默认按钮</we-button>
-          <we-button type="primary" plain round>主要按钮</we-button>
-          <we-button type="success" plain round>成功按钮</we-button>
-          <we-button type="info" plain round>提示按钮</we-button>
-          <we-button type="warning" plain round>警告按钮</we-button>
-          <we-button type="danger" plain round>危险按钮</we-button>
+          <we-button shape="round" plain>默认按钮</we-button>
+          <we-button type="primary" shape="round" plain>主要按钮</we-button>
+          <we-button type="success" shape="round" plain>成功按钮</we-button>
+          <we-button type="info" shape="round" plain>提示按钮</we-button>
+          <we-button type="warning" shape="round" plain>警告按钮</we-button>
+          <we-button type="danger" shape="round" plain>危险按钮</we-button>
+        </div>
+      </div>
+    </div>
+    <div class="first-title">矩形按钮示例</div>
+    <div class="module-main">
+      <div class="module-content">
+        <div>
+          <we-button shape="rectangle">默认按钮</we-button>
+          <we-button type="primary" shape="rectangle">主要按钮</we-button>
+          <we-button type="success" shape="rectangle">成功按钮</we-button>
+          <we-button type="info" shape="rectangle">提示按钮</we-button>
+          <we-button type="warning" shape="rectangle">警告按钮</we-button>
+          <we-button type="danger" shape="rectangle">危险按钮</we-button>
+        </div>
+        <div style="margin-top:15px;">
+          <we-button shape="rectangle" plain>默认按钮</we-button>
+          <we-button type="primary" shape="rectangle" plain>主要按钮</we-button>
+          <we-button type="success" shape="rectangle" plain>成功按钮</we-button>
+          <we-button type="info" shape="rectangle" plain>提示按钮</we-button>
+          <we-button type="warning" shape="rectangle" plain>警告按钮</we-button>
+          <we-button type="danger" shape="rectangle" plain>危险按钮</we-button>
         </div>
       </div>
     </div>
@@ -96,10 +117,10 @@
           <we-button type="primary" size="mini" icon-name="search-o">超小按钮</we-button>
         </div>
         <div style="margin-top:15px;">
-          <we-button plain type="primary" size="large">大型按钮</we-button>
-          <we-button plain type="primary">默认尺寸</we-button>
-          <we-button plain type="primary" size="small">小型按钮</we-button>
-          <we-button plain type="primary" size="mini">超小按钮</we-button>
+          <we-button type="primary" size="large">大型按钮</we-button>
+          <we-button type="primary">默认尺寸</we-button>
+          <we-button type="primary" size="small">小型按钮</we-button>
+          <we-button type="primary" size="mini">超小按钮</we-button>
         </div>
       </div>
     </div>

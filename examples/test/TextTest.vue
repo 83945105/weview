@@ -2,6 +2,14 @@
   <div>
     <div class="mt15">
       <div class="we-text">
+        <input type="text" class="we-text-inner we-text-inner-default is-rectangle" placeholder="请输入文本" />
+      </div>
+      <div class="we-text">
+        <input type="text" class="we-text-inner we-text-inner-default is-round" placeholder="请输入文本" />
+      </div>
+    </div>
+    <div class="mt15">
+      <div class="we-text">
         <input type="text" class="we-text-inner we-text-inner-default" placeholder="请输入文本" />
       </div>
       <div class="we-text">
@@ -99,29 +107,16 @@
       weButton:WeButton
     },
 
-    name: "loading-test",
+    name: "text-test",
 
     data() {
       return {
-        loading: undefined,
-        instance: undefined,
-        vl: true,
-        o: {
-          value: false,
-          text: '玩命加载中'
-        }
+
       };
     },
 
     methods: {
-      handleClick() {
-        if (this.loading) {
-          this.loading = this.loading.close();
-          this.loading = undefined;
-        } else {
-          this.loading = this.$loading({target: '#loadingDom'});
-        }
-      }
+
     },
 
     created() {
