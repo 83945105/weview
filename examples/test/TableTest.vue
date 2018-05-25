@@ -2,23 +2,23 @@
   <div>
     <table class="we-table" cellpadding="0" cellspacing="0" border="1">
       <colgroup>
-        <col style="background-color:#ff0000"/>
-        <col style="background-color:#ff6600"/>
+        <col style="background-color:#ff0000" width="120px" />
+        <col style="background-color:#ff6600" width="120px" />
       </colgroup>
       <tr>
         <th>
-          <div class="cell">标题1</div>
+          <div class="we-table-cell">标题2</div>
         </th>
         <th>
-          <div class="cell">标题2</div>
+          <div class="we-table-cell">标题2</div>
         </th>
       </tr>
       <tr>
         <td>
-          <div class="cell">内容1</div>
+          <div class="we-table-cell">内容1</div>
         </td>
         <td>
-          <div class="cell">内容2</div>
+          <div class="we-table-cell">内容2</div>
         </td>
       </tr>
     </table>

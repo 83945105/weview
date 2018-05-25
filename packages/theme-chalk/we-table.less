@@ -17,14 +17,18 @@
   th{
     height: @table-th-row-height;
     background-color: @table-header-bg;
+    text-align: left;
+    color: @table-title-color;
   }
   td{
     height: @table-row-height;
     background-color: @table-content-bg;
+    color: @table-content-color;
   }
 
-  &.cell{
+  &-cell{
     .mixin-ellipsis;
     padding:0 10px;
+    width: 100%;
   }
 }
