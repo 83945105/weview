@@ -9,6 +9,7 @@
       <we-button @click="$alert({message: '........', showHeader: false, showClose: false})">木有头部和关闭按钮</we-button>
     </div>
     <div style="margin-top: 10px">
+      <we-button @click="renderAlertHeader">头部使用Render函数自定义</we-button>
       <we-button @click="renderAlert">头部、内容、文本使用Render函数自定义</we-button>
     </div>
     <div style="margin-top: 10px">
@@ -53,6 +54,17 @@
                 }
               }
             }, '我来组成底部');
+          }
+        });
+      },
+      renderAlertHeader() {
+        this.$alert({
+          headerRender(h) {
+            return h('div', {
+              style: {
+                marginTop: '10px'
+              }
+            }, '我是一个自定义标题');
           }
         });
       }
