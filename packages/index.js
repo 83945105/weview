@@ -8,7 +8,6 @@
 
 import TemplateDoc from '../web/packages/template-doc/index.js';
 import TemplateTest from '../web/packages/template-test/index.js';
-
 import Animation from './animation/index.js';
 import Button from './button/index.js';
 import Icon from './icon/index.js';
@@ -40,8 +39,8 @@ const components = [
 
 const install = function (Vue, options = {}) {
 
-  for (let component of components) {
-    component.install(Vue, options[component.optionName]);
+  for (let idx in components) {
+    components[idx].install(Vue, options[components[idx].optionName]);
   }
 
 };

@@ -42,7 +42,7 @@ const devWebpackConfig = {
     alias: {
       // 'vue$': 'vue/dist/vue.js',
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('examples'),
+      '@': resolve('examples')
     }
   },
   node: {

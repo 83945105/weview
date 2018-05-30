@@ -2,7 +2,7 @@ import Vue from 'vue';
 import $Layer from '../../layer/src/layer.js';
 import WeButton from '../../button/src/Button.vue';
 import {isObject, isString} from "../../../web/src/utils/util.js";
-import Conf from "../../../src/mixins/conf";
+import Conf from "../../src/mixins/conf";
 
 const Default = {
   title: '确认',

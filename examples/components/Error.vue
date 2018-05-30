@@ -1,9 +1,9 @@
 <template>
-  <router-view></router-view>
+  <h1>错误页面</h1>
 </template>
 
 <script>
   export default {
-    name: "component"
+    name: "error"
   }
 </script>

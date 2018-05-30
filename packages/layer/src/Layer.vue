@@ -44,8 +44,8 @@
 
 <script>
 
-  import Conf from '../../../src/mixins/conf.js';
-  import Global from '../../../src/mixins/global.js';
+  import Conf from '../../src/mixins/conf.js';
+  import Global from '../../src/mixins/global.js';
 
   import WeButton from '../../button/src/Button.vue';
   import WeIcon from '../../icon/src/Icon.vue';

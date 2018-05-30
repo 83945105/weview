@@ -22,8 +22,8 @@
 
 <script>
 
-  import Conf from '../../../src/mixins/conf.js';
-  import Global from '../../../src/mixins/global.js';
+  import Conf from '../../src/mixins/conf.js';
+  import Global from '../../src/mixins/global.js';
 
   import {MessageType} from './message.js';
   import Icon from '../../icon/src/Icon.vue';
