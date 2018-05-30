@@ -78,9 +78,7 @@ const Alert = function (opts) {
     };
   }
 
-  instance = $Layer({
-    ...opts
-  });
+  instance = $Layer(opts);
 
   return instance;
 };

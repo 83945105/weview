@@ -62,11 +62,9 @@ const Layer = function (opts = {}) {
 
   let vm = new Vue({
     render(h) {
+      opts.value = true;
       return h(WeLayer, {
-        props: {
-          value: true,
-          ...opts
-        },
+        props: opts,
         on: {
           animationAfterLeave(el, vm) {
             removeInstance(vm);

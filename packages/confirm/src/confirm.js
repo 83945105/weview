@@ -95,9 +95,7 @@ const Confirm = function (opts) {
     };
   }
 
-  instance = $Layer({
-    ...opts
-  });
+  instance = $Layer(opts);
 
   return instance;
 };

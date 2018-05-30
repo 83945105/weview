@@ -22,11 +22,7 @@ LayerDirective.install = Vue => {
       target: el
     };
     typeCallback(binding.value, () => {
-      opts = {
-        target: el,
-        ...binding.value
-      };
-      opts = merge(opts, binding.modifiers);
+      opts = merge({target: el}, binding.value, binding.modifiers);
     }, () => {
       opts = {
         target: el,
