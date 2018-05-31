@@ -2,59 +2,31 @@
  * Title:
  * Description:
  * author: 白超
- * date: 2018/4/19
+ * date: 2018/4/26
  * version: v1.0
  */
 
-import Animation from './animation/index.js';
-import Button from './button/index.js';
-import Icon from './icon/index.js';
-import Message from './message/index.js';
-import {$Message} from './message/index.js';
-import Loading from './loading/index.js';
-import {$Loading} from './loading/index.js';
-import Layer from './layer/index.js';
-import {$Layer} from './layer/index.js';
-import Alert from './alert/index.js';
-import {$Alert} from './alert/index.js';
-import Confirm from './confirm/index.js';
-import {$Confirm} from './confirm/index.js';
+import TemplateDoc from './template-doc/index.js';
+import TemplateTest from './template-test/index.js';
 
 const components = [
-  Animation,
-  Button,
-  Icon,
-  Message,
-  Loading,
-  Layer,
-  Alert,
-  Confirm
+  TemplateDoc,
+  TemplateTest
 ];
 
-const install = function (Vue, options = {}) {
+const install = function (Vue, opts = {}) {
 
-  for (let idx in components) {
-    components[idx].install(Vue, options[components[idx].optionName]);
-  }
+  components.map(component => Vue.component(component.name, component));
 
 };
 
 if (typeof window !== 'undefined' && window.Vue) {
-  install(window.Vue);
+  install(window.Vue)
 }
 
 export {
-  Animation,
-  Button,
-  Icon,
-  Message,
-  $Message,
-  Loading,
-  $Loading,
-  Layer,
-  $Layer,
-  $Alert,
-  $Confirm
+  TemplateDoc,
+  TemplateTest
 }
 
 export default install;

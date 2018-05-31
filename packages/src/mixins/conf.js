@@ -1,6 +1,6 @@
 import {toUpperCase, toHumpFormat} from '../utils/util.js';
 
-const projectPrefix = 'we';
+const projectPrefix = 'we-template';
 
 const prefixNameCls = toUpperCase(toHumpFormat(projectPrefix), 1);
 
