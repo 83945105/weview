@@ -8,12 +8,13 @@ const rm = require('rimraf');
 const path = require('path');
 const chalk = require('chalk');
 const webpack = require('webpack');
-const webpackConfig = require('./webpack.prod.entry.conf');
+const webpackConfig = require('./webpack.prod.wetemplate.theme.conf');
 
 const spinner = ora('building for production...');
 spinner.start();
 
-rm(path.join(path.resolve(__dirname, '../lib'), ''), err => {
+/*移除指定位置文件*/
+rm(path.join(path.resolve(__dirname, '../wetemplate/lib'), 'theme-chalk'), err => {
   if (err) throw err;
   webpack(webpackConfig, (err, stats) => {
     spinner.stop();

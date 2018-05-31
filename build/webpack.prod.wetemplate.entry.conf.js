@@ -22,10 +22,10 @@ const webpackConfig = {
   entry: {
     ...function () {
       let entries = {
-        index: './packages/index.js'
+        index: './wetemplate/packages/index.js'
       };
-      glob.sync(`./packages/*/index.js`).forEach(f => {
-        let name = f.match(new RegExp(`packages\/(\\S*)\/index.js`))[1];
+      glob.sync(`./wetemplate/packages/*/index.js`).forEach(f => {
+        let name = f.match(new RegExp(`wetemplate\/packages\/(\\S*)\/index.js`))[1];
         entries[`${name}`] = f;
       });
       return entries;
@@ -34,10 +34,10 @@ const webpackConfig = {
   context: path.resolve(__dirname, '../'),
   devtool: false,
   output: {
-    path: path.resolve(__dirname, '../lib'),
+    path: path.resolve(__dirname, '../wetemplate/lib'),
     filename: path.posix.join('', '[name].js'),
     publicPath: '/',
-    library: 'weview',
+    library: 'wetemplate',
     libraryTarget: 'umd',
     umdNamedDefine: true
   },
@@ -52,9 +52,7 @@ const webpackConfig = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      // 'vue$': 'vue/dist/vue.js',
-      // 'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('packages'),
+      '@': resolve('wetemplate/packages'),
     }
   },
   node: {
@@ -95,7 +93,7 @@ const webpackConfig = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('examples'), resolve('packages'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+        include: [resolve('wetemplate/packages'), resolve('node_modules/webpack-dev-server/client')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

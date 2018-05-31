@@ -1,15 +1,13 @@
 {
   "name": "weview",
-  "version": "0.4.2-dev",
+  "version": "0.4.3-dev",
   "description": "Tools based on Vue",
   "author": "wx_83945105 <18606167809@163.com>",
   "private": false,
   "main": "lib/index.js",
   "files": [
     "lib",
-    "web",
-    "packages",
-    "examples"
+    "packages"
   ],
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.examples.conf.js",
@@ -18,9 +16,12 @@
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
     "build:examples": "node build/build-examples.js",
-    "build:file": "node build/build-entry.js",
-    "build:theme": "node build/build-theme.js",
-    "build:all": "npm run build:file && npm run build:theme"
+    "build:weview-file": "node build/build-entry.js",
+    "build:weview-theme": "node build/build-theme.js",
+    "build:weview": "npm run build:weview-file && npm run build:weview-theme",
+    "build:wetemplate-file": "node build/build-wetemplate-entry.js",
+    "build:wetemplate-theme": "node build/build-wetemplate-theme.js",
+    "build:all": "npm run build:weview-file && npm run build:weview-theme && npm run build:wetemplate-file && npm run build:wetemplate-theme"
   },
   "repository": {
     "type": "git",

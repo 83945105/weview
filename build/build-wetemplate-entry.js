@@ -8,12 +8,12 @@ const rm = require('rimraf');
 const path = require('path');
 const chalk = require('chalk');
 const webpack = require('webpack');
-const webpackConfig = require('./webpack.prod.entry.conf');
+const webpackConfig = require('./webpack.prod.wetemplate.entry.conf');
 
 const spinner = ora('building for production...');
 spinner.start();
 
-rm(path.join(path.resolve(__dirname, '../lib'), ''), err => {
+rm(path.join(path.resolve(__dirname, '../wetemplate/lib'), ''), err => {
   if (err) throw err;
   webpack(webpackConfig, (err, stats) => {
     spinner.stop();
