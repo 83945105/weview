@@ -32,11 +32,9 @@ const components = [
 ];
 
 const install = function (Vue, options = {}) {
-
   for (let idx in components) {
     components[idx].install(Vue, options[components[idx].optionName]);
   }
-
 };
 
 if (typeof window !== 'undefined' && window.Vue) {

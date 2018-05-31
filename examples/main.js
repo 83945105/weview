@@ -11,7 +11,7 @@ import wetemplate from 'wetemplate';
 import 'wetemplate/lib/theme-chalk/index.css';
 Vue.use(wetemplate);
 
-import weview from '../lib/index.js';
+import weview from '../packages/index.js';
 import '../lib/theme-chalk/index.css';
 Vue.use(weview);
 
