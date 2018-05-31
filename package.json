@@ -46,7 +46,7 @@
     "cheerio": "^1.0.0-rc.2",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
-    "wetemplate": "0.0.2-dev"
+    "wetemplate": "0.0.3-dev"
   },
   "peerDependencies": {
     "vue": "^2.5.2",
