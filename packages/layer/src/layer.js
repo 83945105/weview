@@ -119,8 +119,8 @@ Layer.close = function (target) {
 };
 
 Layer.closeAll = function () {
-  for (let ist of instances) {
-    ist.close();
+  for (let idx in instances) {
+    instances[idx].close();
   }
 };
 

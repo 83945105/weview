@@ -16,8 +16,8 @@ Confirm.install = function (Vue, options = DefaultConfirmOptions) {
   if (typeof confirmAlias === 'string') {
     Vue.prototype[confirmAlias] = $Confirm;
   } else if (Array.isArray(confirmAlias)) {
-    for (let alias of confirmAlias) {
-      Vue.prototype[alias] = $Confirm;
+    for (let idx in confirmAlias) {
+      Vue.prototype[confirmAlias[idx]] = $Confirm;
     }
   } else {
     Vue.prototype[DefaultConfirmOptions.alias] = $Confirm;

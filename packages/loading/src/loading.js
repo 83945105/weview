@@ -112,8 +112,8 @@ Loading.close = function (target) {
 
 Loading.closeAll = function () {
   let is = [...instances];
-  for (let i of is) {
-    i.close();
+  for (let idx in is) {
+    is[idx].close();
   }
   globalInstance && globalInstance.close();
 };

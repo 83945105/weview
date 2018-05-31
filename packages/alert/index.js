@@ -16,8 +16,8 @@ Alert.install = function (Vue, options = DefaultAlertOptions) {
   if (typeof alertAlias === 'string') {
     Vue.prototype[alertAlias] = $Alert;
   } else if (Array.isArray(alertAlias)) {
-    for (let alias of alertAlias) {
-      Vue.prototype[alias] = $Alert;
+    for (let idx in alertAlias) {
+      Vue.prototype[alertAlias[idx]] = $Alert;
     }
   } else {
     Vue.prototype[DefaultAlertOptions.alias] = $Alert;

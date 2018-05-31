@@ -62,8 +62,8 @@ export function isExist(obj) {
 
 function ___paramsMatching(strings, numbers, booleans, objects, arrays, funs, nulls, undefineds, htmlElements, param) {
   if (isArray(param)) {
-    for (let p of param) {
-      __paramsMatching(strings, numbers, booleans, objects, arrays, funs, nulls, undefineds, htmlElements, p);
+    for (let idx in param) {
+      __paramsMatching(strings, numbers, booleans, objects, arrays, funs, nulls, undefineds, htmlElements, param[idx]);
     }
   } else if (isObject(param)) {
     for (let name in param) {
@@ -98,13 +98,14 @@ export function paramsMatching(matches = [], params = []) {
   if(!isArray(params)) {
     params = [params];
   }
-  for (let param of params) {
-    __paramsMatching(strings, numbers, booleans, objects, arrays, funs, nulls, undefineds, htmlElements, param);
+  for (let idx in params) {
+    __paramsMatching(strings, numbers, booleans, objects, arrays, funs, nulls, undefineds, htmlElements, params[idx]);
   }
 
   let opts = {};
 
-  for (let match of matches) {
+  for (let idx in matches) {
+    let match = matches[idx];
     if (isExist(objects[match.name])) {
       opts[match.name] = objects[match.name];
       continue;
@@ -162,7 +163,6 @@ export function paramsMatching(matches = [], params = []) {
     }
 
   }
-
   return opts;
 }
 

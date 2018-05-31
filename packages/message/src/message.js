@@ -142,8 +142,8 @@ Message.close = function (target) {
 };
 
 Message.closeAll = function () {
-  for (let ist of instances) {
-    ist.close();
+  for (let idx in instances) {
+    instances[idx].close();
   }
 };
 

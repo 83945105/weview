@@ -94,9 +94,9 @@
       },
       messageBgClass() {
         let cls = MessageType.default.cls;
-        for (let type of this.typeKeys) {
-          if (this.type === type) {
-            cls = MessageType[type].cls;
+        for (let idx in this.typeKeys) {
+          if (this.type === this.typeKeys[idx]) {
+            cls = MessageType[this.typeKeys[idx]].cls;
             break;
           }
         }

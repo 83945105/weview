@@ -20,8 +20,8 @@ Layer.install = function (Vue, options = DefaultLayerOptions) {
   if (typeof layerAlias === 'string') {
     Vue.prototype[layerAlias] = $Layer;
   } else if (Array.isArray(layerAlias)) {
-    for (let alias of layerAlias) {
-      Vue.prototype[alias] = $Layer;
+    for (let idx in layerAlias) {
+      Vue.prototype[layerAlias[idx]] = $Layer;
     }
   } else {
     Vue.prototype[DefaultLayerOptions.alias] = $Layer;

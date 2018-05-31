@@ -20,8 +20,8 @@ Loading.install = function (Vue, options = DefaultLoadingOptions) {
   if (typeof loadingAlias === 'string') {
     Vue.prototype[loadingAlias] = $Loading;
   } else if (Array.isArray(loadingAlias)) {
-    for (let alias of loadingAlias) {
-      Vue.prototype[alias] = $Loading;
+    for (let idx in loadingAlias) {
+      Vue.prototype[loadingAlias[idx]] = $Loading;
     }
   } else {
     Vue.prototype[DefaultLoadingOptions.alias] = $Loading;
