@@ -1,8 +1,10 @@
 import Vue from 'vue';
 import $Layer from '../../layer/src/layer.js';
 import WeButton from '../../button/src/Button.vue';
-import {isObject, isString} from "../../../web/src/utils/util.js";
-import Conf from "../../src/mixins/conf";
+import {isObject, isString} from "../../src/utils/util.js";
+import Conf from "../../src/mixins/conf.js";
+
+const merge = require('webpack-merge');
 
 const Default = {
   title: '确认',
@@ -17,8 +19,6 @@ const Default = {
   iconName: 'help-circle-o',
   footerAlign: 'right'
 };
-
-const merge = require('webpack-merge');
 
 const Confirm = function (opts) {
   if (Vue.prototype.$isServer) {

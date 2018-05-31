@@ -1,8 +1,8 @@
 import {$Layer} from '../index.js';
 
-const LayerDirective = {};
-
 const merge = require('webpack-merge');
+
+const LayerDirective = {};
 
 LayerDirective.install = Vue => {
   if (Vue.prototype.$isServer) {

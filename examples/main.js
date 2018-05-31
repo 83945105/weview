@@ -7,8 +7,12 @@ import router from './router'
 
 Vue.config.productionTip = false;
 
-import weview from '../lib/index.js';
+import wetemplate from '../wetemplate/lib/index.js';
+import '../wetemplate/lib/theme-chalk/index.css';
+Vue.use(wetemplate);
 
+import weview from '../lib/index.js';
+import '../lib/theme-chalk/index.css';
 Vue.use(weview);
 
 import DemoBlock from './components/demo-block';

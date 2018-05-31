@@ -1,10 +1,10 @@
 import $Alert from './src/alert.js';
 
+const merge = require('webpack-merge');
+
 const DefaultAlertOptions = {
   alias: '$alert'
 };
-
-const merge = require('webpack-merge');
 
 const Alert = {};
 

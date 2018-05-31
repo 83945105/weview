@@ -27,6 +27,22 @@ export default {
         parent.$emit.apply(parent, [eventName].concat(params));
       }
     },
+    dispatchRoot(componentName, eventName, params) {
+      let parent = this.$parent || this.$root;
+
+      let root;
+
+      while (parent) {
+        parent = parent.$parent;
+
+        if (parent && componentName === parent.$options.componentName) {
+          root = parent;
+        }
+      }
+      if (root) {
+        root.$emit.apply(root, [eventName].concat(params));
+      }
+    },
     broadcast(componentName, eventName, params) {
       broadcast.call(this, componentName, eventName, params);
     }

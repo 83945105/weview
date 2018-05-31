@@ -2,11 +2,11 @@ import Loading from './src/Loading.vue';
 import $Loading from './src/Loading.js';
 import LoadingDirective from './src/directive.js';
 
+const merge = require('webpack-merge');
+
 const DefaultLoadingOptions = {
   alias: '$loading'
 };
-
-const merge = require('webpack-merge');
 
 Loading.install = function (Vue, options = DefaultLoadingOptions) {
 

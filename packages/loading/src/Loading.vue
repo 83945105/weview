@@ -11,7 +11,7 @@
 
 <script>
 
-  import Conf from '../../src/mixins/conf';
+  import Conf from '../../src/mixins/conf.js';
 
   import Icon from '../../icon/src/Icon.vue';
   import Animation from '../../animation/src/Animation.vue';

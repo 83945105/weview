@@ -1,8 +1,8 @@
 import {$Loading} from '../index.js';
 
-const LoadingDirective = {};
-
 const merge = require('webpack-merge');
+
+const LoadingDirective = {};
 
 LoadingDirective.install = Vue => {
   if (Vue.prototype.$isServer) {

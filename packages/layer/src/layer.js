@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import WeLayer from './Layer.vue';
-import {isString} from "../../../web/src/utils/util.js";
-import {isObject} from "../../../web/src/utils/util";
+import {isString, isObject} from "../../src/utils/util.js";
 
 const merge = require('webpack-merge');
 

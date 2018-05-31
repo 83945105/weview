@@ -1,10 +1,10 @@
 import $Confirm from './src/confirm.js';
 
+const merge = require('webpack-merge');
+
 const DefaultConfirmOptions = {
   alias: '$confirm'
 };
-
-const merge = require('webpack-merge');
 
 const Confirm = {};
 

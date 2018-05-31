@@ -1,11 +1,11 @@
 import Message from './src/Message.vue';
 import $Message from './src/message.js';
 
+const merge = require('webpack-merge');
+
 const DefaultMessageOptions = {
   alias: '$message'
 };
-
-const merge = require('webpack-merge');
 
 Message.install = function (Vue, options = DefaultMessageOptions) {
 

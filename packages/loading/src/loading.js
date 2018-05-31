@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import WeLoading from './Loading.vue';
-import {isObject, isString} from "../../../web/src/utils/util";
+import {isObject, isString} from "../../src/utils/util.js";
 
 const merge = require('webpack-merge');
 
