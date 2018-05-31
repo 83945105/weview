@@ -7,13 +7,9 @@ import router from './router'
 
 Vue.config.productionTip = false;
 
-import weview from '../packages/index';
+import weview from '../lib/index.js';
 
 Vue.use(weview);
-
-import weweb from '../web/packages/index';
-
-Vue.use(weweb);
 
 import DemoBlock from './components/demo-block';
 

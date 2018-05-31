@@ -6,8 +6,6 @@
  * version: v1.0
  */
 
-import TemplateDoc from '../web/packages/template-doc/index.js';
-import TemplateTest from '../web/packages/template-test/index.js';
 import Animation from './animation/index.js';
 import Button from './button/index.js';
 import Icon from './icon/index.js';
@@ -23,10 +21,6 @@ import Confirm from './confirm/index.js';
 import {$Confirm} from './confirm/index.js';
 
 const components = [
-
-  TemplateDoc,
-  TemplateTest,
-
   Animation,
   Button,
   Icon,
@@ -50,10 +44,6 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export {
-
-  TemplateDoc,
-  TemplateTest,
-
   Animation,
   Button,
   Icon,

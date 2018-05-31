@@ -6,7 +6,6 @@
   "private": false,
   "main": "lib/index.js",
   "files": [
-    "src",
     "lib",
     "web",
     "packages",

@@ -46,7 +46,7 @@ import Error from '../components/Error.vue';
 export default new Router({
   routes: [{
     path: "/",
-    redirect: {name: 'Component'},
+    redirect: {name: 'Error'},
   }, {
     path: "/error",
     name: "Error",

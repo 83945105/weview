@@ -1,4 +1,4 @@
-import {toUpperCase, toHumpFormat} from '../utils/util';
+import {toUpperCase, toHumpFormat} from '../utils/util.js';
 
 const projectPrefix = 'we';
 
