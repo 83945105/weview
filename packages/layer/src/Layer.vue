@@ -24,7 +24,7 @@
           <slot name="footer">
             <div :class="[footerInnerClass, footerAlignClass]">
               <we-button @click="handleClickCancelButton" style="margin-right:5px;">{{cancelButtonText}}</we-button>
-              <we-button type="primary" @click="handleClickConfirmButton">{{confirmButtonText}}</we-button>
+              <we-button type="primary" :loading="confirmButtonLoading" @click="handleClickConfirmButton">{{confirmButtonText}}</we-button>
             </div>
           </slot>
         </div>
@@ -134,6 +134,7 @@
         type: String,
         default: '确定'
       },
+      confirmButtonLoading: Boolean,
       cancelButtonText: {
         type: String,
         default: '取消'
