@@ -96,9 +96,9 @@
       <we-button type="warning" @click="customLayer">自定义</we-button>
     </div>
     <div style="margin-top: 20px">
-      <we-button type="primary" @click="$layer({target: '#dom1', width: 50, height: 50, resizePosition: ['left'], drag: true})">只有左边可以缩放的弹层</we-button>
-      <we-button type="primary" @click="$layer({target: '#dom1', width: 50, height: 50, resizePosition: ['left', 'top'], drag: true})">只有左边和上边可以缩放的弹层</we-button>
-      <we-button type="primary" @click="$layer({target: '#dom1', width: 50, height: 50, resizePosition: ['left', 'right'], drag: true})">只有左边和右边可以缩放的弹层</we-button>
+      <we-button type="primary" @click="$layer({target: '#dom1', width: 50, height: 50, resizePosition: ['left']})">只有左边可以缩放的弹层</we-button>
+      <we-button type="primary" @click="$layer({target: '#dom1', width: 50, height: 50, resizePosition: ['left', 'top']})">只有左边和上边可以缩放的弹层</we-button>
+      <we-button type="primary" @click="$layer({target: '#dom1', width: 50, height: 50, resizePosition: ['left', 'right']})">只有左边和右边可以缩放的弹层</we-button>
     </div>
   </div>
 </template>
