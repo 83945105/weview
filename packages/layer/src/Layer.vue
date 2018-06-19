@@ -78,8 +78,8 @@
         isDrag: false,
         layerWidth: this.width,
         layerHeight: this.height,
-        w: 0,
-        h: 0,
+        layerDomWidthCache: 0,
+        layerDomHeightCache: 0,
         x: -10000,
         y: -10000,
         layerDom: undefined,
@@ -106,6 +106,14 @@
       },
       height: {
         type: [Number, String]
+      },
+      minWidth: {
+        type: Number,
+        default: 160
+      },
+      minHeight: {
+        type: Number,
+        default: 110
       },
       left: Number,
       top: Number,
@@ -384,7 +392,7 @@
         this.$emit('click-confirm', e, this.close);
       },
       initLeftPosition(width) {
-        this.layerDomWidth = width ? width : this.w;
+        this.layerDomWidth = width ? width : this.layerDomWidthCache;
         if (this.left !== undefined) {
           this.x = this.left;
         } else if (this.position === 'center') {
@@ -408,7 +416,7 @@
         }
       },
       initTopPosition(height) {
-        this.layerDomHeight = height ? height : this.h;
+        this.layerDomHeight = height ? height : this.layerDomHeightCache;
         if (this.top !== undefined) {
           this.y = this.top;
         } else if (this.position === 'center') {
@@ -527,9 +535,9 @@
           this.x = 0;
           return;
         }
-        if (e.clientX + 200 > this.x + this.layerDom.offsetWidth) {
-          this.layerWidth = 200;
-          this.x = this.x + this.layerDom.offsetWidth - 200;
+        if (e.clientX + this.minWidth > this.x + this.layerDom.offsetWidth) {
+          this.layerWidth = this.minWidth;
+          this.x = this.x + this.layerDom.offsetWidth - this.minWidth;
           return;
         }
         if (e.clientX < this.x) {
@@ -546,8 +554,8 @@
           return;
         }
         let w = e.clientX - this.x;
-        if (w < 200) {
-          this.layerWidth = 200;
+        if (w < this.minWidth) {
+          this.layerWidth = this.minWidth;
           return;
         }
         this.layerWidth = w;
@@ -559,9 +567,9 @@
           this.y = 0;
           return;
         }
-        if (e.clientY + 200 > this.y + this.layerDom.offsetHeight) {
-          this.layerHeight = 200;
-          this.y = this.y + this.layerDom.offsetHeight - 200;
+        if (e.clientY + this.minHeight > this.y + this.layerDom.offsetHeight) {
+          this.layerHeight = this.minHeight;
+          this.y = this.y + this.layerDom.offsetHeight - this.minHeight;
           return;
         }
         if (e.clientY < this.y) {
@@ -578,8 +586,8 @@
           return;
         }
         let h = e.clientY - this.y;
-        if (h < 200) {
-          this.layerHeight = 200;
+        if (h < this.minHeight) {
+          this.layerHeight = this.minHeight;
           return;
         }
         this.layerHeight = h;
@@ -596,8 +604,6 @@
         document.removeEventListener('mousemove', this.documentResizeBottomMousemoveEvent);
         this.layerDomWidth = this.layerDom.offsetWidth;
         this.layerDomHeight = this.layerDom.offsetHeight;
-        this.w = this.layerDom.offsetWidth;
-        this.h = this.layerDom.offsetHeight;
       },
       windowResizeEvent(e) {
         let w = this.getWindowWidth();
@@ -630,8 +636,8 @@
 
     mounted() {
       this.layerDom = this.$el.querySelector(`.${this.layerClass}`);
-      this.w = this.layerDom.offsetWidth;
-      this.h = this.layerDom.offsetHeight;
+      this.layerDomWidthCache = this.layerDom.offsetWidth;
+      this.layerDomHeightCache = this.layerDom.offsetHeight;
       this.headerDom = this.$el.querySelector(`.${this.headerClass}`);
       this.footerDom = this.$el.querySelector(`.${this.footerClass}`);
       this.visible = false;

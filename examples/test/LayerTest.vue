@@ -29,6 +29,7 @@
       resize
       :drag-out-the-screen="false"
       :show-header="true"
+      :show-footer="true"
       :show-mask="true"
       position="center"
       title="按住我可拖拽"
@@ -79,7 +80,7 @@
     <we-button @click="layer01">弹出指定文本</we-button>
 
     <div style="margin-top: 20px">
-      <we-button type="primary" @click="$layer({target: '#dom2', width: 600, height: 400})">中间弹出</we-button>
+      <we-button type="primary" @click="$layer({target: '#dom2', width: 600, height: 200})">中间弹出</we-button>
       <we-button type="primary" @click="$layer({target: '#dom2', width: 100, height: 400, position: 'top'})">上方弹出</we-button>
       <we-button type="primary" @click="$layer({target: '#dom2', width: 50, height: 100, position: 'right'})">右方弹出</we-button>
       <we-button type="primary" @click="$layer({target: '#dom2', width: 100, height: 30, position: 'bottom'})">下方弹出</we-button>
