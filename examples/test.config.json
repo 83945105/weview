@@ -32,6 +32,16 @@
         ]
       },
       {
+        "desc": "Form",
+        "name": "Form",
+        "path": "/form",
+        "items": [{
+          "desc": "单选按钮",
+          "name": "RadioTest",
+          "path": "/radioTest"
+        }]
+      },
+      {
         "desc": "通知测试",
         "name": "NoticeTest",
         "path": "/noticeTest",
