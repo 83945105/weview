@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import WeLayer from './Layer.vue';
-import {isString} from "../../../web/src/utils/util.js";
-import {isObject} from "../../../web/src/utils/util";
+import {isString, isObject} from "../../src/utils/util.js";
 
 const merge = require('webpack-merge');
 
@@ -62,11 +61,9 @@ const Layer = function (opts = {}) {
 
   let vm = new Vue({
     render(h) {
+      opts.value = true;
       return h(WeLayer, {
-        props: {
-          value: true,
-          ...opts
-        },
+        props: opts,
         on: {
           animationAfterLeave(el, vm) {
             removeInstance(vm);
@@ -122,8 +119,8 @@ Layer.close = function (target) {
 };
 
 Layer.closeAll = function () {
-  for (let ist of instances) {
-    ist.close();
+  for (let idx in instances) {
+    instances[idx].close();
   }
 };
 

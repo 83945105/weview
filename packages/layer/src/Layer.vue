@@ -24,19 +24,28 @@
           <slot name="footer">
             <div :class="[footerInnerClass, footerAlignClass]">
               <we-button @click="handleClickCancelButton" style="margin-right:5px;">{{cancelButtonText}}</we-button>
-              <we-button type="primary" @click="handleClickConfirmButton">{{confirmButtonText}}</we-button>
+              <we-button type="primary" :loading="confirmButtonLoading" @click="handleClickConfirmButton">
+                {{confirmButtonText}}
+              </we-button>
             </div>
           </slot>
         </div>
 
-        <div v-if="resize" :class="[resizeClass]" class="drag-up-left" @mousedown="resizeLeftUpMousedown"></div>
-        <div v-if="resize" :class="[resizeClass]" class="drag-up" @mousedown="resizeUpMousedown"></div>
-        <div v-if="resize" :class="[resizeClass]" class="drag-up-right" @mousedown="resizeRightUpMousedown"></div>
-        <div v-if="resize" :class="[resizeClass]" class="drag-left" @mousedown="resizeLeftMousedown"></div>
-        <div v-if="resize" :class="[resizeClass]" class="drag-right" @mousedown="resizeRightMousedown"></div>
-        <div v-if="resize" :class="[resizeClass]" class="drag-down-left" @mousedown="resizeLeftDownMousedown"></div>
-        <div v-if="resize" :class="[resizeClass]" class="drag-down" @mousedown="resizeDownMousedown"></div>
-        <div v-if="resize" :class="[resizeClass]" class="drag-down-right" @mousedown="resizeRightDownMousedown"></div>
+        <div v-if="resize || resizeLeftTop" :class="[resizeClass]" class="drag-up-left"
+             @mousedown="resizeLeftTopMousedown"></div>
+        <div v-if="resize || resizeTop" :class="[resizeClass]" class="drag-up" @mousedown="resizeTopMousedown"></div>
+        <div v-if="resize || resizeRightTop" :class="[resizeClass]" class="drag-up-right"
+             @mousedown="resizeRightTopMousedown"></div>
+        <div v-if="resize || resizeLeft" :class="[resizeClass]" class="drag-left"
+             @mousedown="resizeLeftMousedown"></div>
+        <div v-if="resize || resizeRight" :class="[resizeClass]" class="drag-right"
+             @mousedown="resizeRightMousedown"></div>
+        <div v-if="resize || resizeLeftBottom" :class="[resizeClass]" class="drag-down-left"
+             @mousedown="resizeLeftBottomMousedown"></div>
+        <div v-if="resize || resizeBottom" :class="[resizeClass]" class="drag-down"
+             @mousedown="resizeBottomMousedown"></div>
+        <div v-if="resize || resizeRightBottom" :class="[resizeClass]" class="drag-down-right"
+             @mousedown="resizeRightBottomMousedown"></div>
       </div>
     </animation>
   </div>
@@ -44,8 +53,8 @@
 
 <script>
 
-  import Conf from '../../../src/mixins/conf.js';
-  import Global from '../../../src/mixins/global.js';
+  import Conf from '../../src/mixins/conf.js';
+  import Global from '../../src/mixins/global.js';
 
   import WeButton from '../../button/src/Button.vue';
   import WeIcon from '../../icon/src/Icon.vue';
@@ -69,8 +78,8 @@
         isDrag: false,
         layerWidth: this.width,
         layerHeight: this.height,
-        w: 0,
-        h: 0,
+        layerDomWidthCache: 0,
+        layerDomHeightCache: 0,
         x: -10000,
         y: -10000,
         layerDom: undefined,
@@ -97,6 +106,14 @@
       },
       height: {
         type: [Number, String]
+      },
+      minWidth: {
+        type: Number,
+        default: 160
+      },
+      minHeight: {
+        type: Number,
+        default: 110
       },
       left: Number,
       top: Number,
@@ -127,6 +144,12 @@
       drag: Boolean,
       dragOutTheScreen: Boolean,
       resize: Boolean,
+      resizePosition: {
+        type: Array,
+        default() {
+          return [];
+        }
+      },
       resizeOutTheScreen: Boolean,
       customClass: String,
       customMaskClass: String,
@@ -134,6 +157,7 @@
         type: String,
         default: '确定'
       },
+      confirmButtonLoading: Boolean,
       cancelButtonText: {
         type: String,
         default: '取消'
@@ -217,7 +241,7 @@
       titleIconClass() {
         return `${this.prefixCls}-layer-header-title-icon`;
       },
-      titleTextClass(){
+      titleTextClass() {
         return `${this.prefixCls}-layer-header-title-text`;
       },
       closeIconClass() {
@@ -235,7 +259,7 @@
       resizeClass() {
         return `${this.prefixCls}-layer-drag`;
       },
-      footerInnerClass(){
+      footerInnerClass() {
         return `${this.prefixCls}-layer-footer-inner`;
       },
       footerAlignClass() {
@@ -275,6 +299,50 @@
         } else {
           return 'bounce';
         }
+      },
+      resizeLeft() {
+        for (let i in this.resizePosition) {
+          if (this.resizePosition[i] === 'left') {
+            return true;
+          }
+        }
+        return false;
+      },
+      resizeTop() {
+        for (let i in this.resizePosition) {
+          if (this.resizePosition[i] === 'top') {
+            return true;
+          }
+        }
+        return false;
+      },
+      resizeRight() {
+        for (let i in this.resizePosition) {
+          if (this.resizePosition[i] === 'right') {
+            return true;
+          }
+        }
+        return false;
+      },
+      resizeBottom() {
+        for (let i in this.resizePosition) {
+          if (this.resizePosition[i] === 'bottom') {
+            return true;
+          }
+        }
+        return false;
+      },
+      resizeLeftTop() {
+        return this.resizeLeft && this.resizeTop;
+      },
+      resizeRightTop() {
+        return this.resizeRight && this.resizeTop;
+      },
+      resizeLeftBottom() {
+        return this.resizeLeft && this.resizeBottom;
+      },
+      resizeRightBottom() {
+        return this.resizeRight && this.resizeBottom;
       }
     },
 
@@ -324,7 +392,7 @@
         this.$emit('click-confirm', e, this.close);
       },
       initLeftPosition(width) {
-        this.layerDomWidth = width ? width : this.w;
+        this.layerDomWidth = width ? width : this.layerDomWidthCache;
         if (this.left !== undefined) {
           this.x = this.left;
         } else if (this.position === 'center') {
@@ -348,7 +416,7 @@
         }
       },
       initTopPosition(height) {
-        this.layerDomHeight = height ? height : this.h;
+        this.layerDomHeight = height ? height : this.layerDomHeightCache;
         if (this.top !== undefined) {
           this.y = this.top;
         } else if (this.position === 'center') {
@@ -401,64 +469,64 @@
         }
       },
       resizeLeftMousedown(e) {
-        if (!this.visible || !this.resize) {
+        if (!this.visible || (!this.resize && !this.resizeLeft)) {
           return;
         }
         document.body.className += ` ${this.prefixCls}-common-select-none`;
         document.addEventListener('mousemove', this.documentResizeLeftMousemoveEvent);
       },
       resizeRightMousedown(e) {
-        if (!this.visible || !this.resize) {
+        if (!this.visible || (!this.resize && !this.resizeRight)) {
           return;
         }
         document.body.className += ` ${this.prefixCls}-common-select-none`;
         document.addEventListener('mousemove', this.documentResizeRightMousemoveEvent);
       },
-      resizeUpMousedown(e) {
-        if (!this.visible || !this.resize) {
+      resizeTopMousedown(e) {
+        if (!this.visible || (!this.resize && !this.resizeTop)) {
           return;
         }
         document.body.className += ` ${this.prefixCls}-common-select-none`;
-        document.addEventListener('mousemove', this.documentResizeUpMousemoveEvent);
+        document.addEventListener('mousemove', this.documentResizeTopMousemoveEvent);
       },
-      resizeDownMousedown(e) {
-        if (!this.visible || !this.resize) {
+      resizeBottomMousedown(e) {
+        if (!this.visible || (!this.resize && !this.resizeBottom)) {
           return;
         }
         document.body.className += ` ${this.prefixCls}-common-select-none`;
-        document.addEventListener('mousemove', this.documentResizeDownMousemoveEvent);
+        document.addEventListener('mousemove', this.documentResizeBottomMousemoveEvent);
       },
-      resizeLeftUpMousedown(e) {
-        if (!this.visible || !this.resize) {
+      resizeLeftTopMousedown(e) {
+        if (!this.visible || (!this.resize && !this.resizeLeftTop)) {
           return;
         }
         document.body.className += ` ${this.prefixCls}-common-select-none`;
         document.addEventListener('mousemove', this.documentResizeLeftMousemoveEvent);
-        document.addEventListener('mousemove', this.documentResizeUpMousemoveEvent);
+        document.addEventListener('mousemove', this.documentResizeTopMousemoveEvent);
       },
-      resizeRightUpMousedown(e) {
-        if (!this.visible || !this.resize) {
+      resizeRightTopMousedown(e) {
+        if (!this.visible || (!this.resize && !this.resizeRightTop)) {
           return;
         }
         document.body.className += ` ${this.prefixCls}-common-select-none`;
         document.addEventListener('mousemove', this.documentResizeRightMousemoveEvent);
-        document.addEventListener('mousemove', this.documentResizeUpMousemoveEvent);
+        document.addEventListener('mousemove', this.documentResizeTopMousemoveEvent);
       },
-      resizeLeftDownMousedown(e) {
-        if (!this.visible || !this.resize) {
+      resizeLeftBottomMousedown(e) {
+        if (!this.visible || (!this.resize && !this.resizeLeftBottom)) {
           return;
         }
         document.body.className += ` ${this.prefixCls}-common-select-none`;
         document.addEventListener('mousemove', this.documentResizeLeftMousemoveEvent);
-        document.addEventListener('mousemove', this.documentResizeDownMousemoveEvent);
+        document.addEventListener('mousemove', this.documentResizeBottomMousemoveEvent);
       },
-      resizeRightDownMousedown(e) {
-        if (!this.visible || !this.resize) {
+      resizeRightBottomMousedown(e) {
+        if (!this.visible || (!this.resize && !this.resizeRightBottom)) {
           return;
         }
         document.body.className += ` ${this.prefixCls}-common-select-none`;
         document.addEventListener('mousemove', this.documentResizeRightMousemoveEvent);
-        document.addEventListener('mousemove', this.documentResizeDownMousemoveEvent);
+        document.addEventListener('mousemove', this.documentResizeBottomMousemoveEvent);
       },
       documentResizeLeftMousemoveEvent(e) {
         e = e || window.event;
@@ -467,9 +535,9 @@
           this.x = 0;
           return;
         }
-        if (e.clientX + 200 > this.x + this.layerDom.offsetWidth) {
-          this.layerWidth = 200;
-          this.x = this.x + this.layerDom.offsetWidth - 200;
+        if (e.clientX + this.minWidth > this.x + this.layerDom.offsetWidth) {
+          this.layerWidth = this.minWidth;
+          this.x = this.x + this.layerDom.offsetWidth - this.minWidth;
           return;
         }
         if (e.clientX < this.x) {
@@ -486,22 +554,22 @@
           return;
         }
         let w = e.clientX - this.x;
-        if (w < 200) {
-          this.layerWidth = 200;
+        if (w < this.minWidth) {
+          this.layerWidth = this.minWidth;
           return;
         }
         this.layerWidth = w;
       },
-      documentResizeUpMousemoveEvent(e) {
+      documentResizeTopMousemoveEvent(e) {
         e = e || window.event;
         if (e.clientY < 0 && !this.resizeOutTheScreen) {
           this.layerHeight = this.y + this.layerDom.offsetHeight;
           this.y = 0;
           return;
         }
-        if (e.clientY + 200 > this.y + this.layerDom.offsetHeight) {
-          this.layerHeight = 200;
-          this.y = this.y + this.layerDom.offsetHeight - 200;
+        if (e.clientY + this.minHeight > this.y + this.layerDom.offsetHeight) {
+          this.layerHeight = this.minHeight;
+          this.y = this.y + this.layerDom.offsetHeight - this.minHeight;
           return;
         }
         if (e.clientY < this.y) {
@@ -511,33 +579,31 @@
         }
         this.y = e.clientY;
       },
-      documentResizeDownMousemoveEvent(e) {
+      documentResizeBottomMousemoveEvent(e) {
         e = e || window.event;
         if (e.clientY > this.windowHeight && !this.resizeOutTheScreen) {
           this.layerHeight = this.windowHeight - this.y;
           return;
         }
         let h = e.clientY - this.y;
-        if (h < 200) {
-          this.layerHeight = 200;
+        if (h < this.minHeight) {
+          this.layerHeight = this.minHeight;
           return;
         }
         this.layerHeight = h;
       },
       documentMouseupEvent(e) {
-        if (!this.visible || (!this.drag && !this.resize)) {
+        if (!this.visible) {
           return;
         }
         document.body.className = document.body.className.replace(` ${this.prefixCls}-common-select-none`, "");
         document.removeEventListener('mousemove', this.documentDragMousemoveEvent);
         document.removeEventListener('mousemove', this.documentResizeLeftMousemoveEvent);
         document.removeEventListener('mousemove', this.documentResizeRightMousemoveEvent);
-        document.removeEventListener('mousemove', this.documentResizeUpMousemoveEvent);
-        document.removeEventListener('mousemove', this.documentResizeDownMousemoveEvent);
+        document.removeEventListener('mousemove', this.documentResizeTopMousemoveEvent);
+        document.removeEventListener('mousemove', this.documentResizeBottomMousemoveEvent);
         this.layerDomWidth = this.layerDom.offsetWidth;
         this.layerDomHeight = this.layerDom.offsetHeight;
-        this.w = this.layerDom.offsetWidth;
-        this.h = this.layerDom.offsetHeight;
       },
       windowResizeEvent(e) {
         let w = this.getWindowWidth();
@@ -570,8 +636,8 @@
 
     mounted() {
       this.layerDom = this.$el.querySelector(`.${this.layerClass}`);
-      this.w = this.layerDom.offsetWidth;
-      this.h = this.layerDom.offsetHeight;
+      this.layerDomWidthCache = this.layerDom.offsetWidth;
+      this.layerDomHeightCache = this.layerDom.offsetHeight;
       this.headerDom = this.$el.querySelector(`.${this.headerClass}`);
       this.footerDom = this.$el.querySelector(`.${this.footerClass}`);
       this.visible = false;

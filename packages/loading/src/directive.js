@@ -1,8 +1,8 @@
 import {$Loading} from '../index.js';
 
-const LoadingDirective = {};
-
 const merge = require('webpack-merge');
+
+const LoadingDirective = {};
 
 LoadingDirective.install = Vue => {
   if (Vue.prototype.$isServer) {
@@ -22,11 +22,7 @@ LoadingDirective.install = Vue => {
       target: el
     };
     typeCallback(binding.value, () => {
-      opts = {
-        target: el,
-        ...binding.value
-      };
-      opts = merge(opts, binding.modifiers);
+      opts = merge({target: el}, binding.value, binding.modifiers);
     }, () => {
       opts = {
         target: el,
@@ -34,7 +30,7 @@ LoadingDirective.install = Vue => {
       };
       opts = merge(opts, binding.modifiers);
     });
-    if(opts.value) {
+    if (opts.value) {
       el.vm = $Loading(opts);
     }
   };

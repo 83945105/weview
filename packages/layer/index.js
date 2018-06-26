@@ -1,18 +1,15 @@
 import Layer from './src/Layer.vue';
 import $Layer from './src/layer.js';
-import LayerDirective from "./src/directive.js";
+
+const merge = require('webpack-merge');
 
 const DefaultLayerOptions = {
   alias: '$layer'
 };
 
-const merge = require('webpack-merge');
-
 Layer.install = function (Vue, options = DefaultLayerOptions) {
 
   Vue.component(Layer.name, Layer);
-
-  // Vue.use(LayerDirective);
 
   let opts = merge(DefaultLayerOptions, options);
 
@@ -20,8 +17,8 @@ Layer.install = function (Vue, options = DefaultLayerOptions) {
   if (typeof layerAlias === 'string') {
     Vue.prototype[layerAlias] = $Layer;
   } else if (Array.isArray(layerAlias)) {
-    for (let alias of layerAlias) {
-      Vue.prototype[alias] = $Layer;
+    for (let idx in layerAlias) {
+      Vue.prototype[layerAlias[idx]] = $Layer;
     }
   } else {
     Vue.prototype[DefaultLayerOptions.alias] = $Layer;

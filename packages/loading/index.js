@@ -2,11 +2,11 @@ import Loading from './src/Loading.vue';
 import $Loading from './src/Loading.js';
 import LoadingDirective from './src/directive.js';
 
+const merge = require('webpack-merge');
+
 const DefaultLoadingOptions = {
   alias: '$loading'
 };
-
-const merge = require('webpack-merge');
 
 Loading.install = function (Vue, options = DefaultLoadingOptions) {
 
@@ -20,8 +20,8 @@ Loading.install = function (Vue, options = DefaultLoadingOptions) {
   if (typeof loadingAlias === 'string') {
     Vue.prototype[loadingAlias] = $Loading;
   } else if (Array.isArray(loadingAlias)) {
-    for (let alias of loadingAlias) {
-      Vue.prototype[alias] = $Loading;
+    for (let idx in loadingAlias) {
+      Vue.prototype[loadingAlias[idx]] = $Loading;
     }
   } else {
     Vue.prototype[DefaultLoadingOptions.alias] = $Loading;

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import WeLoading from './Loading.vue';
-import {isObject, isString} from "../../../web/src/utils/util";
+import {isObject, isString} from "../../src/utils/util.js";
 
 const merge = require('webpack-merge');
 
@@ -69,11 +69,9 @@ const Loading = function (opts = {}) {
 
   let vm = new Vue({
     render(h) {
+      opts.value = true;
       return h(WeLoading, {
-        props: {
-          value: true,
-          ...opts
-        },
+        props: opts,
         on: {
           animationAfterLeave(el, vm) {
             removeInstance(vm);
@@ -114,8 +112,8 @@ Loading.close = function (target) {
 
 Loading.closeAll = function () {
   let is = [...instances];
-  for (let i of is) {
-    i.close();
+  for (let idx in is) {
+    is[idx].close();
   }
   globalInstance && globalInstance.close();
 };

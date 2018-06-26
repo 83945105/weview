@@ -112,8 +112,6 @@
 
 
 <style lang="less" type="text/less">
-  @import "../../web/packages/theme-chalk/index";
-
   .adc-enter-active, .adc-leave-active {
     transition: all 2s ease-out;
   }

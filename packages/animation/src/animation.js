@@ -1,4 +1,4 @@
-import Conf from '../../../src/mixins/conf.js';
+import Conf from '../../src/mixins/conf.js';
 
 export const AnimationType = {
   bounce: {

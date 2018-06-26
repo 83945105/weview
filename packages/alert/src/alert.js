@@ -1,8 +1,10 @@
 import Vue from 'vue';
 import $Layer from '../../layer/src/layer.js';
 import WeButton from '../../button/src/Button.vue';
-import {isObject, isString} from "../../../web/src/utils/util";
-import Conf from "../../../src/mixins/conf";
+import {isObject, isString} from "../../src/utils/util.js";
+import Conf from "../../src/mixins/conf.js";
+
+const merge = require('webpack-merge');
 
 const Default = {
   title: '警告',
@@ -14,8 +16,6 @@ const Default = {
   footerAlign: 'right',
   iconName: 'warning-circle-o'
 };
-
-const merge = require('webpack-merge');
 
 const Alert = function (opts) {
   if (Vue.prototype.$isServer) {
@@ -78,9 +78,7 @@ const Alert = function (opts) {
     };
   }
 
-  instance = $Layer({
-    ...opts
-  });
+  instance = $Layer(opts);
 
   return instance;
 };

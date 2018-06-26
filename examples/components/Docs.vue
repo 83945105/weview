@@ -1,12 +1,12 @@
 <template>
-  <we-web-template-doc
+  <we-template-doc
     logo-text="weview"
     :logo-src="logoSrc"
     :left-data="docs"
     :header-data="pages"
     page-name="Component"
     @click-logo="$message.open('首页还没做好...')"
-  ></we-web-template-doc>
+  ></we-template-doc>
 </template>
 
 <script>
@@ -37,5 +37,4 @@
 </script>
 
 <style lang="less" type="text/less">
-  @import '../../web/packages/theme-chalk/index';
 </style>

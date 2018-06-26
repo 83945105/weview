@@ -1,8 +1,8 @@
 import {$Layer} from '../index.js';
 
-const LayerDirective = {};
-
 const merge = require('webpack-merge');
+
+const LayerDirective = {};
 
 LayerDirective.install = Vue => {
   if (Vue.prototype.$isServer) {
@@ -22,11 +22,7 @@ LayerDirective.install = Vue => {
       target: el
     };
     typeCallback(binding.value, () => {
-      opts = {
-        target: el,
-        ...binding.value
-      };
-      opts = merge(opts, binding.modifiers);
+      opts = merge({target: el}, binding.value, binding.modifiers);
     }, () => {
       opts = {
         target: el,

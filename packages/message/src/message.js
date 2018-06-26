@@ -1,7 +1,9 @@
 import Vue from 'vue';
 import WeMessage from './Message.vue';
-import Conf from '../../../src/mixins/conf.js';
-import {isObject, isString} from "../../../web/src/utils/util";
+import Conf from '../../src/mixins/conf.js';
+import {isObject, isString} from "../../src/utils/util.js";
+
+const merge = require('webpack-merge');
 
 let seed = 1;
 let instance;
@@ -17,7 +19,6 @@ function removeInstance(vm) {
 };
 
 const Default = {message: ''};
-const merge = require('webpack-merge');
 
 const Message = function (opts = {}) {
   if (Vue.prototype.$isServer) {
@@ -38,11 +39,9 @@ const Message = function (opts = {}) {
 
   let vm = new Vue({
     render(h) {
+      opts.value = true;
       return h(WeMessage, {
-        props: {
-          value: true,
-          ...opts
-        },
+        props: opts,
         on: {
           animationAfterLeave(el, vm) {
             removeInstance(vm);
@@ -143,8 +142,8 @@ Message.close = function (target) {
 };
 
 Message.closeAll = function () {
-  for (let ist of instances) {
-    ist.close();
+  for (let idx in instances) {
+    instances[idx].close();
   }
 };
 

@@ -1,7 +1,6 @@
 'use strict';
 const utils = require('./utils');
 const webpack = require('webpack');
-const config = require('../config');
 const vueLoaderConfig = require('./vue-loader.conf');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
@@ -12,8 +11,12 @@ function resolve(dir) {
 }
 
 const env = process.env.NODE_ENV === 'testing'
-  ? require('../config/test.env')
-  : require('../config/prod.env');
+  ? {
+    NODE_ENV: '"testing"'
+  }
+  : {
+    NODE_ENV: '"production"'
+  };
 
 const webpackConfig = {
   entry: {
@@ -80,7 +83,7 @@ const webpackConfig = {
   module: {
     rules: [
       ...utils.styleLoaders({
-        sourceMap: config.build.productionSourceMap,
+        sourceMap: false,
         extract: true,
         usePostCSS: true
       }),

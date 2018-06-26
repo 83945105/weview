@@ -29,6 +29,7 @@
       resize
       :drag-out-the-screen="false"
       :show-header="true"
+      :show-footer="true"
       :show-mask="true"
       position="center"
       title="按住我可拖拽"
@@ -79,7 +80,7 @@
     <we-button @click="layer01">弹出指定文本</we-button>
 
     <div style="margin-top: 20px">
-      <we-button type="primary" @click="$layer({target: '#dom2', width: 600, height: 400})">中间弹出</we-button>
+      <we-button type="primary" @click="$layer({target: '#dom2', width: 600, height: 200})">中间弹出</we-button>
       <we-button type="primary" @click="$layer({target: '#dom2', width: 100, height: 400, position: 'top'})">上方弹出</we-button>
       <we-button type="primary" @click="$layer({target: '#dom2', width: 50, height: 100, position: 'right'})">右方弹出</we-button>
       <we-button type="primary" @click="$layer({target: '#dom2', width: 100, height: 30, position: 'bottom'})">下方弹出</we-button>
@@ -94,6 +95,11 @@
     <div style="margin-top: 20px">
       <we-button type="danger" @click="$layer({target: '#dom3', width: 50, height: 50, showHeader: false, showFooter: false})">可以没有头部、底部的弹层</we-button>
       <we-button type="warning" @click="customLayer">自定义</we-button>
+    </div>
+    <div style="margin-top: 20px">
+      <we-button type="primary" @click="$layer({target: '#dom1', width: 50, height: 50, resizePosition: ['left']})">只有左边可以缩放的弹层</we-button>
+      <we-button type="primary" @click="$layer({target: '#dom1', width: 50, height: 50, resizePosition: ['left', 'top']})">只有左边和上边可以缩放的弹层</we-button>
+      <we-button type="primary" @click="$layer({target: '#dom1', width: 50, height: 50, resizePosition: ['left', 'right']})">只有左边和右边可以缩放的弹层</we-button>
     </div>
   </div>
 </template>
