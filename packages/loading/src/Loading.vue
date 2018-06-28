@@ -31,7 +31,7 @@
     data() {
       return {
         visible: false,
-        parentPosition: undefined
+        parentStyle: undefined
       };
     },
 
@@ -116,8 +116,10 @@
     mounted() {
       this.$nextTick(() => {
         if (this.$el.parentNode) {
-          this.parentPosition = this.$el.parentNode.style.position;
+          console.log(this.$el.parentNode.getAttribute("style"));
+          this.parentStyle = this.$el.parentNode.getAttribute("style");
           this.$el.parentNode.style.position = 'relative';
+          this.$el.parentNode.style.overflow = 'hidden';
         }
         this.visible = this.value;
       });
@@ -125,7 +127,7 @@
 
     beforeDestroy() {
       if (this.$el.parentNode) {
-        this.$el.parentNode.style.position = this.parentPosition;
+        this.$el.parentNode.setAttribute("style",this.parentStyle);
       }
     }
 
