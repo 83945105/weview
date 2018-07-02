@@ -12,7 +12,7 @@ import 'wetemplate/lib/theme-chalk/index.css';
 Vue.use(wetemplate);
 
 import weview from '../packages/index.js';
-import '../lib/theme-chalk/index.css';
+// import '../lib/theme-chalk/index.css';
 Vue.use(weview);
 
 

@@ -35,3 +35,7 @@
     }
   }
 </script>
+
+<style lang="less" type="text/less">
+  @import "../../packages/theme-chalk/index";
+</style>

@@ -42,6 +42,16 @@
         }]
       },
       {
+        "desc": "Navigation",
+        "name": "Navigation",
+        "path": "/navigation",
+        "items": [{
+          "desc": "菜单",
+          "name": "MenuTest",
+          "path": "/menuTest"
+        }]
+      },
+      {
         "desc": "通知测试",
         "name": "NoticeTest",
         "path": "/noticeTest",
