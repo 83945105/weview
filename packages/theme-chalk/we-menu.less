@@ -3,15 +3,21 @@
 
 @menu-css-prefix: ~"@{css-prefix}menu";
 
-.menu-item-size(@height,@line-height){
-  height: @height;
-  line-height: @line-height;
+.menu-item-size(@padding-top,@font-size){
+  padding: @padding-top 0;
+  font-size: @font-size;
+  overflow: hidden;
 }
 
 .@{menu-css-prefix}{
+  position: fixed;
+  z-index: 9999;
   border: 1px solid @menu-border-color;
-  width: 100%;
-  box-shadow: 2px 2px 2px fade(@color-black, 40%);
+  background-color: @menu-item-bg-color;
+
+  &.is-shadow{
+    box-shadow: 2px 2px 2px fade(@color-black, 40%);
+  }
 
   &-item{
     clear: both;
@@ -19,75 +25,170 @@
     background-color: @menu-item-bg-color;
     color: @menu-item-fc-color;
     cursor: default;
-    .menu-item-size(@menu-item-height; @menu-item-line-height);
+    .menu-item-size(@menu-item-size; @menu-item-font-size);
 
     &:hover{
       background-color: @menu-item-bg-color-hover;
       color: @menu-item-fc-color-hover;
+
+      &.type-title{
+        background-color: #FFFFFF;
+      }
+    }
+
+    &:hover > &-quick{
+      color: @menu-item-fc-color-hover;
+    }
+
+    &:hover > &-icon{
+      color: @menu-item-fc-color-hover;
+    }
+
+    &.type-title{
+      .mixin-default;
+      padding: 3px 0;
+      color: @menu-item-type-title-color;
+    }
+
+    &-icon{
+      float: left;
+      width: 30px;
+      padding-top: 1%;
+      text-align: center;
+
+      &.checked{
+        color: transparent;
+      }
+      &.is-checked{
+        color: @color-primary;
+      }
+    }
+
+    &-text{
+      float: left;
+      max-width: 50%;
+      .mixin-ellipsis;
+
+      &.no-icon{
+        margin-left: 30px;
+      }
+    }
+
+    &-arrow{
+      width: 30px;
+      text-align: center;
+      float: right;
+      & i{
+        font-size: 10px;
+      }
+    }
+
+    &-quick{
+      .mixin-ellipsis;
+      float: right;
+      font-size: 10px;
+      max-width: 35%;
+      padding-right: 10px;
+      padding-top: 1.2%;
+      color: @menu-item-quick-color;
+    }
+
+    &-custom{
+      .mixin-ellipsis;
+      padding: 0 10px;
+    }
+
+    &-split{
+      height: 1px;
+      line-height: 1px;
+      font-size:0;
+      margin:0;
+      padding:0;
+      background-color: @menu-border-color-split;
+    }
+
+    &-scroll-btn{
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 14px;
+      line-height: 1.2;
+      z-index: 99;
+      text-align: center;
+      font-size: 12px;
+      font-family: Arial;
+      cursor: pointer;
+      background-color: @menu-item-bg-color;
+      color: @menu-item-fc-color;
+
+      &:hover{
+        background-color: @menu-item-bg-color-hover;
+        color: @menu-item-fc-color-hover;
+      }
+
+      &:active{
+        opacity: 0.6;
+      }
+
+      &.up{
+        top: 0;
+      }
+
+      &.down{
+        bottom: 0;
+      }
+    }
+
+    &.is-disabled{
+      background-color: #ffffff;
+      color: @menu-item-fc-disabled-color;
+
+      &:hover{
+        background-color: transparent;
+        color: @menu-item-fc-disabled-color;
+      }
+
+      &.type-title{
+        color: @menu-item-fc-disabled-color;
+      }
     }
   }
 
   &.sub{
-    position: absolute;
-    top: -1px;
-    right: -96%;
+    position: fixed;
+    top: 0;
     z-index: 99;
+    min-width: 180px;
+    overflow: hidden;
+  }
 
-    &-follow{
-      position: fixed;
-      min-width: 150px;
-    }
+  &.full{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    padding: 10px 0;
+    min-width: 180px;
+  }
+
+  &-content{
+    position: absolute;
+    top: 14px;
+    bottom: 14px;
+    left: 0;
+    right: 0;
+    overflow: hidden;
   }
 
   &.large &-item{
-    .menu-item-size(@menu-item-height-large; @menu-item-line-height-large);
+    .menu-item-size(@menu-item-size-large; @menu-item-font-size-large);
   }
 
   &.small &-item{
-    .menu-item-size(@menu-item-height-small; @menu-item-line-height-small);
+    .menu-item-size(@menu-item-size-small; @menu-item-font-size-small);
   }
 
   &.mini &-item{
-    .menu-item-size(@menu-item-height-mini; @menu-item-line-height-mini);
+    .menu-item-size(@menu-item-size-mini; @menu-item-font-size-mini);
   }
 
-  &-icon{
-    width: 30px;
-    text-align: center;
-    float: left;
-  }
-
-  &-text{
-    font-size: 14px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 30px;
-    right: 30px;
-    .mixin-ellipsis;
-  }
-
-  &-angle{
-    width: 30px;
-    text-align: center;
-    float: right;
-
-    & i{
-      font-size: 10px;
-    }
-  }
-
-  &-split{
-    height:1px;
-    background-color: @menu-border-color-split;
-  }
-
-  &-clear{
-    clear:both;
-    font-size:0;
-    margin:0;
-    padding:0;
-    height:0;
-    line-height:0;
-  }
 }
