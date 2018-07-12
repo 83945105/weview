@@ -3,18 +3,52 @@
 
 @radio-prefix-css: ~"@{css-prefix}radio";
 
+.radio-style-setting(@background-color,@border-color){
+  background-color: @background-color;
+  border: 1px solid @border-color;
+}
+
 .@{radio-prefix-css}{
   display: inline-block;
-  cursor: pointer;
   line-height: 1;
+  cursor: pointer;
   white-space: nowrap;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   outline: none;
 
-  &+.@{radio-prefix-css}{
+  & + .@{radio-prefix-css}{
     margin-left: 30px;
+  }
+
+  &.is-checked{
+    .@{radio-prefix-css}-input-inner{
+      .radio-style-setting(@radio-checked-color,@radio-checked-color);
+    }
+  }
+
+  &.is-disabled{
+    .@{radio-prefix-css}-input-inner {
+      cursor: not-allowed;
+      .radio-style-setting(@radio-disabled-color,@radio-border-color);
+      &::after{
+        background-color: @radio-disabled-color;
+      }
+    }
+    .@{radio-prefix-css}-label{
+      cursor: not-allowed;
+      color: @radio-disabled-font-color;
+    }
+
+    &.is-checked{
+      .@{radio-prefix-css}-input-inner{
+        .radio-style-setting(@radio-disabled-color,@radio-border-color);
+        &::after{
+          background-color: #cccccc;
+        }
+      }
+    }
   }
 
   &-input{
@@ -25,23 +59,17 @@
     position: relative;
     vertical-align: middle;
 
-    &.is-checked{
-      .@{radio-prefix-css}-input-inner{
-        background-color: @radio-checked-color;
-        border: 1px solid @radio-checked-color;
-      }
-    }
-
     &-inner{
       display: inline-block;
-      width: 14px;
-      height: 14px;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
       position: relative;
-      background-color: @radio-bg-color;
-      border: 1px solid @radio-border-color;
+      .radio-style-setting(@radio-bg-color,@radio-border-color);
+      transition: all .15s ease-in;
+      cursor: pointer;
 
-      &:after{
+      &::after{
         width: 6px;
         height: 6px;
         border-radius: 100%;
@@ -50,7 +78,6 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%,-50%) scale(1);
-        transition: transform .15s ease-in;
         background-color:  @radio-bg-color;
       }
     }
@@ -63,6 +90,7 @@
       left: 0;
       right: 0;
       z-index: -1;
+      margin: 0;
     }
   }
 

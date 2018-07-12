@@ -1,0 +1,69 @@
+@import "./src/common/var";
+@import "./src/common/mixins";
+@import "./src/mixins/button";
+
+@radio-button-prefix-css: ~"@{css-prefix}radio-button";
+
+.@{radio-button-prefix-css}{
+  position: relative;
+  display: inline-block;
+  outline: none;
+
+  &-inner{
+    position: relative;
+    display: inline-block;
+    line-height: 1;
+    cursor: pointer;
+    vertical-align: middle;
+    background-color: @button-default-fill;
+    border: 1px solid @button-default-border;
+    border-left: 0;
+    .mixin-wordwrap;
+    .mixin-border-box;
+    transition: all .2s ease-in;
+    .button-size(@button-default-padding;@button-default-font-size;0);
+  }
+
+  &:first-child .@{radio-button-prefix-css}-inner{
+    border-radius: 3px 0 0 3px;
+    border-left: 1px solid @button-default-border;
+  }
+  &:last-child .@{radio-button-prefix-css}-inner{
+    border-radius: 0 3px 3px 0;
+  }
+
+  &.is-checked{
+    .@{radio-button-prefix-css}-inner{
+      .button-color(@button-primary-color;@button-primary-fill;@button-primary-border);
+    }
+    .@{radio-button-prefix-css}-inner:first-child{
+      border-left: 0;
+    }
+  }
+
+  &-large{
+    .@{radio-button-prefix-css}-inner{
+      .button-size(@button-large-padding; @button-large-font-size; @button-large-border-radius);
+    }
+  }
+
+  &-small{
+    .@{radio-button-prefix-css}-inner {
+      .button-size(@button-small-padding; @button-small-font-size; @button-small-border-radius);
+    }
+  }
+
+  &-mini{
+    .@{radio-button-prefix-css}-inner{
+      .button-size(@button-mini-padding; @button-mini-font-size; @button-mini-border-radius);
+    }
+  }
+
+  &-original{
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: -1;
+  }
+}
