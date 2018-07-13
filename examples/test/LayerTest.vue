@@ -8,6 +8,7 @@
     <we-layer v-model="clickCloseLayer"
               :width="50"
               :height="50"
+              :z-index="500"
               @click-confirm="(e, close) => {
                 this.$confirm({
                   message: '确定要关闭吗？',
@@ -101,6 +102,34 @@
       <we-button type="primary" @click="$layer({target: '#dom1', width: 50, height: 50, resizePosition: ['left', 'top']})">只有左边和上边可以缩放的弹层</we-button>
       <we-button type="primary" @click="$layer({target: '#dom1', width: 50, height: 50, resizePosition: ['left', 'right']})">只有左边和右边可以缩放的弹层</we-button>
     </div>
+
+    <div class="we-layer" style="width: 50%; height: 50%; left: 400px; top: 201.5px; z-index: 501;">
+      <div class="we-layer-header"><div class="we-layer-header-title">
+        <div title="标题" class="we-layer-header-title-text">标题</div>
+      </div>
+      <div class="we-layer-header-icon-btn">
+        <div class="title-icon">
+          <i class="we-icon we-minimize we-icon-default"></i>
+        </div>
+         <div class="title-icon">
+           <i class="we-icon we-maximize we-icon-default"></i>
+         </div>
+        <div class="title-icon">
+        <i class="we-icon we-close we-icon-default"></i>
+        </div>
+      </div>
+      </div>
+      <div class="we-layer-content" style="height: 74.6898%;">
+        <div style="font-size: 20px;">点击确定按钮进行校验,校验成功后关闭弹层</div>
+      </div>
+      <div class="we-layer-footer">
+        <div class="we-layer-footer-inner tar">
+          <button type="button" class="we-button we-button-default" style="margin-right: 5px;"><span>取消</span></button>
+          <button type="button" class="we-button we-button-primary"><span>确定</span></button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 

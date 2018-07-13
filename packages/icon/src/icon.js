@@ -70,6 +70,9 @@ export const IconName = [
   "minus-circle-o",
   "minus-square",
   "minus-square-o",
+  "maximize",
+  "maximize-restore",
+  "minimize",
   "mobile-phone",
   "mobile-phone-o",
 

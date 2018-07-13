@@ -24,12 +24,16 @@
     .button-size(@button-default-padding;@button-default-font-size;0);
   }
 
-  &:first-child .@{radio-button-prefix-css}-inner{
+  &:first-child{
+    .@{radio-button-prefix-css}-inner{
     border-radius: 3px 0 0 3px;
     border-left: 1px solid @button-default-border;
+    }
   }
-  &:last-child .@{radio-button-prefix-css}-inner{
+  &:last-child{
+    .@{radio-button-prefix-css}-inner{
     border-radius: 0 3px 3px 0;
+    }
   }
 
   &.is-checked{
@@ -41,22 +45,19 @@
     }
   }
 
-  &-large{
-    .@{radio-button-prefix-css}-inner{
-      .button-size(@button-large-padding; @button-large-font-size; @button-large-border-radius);
-    }
+  &:hover{
+    color: @button-primary-fill;
+  }
+  &-large .@{radio-button-prefix-css}-inner{
+    .button-size(@button-large-padding; @button-large-font-size; 0);
   }
 
-  &-small{
-    .@{radio-button-prefix-css}-inner {
-      .button-size(@button-small-padding; @button-small-font-size; @button-small-border-radius);
-    }
+  &-small .@{radio-button-prefix-css}-inner{
+    .button-size(@button-small-padding; @button-small-font-size; 0);
   }
 
-  &-mini{
-    .@{radio-button-prefix-css}-inner{
-      .button-size(@button-mini-padding; @button-mini-font-size; @button-mini-border-radius);
-    }
+  &-mini .@{radio-button-prefix-css}-inner{
+    .button-size(@button-mini-padding; @button-mini-font-size; @button-mini-border-radius);
   }
 
   &-original{

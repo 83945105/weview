@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="visible && showMask" :class="[maskClass, maskBgClass, customMaskClass]" @click="maskClose"></div>
+    <div v-if="visible && showMask" :class="[maskClass, maskBgClass, customMaskClass]" :style="maskStyle" @click="maskClose"></div>
     <animation :name="_animationName" @before-enter="animationBeforeEnter" @after-leave="animationAfterLeave">
       <div v-show="visible" :class="[layerClass, customClass]" :style="style">
         <div v-if="showHeader" :class="[headerClass, dragClass]" @mousedown="dragMousedown">
@@ -11,8 +11,17 @@
               </div>
               <div :class="[titleTextClass]" :title="title">{{title}}</div>
             </div>
-            <div v-if="showClose" :class="closeIconClass">
-              <icon name="close" @click.native="close"></icon>
+            <div :class="iconBtnClass">
+              <div class="title-icon">
+                <icon name="minimize"></icon>
+              </div>
+              <div class="title-icon">
+                <icon name="maximize"></icon>
+                <!--<icon name="maximize-restore"></icon>-->
+              </div>
+              <div class="title-icon" v-if="showClose">
+                <icon name="close" @click.native="close"></icon>
+              </div>
             </div>
           </slot>
         </div>
@@ -106,6 +115,10 @@
       },
       height: {
         type: [Number, String]
+      },
+      zIndex: {
+        type: Number,
+        default: 19910405
       },
       minWidth: {
         type: Number,
@@ -215,12 +228,18 @@
         let fh = this.footerHeight;
         return `${(1 - hh / wh - fh / wh) * 100}%`;
       },
+      maskStyle(){
+        return {
+          zIndex: this.zIndex
+        }
+      },
       style() {
         return {
           width: this.__width,
           height: this.__height,
           left: `${this.x}px`,
-          top: `${this.y}px`
+          top: `${this.y}px`,
+          zIndex: this.zIndex + 1
         };
       },
       maskClass() {
@@ -243,6 +262,9 @@
       },
       titleTextClass() {
         return `${this.prefixCls}-layer-header-title-text`;
+      },
+      iconBtnClass() {
+        return `${this.prefixCls}-layer-header-icon-btn`;
       },
       closeIconClass() {
         return `${this.prefixCls}-layer-header-close`;

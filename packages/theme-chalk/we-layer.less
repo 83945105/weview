@@ -9,7 +9,7 @@
   bottom:0px;
   left:0px;
   right:0px;
-  z-index:9999;
+  z-index:@layer-mask-z-index;
   background-color:transparent;
 
   &-bg{
@@ -29,7 +29,7 @@
 
   &-drag{
     position:absolute;
-    z-index:999;
+    z-index:10000;
     background-color: transparent;
 
     &.drag-up-left{
@@ -165,21 +165,28 @@
         line-height: 46px;
       }
     }
-    &-close{
-      .mixin-vertical;
-      height:46px;
-      float:right;
-      cursor:pointer;
-      margin-right:15px;
 
-      &:hover{
-        color:tint(@color-text-1,50%);
-      }
+    &-icon-btn{
+      float: right;
+      margin-right: 5px;
 
-      &:active{
-        color:@color-text-1;
+      & .title-icon{
+        .mixin-vertical;
+        height:46px;
+        float: left;
+        cursor:pointer;
+        margin-right:15px;
+
+        &:hover{
+          color:tint(@color-text-1,50%);
+        }
+
+        &:active{
+          color:@color-text-1;
+        }
       }
     }
+
   }
 
   &-content{
