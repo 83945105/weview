@@ -33,7 +33,7 @@
         return `${this.prefixCls}-icon`;
       },
       nameClass() {
-        return `${this.prefixCls}-${this.name}`;
+        return `${this.prefixCls}-icon-${this.name}`;
       },
       typeClass() {
         return `${this.prefixCls}-icon-${this.type}`;

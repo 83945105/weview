@@ -26,6 +26,8 @@ export const IconName = [
   "crying-face-circle",
   "crying-face-o",
 
+  "edit",
+  "edit-o",
   "error-circle",
   "error-circle-o",
 
@@ -82,6 +84,13 @@ export const IconName = [
   "plus-square",
   "plus-square-o",
 
+  "recovery",
+  "recovery-o",
+  "revoke",
+  "revoke-o",
+
+  "save",
+  "save-o",
   "screen",
   "search",
   "search-minus",
@@ -89,6 +98,8 @@ export const IconName = [
   "search-o",
   "search-plus",
   "search-plus-o",
+  "settings",
+  "settings-o",
   "smiling-face-circle",
   "smiling-face-o",
   "sort",
@@ -96,6 +107,9 @@ export const IconName = [
   "sort-down",
   "success-circle",
   "success-circle-o",
+
+  "trash",
+  "trash-o",
 
   "unlock",
   "unlock-o",
