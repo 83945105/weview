@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div v-if="visible && showMask" :class="[maskClass, maskBgClass, customMaskClass]" :style="maskStyle" @click="maskClose"></div>
+    <div v-if="visible && showMask" :class="[maskClass, maskBgClass, customMaskClass]" :style="maskStyle"
+         @click="maskClose"></div>
     <animation :name="_animationName" @before-enter="animationBeforeEnter" @after-leave="animationAfterLeave">
       <div v-show="visible" :class="[layerClass, customClass]" :style="style">
         <div v-if="showHeader" :class="[headerClass, dragClass]" @mousedown="dragMousedown">
@@ -12,10 +13,10 @@
               <div :class="[titleTextClass]" :title="title">{{title}}</div>
             </div>
             <div :class="iconBtnClass">
-              <div class="title-icon">
+              <div class="title-icon" v-show="false">
                 <icon name="minimize"></icon>
               </div>
-              <div class="title-icon">
+              <div class="title-icon" v-show="false">
                 <icon name="maximize"></icon>
                 <!--<icon name="maximize-restore"></icon>-->
               </div>
@@ -42,7 +43,8 @@
 
         <div v-if="resize || resizeLeftTop" :class="[resizeClass]" class="drag-up-left"
              @mousedown="resizeLeftTopMousedown"></div>
-        <div v-if="resize || resizeTop" :class="[resizeClass]" class="drag-up" @mousedown="resizeTopMousedown"></div>
+        <div v-if="resize || resizeTop" :class="[resizeClass]" class="drag-up"
+             @mousedown="resizeTopMousedown"></div>
         <div v-if="resize || resizeRightTop" :class="[resizeClass]" class="drag-up-right"
              @mousedown="resizeRightTopMousedown"></div>
         <div v-if="resize || resizeLeft" :class="[resizeClass]" class="drag-left"
@@ -228,7 +230,7 @@
         let fh = this.footerHeight;
         return `${(1 - hh / wh - fh / wh) * 100}%`;
       },
-      maskStyle(){
+      maskStyle() {
         return {
           zIndex: this.zIndex
         }

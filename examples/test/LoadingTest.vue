@@ -9,7 +9,6 @@
     </div>
 
 
-
     <div id="loadingDom" style="width: 300px;height: 300px;border:1px solid #ee673c;margin-top:15px;"
          @click="handleClick">
       点我使用$loading开启加载特效
@@ -18,9 +17,10 @@
       </div>
     </div>
 
-    <div id="loadingDom2" style="width: 300px;height: 300px;border:1px solid #ee43e1;margin-top:15px;overflow-x:hidden;overflow-y: auto;">
+    <div id="loadingDom2"
+         style="width: 300px;height: 300px;border:1px solid #ee43e1;margin-top:15px;overflow-x:hidden;overflow-y: auto;">
       使用按钮开启加载特效
-        <div style="height:1000px"></div>
+      <div style="height:1000px"></div>
     </div>
 
     <we-button @click="instance = $loading({target: '#loadingDom2'})">开启特效</we-button>
@@ -47,6 +47,10 @@
       <we-button @click="$loading({target: '#loadingDom4'})">开启第二个</we-button>
       <we-button @click="$loading.closeAll()">关闭全部</we-button>
     </div>
+
+    <div style="margin-top: 20px">
+      <we-button type="danger" @click="fullscreenLoading">全屏loading</we-button>
+    </div>
   </div>
 </template>
 
@@ -70,7 +74,7 @@
         handler(v) {
           console.log(v)
         },
-        deep:true
+        deep: true
       }
     },
 
@@ -82,13 +86,19 @@
         } else {
           this.loading = this.$loading({target: '#loadingDom', animationName: 'fadeRight'});
         }
+      },
+      fullscreenLoading() {
+        let l = this.$loading();
+        setTimeout(() => {
+          l.close();
+        }, 3000);
       }
     },
 
     created() {
     },
 
-    mounted(){
+    mounted() {
 
     }
   }

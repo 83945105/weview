@@ -116,7 +116,6 @@
     mounted() {
       this.$nextTick(() => {
         if (this.$el.parentNode) {
-          console.log(this.$el.parentNode.getAttribute("style"));
           this.parentStyle = this.$el.parentNode.getAttribute("style");
           this.$el.parentNode.style.position = 'relative';
           this.$el.parentNode.style.overflow = 'hidden';
