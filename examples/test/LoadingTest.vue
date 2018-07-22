@@ -28,12 +28,6 @@
     <we-button @click="$loading.close(instance)">实例关闭</we-button>
     <we-button @click="$loading.close(instance.id)">ID关闭</we-button>
 
-    <div v-loading="o" style="width: 300px;height: 300px;border:1px solid #ee362e;margin-top:15px;">
-      使用v-loading开启加载特效
-    </div>
-    <we-button @click="o.value = true">开启</we-button>
-    <we-button @click="o.value = false">关闭</we-button>
-
     <div id="loadingDom3" style="width: 300px;height: 300px;border:1px solid #52ee47;margin-top:15px;">
       第一个
     </div>
@@ -51,6 +45,17 @@
     <div style="margin-top: 20px">
       <we-button type="danger" @click="fullscreenLoading">全屏loading</we-button>
     </div>
+
+    <div style="margin-top: 20px"></div>
+
+    <el-table v-loading="tableLoading" :height="500" :data="tableData" stripe border
+              style="overflow: inherit">
+      <el-table-column label="资源名称" column-key="name" prop="name" min-width="200" align="center"></el-table-column>
+    </el-table>
+    <div style="margin-top: 20px">
+      <we-button type="danger" @click="handleTableLoading">表格Loading</we-button>
+    </div>
+
   </div>
 </template>
 
@@ -65,17 +70,10 @@
         o: {
           value: false,
           text: '玩命加载中'
-        }
-      };
-    },
-
-    watch: {
-      'o.value': {
-        handler(v) {
-          console.log(v)
         },
-        deep: true
-      }
+        tableData: [],
+        tableLoading: false
+      };
     },
 
     methods: {
@@ -92,6 +90,22 @@
         setTimeout(() => {
           l.close();
         }, 3000);
+      },
+      timeoutCloseVLoading() {
+        this.o.value = true;
+        setTimeout(() => {
+          this.o.value = false;
+        }, 3000);
+      },
+      handleTableLoading() {
+        this.tableLoading = true;
+        setTimeout(() => {
+          let rows = [{
+            name: '1'
+          }];
+          this.tableData = rows;
+          this.tableLoading = false;
+        }, 1000);
       }
     },
 

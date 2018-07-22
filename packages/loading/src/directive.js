@@ -18,6 +18,9 @@ LoadingDirective.install = Vue => {
   };
 
   const create = (el, binding) => {
+    if (el.vm) {
+      return;
+    }
     let opts = {
       target: el
     };
@@ -40,16 +43,19 @@ LoadingDirective.install = Vue => {
       create(el, binding);
     },
     update(el, binding, vnode, oldVnode) {
-      let v = false;
-      typeCallback(binding.value, () => {
-        v = binding.value.value || false;
-      }, () => {
-        v = binding.value;
-      });
-      if (v) {
-        create(el, binding);
-      } else {
-        el.vm.close();
+      if (binding.oldValue !== binding.value) {
+        let v = false;
+        typeCallback(binding.value, () => {
+          v = binding.value.value || false;
+        }, () => {
+          v = binding.value;
+        });
+        if (v) {
+          create(el, binding);
+        } else {
+          el.vm && el.vm.close();
+          el.vm = undefined;
+        }
       }
     }
   });

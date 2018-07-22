@@ -19,7 +19,7 @@ function removeInstance(vm) {
   if (globalInstance && globalInstance.id === vm.id) {
     globalInstance = undefined;
   }
-};
+}
 
 const Default = {
   target: document.body
@@ -45,9 +45,7 @@ const Loading = function (opts = {}) {
     target = opts.target;
     if (isString(target)) {
       target = document.querySelector(`${target}`);
-    } else if (target instanceof HTMLElement) {
-      target = target;
-    } else {
+    } else if (!(target instanceof HTMLElement)) {
       target = undefined;
     }
     opts = merge(Default, opts, {

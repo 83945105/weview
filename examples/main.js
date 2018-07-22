@@ -11,6 +11,10 @@ import wetemplate from 'wetemplate';
 import 'wetemplate/lib/theme-chalk/index.css';
 Vue.use(wetemplate);
 
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
+
 import weview from '../packages/index.js';
 // import '../lib/theme-chalk/index.css';
 Vue.use(weview);
