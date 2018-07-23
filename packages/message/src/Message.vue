@@ -76,7 +76,11 @@
         type: String,
         default: 'left'
       },
-      animationName: String
+      animationName: String,
+      zIndex: {
+        type: Number,
+        default: 99999999
+      }
     },
 
     computed: {
@@ -86,7 +90,8 @@
       style() {
         return {
           left: `${this.x}px`,
-          top: `${this.y}px`
+          top: `${this.y}px`,
+          zIndex: this.zIndex
         };
       },
       messageClass() {

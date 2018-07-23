@@ -14,7 +14,8 @@ const Default = {
   escCloseable: false,
   maskClosable: false,
   footerAlign: 'right',
-  iconName: 'warning-circle-o'
+  iconName: 'warning-circle-o',
+  zIndex: 19920405
 };
 
 const Alert = function (opts) {
