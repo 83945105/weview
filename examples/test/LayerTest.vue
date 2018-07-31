@@ -5,6 +5,15 @@
       <div>这是一个普通的弹窗</div>
     </we-layer>
 
+    <we-layer v-model="normalRightLayer"
+              :width="40"
+              :height="100"
+              drag
+              position="right"
+    >
+      <div>组件方式弹出右侧</div>
+    </we-layer>
+
     <we-layer v-model="clickCloseLayer"
               :width="50"
               :height="50"
@@ -75,6 +84,7 @@
     </div>
 
     <we-button @click="normalLayer = !normalLayer">普通弹层</we-button>
+    <we-button @click="normalRightLayer = !normalRightLayer">组件右侧弹窗</we-button>
     <we-button @click="clickCloseLayer = !clickCloseLayer">可以点击确定按钮关闭的弹层</we-button>
     <we-button @click="visible = true">可拖拽可缩放的弹层</we-button>
     <we-button @click="$layer({target:'#dom1', drag: true, resize: true, height: 400})">使用$layer打开弹层</we-button>
@@ -82,25 +92,46 @@
 
     <div style="margin-top: 20px">
       <we-button type="primary" @click="$layer({target: '#dom2', width: 600, height: 200})">中间弹出</we-button>
-      <we-button type="primary" @click="$layer({target: '#dom2', width: 100, height: 400, position: 'top'})">上方弹出</we-button>
-      <we-button type="primary" @click="$layer({target: '#dom2', width: 50, height: 100, position: 'right'})">右方弹出</we-button>
-      <we-button type="primary" @click="$layer({target: '#dom2', width: 100, height: 30, position: 'bottom'})">下方弹出</we-button>
-      <we-button type="primary" @click="$layer({target: '#dom2', width: 100, height: 50, position: 'left'})">左方弹出</we-button>
+      <we-button type="primary" @click="$layer({target: '#dom2', width: 100, height: 400, position: 'top'})">上方弹出
+      </we-button>
+      <we-button type="primary" @click="$layer({target: '#dom2', width: 50, height: 100, position: 'right'})">右方弹出
+      </we-button>
+      <we-button type="primary" @click="$layer({target: '#dom2', width: 100, height: 30, position: 'bottom'})">下方弹出
+      </we-button>
+      <we-button type="primary" @click="$layer({target: '#dom2', width: 100, height: 50, position: 'left'})">左方弹出
+      </we-button>
     </div>
     <div style="margin-top: 20px">
-      <we-button type="primary" @click="$layer({target: '#dom2', width: 50, height: 50, position: 'left-top'})">左上角弹出</we-button>
-      <we-button type="primary" @click="$layer({target: '#dom2', width: 90, height: 90, position: 'right-top'})">右上角弹出</we-button>
-      <we-button type="primary" @click="$layer({target: '#dom2', width: 20, height: 30, position: 'right-bottom'})">右下角弹出</we-button>
-      <we-button type="primary" @click="$layer({target: '#dom2', width: 300, height: 30, position: 'left-bottom'})">左下角弹出</we-button>
+      <we-button type="primary" @click="$layer({target: '#dom2', width: 50, height: 50, position: 'left-top'})">左上角弹出
+      </we-button>
+      <we-button type="primary" @click="$layer({target: '#dom2', width: 90, height: 90, position: 'right-top'})">右上角弹出
+      </we-button>
+      <we-button type="primary" @click="$layer({target: '#dom2', width: 20, height: 30, position: 'right-bottom'})">
+        右下角弹出
+      </we-button>
+      <we-button type="primary" @click="$layer({target: '#dom2', width: 300, height: 30, position: 'left-bottom'})">
+        左下角弹出
+      </we-button>
     </div>
     <div style="margin-top: 20px">
-      <we-button type="danger" @click="$layer({target: '#dom3', width: 50, height: 50, showHeader: false, showFooter: false})">可以没有头部、底部的弹层</we-button>
+      <we-button type="danger"
+                 @click="$layer({target: '#dom3', width: 50, height: 50, showHeader: false, showFooter: false})">
+        可以没有头部、底部的弹层
+      </we-button>
       <we-button type="warning" @click="customLayer">自定义</we-button>
     </div>
     <div style="margin-top: 20px">
-      <we-button type="primary" @click="$layer({target: '#dom1', width: 50, height: 50, resizePosition: ['left']})">只有左边可以缩放的弹层</we-button>
-      <we-button type="primary" @click="$layer({target: '#dom1', width: 50, height: 50, resizePosition: ['left', 'top']})">只有左边和上边可以缩放的弹层</we-button>
-      <we-button type="primary" @click="$layer({target: '#dom1', width: 50, height: 50, resizePosition: ['left', 'right']})">只有左边和右边可以缩放的弹层</we-button>
+      <we-button type="primary" @click="$layer({target: '#dom1', width: 50, height: 50, resizePosition: ['left']})">
+        只有左边可以缩放的弹层
+      </we-button>
+      <we-button type="primary"
+                 @click="$layer({target: '#dom1', width: 50, height: 50, resizePosition: ['left', 'top']})">
+        只有左边和上边可以缩放的弹层
+      </we-button>
+      <we-button type="primary"
+                 @click="$layer({target: '#dom1', width: 50, height: 50, resizePosition: ['left', 'right']})">
+        只有左边和右边可以缩放的弹层
+      </we-button>
     </div>
   </div>
 </template>
@@ -112,6 +143,7 @@
     data() {
       return {
         normalLayer: false,
+        normalRightLayer: false,
         clickCloseLayer: false,
         visible: false,
         o: {

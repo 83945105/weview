@@ -125,8 +125,8 @@
     },
 
     beforeDestroy() {
-      if (this.$el.parentNode) {
-        this.$el.parentNode.setAttribute("style",this.parentStyle);
+      if (this.$el.parentNode && this.parentStyle) {
+        this.$el.parentNode.setAttribute("style", this.parentStyle);
       }
     }
 
