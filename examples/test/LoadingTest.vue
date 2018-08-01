@@ -8,8 +8,7 @@
       <we-loading :value="true" background="rgba(0,0,0,0.8)" text="玩命加载中" :loading-speed="1"></we-loading>
     </div>
 
-
-    <div id="loadingDom" style="width: 300px;height: 300px;border:1px solid #ee673c;margin-top:15px;"
+    <div id="loadingDom"
          @click="handleClick">
       点我使用$loading开启加载特效
       <div style="height: 200px; overflow: auto">

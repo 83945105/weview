@@ -125,8 +125,12 @@
     },
 
     beforeDestroy() {
-      if (this.$el.parentNode && this.parentStyle) {
-        this.$el.parentNode.setAttribute("style", this.parentStyle);
+      if (this.$el.parentNode) {
+        if(this.parentStyle) {
+          this.$el.parentNode.setAttribute("style", this.parentStyle);
+        }else {
+          this.$el.parentNode.removeAttribute("style");
+        }
       }
     }
 
