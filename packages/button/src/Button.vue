@@ -26,6 +26,8 @@
 
     componentName: `${Conf.prefixNameCls}Button`,
 
+    optionName: 'button',
+
     mixins: [Conf],
 
     props: {

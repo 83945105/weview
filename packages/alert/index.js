@@ -6,7 +6,9 @@ const DefaultAlertOptions = {
   alias: '$alert'
 };
 
-const Alert = {};
+const Alert = {
+  optionName: 'alert'
+};
 
 Alert.install = function (Vue, options = DefaultAlertOptions) {
 

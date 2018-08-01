@@ -6,7 +6,9 @@ const DefaultConfirmOptions = {
   alias: '$confirm'
 };
 
-const Confirm = {};
+const Confirm = {
+  optionName: 'confirm'
+};
 
 Confirm.install = function (Vue, options = DefaultConfirmOptions) {
 

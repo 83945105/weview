@@ -27,6 +27,8 @@
 
     componentName: `${Conf.prefixNameCls}Animation`,
 
+    optionName: 'animation',
+
     data() {
       return {
         open: this.value
