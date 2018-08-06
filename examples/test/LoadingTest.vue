@@ -77,6 +77,7 @@
 
     methods: {
       handleClick() {
+
         if (this.loading) {
           this.loading = this.loading.close();
           this.loading = undefined;

@@ -11,6 +11,7 @@
 
 <script>
 
+  import {hasClass, addClass, removeClass, getStyle} from '../../src/utils/dom.js';
   import Conf from '../../src/mixins/conf.js';
 
   import Icon from '../../icon/src/Icon.vue';
@@ -115,23 +116,23 @@
 
     mounted() {
       this.$nextTick(() => {
-        if (this.$el.parentNode) {
-          this.parentStyle = this.$el.parentNode.getAttribute("style");
-          this.$el.parentNode.style.position = 'relative';
-          this.$el.parentNode.style.overflow = 'hidden';
+        let parent = this.fullscreen ? document.body : (this.$el.parentNode || document.body);
+        this.$el.originalPosition = getStyle(parent, 'position');
+        this.$el.originalOverflow = getStyle(parent, 'overflow');
+        if (this.$el.originalPosition !== 'absolute' && this.$el.originalPosition !== 'fixed' && !hasClass(parent, `${this.prefixCls}-loading-parent-relative`)) {
+          addClass(parent, `${this.prefixCls}-loading-parent-relative`);
+        }
+        if (this.fullscreen && !hasClass(parent, `${this.prefixCls}-loading-parent-hidden`)) {
+          addClass(parent, `${this.prefixCls}-loading-parent-hidden`);
         }
         this.visible = this.value;
       });
     },
 
     beforeDestroy() {
-      if (this.$el.parentNode) {
-        if(this.parentStyle) {
-          this.$el.parentNode.setAttribute("style", this.parentStyle);
-        }else {
-          this.$el.parentNode.removeAttribute("style");
-        }
-      }
+      let parent = this.fullscreen ? document.body : (this.$el.parentNode || document.body);
+      removeClass(parent, `${this.prefixCls}-loading-parent-relative`);
+      removeClass(parent, `${this.prefixCls}-loading-parent-hidden`);
     }
 
   }
