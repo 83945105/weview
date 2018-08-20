@@ -24,6 +24,7 @@
 
   import Conf from '../../src/mixins/conf.js';
   import Global from '../../src/mixins/global.js';
+  import PopupManager from '../../src/utils/popup.js';
 
   import {MessageType} from './message.js';
   import Icon from '../../icon/src/Icon.vue';
@@ -79,7 +80,9 @@
       animationName: String,
       zIndex: {
         type: Number,
-        default: 99999999
+        default() {
+          return PopupManager.nextZIndex();
+        }
       }
     },
 

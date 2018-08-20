@@ -17,8 +17,7 @@ const Default = {
   escCloseable: false,
   maskClosable: false,
   iconName: 'help-circle-o',
-  footerAlign: 'right',
-  zIndex: 19930405
+  footerAlign: 'right'
 };
 
 const Confirm = function (opts) {

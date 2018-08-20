@@ -66,6 +66,7 @@
 
   import Conf from '../../src/mixins/conf.js';
   import Global from '../../src/mixins/global.js';
+  import PopupManager from '../../src/utils/popup.js';
 
   import WeButton from '../../button/src/Button.vue';
   import WeIcon from '../../icon/src/Icon.vue';
@@ -120,7 +121,9 @@
       },
       zIndex: {
         type: Number,
-        default: 19910405
+        default() {
+          return PopupManager.nextZIndex();
+        }
       },
       minWidth: {
         type: Number,

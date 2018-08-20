@@ -20,6 +20,8 @@ import {$Alert} from './alert/index.js';
 import Confirm from './confirm/index.js';
 import {$Confirm} from './confirm/index.js';
 
+import PopupManager from './src/utils/popup.js';
+
 const components = [
   Animation,
   Button,
@@ -35,6 +37,12 @@ const install = function (Vue, options = {}) {
   for (let idx in components) {
     components[idx].install(Vue, options[components[idx].optionName]);
   }
+
+  const WEVIEW = {};
+  WEVIEW.zIndex = options.zIndex || 1024;
+  PopupManager.zIndex = WEVIEW.zIndex;
+
+  Vue.prototype.$WEVIEW = WEVIEW;
 };
 
 if (typeof window !== 'undefined' && window.Vue) {
