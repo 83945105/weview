@@ -31,6 +31,7 @@ export const IconName = [
   "error-circle",
   "error-circle-o",
 
+  "file",
   "file-audio-o",
   "file-code-o",
   "file-excel-o",
@@ -43,6 +44,10 @@ export const IconName = [
   "file-video-o",
   "file-word-o",
   "file-zip-o",
+  "folder",
+  "folder-o",
+  "folder-open",
+  "folder-open-o",
 
   "help-circle",
   "help-circle-o",
@@ -64,6 +69,7 @@ export const IconName = [
   "loading-refresh",
   "loading-snakes",
 
+  "link",
   "lock",
   "lock-o",
 
@@ -77,6 +83,8 @@ export const IconName = [
   "minimize",
   "mobile-phone",
   "mobile-phone-o",
+
+  "node",
 
   "plus",
   "plus-circle",
