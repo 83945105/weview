@@ -31,7 +31,7 @@
     .mixin-wordwrap;
     .mixin-border-box;
     transition: all .2s ease-in;
-    .button-size(@radio-default-padding;@radio-default-font-size;0);
+    .button-size(@radio-button-default-padding;@radio-button-default-font-size;0);
   }
 
   &:first-child{
@@ -78,15 +78,15 @@
   }
 
   &-large .@{radio-button-prefix-css}-inner{
-    .button-size(@radio-large-padding; @radio-large-font-size; 0);
+    .button-size(@radio-button-large-padding; @radio-button-large-font-size; 0);
   }
 
   &-small .@{radio-button-prefix-css}-inner{
-    .button-size(@radio-small-padding; @radio-small-font-size; 0;);
+    .button-size(@radio-button-small-padding; @radio-button-small-font-size; 0;);
   }
 
   &-mini .@{radio-button-prefix-css}-inner{
-    .button-size(@radio-mini-padding; @radio-mini-font-size; 0;);
+    .button-size(@radio-button-mini-padding; @radio-button-mini-font-size; 0;);
   }
 
   &-original{
