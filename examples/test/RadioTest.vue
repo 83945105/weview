@@ -93,19 +93,63 @@
         </div>
         <div class="module-spacing">
           <div class="we-radio-group">
-            <label class="we-radio-button we-radio-button-mini" :class="[buttonRadio4 === `rdo6-1` ? 'is-checked' :'']">
-              <input value="rdo6-1" v-model="buttonRadio4" type="radio" class="we-radio-button-original" />
+            <label class="we-radio-button we-radio-button-mini is-disabled" :class="[buttonRadio4 === `rdo6-1` ? 'is-checked' :'']">
+              <input value="rdo6-1" type="radio" class="we-radio-button-original" />
               <span class="we-radio-button-inner">选项6-1</span>
             </label>
-            <label class="we-radio-button we-radio-button-mini" :class="[buttonRadio4 === `rdo6-2` ? 'is-checked' :'']">
-              <input value="rdo6-2" v-model="buttonRadio4" type="radio" class="we-radio-button-original" />
+            <label class="we-radio-button we-radio-button-mini is-disabled" :class="[buttonRadio4 === `rdo6-2` ? 'is-checked' :'']">
+              <input value="rdo6-2" type="radio" class="we-radio-button-original" />
               <span class="we-radio-button-inner">选项6-2</span>
             </label>
-            <label class="we-radio-button we-radio-button-mini" :class="[buttonRadio4 === `rdo6-3` ? 'is-checked' :'']">
-              <input value="rdo6-3" v-model="buttonRadio4" type="radio" class="we-radio-button-original" />
+            <label class="we-radio-button we-radio-button-mini is-disabled" :class="[buttonRadio4 === `rdo6-3` ? 'is-checked' :'']">
+              <input value="rdo6-3" type="radio" class="we-radio-button-original" />
               <span class="we-radio-button-inner">选项6-3</span>
             </label>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="first-title">带边框样式</div>
+    <div class="module-main">
+      <div class="module-content">
+        <div class="we-radio-group">
+          <label class="we-radio is-bordered" :class="[buttonRadio5 === `rdo7-1` ? 'is-checked' :'']">
+              <span class="we-radio-input">
+                <span class="we-radio-input-inner"></span>
+                <input value="rdo7-1" type="radio" v-model="buttonRadio5" class="we-radio-input-original" />
+              </span>
+            <span class="we-radio-label">选项2-1</span>
+          </label>
+          <label class="we-radio is-bordered" :class="[buttonRadio5 === `rdo7-2` ? 'is-checked' :'']">
+              <span class="we-radio-input">
+                <span class="we-radio-input-inner"></span>
+                <input value="rdo7-2" type="radio" v-model="buttonRadio5" class="we-radio-input-original" />
+              </span>
+            <span class="we-radio-label">选项2-2</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="first-title">禁用带边框样式</div>
+    <div class="module-main">
+      <div class="module-content">
+        <div class="we-radio-group">
+          <label class="we-radio is-bordered is-disabled" :class="[buttonRadio6 === `rdo8-1` ? 'is-checked' :'']">
+              <span class="we-radio-input">
+                <span class="we-radio-input-inner"></span>
+                <input value="rdo8-1" disabled type="radio" v-model="buttonRadio6" class="we-radio-input-original" />
+              </span>
+            <span class="we-radio-label">选项2-1</span>
+          </label>
+          <label class="we-radio is-bordered is-disabled" :class="[buttonRadio6 === `rdo8-2` ? 'is-checked' :'']">
+              <span class="we-radio-input">
+                <span class="we-radio-input-inner"></span>
+                <input value="rdo8-2" disabled type="radio" v-model="buttonRadio6" class="we-radio-input-original" />
+              </span>
+            <span class="we-radio-label">选项2-2</span>
+          </label>
         </div>
       </div>
     </div>
@@ -125,7 +169,9 @@
           buttonRadio1: 'rdo3-1',
           buttonRadio2: 'rdo4-1',
           buttonRadio3: 'rdo5-1',
-          buttonRadio4: 'rdo6-1'
+          buttonRadio4: 'rdo6-1',
+          buttonRadio5: 'rdo7-1',
+          buttonRadio6: 'rdo8-1'
         }
       },
 

@@ -1,8 +1,18 @@
 @import "./src/common/var";
 @import "./src/common/mixins";
-@import "./src/mixins/button";
 
 @radio-button-prefix-css: ~"@{css-prefix}radio-button";
+
+.button-size(@padding;@font-size;@border-radius){
+  padding: @padding;
+  font-size:@font-size;
+  border-radius:@border-radius;
+}
+.button-color(@color;@background;@border){
+  background-color:@background;
+  border-color:@border;
+  color:@color;
+}
 
 .@{radio-button-prefix-css}{
   position: relative;
@@ -15,19 +25,19 @@
     line-height: 1;
     cursor: pointer;
     vertical-align: middle;
-    background-color: @button-default-fill;
-    border: 1px solid @button-default-border;
+    background-color: @radio-default-fill;
+    border: 1px solid @radio-default-border;
     border-left: 0;
     .mixin-wordwrap;
     .mixin-border-box;
     transition: all .2s ease-in;
-    .button-size(@button-default-padding;@button-default-font-size;0);
+    .button-size(@radio-default-padding;@radio-default-font-size;0);
   }
 
   &:first-child{
     .@{radio-button-prefix-css}-inner{
     border-radius: 3px 0 0 3px;
-    border-left: 1px solid @button-default-border;
+    border-left: 1px solid @radio-default-border;
     }
   }
   &:last-child{
@@ -36,9 +46,27 @@
     }
   }
 
+  &.is-disabled{
+    cursor: not-allowed;
+    .button-color(@radio-disable-color;@radio-disable-fill;@radio-disable-border);
+
+    .@{radio-button-prefix-css}-inner{
+      cursor: not-allowed;
+    }
+
+    &.is-checked{
+      .@{radio-button-prefix-css}-inner{
+        .button-color(@radio-disable-color;@radio-disable-fill;@radio-disable-border);
+      }
+    }
+    &:hover{
+      color: @radio-disable-color;
+    }
+  }
+
   &.is-checked{
     .@{radio-button-prefix-css}-inner{
-      .button-color(@button-primary-color;@button-primary-fill;@button-primary-border);
+      .button-color(@radio-primary-color;@radio-primary-fill;@radio-primary-border);
     }
     .@{radio-button-prefix-css}-inner:first-child{
       border-left: 0;
@@ -46,18 +74,19 @@
   }
 
   &:hover{
-    color: @button-primary-fill;
+    color: @radio-primary-fill;
   }
+
   &-large .@{radio-button-prefix-css}-inner{
-    .button-size(@button-large-padding; @button-large-font-size; 0);
+    .button-size(@radio-large-padding; @radio-large-font-size; 0);
   }
 
   &-small .@{radio-button-prefix-css}-inner{
-    .button-size(@button-small-padding; @button-small-font-size; 0);
+    .button-size(@radio-small-padding; @radio-small-font-size; 0;);
   }
 
   &-mini .@{radio-button-prefix-css}-inner{
-    .button-size(@button-mini-padding; @button-mini-font-size; @button-mini-border-radius);
+    .button-size(@radio-mini-padding; @radio-mini-font-size; 0;);
   }
 
   &-original{
