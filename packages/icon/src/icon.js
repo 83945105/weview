@@ -57,6 +57,8 @@ export const IconName = [
   "info-circle",
   "info-circle-o",
 
+  "jurisdiction",
+
   "loading-annual-ring",
   "loading-black-hole",
   "loading-drop",
