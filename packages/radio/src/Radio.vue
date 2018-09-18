@@ -1,5 +1,5 @@
 <template>
-
+  <div>341646464</div>
 </template>
 
 <script>
@@ -12,10 +12,6 @@
 
     componentName: `${Conf.prefixNameCls}Radio`,
 
-    mixins: [Conf],
+    mixins: [Conf]
   }
 </script>
-
-<style scoped>
-
-</style>
