@@ -197,6 +197,8 @@ export const IconName = [
   "users",
   "users-o",
 
+  "validate",
+  "validate-o",
   "video-camera",
   "video-camera-o",
 
