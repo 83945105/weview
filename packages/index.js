@@ -19,6 +19,7 @@ import Alert from './alert/index.js';
 import {$Alert} from './alert/index.js';
 import Confirm from './confirm/index.js';
 import {$Confirm} from './confirm/index.js';
+import Radio from './radio/index.js';
 
 import PopupManager from './src/utils/popup.js';
 
@@ -30,7 +31,8 @@ const components = [
   Loading,
   Layer,
   Alert,
-  Confirm
+  Confirm,
+  Radio
 ];
 
 const install = function (Vue, options = {}) {
@@ -60,7 +62,8 @@ export {
   Layer,
   $Layer,
   $Alert,
-  $Confirm
+  $Confirm,
+  Radio
 }
 
 export default install;
