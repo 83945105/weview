@@ -6,9 +6,9 @@
         <we-icon name="angle-down"></we-icon>
       </div>
       <div class="we-menu-item-title-inner">
-        <!--<div class="we-menu-item-title-inner-icon">-->
-        <!--<we-icon name="edit"></we-icon>-->
-        <!--</div>-->
+        <div class="we-menu-item-title-inner-icon">
+          <we-icon name="edit"></we-icon>
+        </div>
         <div class="we-menu-item-title-inner-text">
           <slot></slot>
         </div>
@@ -37,7 +37,22 @@
 
     optionName: `menuItem`,
 
-    mixins: [Conf]
+    mixins: [Conf],
+
+    provide: {
+      menuItem: this
+    },
+
+    data() {
+      return {
+        selected: this.value,
+        hasSubMenu: false
+      };
+    },
+
+    props: {
+      value: Boolean
+    }
 
   }
 </script>
