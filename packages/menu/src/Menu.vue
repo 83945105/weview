@@ -63,13 +63,23 @@
 
     mixins: [Conf],
 
+    inject: {
+      menuItem: {
+        default: null
+      }
+    },
+
     data() {
       return {};
     },
 
     props: {},
 
-    methods: {}
+    methods: {},
+
+    created() {
+      console.log(this.menuItem)
+    }
 
   }
 </script>
