@@ -3,222 +3,364 @@
     <!--一级带图标菜单-->
     <h3>一级带图标菜单</h3>
     <div style="height: 300px; width: 220px; position: relative; border: 1px solid #e5e5e5;">
-      <div class="we-menu is-full">
-        <div class="we-menu-item is-active">
-          <div class="we-menu-item-title is-selected"
-               :style="[itemStyle, { backgroundColor }]"
-               @mouseenter="onMouseEnter($event)"
-               @mouseleave="onMouseLeave($event)"
-               @click="foldShow">
-            <div class="we-menu-item-title-arrow" :class="{'is-selected':isMenuChildShow}">
-              <we-icon name="angle-down"></we-icon>
-            </div>
-            <div class="we-menu-item-title-inner">
-              <div class="we-menu-item-title-inner-icon">
-                <we-icon name="edit"></we-icon>
+      <div class="we-menu is-full" :style="[{ backgroundColor }]">
+        <div class="we-menu-inner">
+          <div class="we-menu-item is-active"
+               @mouseenter="itemMouseEnter($event)"
+               @mouseleave="itemMouseLeave($event)">
+            <div class="we-menu-item-title is-selected"
+                 :style="[itemStyle]"
+                 @mouseenter="onMouseEnter($event)"
+                 @mouseleave="onMouseLeave($event)"
+                 @click="foldShow">
+              <div class="we-menu-item-title-arrow"
+                   :class="{'is-selected':isMenuChildShow}"
+                   :style="[ itemArrowColor ]">
+                <we-icon name="angle-down"></we-icon>
               </div>
-              <div class="we-menu-item-title-inner-text">一级菜单</div>
+              <div class="we-menu-item-title-inner">
+                <div class="we-menu-item-title-inner-icon">
+                  <we-icon name="edit"></we-icon>
+                </div>
+                <div class="we-menu-item-title-inner-text">一级菜单</div>
+              </div>
             </div>
-          </div>
-          <div class="we-menu-child" :class="{'is-fold':isMenuChildShow}" :style="{'display':isMenuShowDisplay ? 'block' : 'none'}">
-            <div class="we-menu-item-group">
-              <h3 class="we-menu-item-group-title"
-                  :style="[{ backgroundColor }, {'padding-left':50 + textPaddingLeft*0 + `px`}]">分组</h3>
-              <div class="we-menu-item">
-                <div class="we-menu-item-title"
-                     :style="[itemStyle, { backgroundColor }, {'padding-left':50 + textPaddingLeft*0 + `px`}]"
-                     @mouseenter="onMouseEnter($event)"
-                     @mouseleave="onMouseLeave($event)">
-                  <div class="we-menu-item-title-arrow">
-                    <we-icon name="angle-down"></we-icon>
+            <div class="we-menu-child" :class="{'is-fold':isMenuChildShow}" :style="{'display':isMenuShowDisplay ? 'block' : 'none'}">
+              <div class="we-menu-item-group">
+                <h3 class="we-menu-item-group-title"
+                    :style="[ textGroupColor , {'padding-left':50 + textPaddingLeft*0 + `px`}]">分组</h3>
+                <div class="we-menu-item">
+                  <div class="we-menu-item-title"
+                       :style="[itemStyle, { backgroundColor }, {'padding-left':50 + textPaddingLeft*0 + `px`}]"
+                       @mouseenter="onMouseEnter($event)"
+                       @mouseleave="onMouseLeave($event)">
+                    <div class="we-menu-item-title-arrow"
+                         :style="[ itemArrowColor ]">
+                      <we-icon name="angle-down"></we-icon>
+                    </div>
+                    <div class="we-menu-item-title-inner isFull">
+                      <!--<div class="we-menu-item-title-inner-icon">-->
+                        <!--<we-icon name="edit"></we-icon>-->
+                      <!--</div>-->
+                      <div class="we-menu-item-title-inner-text">二级菜单</div>
+                    </div>
                   </div>
-                  <div class="we-menu-item-title-inner isFull">
-                    <!--<div class="we-menu-item-title-inner-icon">-->
-                      <!--<we-icon name="edit"></we-icon>-->
-                    <!--</div>-->
-                    <div class="we-menu-item-title-inner-text">二级菜单</div>
+                  <div class="we-menu-item">
+                    <div class="we-menu-item-title"
+                         :style="[itemStyle, { backgroundColor }, {'padding-left':50 + textPaddingLeft*1 + `px`}]"
+                         @mouseenter="onMouseEnter($event)"
+                         @mouseleave="onMouseLeave($event)">
+                      <div class="we-menu-item-title-arrow"
+                           :style="[ itemArrowColor ]">
+                        <!--<we-icon name="angle-down"></we-icon>-->
+                      </div>
+                      <div class="we-menu-item-title-inner isFull">
+                        <!--<div class="we-menu-item-title-inner-icon">-->
+                        <!--<we-icon name="edit"></we-icon>-->
+                        <!--</div>-->
+                        <div class="we-menu-item-title-inner-text">三级菜单</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="we-menu-item">
-                  <div class="we-menu-item-title"
-                       :style="[itemStyle, { backgroundColor }, {'padding-left':50 + textPaddingLeft*1 + `px`}]"
+                  <div class="we-menu-item-title is-disabled"
+                       :style="[itemStyle, { backgroundColor }, {'padding-left':50 + textPaddingLeft*0 + `px`}]"
                        @mouseenter="onMouseEnter($event)"
                        @mouseleave="onMouseLeave($event)">
-                    <div class="we-menu-item-title-arrow">
-                      <we-icon name="angle-down"></we-icon>
+                    <div class="we-menu-item-title-arrow"
+                         :style="[ itemArrowColor ]">
+                      <!--<we-icon name="angle-right"></we-icon>-->
                     </div>
                     <div class="we-menu-item-title-inner isFull">
                       <!--<div class="we-menu-item-title-inner-icon">-->
                       <!--<we-icon name="edit"></we-icon>-->
                       <!--</div>-->
-                      <div class="we-menu-item-title-inner-text">三级菜单</div>
+                      <div class="we-menu-item-title-inner-text">二级菜单</div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="we-menu-item">
-                <div class="we-menu-item-title is-disabled"
-                     :style="[itemStyle, { backgroundColor }, {'padding-left':50 + textPaddingLeft*0 + `px`}]"
-                     @mouseenter="onMouseEnter($event)"
-                     @mouseleave="onMouseLeave($event)">
-                  <div class="we-menu-item-title-arrow">
-                    <!--<we-icon name="angle-right"></we-icon>-->
-                  </div>
-                  <div class="we-menu-item-title-inner isFull">
-                    <!--<div class="we-menu-item-title-inner-icon">-->
-                    <!--<we-icon name="edit"></we-icon>-->
-                    <!--</div>-->
-                    <div class="we-menu-item-title-inner-text">二级菜单</div>
-                  </div>
+            </div>
+          </div>
+          <div class="we-menu-item"
+               @mouseenter="itemMouseEnter($event)"
+               @mouseleave="itemMouseLeave($event)">
+            <div class="we-menu-item-title"
+                 :style="[itemStyle, { backgroundColor }]"
+                 @mouseenter="onMouseEnter($event)"
+                 @mouseleave="onMouseLeave($event)">
+              <div class="we-menu-item-title-arrow"
+                   :style="[ itemArrowColor ]">
+                <we-icon name="angle-down"></we-icon>
+              </div>
+              <div class="we-menu-item-title-inner">
+                <div class="we-menu-item-title-inner-icon">
+                  <we-icon name="edit"></we-icon>
                 </div>
+                <div class="we-menu-item-title-inner-text">一级菜单</div>
               </div>
             </div>
           </div>
+
+          <div class="we-menu-vertical-line"
+               :style="{'top':verticalLineTop+'px','height':verticalLineHeight+'px','opacity':menuBarOpacity}"></div>
         </div>
-        <div class="we-menu-item">
-          <div class="we-menu-item-title"
-               :style="[itemStyle, { backgroundColor }]"
-               @mouseenter="onMouseEnter($event)"
-               @mouseleave="onMouseLeave($event)">
-            <div class="we-menu-item-title-arrow">
-              <we-icon name="angle-down"></we-icon>
-            </div>
-            <div class="we-menu-item-title-inner">
-              <div class="we-menu-item-title-inner-icon">
-                <we-icon name="edit"></we-icon>
-              </div>
-              <div class="we-menu-item-title-inner-text">一级菜单</div>
-            </div>
-          </div>
-        </div>
-        <div class="we-menu-vertical-line" style="top: 0; left: 0;"></div>
       </div>
     </div>
     <!--/一级带图标菜单-->
 
+    <!--折叠菜单-->
+    <h3>折叠菜单</h3>
+    <div class="we-menu-external" style="left: 0;"
+      :style="{'width': menuWidth + `px`}"
+      @mouseenter="menuWidth = 210"
+      @mouseleave="menuWidth = 50">
+        <div class="we-menu" :style="[{'width':menuInnerWidth + `px`} , { backgroundColor }]">
+          <div class="we-menu-inner">
+            <div class="we-menu-item is-active"
+                 @mouseenter="itemMouseEnter($event)"
+                 @mouseleave="itemMouseLeave($event)">
+              <div class="we-menu-item-title is-selected"
+                   :style="[itemStyle]"
+                   @mouseenter="onMouseEnter($event)"
+                   @mouseleave="onMouseLeave($event)"
+                   @click="foldShow">
+                <div class="we-menu-item-title-arrow"
+                     :class="{'is-selected':isMenuChildShow}"
+                     :style="[ itemArrowColor ]">
+                  <we-icon name="angle-down"></we-icon>
+                </div>
+                <div class="we-menu-item-title-inner">
+                  <div class="we-menu-item-title-inner-icon">
+                    <we-icon name="edit"></we-icon>
+                  </div>
+                  <div class="we-menu-item-title-inner-text">一级菜单</div>
+                </div>
+              </div>
+            </div>
+            <div class="we-menu-item"
+                 @mouseenter="itemMouseEnter($event)"
+                 @mouseleave="itemMouseLeave($event)">
+              <div class="we-menu-item-title"
+                   :style="[itemStyle, { backgroundColor }]"
+                   @mouseenter="onMouseEnter($event)"
+                   @mouseleave="onMouseLeave($event)">
+                <div class="we-menu-item-title-arrow"
+                     :style="[ itemArrowColor ]">
+                  <we-icon name="angle-down"></we-icon>
+                </div>
+                <div class="we-menu-item-title-inner">
+                  <div class="we-menu-item-title-inner-icon">
+                    <we-icon name="edit"></we-icon>
+                  </div>
+                  <div class="we-menu-item-title-inner-text">一级菜单</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="we-menu-vertical-line"
+                 :style="{'top':verticalLineTop+'px','height':verticalLineHeight+'px','opacity':menuBarOpacity}"></div>
+          </div>
+      </div>
+    </div>
+    <!--/折叠菜单-->
+
     <!--正常菜单-->
     <h3>正常菜单</h3>
     <div style="height: 300px; width: 220px; position: relative; border: 1px solid #e5e5e5;">
-      <div class="we-menu is-full">
-        <div class="we-menu-item is-active">
-          <div class="we-menu-item-title is-selected"
-               :style="[itemStyle, { backgroundColor }, {'padding-left':textPaddingLeft + `px`}]"
-               @mouseenter="onMouseEnter($event)"
-               @mouseleave="onMouseLeave($event)"
-               style="padding-left: 15px;">
-            <div class="we-menu-item-title-arrow">
-              <we-icon name="angle-down"></we-icon>
+      <div class="we-menu is-full" :style="[{ backgroundColor }]">
+        <div class="we-menu-inner">
+          <div class="we-menu-item is-active"
+               @mouseenter="itemMouseEnter($event)"
+               @mouseleave="itemMouseLeave($event)">
+            <div class="we-menu-item-title is-selected"
+                 :style="[itemStyle, { backgroundColor }, {'padding-left':textPaddingLeft + `px`}]"
+                 @mouseenter="onMouseEnter($event)"
+                 @mouseleave="onMouseLeave($event)"
+                 style="padding-left: 15px;">
+              <div class="we-menu-item-title-arrow"
+                   :style="[ itemArrowColor ]">
+                <we-icon name="angle-down"></we-icon>
+              </div>
+              <div class="we-menu-item-title-inner">
+                <!--<div class="we-menu-item-title-inner-icon">-->
+                  <!--<we-icon name="edit"></we-icon>-->
+                <!--</div>-->
+                <div class="we-menu-item-title-inner-text">一级菜单</div>
+              </div>
             </div>
-            <div class="we-menu-item-title-inner">
-              <!--<div class="we-menu-item-title-inner-icon">-->
-                <!--<we-icon name="edit"></we-icon>-->
-              <!--</div>-->
-              <div class="we-menu-item-title-inner-text">一级菜单</div>
-            </div>
-          </div>
-          <div class="we-menu-child is-fold" style="display: block">
-            <div class="we-menu-item-group">
-              <h3 class="we-menu-item-group-title"
-                  :style="[{ backgroundColor }, {'padding-left':50 + textPaddingLeft*0 + `px`}]">分组</h3>
-              <div class="we-menu-item">
-                <div class="we-menu-item-title"
-                     :style="[itemStyle, { backgroundColor }, {'padding-left':textPaddingLeft*2 + `px`}]"
-                     @mouseenter="onMouseEnter($event)"
-                     @mouseleave="onMouseLeave($event)"
-                     style="padding-left: 30px;">
-                  <div class="we-menu-item-title-arrow">
-                    <we-icon name="angle-down"></we-icon>
-                  </div>
-                  <div class="we-menu-item-title-inner isFull">
-                    <!--<div class="we-menu-item-title-inner-icon">-->
-                    <!--<we-icon name="edit"></we-icon>-->
-                    <!--</div>-->
-                    <div class="we-menu-item-title-inner-text">二级菜单</div>
-                  </div>
-                </div>
+            <div class="we-menu-child is-fold" style="display: block">
+              <div class="we-menu-item-group">
+                <h3 class="we-menu-item-group-title"
+                    :style="[ textGroupColor , {'padding-left':textPaddingLeft*2 + `px`}]">分组</h3>
                 <div class="we-menu-item">
                   <div class="we-menu-item-title"
-                       :style="[itemStyle, { backgroundColor }, {'padding-left':textPaddingLeft*3 + `px`}]"
+                       :style="[itemStyle, { backgroundColor }, {'padding-left':textPaddingLeft*2 + `px`}]"
                        @mouseenter="onMouseEnter($event)"
                        @mouseleave="onMouseLeave($event)"
                        style="padding-left: 30px;">
-                    <div class="we-menu-item-title-arrow">
+                    <div class="we-menu-item-title-arrow"
+                         :style="[ itemArrowColor ]">
                       <we-icon name="angle-down"></we-icon>
                     </div>
                     <div class="we-menu-item-title-inner isFull">
                       <!--<div class="we-menu-item-title-inner-icon">-->
                       <!--<we-icon name="edit"></we-icon>-->
                       <!--</div>-->
-                      <div class="we-menu-item-title-inner-text">三级菜单</div>
+                      <div class="we-menu-item-title-inner-text">二级菜单</div>
+                    </div>
+                  </div>
+                  <div class="we-menu-item">
+                    <div class="we-menu-item-title"
+                         :style="[itemStyle, { backgroundColor }, {'padding-left':textPaddingLeft*3 + `px`}]"
+                         @mouseenter="onMouseEnter($event)"
+                         @mouseleave="onMouseLeave($event)"
+                         style="padding-left: 30px;">
+                      <div class="we-menu-item-title-arrow"
+                           :style="[ itemArrowColor ]">
+                        <we-icon name="angle-down"></we-icon>
+                      </div>
+                      <div class="we-menu-item-title-inner isFull">
+                        <!--<div class="we-menu-item-title-inner-icon">-->
+                        <!--<we-icon name="edit"></we-icon>-->
+                        <!--</div>-->
+                        <div class="we-menu-item-title-inner-text">三级菜单</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="we-menu-item">
+                  <div class="we-menu-item-title"
+                       :style="[itemStyle, { backgroundColor }, {'padding-left':textPaddingLeft*2 + `px`}]"
+                       @mouseenter="onMouseEnter($event)"
+                       @mouseleave="onMouseLeave($event)">
+                    <div class="we-menu-item-title-arrow"
+                         :style="[ itemArrowColor ]">
+                      <!--<we-icon name="angle-right"></we-icon>-->
+                    </div>
+                    <div class="we-menu-item-title-inner isFull">
+                      <!--<div class="we-menu-item-title-inner-icon">-->
+                      <!--<we-icon name="edit"></we-icon>-->
+                      <!--</div>-->
+                      <div class="we-menu-item-title-inner-text">二级菜单</div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="we-menu-item">
-                <div class="we-menu-item-title"
-                     :style="[itemStyle, { backgroundColor }, {'padding-left':textPaddingLeft*2 + `px`}]"
-                     @mouseenter="onMouseEnter($event)"
-                     @mouseleave="onMouseLeave($event)">
-                  <div class="we-menu-item-title-arrow">
-                    <!--<we-icon name="angle-right"></we-icon>-->
-                  </div>
-                  <div class="we-menu-item-title-inner isFull">
-                    <!--<div class="we-menu-item-title-inner-icon">-->
-                    <!--<we-icon name="edit"></we-icon>-->
-                    <!--</div>-->
-                    <div class="we-menu-item-title-inner-text">二级菜单</div>
-                  </div>
-                </div>
+            </div>
+          </div>
+          <div class="we-menu-item"
+               @mouseenter="itemMouseEnter($event)"
+               @mouseleave="itemMouseLeave($event)">
+            <div class="we-menu-item-title"
+                 :style="[itemStyle, { backgroundColor }, {'padding-left':textPaddingLeft + `px`}]"
+                 @mouseenter="onMouseEnter($event)"
+                 @mouseleave="onMouseLeave($event)">
+              <div class="we-menu-item-title-arrow"
+                   :style="[ itemArrowColor ]">
+                <we-icon name="angle-down"></we-icon>
+              </div>
+              <div class="we-menu-item-title-inner">
+                <!--<div class="we-menu-item-title-inner-icon">-->
+                  <!--<we-icon name="edit"></we-icon>-->
+                <!--</div>-->
+                <div class="we-menu-item-title-inner-text">一级菜单</div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="we-menu-item">
-          <div class="we-menu-item-title"
-               :style="[itemStyle, { backgroundColor }, {'padding-left':textPaddingLeft + `px`}]"
-               @mouseenter="onMouseEnter($event)"
-               @mouseleave="onMouseLeave($event)">
-            <div class="we-menu-item-title-arrow">
-              <we-icon name="angle-down"></we-icon>
-            </div>
-            <div class="we-menu-item-title-inner">
-              <!--<div class="we-menu-item-title-inner-icon">-->
-                <!--<we-icon name="edit"></we-icon>-->
-              <!--</div>-->
-              <div class="we-menu-item-title-inner-text">一级菜单</div>
-            </div>
-          </div>
+
         </div>
       </div>
     </div>
     <!--/正常菜单-->
 
     <!--右键菜单-->
-    <div class="we-menu we-menu-right is-shadow is-full" style="height: 300px; width: 220px; left: 50%; top: 100px;">
-      <div class="we-menu-item">
-        <div class="we-menu-item-title"
-             :style="[itemStyle, { backgroundColor }]"
-             @mouseenter="onMouseEnter($event)"
-             @mouseleave="onMouseLeave($event)">
-          <div class="we-menu-item-title-arrow">
-            <we-icon name="angle-down"></we-icon>
-          </div>
-          <div class="we-menu-item-title-inner">
-            <div class="we-menu-item-title-inner-icon">
-              <we-icon name="edit"></we-icon>
+    <div class="we-menu we-menu-right is-shadow is-full" style="height: 200px; width: 220px; left: 50%; top: 50px;"
+      :style="[ menuBorderStyle ]">
+      <div class="we-menu-arrow we-menu-arrow-up"
+           :style="[arrowStyle]"
+           @mouseenter="onArrowMouseEnter($event)"
+           @mouseleave="onArrowMouseLeave($event)"
+           @click="scrollUpDo($event)">
+        <we-icon name="angle-up"></we-icon>
+      </div>
+      <div class="we-menu-inner" style="top: 20px; bottom: 20px;" :style="[{ backgroundColor }]">
+        <div class="we-menu-item">
+          <div class="we-menu-item-title"
+              :style="[itemStyle]"
+               @mouseenter="onMouseEnter($event)"
+               @mouseleave="onMouseLeave($event)">
+            <div class="we-menu-item-title-arrow"
+                 :style="[ itemArrowColor ]">
+              <!--<we-icon name="angle-down"></we-icon>-->
             </div>
-            <div class="we-menu-item-title-inner-text">一级菜单</div>
+            <div class="we-menu-item-title-inner">
+              <div class="we-menu-item-title-inner-icon">
+                <we-icon name="edit"></we-icon>
+              </div>
+              <div class="we-menu-item-title-inner-text">一级菜单</div>
+            </div>
           </div>
-        </div>
-        <div class="we-menu-item-group">
-          <h3 class="we-menu-item-group-title"
-              :style="[{ backgroundColor }, {'padding-left':50 + textPaddingLeft*0 + `px`}]">分组</h3>
+          <div class="we-menu-item-group">
+            <h3 class="we-menu-item-group-title"
+                :style="[ textGroupColor, {'padding-left': textPaddingLeft*2 + `px`}]">分组</h3>
+            <div class="we-menu-item-title"
+                 :style="[itemStyle, { backgroundColor }]"
+                 @mouseenter="onMouseEnter($event)"
+                 @mouseleave="onMouseLeave($event)">
+              <div class="we-menu-item-title-arrow"
+                   :style="[ itemArrowColor ]">
+                <!--<we-icon name="angle-down"></we-icon>-->
+              </div>
+              <div class="we-menu-item-title-inner">
+                <div class="we-menu-item-title-inner-icon">
+                  <!--<we-icon name="edit"></we-icon>-->
+                </div>
+                <div class="we-menu-item-title-inner-text">一级菜单</div>
+              </div>
+            </div>
+            <div class="we-menu-item-title is-disabled"
+                 :style="[itemStyle, { backgroundColor }]"
+                 @mouseenter="onMouseEnter($event)"
+                 @mouseleave="onMouseLeave($event)">
+              <div class="we-menu-item-title-arrow"
+                   :style="[ itemArrowColor ]">
+                <!--<we-icon name="angle-down"></we-icon>-->
+              </div>
+              <div class="we-menu-item-title-inner">
+                <div class="we-menu-item-title-inner-icon">
+                  <!--<we-icon name="edit"></we-icon>-->
+                </div>
+                <div class="we-menu-item-title-inner-text">一级菜单</div>
+              </div>
+            </div>
+          </div>
+          <div class="we-menu-item-title"
+               :class="{'is-quick':isQuick}"
+               :style="[itemStyle, { backgroundColor }]"
+               @mouseenter="onMouseEnter($event)"
+               @mouseleave="onMouseLeave($event)">
+            <!--<div class="we-menu-item-title-arrow">-->
+              <!--<we-icon name="angle-down"></we-icon>-->
+            <!--</div>-->
+            <div class="we-menu-item-title-quick" :style="[ textQuickColor ]">
+              Ctrl+Shift+U
+            </div>
+            <div class="we-menu-item-title-inner">
+              <div class="we-menu-item-title-inner-icon">
+                <!--<we-icon name="edit"></we-icon>-->
+              </div>
+              <div class="we-menu-item-title-inner-text">一级菜单</div>
+            </div>
+          </div>
           <div class="we-menu-item-title"
                :style="[itemStyle, { backgroundColor }]"
                @mouseenter="onMouseEnter($event)"
                @mouseleave="onMouseLeave($event)">
-            <div class="we-menu-item-title-arrow">
-              <!--<we-icon name="angle-down"></we-icon>-->
+            <div class="we-menu-item-title-arrow"
+                 :style="[ itemArrowColor ]">
+              <we-icon name="angle-right"></we-icon>
             </div>
             <div class="we-menu-item-title-inner">
               <div class="we-menu-item-title-inner-icon">
@@ -227,12 +369,14 @@
               <div class="we-menu-item-title-inner-text">一级菜单</div>
             </div>
           </div>
-          <div class="we-menu-item-title is-disabled"
+          <div class="we-menu-item-split" :style="[splitStyle]"></div>
+          <div class="we-menu-item-title"
                :style="[itemStyle, { backgroundColor }]"
                @mouseenter="onMouseEnter($event)"
                @mouseleave="onMouseLeave($event)">
-            <div class="we-menu-item-title-arrow">
-              <!--<we-icon name="angle-down"></we-icon>-->
+            <div class="we-menu-item-title-arrow"
+                 :style="[ itemArrowColor ]">
+              <we-icon name="angle-right"></we-icon>
             </div>
             <div class="we-menu-item-title-inner">
               <div class="we-menu-item-title-inner-icon">
@@ -242,42 +386,77 @@
             </div>
           </div>
         </div>
-        <div class="we-menu-item-title"
-             :class="{'is-quick':isQuick}"
-             :style="[itemStyle, { backgroundColor }]"
-             @mouseenter="onMouseEnter($event)"
-             @mouseleave="onMouseLeave($event)">
-          <!--<div class="we-menu-item-title-arrow">-->
-            <!--<we-icon name="angle-down"></we-icon>-->
-          <!--</div>-->
-          <div class="we-menu-item-title-quick">
-            Ctrl+Shift+U
-          </div>
-          <div class="we-menu-item-title-inner">
-            <div class="we-menu-item-title-inner-icon">
-              <!--<we-icon name="edit"></we-icon>-->
-            </div>
-            <div class="we-menu-item-title-inner-text">一级菜单</div>
-          </div>
-        </div>
-        <div class="we-menu-item-title"
-             :style="[itemStyle, { backgroundColor }]"
-             @mouseenter="onMouseEnter($event)"
-             @mouseleave="onMouseLeave($event)">
-          <div class="we-menu-item-title-arrow">
-            <we-icon name="angle-right"></we-icon>
-          </div>
-          <div class="we-menu-item-title-inner">
-            <div class="we-menu-item-title-inner-icon">
-              <!--<we-icon name="edit"></we-icon>-->
-            </div>
-            <div class="we-menu-item-title-inner-text">一级菜单</div>
-          </div>
-        </div>
-        <div class="we-menu-item-split"></div>
+      </div>
+      <div class="we-menu-arrow we-menu-arrow-down is-disabled"
+           :style="[arrowStyle]"
+           @mouseenter="onArrowMouseEnter($event)"
+           @mouseleave="onArrowMouseLeave($event)"
+           @click="scrollDownDo($event)">
+        <we-icon name="angle-down"></we-icon>
       </div>
     </div>
     <!--/右键菜单-->
+
+    <!--横向菜单-->
+    <h3>横向菜单</h3>
+    <div style="height: 50px; width: 800px; position: relative; border: 1px solid #e5e5e5;">
+      <div class="we-menu is-full" :style="[{ backgroundColor }]">
+        <div class="we-menu-inner">
+          <div class="we-menu-item is-horizontal"
+               @mouseenter="itemHorizontalMouseEnter($event)"
+               @mouseleave="itemHorizontalMouseLeave($event)">
+            <div class="we-menu-item-title"
+                 :style="[itemStyle, { backgroundColor }]"
+                 @mouseenter="onMouseEnter($event)"
+                 @mouseleave="onMouseLeave($event)">
+              <div class="we-menu-item-title-arrow"
+                   :style="[ itemArrowColor ]">
+                <we-icon name="angle-down"></we-icon>
+              </div>
+              <div class="we-menu-item-title-inner">
+                <!--<div class="we-menu-item-title-inner-icon">-->
+                <!--<we-icon name="edit"></we-icon>-->
+                <!--</div>-->
+                <div class="we-menu-item-title-inner-text">
+                  <we-icon name="edit"></we-icon>
+                  <span>一级菜单</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="we-menu-item is-horizontal"
+               @mouseenter="itemHorizontalMouseEnter($event)"
+               @mouseleave="itemHorizontalMouseLeave($event)">
+            <div class="we-menu-item-title"
+                 :style="[itemStyle, { backgroundColor }]"
+                 @mouseenter="onMouseEnter($event)"
+                 @mouseleave="onMouseLeave($event)">
+              <div class="we-menu-item-title-arrow"
+                   :style="[ itemArrowColor ]">
+                <we-icon name="angle-down"></we-icon>
+              </div>
+              <div class="we-menu-item-title-inner">
+                <!--<div class="we-menu-item-title-inner-icon">-->
+                <!--<we-icon name="edit"></we-icon>-->
+                <!--</div>-->
+                <div class="we-menu-item-title-inner-text">
+                  <we-icon name="edit"></we-icon>
+                  <span>一级菜单</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="we-menu-horizontal-line"
+               :style="{
+               'bottom': 0,
+               'left':horizontalLineLeft+'px',
+               'width':horizontalLineWidth+'px',
+               'opacity':menuBarOpacity}"></div>
+        </div>
+      </div>
+    </div>
+    <!--/横向菜单-->
 
     <br/><br/>
     <!--<div class="we-menu is-shadow" style="width: 220px;">-->
@@ -368,14 +547,26 @@
             menuSubTop: 0,
             timeInter: null,
 
+            // backgroundColor: "#252525",
+            // textColor: "#ffffff",
+            // activeColor: "#2199ed",
+            // disabledColor: "#666666",
+            // menuRightBorderColor: "#252525",
             backgroundColor: "",
             textColor: "",
-            activeTextColor: "",
+            activeColor: "",
+            disabledColor: "",
+            menuRightBorderColor: "",
             active: false,
+            disabled: true,
+            arrowDisabled: false,
 
             verticalLineTop: 0,
             verticalLineHeight: 0,
             menuBarOpacity: 0,
+
+            horizontalLineLeft: 0,
+            horizontalLineWidth: 0,
 
             isIcon: false,
             currScrollHeight: 0,
@@ -384,17 +575,57 @@
             isMenuChildShow: true,
             isMenuShowDisplay: true,
 
-            isQuick: true
+            isQuick: true,
+            menuWidth: 50,
+            menuInnerWidth: 210
           }
         },
 
         computed: {
           hoverBackground() {
-            return this.backgroundColor ? this.mixColor(this.backgroundColor, 0.2) : '';
+            return this.backgroundColor ? this.mixColor(this.backgroundColor, 0.4) : '';
           },
           itemStyle() {
             const style = {
-              color: this.active ? this.activeTextColor : this.textColor
+              color: this.active ? this.activeColor : this.textColor,
+              backgroundColor: this.active ? this.mixColor(this.backgroundColor, 0.2) : this.backgroundColor
+            };
+            return style;
+          },
+          itemArrowColor() {
+            const style = {
+              color: this.mixColor(this.textColor, 0.2)
+            };
+            return style;
+          },
+          menuBorderStyle(){
+            const style = {
+              border: "1px solid " + this.mixColor(this.menuRightBorderColor, 0.2)
+            };
+            return style;
+          },
+          textGroupColor() {
+            const style = {
+              color: this.mixColor(this.textColor, 0.3)
+            };
+            return style;
+          },
+          textQuickColor() {
+            const style = {
+              color: this.mixColor(this.textColor, 0.3)
+            };
+            return style;
+          },
+          splitStyle(){
+            const style = {
+              backgroundColor: this.mixColor(this.backgroundColor, 0.1)
+            };
+            return style;
+          },
+          arrowStyle() {
+            const style = {
+              color: this.arrowDisabled ? this.mixColor(this.textColor, 0.5) : this.textColor,
+              backgroundColor: this.backgroundColor
             };
             return style;
           }
@@ -405,20 +636,87 @@
             this.isShow =! this.isShow;
             this.menuSubTop = ev.currentTarget.offsetTop + 80;
           },
-          scrollUpDo(){
-            let menuContent= document.getElementById("menu-content");
-            menuContent.scrollTop = menuContent.scrollTop - 39;
+          scrollUpDo(e){
+            let menuContent = this.getClass(e.currentTarget.parentNode, "we-menu-inner");
+            setTimeout(function(){
+              menuContent[0].scrollTop = menuContent[0].scrollTop - 40;
+            },100);
           },
-          scrollDownDo(){
-            let menuContent= document.getElementById("menu-content");
-            menuContent.scrollTop = menuContent.scrollTop + 39;
+          scrollDownDo(e){
+            let menuContent = this.getClass(e.currentTarget.parentNode, "we-menu-inner");
+            setTimeout(function(){
+              menuContent[0].scrollTop = menuContent[0].scrollTop + 40;
+            },100);
+
+          },
+          getClass(obj,name){
+            let arr = [];
+            let elems = obj.getElementsByTagName('*');
+            for(let i=0;i<elems.length;i++){
+              if(elems[i].className == name){
+                arr.push(elems[i]);
+              }
+            }
+            return arr;
           },
 
           onMouseEnter(e) {
-            if (!this.backgroundColor) return;
-            e.currentTarget.style.backgroundColor = this.hoverBackground;
+            if (!this.backgroundColor){
+              return;
+            }else{
+              e.currentTarget.style.backgroundColor = this.hoverBackground;
+            }
           },
           onMouseLeave(e) {
+            if (!this.backgroundColor){
+              return;
+            }else{
+              if(this.active){
+                e.currentTarget.style.backgroundColor = this.hoverBackground;
+              }else{
+                e.currentTarget.style.backgroundColor = this.backgroundColor;
+              }
+            }
+          },
+          itemMouseEnter(e) {
+            let first_level_menu = getByClassDom(e.currentTarget,'we-menu-item-title');
+            this.verticalLineTop = first_level_menu[0].offsetTop;
+            this.verticalLineHeight = 50;
+            this.menuBarOpacity = 1;
+          },
+          itemMouseLeave(e) {
+            let first_level_menu = getByClassDom(e.currentTarget,'we-menu-item-title');
+            this.verticalLineTop = first_level_menu[0].offsetTop + 28;
+            this.verticalLineHeight = 5;
+            this.menuBarOpacity = 0;
+          },
+
+          itemHorizontalMouseEnter(e) {
+            let first_level_menu = getByClassDom(e.currentTarget,'we-menu-item-title');
+            console.log(first_level_menu[0]);
+            this.horizontalLineLeft = first_level_menu[0].offsetLeft;
+            this.horizontalLineWidth = first_level_menu[0].offsetWidth;
+            this.menuBarOpacity = 1;
+          },
+          itemHorizontalMouseLeave(e) {
+            let first_level_menu = getByClassDom(e.currentTarget,'we-menu-item-title');
+            this.horizontalLineLeft = first_level_menu[0].offsetLeft + 28;
+            this.horizontalLineWidth = 5;
+            this.menuBarOpacity = 0;
+          },
+
+          onArrowMouseEnter(e) {
+            if (!this.backgroundColor){
+              return;
+            }else{
+              if(!this.arrowDisabled){
+                e.currentTarget.style.backgroundColor = this.hoverBackground;
+              }else{
+                e.currentTarget.style.backgroundColor = this.backgroundColor;
+              }
+            }
+          },
+          onArrowMouseLeave(e) {
             if (!this.backgroundColor) return;
             e.currentTarget.style.backgroundColor = this.backgroundColor;
           },
@@ -474,6 +772,18 @@
           }
 
         }
+    }
+
+    function getByClassDom(parent, cls){
+      let res = [];
+      let reg = new RegExp('\\b' + cls + '\\b', 'i');  //匹配cls是一个独立的单词
+      let ele = parent.getElementsByTagName('*');
+      for(let i = 0; i < ele.length; i++){
+        if(reg.test(ele[i].className)){
+          res.push(ele[i]);
+        }
+      }
+      return res;
     }
 </script>
 
