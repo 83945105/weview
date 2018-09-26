@@ -2,9 +2,9 @@
   <div>
     <!--一级带图标菜单-->
     <h3>一级带图标菜单</h3>
-    <div style="height: 300px; width: 220px; position: relative; border: 1px solid #e5e5e5;">
+    <div style="height: 100px; width: 220px; position: relative; border: 1px solid #e5e5e5;">
       <div class="we-menu is-full" :style="[{ backgroundColor }]">
-        <div class="we-menu-inner">
+        <div class="we-menu-inner vertical-scroll">
           <div class="we-menu-item"
                @mouseenter="itemMouseEnter($event)"
                @mouseleave="itemMouseLeave($event)">

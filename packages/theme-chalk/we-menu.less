@@ -1,5 +1,5 @@
-@import "./src/common/var";
-@import "./src/common/mixins";
+@import "./src/common/var.less";
+@import "./src/common/mixins.less";
 
 @menu-css-prefix: ~"@{css-prefix}menu";
 @submenu-css-prefix: ~"@{css-prefix}submenu";
@@ -76,6 +76,19 @@
     left: 0;
     right: 0;
     overflow: hidden;
+    .mixin-scrollbar;
+
+    &.all-scroll{
+      .mixin-all-scroll;
+    }
+
+    &.vertical-scroll{
+      .mixin-v-scroll;
+    }
+
+    &.horizontal-scroll{
+      .mixin-h-scroll;
+    }
   }
 
   &-arrow{

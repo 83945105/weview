@@ -1,4 +1,4 @@
-@import "./var";
+@import "./var.less";
 
 /*去除内外边距和列表样式*/
 .mixin-default{
@@ -39,10 +39,21 @@
   }
 }
 
+.mixin-all-scroll{
+  overflow-x:auto;
+  overflow-y:auto;
+}
+
 .mixin-v-scroll{
   overflow-x:hidden;
   overflow-y:auto;
 }
+
+.mixin-h-scroll{
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
 .mixin-scrollbar{
   &::-webkit-scrollbar {
     width:@scrollbar-width;
