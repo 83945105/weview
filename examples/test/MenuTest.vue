@@ -5,11 +5,11 @@
     <div style="height: 300px; width: 220px; position: relative; border: 1px solid #e5e5e5;">
       <div class="we-menu is-full" :style="[{ backgroundColor }]">
         <div class="we-menu-inner">
-          <div class="we-menu-item is-active"
+          <div class="we-menu-item"
                @mouseenter="itemMouseEnter($event)"
                @mouseleave="itemMouseLeave($event)">
-            <div class="we-menu-item-title is-selected"
-                 :style="[itemStyle]"
+            <div class="we-menu-item-title is-active"
+                 :style="[itemStyle, { backgroundColor }]"
                  @mouseenter="onMouseEnter($event)"
                  @mouseleave="onMouseLeave($event)"
                  @click="foldShow">
@@ -38,7 +38,7 @@
                          :style="[ itemArrowColor ]">
                       <we-icon name="angle-down"></we-icon>
                     </div>
-                    <div class="we-menu-item-title-inner isFull">
+                    <div class="we-menu-item-title-inner is-full">
                       <!--<div class="we-menu-item-title-inner-icon">-->
                         <!--<we-icon name="edit"></we-icon>-->
                       <!--</div>-->
@@ -46,15 +46,15 @@
                     </div>
                   </div>
                   <div class="we-menu-item">
-                    <div class="we-menu-item-title"
-                         :style="[itemStyle, { backgroundColor }, {'padding-left':50 + textPaddingLeft*1 + `px`}]"
+                    <div class="we-menu-item-title is-selected"
+                         :style="[itemStyle, backgroundSelectedSyle , {'padding-left':50 + textPaddingLeft*1 + `px`}]"
                          @mouseenter="onMouseEnter($event)"
                          @mouseleave="onMouseLeave($event)">
                       <div class="we-menu-item-title-arrow"
                            :style="[ itemArrowColor ]">
                         <!--<we-icon name="angle-down"></we-icon>-->
                       </div>
-                      <div class="we-menu-item-title-inner isFull">
+                      <div class="we-menu-item-title-inner is-full">
                         <!--<div class="we-menu-item-title-inner-icon">-->
                         <!--<we-icon name="edit"></we-icon>-->
                         <!--</div>-->
@@ -72,7 +72,7 @@
                          :style="[ itemArrowColor ]">
                       <!--<we-icon name="angle-right"></we-icon>-->
                     </div>
-                    <div class="we-menu-item-title-inner isFull">
+                    <div class="we-menu-item-title-inner is-full">
                       <!--<div class="we-menu-item-title-inner-icon">-->
                       <!--<we-icon name="edit"></we-icon>-->
                       <!--</div>-->
@@ -118,10 +118,10 @@
       @mouseleave="menuWidth = 50">
         <div class="we-menu" :style="[{'width':menuInnerWidth + `px`} , { backgroundColor }]">
           <div class="we-menu-inner">
-            <div class="we-menu-item is-active"
+            <div class="we-menu-item"
                  @mouseenter="itemMouseEnter($event)"
                  @mouseleave="itemMouseLeave($event)">
-              <div class="we-menu-item-title is-selected"
+              <div class="we-menu-item-title is-active"
                    :style="[itemStyle]"
                    @mouseenter="onMouseEnter($event)"
                    @mouseleave="onMouseLeave($event)"
@@ -171,10 +171,10 @@
     <div style="height: 300px; width: 220px; position: relative; border: 1px solid #e5e5e5;">
       <div class="we-menu is-full" :style="[{ backgroundColor }]">
         <div class="we-menu-inner">
-          <div class="we-menu-item is-active"
+          <div class="we-menu-item"
                @mouseenter="itemMouseEnter($event)"
                @mouseleave="itemMouseLeave($event)">
-            <div class="we-menu-item-title is-selected"
+            <div class="we-menu-item-title is-active"
                  :style="[itemStyle, { backgroundColor }, {'padding-left':textPaddingLeft + `px`}]"
                  @mouseenter="onMouseEnter($event)"
                  @mouseleave="onMouseLeave($event)"
@@ -196,7 +196,7 @@
                     :style="[ textGroupColor , {'padding-left':textPaddingLeft*2 + `px`}]">分组</h3>
                 <div class="we-menu-item">
                   <div class="we-menu-item-title"
-                       :style="[itemStyle, { backgroundColor }, {'padding-left':textPaddingLeft*2 + `px`}]"
+                       :style="[itemStyle, { backgroundSelectedColor }, {'padding-left':textPaddingLeft*2 + `px`}]"
                        @mouseenter="onMouseEnter($event)"
                        @mouseleave="onMouseLeave($event)"
                        style="padding-left: 30px;">
@@ -204,7 +204,7 @@
                          :style="[ itemArrowColor ]">
                       <we-icon name="angle-down"></we-icon>
                     </div>
-                    <div class="we-menu-item-title-inner isFull">
+                    <div class="we-menu-item-title-inner is-full">
                       <!--<div class="we-menu-item-title-inner-icon">-->
                       <!--<we-icon name="edit"></we-icon>-->
                       <!--</div>-->
@@ -221,7 +221,7 @@
                            :style="[ itemArrowColor ]">
                         <we-icon name="angle-down"></we-icon>
                       </div>
-                      <div class="we-menu-item-title-inner isFull">
+                      <div class="we-menu-item-title-inner is-full">
                         <!--<div class="we-menu-item-title-inner-icon">-->
                         <!--<we-icon name="edit"></we-icon>-->
                         <!--</div>-->
@@ -239,7 +239,7 @@
                          :style="[ itemArrowColor ]">
                       <!--<we-icon name="angle-right"></we-icon>-->
                     </div>
-                    <div class="we-menu-item-title-inner isFull">
+                    <div class="we-menu-item-title-inner is-full">
                       <!--<div class="we-menu-item-title-inner-icon">-->
                       <!--<we-icon name="edit"></we-icon>-->
                       <!--</div>-->
@@ -552,14 +552,19 @@
             // activeColor: "#2199ed",
             // disabledColor: "#666666",
             // menuRightBorderColor: "#252525",
+            // selectedColor: "#ffffff",
+            // selectedBg: "#2199ed",
             backgroundColor: "",
             textColor: "",
             activeColor: "",
             disabledColor: "",
             menuRightBorderColor: "",
-            active: false,
-            disabled: true,
-            arrowDisabled: false,
+            selectedColor: "",
+            selectedBg: "",
+            isActive: true,
+            isSelected: true,
+            isDisabled: true,
+            isArrowDisabled: false,
 
             verticalLineTop: 0,
             verticalLineHeight: 0,
@@ -598,6 +603,13 @@
             };
             return style;
           },
+          backgroundSelectedSyle(){
+            const style = {
+              color: this.isSelected ? this.selectedColor : this.textColor,
+              backgroundColor: this.isSelected ? this.selectedBg : this.backgroundColor
+            };
+            return style;
+          },
           menuBorderStyle(){
             const style = {
               border: "1px solid " + this.mixColor(this.menuRightBorderColor, 0.2)
@@ -624,7 +636,7 @@
           },
           arrowStyle() {
             const style = {
-              color: this.arrowDisabled ? this.mixColor(this.textColor, 0.5) : this.textColor,
+              color: this.isArrowDisabled ? this.mixColor(this.textColor, 0.5) : this.textColor,
               backgroundColor: this.backgroundColor
             };
             return style;

@@ -175,17 +175,6 @@
     }
   }
 
-  &.is-active{
-    & > .@{menu-css-prefix}-item-title{
-      color: @menu-active-text-color;
-      background-color: @menu-item-hover-bg;
-    }
-
-    & > .@{menu-css-prefix}-item-arrow{
-      color: @menu-active-text-color;
-    }
-  }
-
   &-group-title{
     .mixin-h1-default;
     font-size: 12px;
@@ -197,6 +186,33 @@
     overflow: hidden;
     &:hover{
       background-color: @menu-item-hover-bg;
+    }
+
+    &.is-active{
+      color: @menu-active-text-color;
+      background-color: @menu-item-hover-bg;
+
+      &-arrow{
+        color: @menu-active-text-color;
+      }
+
+      &:hover{
+        background-color: @menu-active-text-bg;
+      }
+    }
+
+    &.is-selected{
+      color: @menu-title-selected-color;
+      background-color: @menu-title-selected-bg;
+
+      &:hover{
+        background-color: @menu-title-selected-bg;
+      }
+
+      &-arrow,
+      &-quick{
+        color: @menu-title-selected-color;
+      }
     }
 
     &.is-disabled{
