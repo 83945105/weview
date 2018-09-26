@@ -1,0 +1,23 @@
+@import "./src/common/var.less";
+@import "./src/common/mixins.less";
+
+@scroll-bar-prefix-css: ~"@{css-prefix}scroll-bar";
+
+@{scroll-bar-prefix-css}{
+  position: relative;
+
+  &.all{
+    overflow-x: auto;
+    overflow-y: auto;
+  }
+
+  &.vertical{
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  &.horizontal{
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+}

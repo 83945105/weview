@@ -1,10 +1,10 @@
 <template>
-  <we-scroll>
+  <we-scroll-bar>
     <ul class="we-menu">
 
       <slot></slot>
     </ul>
-  </we-scroll>
+  </we-scroll-bar>
   <!-- <we-scroll>
      <ul>
      <we-menu>
@@ -49,11 +49,11 @@
 
   import Conf from '../../src/mixins/conf.js';
 
-  import Scroll from '../../scroll/src/Scroll.vue';
+  import ScrollBar from '../../scroll-bar/src/ScrollBar.vue';
 
   export default {
 
-    components: {Scroll: Scroll},
+    components: {ScrollBar: ScrollBar},
 
     name: `${Conf.prefixCls}-menu`,
 
