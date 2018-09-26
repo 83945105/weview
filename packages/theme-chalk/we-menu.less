@@ -18,7 +18,7 @@
   overflow: hidden;
   position: relative;
   width: 100%;
-  height: 100%;
+  .mixin-default;
 
   &-child{
     opacity: 0;
@@ -69,24 +69,20 @@
     background-color: @menu-vertical-line;
   }
 
-  &-inner{
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    overflow: hidden;
+
+
+  &-scroll{
     .mixin-scrollbar;
 
-    &.all-scroll{
-      .mixin-all-scroll;
+    &.all{
+    .mixin-all-scroll;
     }
 
-    &.vertical-scroll{
+    &.vertical{
       .mixin-v-scroll;
     }
 
-    &.horizontal-scroll{
+    &.horizontal{
       .mixin-h-scroll;
     }
   }

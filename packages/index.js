@@ -20,6 +20,10 @@ import {$Alert} from './alert/index.js';
 import Confirm from './confirm/index.js';
 import {$Confirm} from './confirm/index.js';
 import Radio from './radio/index.js';
+import Menu from './menu/index.js';
+import MenuItem from './menu-item/index.js';
+import MenuGroup from './menu-group/index.js';
+import Scroll from './scroll/index.js';
 
 import PopupManager from './src/utils/popup.js';
 
@@ -32,7 +36,11 @@ const components = [
   Layer,
   Alert,
   Confirm,
-  Radio
+  Radio,
+  Menu,
+  MenuItem,
+  MenuGroup,
+  Scroll
 ];
 
 const install = function (Vue, options = {}) {
@@ -63,7 +71,11 @@ export {
   $Layer,
   $Alert,
   $Confirm,
-  Radio
+  Radio,
+  Menu,
+  MenuItem,
+  MenuGroup,
+  Scroll
 }
 
 export default install;
