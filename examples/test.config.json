@@ -28,6 +28,11 @@
             "desc": "输入框测试",
             "name": "TextTest",
             "path": "/textTest"
+          },
+          {
+            "desc": "滚动条测试",
+            "name": "ScrollBarTest",
+            "path": "/scrollBarTest"
           }
         ]
       },

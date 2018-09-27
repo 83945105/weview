@@ -334,10 +334,6 @@
   }
 }
 
-
-
-
-
 .@{animation-css-prefix}-fade-down-left-enter{
   &-active {
     animation: fade-down-left @fade-duration;
@@ -417,5 +413,43 @@
   to {
     opacity: 1;
     transform: none
+  }
+}
+
+.@{animation-css-prefix}-menu-fade-in-enter{
+  &-active {
+    animation: menu-fade-in @menu-fade-duration;
+  }
+
+  &-to {
+  }
+}
+
+.@{animation-css-prefix}-menu-fade-in-leave{
+  &-active {
+    animation: menu-fade-in @menu-fade-duration reverse;
+  }
+
+  &-to {
+  }
+}
+
+@keyframes menu-fade-in{
+  0% {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes menu-fade-in{
+  0% {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }
