@@ -2,7 +2,7 @@
   <div>
     <!--一级带图标菜单-->
     <h3>一级带图标菜单</h3>
-    <div style="height: 300px; width: 220px; position: relative; border: 1px solid #e5e5e5;">
+    <div style="height: 500px; width: 220px; position: relative; border: 1px solid #e5e5e5;">
       <div class="we-menu is-full" :style="[{ backgroundColor }]">
         <div class="we-menu-inner vertical-scroll">
           <div class="we-menu-item"
@@ -25,8 +25,8 @@
                 <div class="we-menu-item-title-inner-text">一级菜单</div>
               </div>
             </div>
-            <we-animation name="menuFadeIn">
-            <div v-if="isMenuChildShow" class="we-menu-child">
+            <div class="we-menu-child we-menu-transition"
+                 :style="{'height':isMenuChildShow ? 226+`px` : 0}">
               <div class="we-menu-item-group">
                 <h3 class="we-menu-item-group-title"
                     :style="[ textGroupColor , {'padding-left':50 + textPaddingLeft*0 + `px`}]">分组</h3>
@@ -63,6 +63,23 @@
                       </div>
                     </div>
                   </div>
+                  <div class="we-menu-item">
+                    <div class="we-menu-item-title"
+                         :style="[itemStyle, backgroundSelectedSyle , {'padding-left':50 + textPaddingLeft*1 + `px`}]"
+                         @mouseenter="onMouseEnter($event)"
+                         @mouseleave="onMouseLeave($event)">
+                      <div class="we-menu-item-title-arrow"
+                           :style="[ itemArrowColor ]">
+                        <!--<we-icon name="angle-down"></we-icon>-->
+                      </div>
+                      <div class="we-menu-item-title-inner is-full">
+                        <!--<div class="we-menu-item-title-inner-icon">-->
+                        <!--<we-icon name="edit"></we-icon>-->
+                        <!--</div>-->
+                        <div class="we-menu-item-title-inner-text">三级菜单</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="we-menu-item">
                   <div class="we-menu-item-title is-disabled"
@@ -83,7 +100,6 @@
                 </div>
               </div>
             </div>
-            </we-animation>
           </div>
           <div class="we-menu-item"
                @mouseenter="itemMouseEnter($event)"
@@ -527,6 +543,59 @@
     </div>
     <!--/横向菜单-->
 
+
+    <!--右键菜单-->
+    <div id="testMenu" class="we-menu we-menu-right is-shadow is-full zoomIn" style="height: 176px; width: 220px; z-index: -10; opacity: 0;"
+         :style="[ menuBorderStyle ]">
+      <div class="we-menu-inner" style="top: 20px; bottom: 20px;" :style="[{ backgroundColor }]">
+        <div class="we-menu-item">
+          <div class="we-menu-item-title"
+               :style="[itemStyle]">
+            <div class="we-menu-item-title-arrow"
+                 :style="[ itemArrowColor ]">
+              <!--<we-icon name="angle-down"></we-icon>-->
+            </div>
+            <div class="we-menu-item-title-inner">
+              <div class="we-menu-item-title-inner-icon">
+                <we-icon name="edit"></we-icon>
+              </div>
+              <div class="we-menu-item-title-inner-text">一级菜单</div>
+            </div>
+          </div>
+          <div class="we-menu-item-group">
+            <h3 class="we-menu-item-group-title"
+                :style="[ textGroupColor, {'padding-left': textPaddingLeft*2 + `px`}]">分组</h3>
+            <div class="we-menu-item-title"
+                 :style="[itemStyle, { backgroundColor }]">
+              <div class="we-menu-item-title-arrow"
+                   :style="[ itemArrowColor ]">
+                <!--<we-icon name="angle-down"></we-icon>-->
+              </div>
+              <div class="we-menu-item-title-inner">
+                <div class="we-menu-item-title-inner-icon">
+                  <!--<we-icon name="edit"></we-icon>-->
+                </div>
+                <div class="we-menu-item-title-inner-text">一级菜单</div>
+              </div>
+            </div>
+            <div class="we-menu-item-title is-disabled"
+                 :style="[itemStyle, { backgroundColor }]">
+              <div class="we-menu-item-title-arrow"
+                   :style="[ itemArrowColor ]">
+                <!--<we-icon name="angle-down"></we-icon>-->
+              </div>
+              <div class="we-menu-item-title-inner">
+                <div class="we-menu-item-title-inner-icon">
+                  <!--<we-icon name="edit"></we-icon>-->
+                </div>
+                <div class="we-menu-item-title-inner-text">一级菜单</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/右键菜单-->
     <br/><br/>
     <!--<div class="we-menu is-shadow" style="width: 220px;">-->
     <!--<div class="we-menu-item type-title">-->
@@ -599,7 +668,7 @@
 
 <script>
   import WeIcon from "../../packages/icon/src/Icon.vue";
-  import WeButton from "../../packages/button/src/Button";
+  import WeButton from "../../packages/button/src/Button.vue";
 
   export default {
     components: {
@@ -742,6 +811,8 @@
       },
 
       onMouseEnter(e) {
+        document.getElementById("testMenu").style.top = e.currentTarget.offsetTop + 50 + `px`;
+        document.getElementById("testMenu").style.left = 400 + `px`;
         if (!this.backgroundColor) {
           return;
         } else {

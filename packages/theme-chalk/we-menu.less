@@ -4,9 +4,37 @@
 @menu-css-prefix: ~"@{css-prefix}menu";
 @submenu-css-prefix: ~"@{css-prefix}submenu";
 
+@-webkit-keyframes zoomIn {
+  from {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.zoomIn {
+  -webkit-animation-name: zoomIn;
+  animation-name: zoomIn;
+}
+
 .@{menu-css-prefix}-external{
-  position: fixed;
-  z-index: 999;
+  position: relative;
   top: 0;
   bottom: 0;
   overflow-x: hidden;
@@ -125,6 +153,10 @@
       }
     }
   }
+
+  &-transition {
+    transition: .3s all ease-in-out;
+  }
 }
 
 .@{menu-css-prefix}-right{
@@ -132,6 +164,7 @@
   top: 0;
   left: 0;
   border: 1px solid @menu-border-color;
+  transition: .3s all ease-in-out;
 
   &.is-shadow{
     box-shadow: 2px 2px 2px fade(@color-black, 40%);
@@ -166,9 +199,10 @@
   cursor: pointer;
   overflow: hidden;
   transition: border-color .3s, background-color .3s, color .3s;
-  .mixin-border-box;
   color: @menu-text-color;
   display: block;
+  .mixin-border-box;
+  .mixin-select-none;
 
   &.is-horizontal{
     float: left;
@@ -193,6 +227,8 @@
 
   &-title{
     overflow: hidden;
+    position: relative;
+
     &:hover{
       background-color: @menu-item-hover-bg;
     }
@@ -226,6 +262,8 @@
 
     &.is-disabled{
       color: @menu-item-fc-disabled-color;
+      cursor: not-allowed;
+
       &:hover{
         background-color: transparent;
       }
