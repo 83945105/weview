@@ -340,8 +340,9 @@
 
     <!--正常菜单-->
     <h3>正常菜单组件</h3>
+    <button @click="menuShow = !menuShow">展开/折叠</button>
     <div style="height: 800px; width: 220px; position: relative; border: 1px solid #e5e5e5;">
-      <we-menu>
+      <we-menu v-model="menuShow">
         <we-menu-item icon-name="edit">我的工作台</we-menu-item>
         <we-menu-group label="分组">
           <we-menu-item icon-name="edit">选项一</we-menu-item>
@@ -714,6 +715,7 @@
     },
     data() {
       return {
+        menuShow: true,
         name: 'menu',
         isShow: false,
         isShow1: false,

@@ -3,24 +3,23 @@
 
 @scroll-bar-prefix-css: ~"@{css-prefix}scroll-bar";
 
-@{scroll-bar-prefix-css}-wrap{
-  overflow: hidden;
+@{scroll-bar-prefix-css}{
   position: relative;
 
-  &::-webkit-scrollbar {
-    width: 0;
-    height: 0;
+  &.hidden{
+    overflow: hidden;
   }
-}
-
-@{scroll-bar-prefix-css}{
-  border-radius: @scroll-bar-border-radius;
-
-  &.is-vertical{
-    width: @scroll-bar-size;
+  &.all{
+    overflow-x: auto;
+    overflow-y: auto;
   }
 
-  &.is-horizontal{
+  &.vertical{
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  &.horizontal{
     overflow-x: auto;
     overflow-y: hidden;
   }

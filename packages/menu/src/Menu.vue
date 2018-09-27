@@ -1,17 +1,15 @@
 <template>
-  <!--<menu-collapse-transition>-->
-  <div class="we-menu-external" style="width: 50px">
-    <animation name="menuFadeIn">
-      <scroll-bar v-show="show">
+  <menu-collapse-transition>
+    <div v-show="show" class="we-menu-external">
+      <scroll-bar>
 
         <ul class="we-menu">
           <slot></slot>
         </ul>
 
       </scroll-bar>
-    </animation>
-  </div>
-  <!--</menu-collapse-transition>-->
+    </div>
+  </menu-collapse-transition>
 </template>
 
 <script>
@@ -21,12 +19,12 @@
 
   import ScrollBar from '../../scroll-bar/src/ScrollBar.vue';
   import Animation from '../../animation/src/Animation.vue';
-  import {addClass, removeClass, hasClass} from '../../src/utils/dom.js';
+  import {addClass, removeClass, hasClass, getStyle} from '../../src/utils/dom.js';
 
   export default {
 
     components: {
-      ScrollBar: ScrollBar, Animation, 'menu-collapse-transition': {
+      ScrollBar: ScrollBar, 'menu-collapse-transition': {
         functional: true,
         render(createElement, context) {
           return createElement('transition', {
@@ -35,41 +33,71 @@
             },
             on: {
               beforeEnter(el) {
-                el.style.opacity = 0.2;
+                // addClass(el, 'we-menu-transition');
+                if (!el.dataset) el.dataset = {};
+
+                console.log(el.style)
+
+
+                el.dataset.oldHeight = el.style.height;
+                el.dataset.oldPaddingTop = el.style.paddingTop;
+                el.dataset.oldPaddingBottom = el.style.paddingBottom;
+
+                el.style.height = '0';
+                el.style.paddingTop = 0;
+                el.style.paddingBottom = 0;
               },
 
               enter(el) {
-                addClass(el, 'we-opacity-transition');
-                el.style.opacity = 1;
+                el.dataset.oldOverflow = el.style.overflow;
+                if (el.scrollHeight !== 0) {
+                  el.style.height = el.scrollHeight + 'px';
+                  el.style.paddingTop = el.dataset.oldPaddingTop;
+                  el.style.paddingBottom = el.dataset.oldPaddingBottom;
+                } else {
+                  el.style.height = '';
+                  el.style.paddingTop = el.dataset.oldPaddingTop;
+                  el.style.paddingBottom = el.dataset.oldPaddingBottom;
+                }
+
+                el.style.overflow = 'hidden';
               },
 
               afterEnter(el) {
-                removeClass(el, 'we-opacity-transition');
-                el.style.opacity = '';
+                // for safari: remove class then reset height is necessary
+                // removeClass(el, 'we-menu-transition');
+                el.style.height = el.dataset.oldHeight;
+                el.style.overflow = el.dataset.oldOverflow;
               },
 
               beforeLeave(el) {
                 if (!el.dataset) el.dataset = {};
 
-                if (hasClass(el, 'we-menu--collapse')) {
-                  removeClass(el, 'we-menu--collapse');
-                  el.dataset.oldOverflow = el.style.overflow;
-                  el.dataset.scrollWidth = el.clientWidth;
-                  addClass(el, 'we-menu--collapse');
-                } else {
-                  addClass(el, 'we-menu--collapse');
-                  el.dataset.oldOverflow = el.style.overflow;
-                  el.dataset.scrollWidth = el.clientWidth;
-                  removeClass(el, 'we-menu--collapse');
-                }
+                el.dataset.oldHeight = el.style.height;
+                el.dataset.oldPaddingTop = el.style.paddingTop;
+                el.dataset.oldPaddingBottom = el.style.paddingBottom;
+                el.dataset.oldOverflow = el.style.overflow;
 
-                el.style.width = el.scrollWidth + 'px';
+                el.style.height = el.scrollHeight + 'px';
                 el.style.overflow = 'hidden';
               },
 
               leave(el) {
-                addClass(el, 'horizontal-collapse-transition');
-                el.style.width = el.dataset.scrollWidth + 'px';
+                if (el.scrollHeight !== 0) {
+                  // for safari: add class after set height, or it will jump to zero height suddenly, weired
+                  // addClass(el, 'we-menu-transition');
+                  el.style.height = 0;
+                  el.style.paddingTop = 0;
+                  el.style.paddingBottom = 0;
+                }
+              },
+
+              afterLeave(el) {
+                // removeClass(el, 'we-menu-transition');
+                el.style.height = el.dataset.oldHeight;
+                el.style.overflow = el.dataset.oldOverflow;
+                el.style.paddingTop = el.dataset.oldPaddingTop;
+                el.style.paddingBottom = el.dataset.oldPaddingBottom;
               }
             }
           }, context.children);
@@ -152,6 +180,7 @@
       }
       this.$on('item-click', this.handleItemClick);
       this.$on('item-expand', this.handleItemExpand);
+
     }
 
   }
