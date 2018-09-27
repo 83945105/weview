@@ -3,47 +3,24 @@
 
 @scroll-bar-prefix-css: ~"@{css-prefix}scroll-bar";
 
-@{scroll-bar-prefix-css}-wrap{
-  overflow: hidden;
-  position: relative;
-
-  &::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-  }
-}
-
 @{scroll-bar-prefix-css}{
   position: relative;
 
   &.hidden{
-    overflow-x: hidden;
-    overflow-y: hidden;
+    overflow: hidden;
   }
-
   &.all{
     overflow-x: auto;
     overflow-y: auto;
   }
 
-  &.is-vertical{
+  &.vertical{
     overflow-x: hidden;
     overflow-y: auto;
   }
 
-  &.is-horizontal{
+  &.horizontal{
     overflow-x: auto;
     overflow-y: hidden;
   }
-
-  //border-radius: @scroll-bar-border-radius;
-  //
-  //&.is-vertical{
-  //  width: @scroll-bar-size;
-  //}
-  //
-  //&.is-horizontal{
-  //  overflow-x: auto;
-  //  overflow-y: hidden;
-  //}
 }
