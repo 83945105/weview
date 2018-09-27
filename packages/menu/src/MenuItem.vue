@@ -7,20 +7,18 @@
       <div v-if="hasSubMenu" :class="[titleArrowClass]">
         <icon :name="expand ? 'angle-down' : 'angle-up'"></icon>
       </div>
-      <div class="we-menu-item-title-inner">
-        <div class="we-menu-item-title-inner-icon">
-          <icon name="edit"></icon>
+      <div :class="[titleInnerClass]">
+        <div :class="[titleInnerIconClass]">
+          <slot name="icon">
+            <icon :name="iconName"></icon>
+          </slot>
         </div>
-        <div class="we-menu-item-title-inner-text">
+        <div :class="[titleInnerTextClass]">
           <slot></slot>
         </div>
       </div>
     </div>
-
-    <animation name="menuFadeIn">
-      <slot name="subMenu"></slot>
-    </animation>
-
+    <slot name="subMenu"></slot>
   </li>
 </template>
 
@@ -30,11 +28,10 @@
   import Emitter from '../../src/mixins/emitter.js';
 
   import Icon from '../../icon/src/Icon.vue';
-  import Animation from '../../animation/src/Animation.vue';
 
   export default {
 
-    components: {Icon: Icon, Animation: Animation},
+    components: {Icon: Icon},
 
     name: `${Conf.prefixCls}-menu-item`,
 
@@ -59,7 +56,7 @@
     data() {
       return {
         selected: this.value,
-        expand: this.value,
+        expand: false,
         active: false,
         hasSubMenu: false,
         indentNum: 0
@@ -68,7 +65,11 @@
 
     props: {
       value: Boolean,
-      disabled: Boolean
+      disabled: Boolean,
+      iconName: {
+        type: String,
+        default: ''
+      }
     },
 
     computed: {
@@ -78,11 +79,20 @@
       titleClass() {
         return `${this.prefixCls}-menu-item-title`;
       },
+      titleInnerClass() {
+        return `${this.prefixCls}-menu-item-title-inner`;
+      },
+      titleInnerIconClass() {
+        return `${this.prefixCls}-menu-item-title-inner-icon`;
+      },
+      titleInnerTextClass() {
+        return `${this.prefixCls}-menu-item-title-inner-text`;
+      },
       selectedClass() {
-        return this.selected ? 'is-selected' : undefined;
+        return (!this.hasSubMenu && this.selected) ? 'is-selected' : undefined;
       },
       activeClass() {
-        return this.active ? 'is-active' : undefined;
+        return (this.hasSubMenu && this.active) ? 'is-active' : undefined;
       },
       titleArrowClass() {
         return `${this.prefixCls}-menu-item-title-arrow`;
@@ -110,12 +120,27 @@
         }
         if (this.hasSubMenu) {
           this.expand = !this.expand;
+          this.broadcast(`${this.prefixNameCls}Menu`, 'item-expand', {menu: this.menu, item: this});
           this.$emit('click', e, this);
           return
         }
-        this.dispatch(`${this.prefixNameCls}Menu`, 'item-click', this);
+        //通知根菜单
+        this.dispatchRoot(`${this.prefixNameCls}Menu`, 'item-click', {menu: this.menu, item: this});
+        //通知根菜单项激活
+        this.dispatchRoot(`${this.prefixNameCls}MenuItem`, 'item-click', {menu: this.menu, item: this});
         this.selected = true;
         this.$emit('click', e, this);
+      },
+      handleItemUnSelected({menu, item}) {
+        if (this.hasSubMenu) {
+          this.active = false;
+        } else {
+          this.selected = false;
+        }
+        this.broadcast(`${this.prefixNameCls}MenuItem`, 'item-un-selected', {menu: menu, item: item});
+      },
+      handleItemClick({menu, item}) {
+        this.active = true;
       }
     },
 
@@ -125,6 +150,8 @@
           this.indentNum = this.menu.indentNum;
         }
       }
+      this.$on('item-un-selected', this.handleItemUnSelected);
+      this.$on('item-click', this.handleItemClick);
     }
 
   }

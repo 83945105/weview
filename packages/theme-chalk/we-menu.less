@@ -5,8 +5,7 @@
 @submenu-css-prefix: ~"@{css-prefix}submenu";
 
 .@{menu-css-prefix}-external{
-  position: fixed;
-  z-index: 999;
+  position: relative;
   top: 0;
   bottom: 0;
   overflow-x: hidden;
@@ -19,6 +18,18 @@
   position: relative;
   width: 100%;
   .mixin-default;
+
+  //&-item{
+  //  .we-menu-item-title-arrow{
+  //    opacity: 0;
+  //  }
+  //  .we-menu-item-title-inner-text{
+  //    opacity: 0;
+  //  }
+  //  .we-menu-item-group{
+  //    opacity: 0;
+  //  }
+  //}
 
   //&-child{
   //  opacity: 0;

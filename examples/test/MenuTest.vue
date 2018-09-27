@@ -114,7 +114,7 @@
 
     <!--折叠菜单-->
     <h3>折叠菜单</h3>
-    <div class="we-menu-external" style="left: 0;"
+    <div class="we-menu-external" style="left: 0;position: fixed"
          :style="{'width': menuWidth + `px`}"
          @mouseenter="menuWidth = 210"
          @mouseleave="menuWidth = 50">
@@ -326,23 +326,46 @@
     <h3>正常菜单组件</h3>
     <div style="height: 800px; width: 220px; position: relative; border: 1px solid #e5e5e5;">
       <we-menu>
-        <we-menu-item>我的工作台</we-menu-item>
+        <we-menu-item icon-name="edit">我的工作台</we-menu-item>
         <we-menu-group label="分组">
-          <we-menu-item>选项一</we-menu-item>
+          <we-menu-item icon-name="edit">选项一</we-menu-item>
           <we-menu-item>选项二</we-menu-item>
-          <we-menu-item>
+          <we-menu-item icon-name="edit">
 
             二级菜单
 
             <we-menu slot="subMenu">
-              <we-menu-item>二级选项一</we-menu-item>
+              <we-menu-item icon-name="edit">二级选项一</we-menu-item>
               <we-menu-item>
+
+                <we-icon name="edit" slot="icon"></we-icon>
 
                 三级菜单
 
                 <we-menu slot="subMenu">
                   <we-menu-item>三级选项一</we-menu-item>
-                  <we-menu-item>三级选项二</we-menu-item>
+                  <we-menu-item icon-name="edit">三级选项二</we-menu-item>
+                </we-menu>
+
+              </we-menu-item>
+            </we-menu>
+
+          </we-menu-item>
+          <we-menu-item icon-name="edit">
+
+            二级菜单
+
+            <we-menu slot="subMenu">
+              <we-menu-item icon-name="edit">二级选项一</we-menu-item>
+              <we-menu-item>
+
+                <el-icon name="edit" slot="icon"></el-icon>
+
+                三级菜单
+
+                <we-menu slot="subMenu">
+                  <we-menu-item>三级选项一</we-menu-item>
+                  <we-menu-item icon-name="edit">三级选项二</we-menu-item>
                 </we-menu>
 
               </we-menu-item>
