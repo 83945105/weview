@@ -23,7 +23,6 @@ import Radio from './radio/index.js';
 import Menu from './menu/index.js';
 import MenuItem from './menu-item/index.js';
 import MenuGroup from './menu-group/index.js';
-import Scroll from './scroll/index.js';
 
 import PopupManager from './src/utils/popup.js';
 
@@ -39,8 +38,7 @@ const components = [
   Radio,
   Menu,
   MenuItem,
-  MenuGroup,
-  Scroll
+  MenuGroup
 ];
 
 const install = function (Vue, options = {}) {
@@ -74,8 +72,7 @@ export {
   Radio,
   Menu,
   MenuItem,
-  MenuGroup,
-  Scroll
+  MenuGroup
 }
 
 export default install;

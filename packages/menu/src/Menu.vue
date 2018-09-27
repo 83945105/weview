@@ -1,9 +1,9 @@
 <template>
-  <we-scroll>
+  <scroll>
     <ul class="we-menu">
       <slot></slot>
     </ul>
-  </we-scroll>
+  </scroll>
 </template>
 
 <script>
@@ -24,6 +24,12 @@
 
     mixins: [Conf],
 
+    provide() {
+      return {
+        menu: this
+      };
+    },
+
     inject: {
       menuItem: {
         default: null
@@ -31,15 +37,25 @@
     },
 
     data() {
-      return {};
+      return {
+        indentNum: undefined
+      };
     },
 
     props: {},
 
-    methods: {},
+    methods: {
+      handleItemClick(item) {
+        console.log(item)
+      }
+    },
 
     created() {
-      console.log(this.menuItem)
+      if (this.menuItem) {
+        this.menuItem.hasSubMenu = true;
+        this.indentNum = this.menuItem.indentNum + 1;
+      }
+      this.$on('item-click', this.handleItemClick);
     }
 
   }
