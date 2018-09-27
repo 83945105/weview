@@ -340,7 +340,7 @@
 
     <!--正常菜单-->
     <h3>正常菜单组件</h3>
-    <div style="height: 300px; width: 220px; position: relative; border: 1px solid #e5e5e5;">
+    <div style="height: 800px; width: 220px; position: relative; border: 1px solid #e5e5e5;">
       <we-menu>
         <we-menu-item>我的工作台</we-menu-item>
         <we-menu-group label="分组">
@@ -352,6 +352,16 @@
 
             <we-menu slot="subMenu">
               <we-menu-item>二级选项一</we-menu-item>
+              <we-menu-item>
+
+                三级菜单
+
+                <we-menu slot="subMenu">
+                  <we-menu-item>三级选项一</we-menu-item>
+                  <we-menu-item>三级选项二</we-menu-item>
+                </we-menu>
+
+              </we-menu-item>
             </we-menu>
 
           </we-menu-item>
@@ -845,7 +855,6 @@
 
       itemHorizontalMouseEnter(e) {
         let first_level_menu = getByClassDom(e.currentTarget, 'we-menu-item-title');
-        console.log(first_level_menu[0]);
         this.horizontalLineLeft = first_level_menu[0].offsetLeft;
         this.horizontalLineWidth = first_level_menu[0].offsetWidth;
         this.menuBarOpacity = 1;
