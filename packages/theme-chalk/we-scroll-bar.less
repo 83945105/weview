@@ -14,14 +14,36 @@
 }
 
 @{scroll-bar-prefix-css}{
-  border-radius: @scroll-bar-border-radius;
+  position: relative;
+
+  &.hidden{
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+
+  &.all{
+    overflow-x: auto;
+    overflow-y: auto;
+  }
 
   &.is-vertical{
-    width: @scroll-bar-size;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   &.is-horizontal{
     overflow-x: auto;
     overflow-y: hidden;
   }
+
+  //border-radius: @scroll-bar-border-radius;
+  //
+  //&.is-vertical{
+  //  width: @scroll-bar-size;
+  //}
+  //
+  //&.is-horizontal{
+  //  overflow-x: auto;
+  //  overflow-y: hidden;
+  //}
 }
