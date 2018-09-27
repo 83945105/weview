@@ -372,16 +372,14 @@
             二级菜单
 
             <we-menu slot="subMenu">
-              <we-menu-item icon-name="edit">二级选项一</we-menu-item>
+              <we-menu-item>二级选项一</we-menu-item>
               <we-menu-item>
-
-                <el-icon name="edit" slot="icon"></el-icon>
 
                 三级菜单
 
                 <we-menu slot="subMenu">
                   <we-menu-item>三级选项一</we-menu-item>
-                  <we-menu-item icon-name="edit">三级选项二</we-menu-item>
+                  <we-menu-item>三级选项二</we-menu-item>
                 </we-menu>
 
               </we-menu-item>
@@ -578,12 +576,14 @@
 
 
     <!--右键菜单-->
-    <div id="testMenu" class="we-menu we-menu-right is-shadow is-full zoomIn" style="height: 176px; width: 220px; z-index: -10; opacity: 0;"
+    <div id="testMenu" class="we-menu we-menu-right is-shadow is-full" style="height: 176px; width: 220px; left: 0; top: 0;"
          :style="[ menuBorderStyle ]">
       <div class="we-menu-inner" style="top: 20px; bottom: 20px;" :style="[{ backgroundColor }]">
         <div class="we-menu-item">
           <div class="we-menu-item-title"
-               :style="[itemStyle]">
+               :style="[itemStyle]"
+               @mouseenter="onMouseEnter($event)"
+               @mouseleave="onMouseLeave($event)">
             <div class="we-menu-item-title-arrow"
                  :style="[ itemArrowColor ]">
               <!--<we-icon name="angle-down"></we-icon>-->
@@ -599,7 +599,9 @@
             <h3 class="we-menu-item-group-title"
                 :style="[ textGroupColor, {'padding-left': textPaddingLeft*2 + `px`}]">分组</h3>
             <div class="we-menu-item-title"
-                 :style="[itemStyle, { backgroundColor }]">
+                 :style="[itemStyle, { backgroundColor }]"
+                 @mouseenter="onMouseEnter($event)"
+                 @mouseleave="onMouseLeave($event)">
               <div class="we-menu-item-title-arrow"
                    :style="[ itemArrowColor ]">
                 <!--<we-icon name="angle-down"></we-icon>-->
@@ -612,7 +614,9 @@
               </div>
             </div>
             <div class="we-menu-item-title is-disabled"
-                 :style="[itemStyle, { backgroundColor }]">
+                 :style="[itemStyle, { backgroundColor }]"
+                 @mouseenter="onMouseEnter($event)"
+                 @mouseleave="onMouseLeave($event)">
               <div class="we-menu-item-title-arrow"
                    :style="[ itemArrowColor ]">
                 <!--<we-icon name="angle-down"></we-icon>-->
@@ -845,7 +849,7 @@
 
       onMouseEnter(e) {
         document.getElementById("testMenu").style.top = e.currentTarget.offsetTop + 50 + `px`;
-        document.getElementById("testMenu").style.left = 400 + `px`;
+        document.getElementById("testMenu").style.left = document.body.clientWidth - e.currentTarget.offsetLeft + `px`;
         if (!this.backgroundColor) {
           return;
         } else {
@@ -878,6 +882,7 @@
 
       itemHorizontalMouseEnter(e) {
         let first_level_menu = getByClassDom(e.currentTarget, 'we-menu-item-title');
+        console.log(first_level_menu[0]);
         this.horizontalLineLeft = first_level_menu[0].offsetLeft;
         this.horizontalLineWidth = first_level_menu[0].offsetWidth;
         this.menuBarOpacity = 1;
