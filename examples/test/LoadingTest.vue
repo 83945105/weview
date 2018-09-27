@@ -8,6 +8,10 @@
       <we-loading :value="true" background="rgba(0,0,0,0.8)" text="玩命加载中" :loading-speed="1"></we-loading>
     </div>
 
+    <svg v-if="!spinner" class="circular" viewBox="25 25 50 50">
+      <circle class="path" cx="50" cy="50" r="20" fill="none"/>
+    </svg>
+
     <div id="loadingDom"
          @click="handleClick">
       点我使用$loading开启加载特效

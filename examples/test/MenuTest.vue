@@ -2,7 +2,7 @@
   <div>
     <!--一级带图标菜单-->
     <h3>一级带图标菜单</h3>
-    <div style="height: 100px; width: 220px; position: relative; border: 1px solid #e5e5e5;">
+    <div style="height: 300px; width: 220px; position: relative; border: 1px solid #e5e5e5;">
       <div class="we-menu is-full" :style="[{ backgroundColor }]">
         <div class="we-menu-inner vertical-scroll">
           <div class="we-menu-item"
@@ -12,7 +12,7 @@
                  :style="[itemStyle, { backgroundColor }]"
                  @mouseenter="onMouseEnter($event)"
                  @mouseleave="onMouseLeave($event)"
-                 @click="foldShow">
+                 @click="isMenuChildShow =! isMenuChildShow">
               <div class="we-menu-item-title-arrow"
                    :class="{'is-selected':isMenuChildShow}"
                    :style="[ itemArrowColor ]">
@@ -25,8 +25,8 @@
                 <div class="we-menu-item-title-inner-text">一级菜单</div>
               </div>
             </div>
-            <div class="we-menu-child" :class="{'is-fold':isMenuChildShow}"
-                 :style="{'display':isMenuShowDisplay ? 'block' : 'none'}">
+            <we-animation name="menuFadeIn">
+            <div v-if="isMenuChildShow" class="we-menu-child">
               <div class="we-menu-item-group">
                 <h3 class="we-menu-item-group-title"
                     :style="[ textGroupColor , {'padding-left':50 + textPaddingLeft*0 + `px`}]">分组</h3>
@@ -83,6 +83,7 @@
                 </div>
               </div>
             </div>
+            </we-animation>
           </div>
           <div class="we-menu-item"
                @mouseenter="itemMouseEnter($event)"

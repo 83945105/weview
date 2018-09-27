@@ -7,6 +7,9 @@ export const AnimationType = {
   fadeIn: {
     name: `${Conf.prefixCls}-animation-fade-in`
   },
+  menuFadeIn: {
+    name: `${Conf.prefixCls}-animation-menu-fade-in`
+  },
   fadeRight: {
     name: `${Conf.prefixCls}-animation-fade-right`
   },
