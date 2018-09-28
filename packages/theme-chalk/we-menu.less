@@ -39,7 +39,8 @@
   bottom: 0;
   overflow-x: hidden;
   overflow-y: hidden;
-  transition: all .3s cubic-bezier(0,0,.2,1);
+  width: 100%;
+  transition: height .3s cubic-bezier(0,0,.2,1) , width .3s cubic-bezier(0,0,.2,1);
 }
 .@{menu-css-prefix}{
   background-color: @menu-bg;
@@ -213,6 +214,7 @@
   transition: border-color .3s, background-color .3s, color .3s;
   color: @menu-text-color;
   display: block;
+  position: relative;
   .mixin-border-box;
   .mixin-select-none;
 
