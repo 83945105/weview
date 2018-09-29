@@ -7,11 +7,11 @@
          @mouseenter="handleMouseEnter"
          @mouseleave="handleMouseLeave"
     >
-      <div v-if="showArrow && hasSubMenu" :class="[titleArrowClass]">
+      <div v-if="$_showArrow_ && hasSubMenu" :class="[titleArrowClass]">
         <icon :name="expand ? 'angle-down' : 'angle-up'"></icon>
       </div>
       <div :class="[titleInnerClass]">
-        <div :class="[titleInnerIconClass]">
+        <div v-if="$_hasIcon_" :class="[titleInnerIconClass]">
           <slot name="icon">
             <icon :name="iconName"></icon>
           </slot>
@@ -49,39 +49,42 @@
 
     provide() {
       return {
-        rootMenu: this.rootMenu,
+        rootMenuItem: this.rootMenuItem,
         menuItem: this
       };
     },
 
     inject: {
-      rootMenu: {
+      $_colors_: ['$_colors_'],
+      indentNum: {
+        default: 0
+      },
+      rootMenu: ['rootMenu'],
+      menu: ['menu'],
+      rootMenuItem: {
+        default() {
+          return this;
+        }
+      },
+      parentMenuItem: {
+        from: 'menuItem',
         default: null
       },
-      menu: {
+      menuGroup: {
         default: null
       }
     },
 
     data() {
       return {
-        showArrow: true,
         selected: this.value,
         expand: false,
         active: false,
-        hasSubMenu: false,
-        indentNum: 0,
-        textColor: undefined,
-        backgroundColor: undefined,
-        activeTextColor: undefined,
-        activeBackgroundColor: undefined,
-        selectedTextColor: undefined,
-        selectedBackgroundColor: undefined,
-        hoverTextColor: undefined,
-        hoverBackgroundColor: undefined,
         hover: false,
-        hoverOldTextColor: undefined,
-        hoverOldBackgroundColor: undefined
+        hasSubMenu: false,
+        $_showArrow_: true,
+        $_hoverTextColorCache_: undefined,
+        $_hoverBackgroundColorCache_: undefined
       };
     },
 
@@ -95,8 +98,15 @@
     },
 
     computed: {
+      $_hasIcon_() {
+        return this.rootMenu.mode !== 'horizontal';
+      },
       itemClass() {
-        return `${this.prefixCls}-menu-item`;
+        let cls = `${this.prefixCls}-menu-item`;
+        if (this.rootMenuItem === this && this.rootMenu.mode === 'horizontal') {
+          cls += ' is-horizontal';
+        }
+        return cls;
       },
       titleClass() {
         return `${this.prefixCls}-menu-item-title`;
@@ -106,7 +116,7 @@
       },
       titleInnerStyle() {
         return {
-          color: this.textColor
+          color: this.$_colors_.textColor
         };
       },
       titleInnerIconClass() {
@@ -123,8 +133,8 @@
           return undefined;
         }
         return {
-          color: this.selectedTextColor,
-          backgroundColor: this.selectedBackgroundColor
+          color: this.$_colors_.selectedTextColor,
+          backgroundColor: this.$_colors_.selectedBackgroundColor
         };
       },
       activeClass() {
@@ -135,8 +145,8 @@
           return undefined;
         }
         return {
-          color: this.activeTextColor,
-          backgroundColor: this.activeBackgroundColor
+          color: this.$_colors_.activeTextColor,
+          backgroundColor: this.$_colors_.activeBackgroundColor
         };
       },
       titleArrowClass() {
@@ -162,7 +172,7 @@
           top: 0,
           height: `50px`,
           opacity: 1,
-          backgroundColor: this.activeTextColor
+          backgroundColor: this.$_colors_.activeTextColor
         };
       }
     },
@@ -181,9 +191,9 @@
           this.broadcast(`${this.prefixNameCls}Menu`, 'item-un-expand', {menu: this.menu, item: this});
         }
       },
-      'menu.collapse': {
+      'rootMenu.collapse': {
         handler(v) {
-          this.showArrow = !v;
+          this.$_showArrow_ = !v;
         },
         deep: true
       }
@@ -191,20 +201,19 @@
 
     methods: {
       handleMouseEnter(e) {
-
         this.hover = true;
 
-        this.hoverOldBackgroundColor = e.currentTarget.style.backgroundColor;
-        this.hoverOldTextColor = e.currentTarget.style.color;
+        this.$_hoverBackgroundColorCache_ = e.currentTarget.style.backgroundColor;
+        this.$_hoverTextColorCache_ = e.currentTarget.style.color;
 
-        e.currentTarget.style.color = this.hoverTextColor;
-        e.currentTarget.style.backgroundColor = this.hoverBackgroundColor;
+        e.currentTarget.style.color = this.$_colors_.hoverTextColor;
+        e.currentTarget.style.backgroundColor = this.$_colors_.hoverBackgroundColor;
 
       },
       handleMouseLeave(e) {
         this.hover = false;
-        e.currentTarget.style.backgroundColor = this.hoverOldBackgroundColor;
-        e.currentTarget.style.color = this.hoverOldTextColor;
+        e.currentTarget.style.backgroundColor = this.$_hoverBackgroundColorCache_;
+        e.currentTarget.style.color = this.$_hoverTextColorCache_;
       },
       handleClick(e) {
         if (this.disabled) {
@@ -240,23 +249,14 @@
 
     created() {
       if (this.rootMenu) {
-        this.showArrow = !this.rootMenu.collapse;
-      }
-      if (this.menu) {
-        this.textColor = this.menu.tc;
-        this.backgroundColor = this.menu.bgc;
-        this.activeTextColor = this.menu.atc;
-        this.activeBackgroundColor = this.menu.aBgc;
-        this.selectedTextColor = this.menu.stc;
-        this.selectedBackgroundColor = this.menu.sBgc;
-        this.hoverTextColor = this.menu.htc;
-        this.hoverBackgroundColor = this.menu.hBgc;
-        if (this.menu.indentNum !== undefined) {
-          this.indentNum = this.menu.indentNum;
-        }
+        this.$_showArrow_ = !this.rootMenu.collapse;
       }
       this.$on('item-un-selected', this.handleItemUnSelected);
       this.$on('item-click', this.handleItemClick);
+    },
+
+    mounted() {
+      // console.log(this.$_colors_)
     }
 
   }

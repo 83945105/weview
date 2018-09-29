@@ -1,6 +1,6 @@
 <template>
   <li class="we-menu-item-group">
-    <h3 class="we-menu-item-group-title">分组</h3>
+    <h3 v-show="showTitle && title" class="we-menu-item-group-title" :style="[indentStyle]">{{title}}</h3>
     <ul>
       <slot></slot>
     </ul>
@@ -19,7 +19,61 @@
 
     optionName: `menuGroup`,
 
-    mixins: [Conf]
+    mixins: [Conf],
+
+    provide() {
+      return {
+        menuGroup: this
+      };
+    },
+
+    inject: {
+      indentNum: {
+        default: 0
+      },
+      rootMenu: {
+        default: null
+      },
+      menu: {
+        default: null
+      },
+      menuItem: {
+        default: null
+      }
+    },
+
+    data() {
+      return {
+        showTitle: true
+      };
+    },
+
+    props: {
+      title: String
+    },
+
+    computed: {
+      indentStyle() {
+        return {
+          paddingLeft: this.indentNum > 0 ? `${this.indentNum * 15 + 50}px` : '50px'
+        };
+      }
+    },
+
+    watch: {
+      'rootMenu.collapse': {
+        handler(v) {
+          this.showTitle = !v;
+        },
+        deep: true
+      }
+    },
+
+    created() {
+      if (this.rootMenu) {
+        this.showTitle = !this.rootMenu.collapse;
+      }
+    }
 
   }
 </script>

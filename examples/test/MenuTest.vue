@@ -351,6 +351,8 @@
     <button @click="$refs.menu.closeAllSubMenu()">收起根菜单下所有子菜单</button>
     <p></p>
     <button @click="collapse = !collapse">折叠/展开</button>
+    <!--@mouseenter.native="collapse = false"-->
+    <!--@mouseleave.native="collapse = true"-->
     <div style="height: 1000px; width: 220px; position: relative; border: 1px solid #e5e5e5;">
       <we-menu v-model="menuShow"
                index="0"
@@ -365,70 +367,82 @@
                selected-background-color="#2199ed"
                hover-text-color="#ff0000"
                hover-background-color="#666666"
-               @mouseenter.native="collapse = false"
-               @mouseleave.native="collapse = true"
-               style="height: 1100px;left: 0px;top: 0px"
+               style="height: 1000px;left: 0px;top: 0px"
       >
         <we-menu-item icon-name="edit">我的工作台</we-menu-item>
-        <we-menu-group label="分组">
+        <we-menu-group title="分组">
           <we-menu-item icon-name="edit">选项一</we-menu-item>
-          <we-menu-item>选项二</we-menu-item>
-          <we-menu-item icon-name="edit">
+          <we-menu-item icon-name="edit">选项二</we-menu-item>
+        </we-menu-group>
+        <we-menu-item icon-name="edit">
 
-            二级菜单
+          二级菜单
 
-            <we-menu slot="subMenu" index="1">
-              <we-menu-item icon-name="edit">二级选项一</we-menu-item>
-              <we-menu-item>
+          <we-menu slot="subMenu" index="1">
+            <we-menu-item icon-name="edit">二级选项一</we-menu-item>
+            <we-menu-item>
 
-                <we-icon name="edit" slot="icon"></we-icon>
+              <we-icon name="edit" slot="icon"></we-icon>
 
-                三级菜单
+              三级菜单
 
-                <we-menu slot="subMenu">
+              <we-menu slot="subMenu">
+                <we-menu-group title="三级分组">
                   <we-menu-item>三级选项一</we-menu-item>
                   <we-menu-item icon-name="edit">三级选项二</we-menu-item>
-                </we-menu>
+                </we-menu-group>
+              </we-menu>
 
-              </we-menu-item>
-            </we-menu>
+            </we-menu-item>
+          </we-menu>
 
-          </we-menu-item>
-          <we-menu-item icon-name="edit">
+        </we-menu-item>
+        <we-menu-item icon-name="edit">
 
-            二级菜单
+          二级菜单
 
-            <we-menu slot="subMenu">
-              <we-menu-item>二级选项一</we-menu-item>
-              <we-menu-item>
+          <we-menu slot="subMenu" >
+            <we-menu-item>二级选项一</we-menu-item>
+            <we-menu-item>
 
-                三级菜单
+              三级菜单
 
-                <we-menu slot="subMenu">
-                  <we-menu-item>三级选项一</we-menu-item>
-                  <we-menu-item>三级选项二</we-menu-item>
+              <we-menu slot="subMenu">
+                <we-menu-item>三级选项一</we-menu-item>
+                <we-menu-item>三级选项二</we-menu-item>
 
-                  <we-menu-item>
+                <we-menu-item>
 
-                    四级菜单
+                  四级菜单
 
-                    <we-menu slot="subMenu">
-                      <we-menu-item>四级选项一</we-menu-item>
-                      <we-menu-item>四级选项二</we-menu-item>
-                    </we-menu>
+                  <we-menu slot="subMenu">
+                    <we-menu-item>四级选项一</we-menu-item>
+                    <we-menu-item>四级选项二</we-menu-item>
+                  </we-menu>
 
-                  </we-menu-item>
-                </we-menu>
+                </we-menu-item>
+              </we-menu>
 
-              </we-menu-item>
-            </we-menu>
+            </we-menu-item>
+          </we-menu>
 
-          </we-menu-item>
-        </we-menu-group>
+        </we-menu-item>
         <we-menu-item icon-name="edit">后台系统</we-menu-item>
       </we-menu>
     </div>
     <!--/正常菜单-->
+
+    <p></p>
+
+    <!--横向菜单组件-->
+    <div style="height: 50px; width: 800px; position: relative; border: 1px solid #e5e5e5;">
+      <we-menu mode="horizontal">
+        <we-menu-item>羽毛球</we-menu-item>
+        <we-menu-item>乒乓球</we-menu-item>
+      </we-menu>
+    </div>
+
+    <!--横向菜单-->
 
     <!--右键菜单-->
     <div class="we-menu we-menu-right is-shadow is-full" style="height: 200px; width: 220px; left: 50%; top: 50px;"
@@ -757,7 +771,7 @@
         menuShow: true,
         openMenuIndex: '0',
         closeMenuIndex: '0',
-        collapse: true,
+        collapse: false,
 
 
         name: 'menu',

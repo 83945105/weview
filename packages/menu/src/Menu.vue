@@ -1,13 +1,8 @@
 <template>
   <menu-collapse-transition>
-    <div v-show="show"
-         :class="[menuExternalClass]"
-         :style="[menuStyle]"
-    >
+    <div v-show="show" :class="[menuExternalClass]" :style="[menuStyle]">
       <scroll-bar>
-        <ul :class="[menuClass]"
-            :style="[menuStyle]"
-        >
+        <ul :class="[menuClass]" :style="[menuStyle]">
           <slot></slot>
         </ul>
       </scroll-bar>
@@ -107,36 +102,57 @@
 
     provide() {
       return {
-        rootMenu: this.menuItem ? this.rootMenu : this,
-        menu: this
+        $_colors_: {
+          textColor: this.textColor || this.$_parentColors_.textColor,
+          backgroundColor: this.backgroundColor || this.$_parentColors_.backgroundColor,
+          activeTextColor: this.activeTextColor || this.$_parentColors_.activeTextColor,
+          activeBackgroundColor: this.activeBackgroundColor || this.$_parentColors_.activeBackgroundColor,
+          selectedTextColor: this.selectedTextColor || this.$_parentColors_.selectedTextColor,
+          selectedBackgroundColor: this.selectedBackgroundColor || this.$_parentColors_.selectedBackgroundColor,
+          hoverTextColor: this.hoverTextColor || this.$_parentColors_.hoverTextColor,
+          hoverBackgroundColor: this.hoverBackgroundColor || this.$_parentColors_.hoverBackgroundColor,
+        },
+        indentNum: this.indent ? this.indentNum + 1 : this.indentNum,
+        rootMenu: this.rootMenu,
+        menu: this,
       };
     },
 
     inject: {
-      rootMenu: {
+      $_parentColors_: {
+        from: '$_colors_',
+        default() {
+          return {};
+        }
+      },
+      indentNum: {//缩进号
+        default: -1
+      },
+      rootMenu: {//根菜单,默认自身
+        default() {
+          return this;
+        }
+      },
+      parentMenu: {//父级菜单
+        from: 'menu',
         default: null
       },
-      menuItem: {
+      rootMenuItem: {//所属根菜单项
+        default: null
+      },
+      menuItem: {//所属menuItem
         default: null
       }
     },
 
     data() {
       return {
-        opacityCache: undefined,
         show: this.value,
-        indentNum: undefined,
-        root: false,
-        tc: this.textColor,
-        bgc: this.backgroundColor,
-        atc: this.activeTextColor,
-        aBgc: this.activeBackgroundColor,
-        stc: this.selectedTextColor,
-        sBgc: this.selectedBackgroundColor,
-        htc: this.hoverTextColor,
-        hBgc: this.hoverBackgroundColor,
-        showCache: undefined,
-        collapseCache: undefined
+        isRoot: false,
+        $_opacityCache_: undefined,
+        $_showCache_: undefined,
+        $_collapseCache_: undefined,
+        bgc: this.backgroundColor || this.$_parentColors_.backgroundColor
       };
     },
 
@@ -146,14 +162,22 @@
         type: Boolean,
         default: true
       },
-      mode: {//菜单模式  vertical - 垂直  horizontal - 水平
+      mode: {//菜单模式  vertical - 垂直  horizontal - 水平 仅对根菜单项有效
         type: String,
         default: 'vertical'
+      },
+      accordion: {//手风琴模式, 当菜单模式为 horizontal 模式时,强制关闭手风琴模式
+        type: Boolean,
+        default: true
       },
       collapse: Boolean,//是否水平折叠,仅当mode为 vertical 时有效
       collapseDelay: {//折叠延迟
         type: Number,
         default: 0
+      },
+      indent: {//是否开启缩进
+        type: Boolean,
+        default: true
       },
       textColor: String,//菜单文本颜色
       backgroundColor: String,//菜单背景颜色
@@ -204,7 +228,7 @@
 
     methods: {
       handleItemClick({menu, item}) {
-        if (this.root) {
+        if (this.isRoot) {
           this.broadcast(`${this.prefixNameCls}MenuItem`, 'item-un-selected', {menu: menu, item: item});
         } else {
           //因为通知的是根节点,如果当前节点不是根节点,不符合预期效果
@@ -258,7 +282,8 @@
       },
       handleAllSubMenuShow(restore) {
         if (restore === true) {
-          if (this.showCache === true) {
+          if (this.$_showCache_ === true) {
+            this.$_showCache_ = undefined;
             //缓存为打开状态,此时应该打开
             this.show = true;
           }
@@ -276,8 +301,8 @@
         this.broadcast(`${this.prefixNameCls}Menu`, 'all-subMenu-un-show', memory);
       },
       handleAllSubMenuUnShow(memory) {
-        if (memory === true) {
-          this.showCache = this.show;
+        if (memory === true && this.$_showCache_ === undefined) {
+          this.$_showCache_ = this.show;
         }
         this.broadcast(`${this.prefixNameCls}Menu`, 'all-subMenu-un-show', memory);
         this.show = false;
@@ -293,7 +318,6 @@
         }
         this.closeAllSubMenu(true);
         setTimeout(() => {
-          this.collapseCache = this.$el.style.width;
           this.$el.style.width = '50px';
         }, this.collapseDelay);
       },
@@ -306,7 +330,7 @@
         if (this.mode !== 'vertical') {
           return;
         }
-        this.$el.style.width = this.collapseCache;
+        this.$el.style.width = this.$_collapseCache_;
         this.openAllSubMenu(true);
       }
     },
@@ -315,33 +339,8 @@
       if (this.menuItem) {
         this.menuItem.hasSubMenu = true;
         this.menuItem.expand = this.value;
-        this.indentNum = this.menuItem.indentNum + 1;
-        if (this.menuItem.textColor !== undefined) {
-          this.tc = this.menuItem.textColor;
-        }
-        if (this.menuItem.backgroundColor !== undefined) {
-          this.bgc = this.menuItem.backgroundColor;
-        }
-        if (this.menuItem.activeTextColor !== undefined) {
-          this.atc = this.menuItem.activeTextColor;
-        }
-        if (this.menuItem.activeBackgroundColor !== undefined) {
-          this.aBgc = this.menuItem.activeBackgroundColor;
-        }
-        if (this.menuItem.selectedTextColor !== undefined) {
-          this.stc = this.menuItem.selectedTextColor;
-        }
-        if (this.menuItem.selectedBackgroundColor !== undefined) {
-          this.sBgc = this.menuItem.selectedBackgroundColor;
-        }
-        if (this.menuItem.hoverTextColor !== undefined) {
-          this.htc = this.menuItem.hoverTextColor;
-        }
-        if (this.menuItem.hoverBackgroundColor !== undefined) {
-          this.hBgc = this.menuItem.hoverBackgroundColor;
-        }
       } else {
-        this.root = true;
+        this.isRoot = true;
       }
       this.$on('item-click', this.handleItemClick);
       this.$on('item-expand', this.handleItemExpand);
@@ -350,16 +349,18 @@
       this.$on('menu-un-show', this.handleMenuUnShow);
       this.$on('all-subMenu-show', this.handleAllSubMenuShow);
       this.$on('all-subMenu-un-show', this.handleAllSubMenuUnShow);
+
     },
 
     mounted() {
+      this.$_collapseCache_ = this.$el.style.width;
       if (this.collapse) {
-        this.opacityCache = this.$el.style.opacity;
+        this.$_opacityCache_ = this.$el.style.opacity;
         this.$el.style.opacity = 0;
         this.$nextTick(() => {
           this._collapse();
           setTimeout(() => {
-            this.$el.style.opacity = this.opacityCache;
+            this.$el.style.opacity = this.$_opacityCache_;
           }, this.collapseDelay + 300);
         });
       }
