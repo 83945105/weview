@@ -219,14 +219,20 @@
   &.is-horizontal{
     float: left;
     .@{menu-css-prefix}-item-title-inner{
-
+      margin-right: 0;
+      padding: 0 15px 0 15px;
     }
-
-    .@{menu-css-prefix}-item-title{
-      padding: 0 10px 0 15px;
-    }
-
-    .@{menu-css-prefix}-item-arrow{
+    &.is-arrow{
+      .@{menu-css-prefix}-item-title-inner{
+        margin-right: 20px;
+        padding: 0 0 0 15px;
+      }
+      .@{menu-css-prefix}-item-title{
+        padding-right: 12px;
+      }
+      .@{menu-css-prefix}-item-title-arrow{
+        width: 20px;
+      }
     }
   }
 
