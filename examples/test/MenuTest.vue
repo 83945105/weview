@@ -378,7 +378,7 @@
 
           二级菜单
 
-          <we-menu slot="subMenu" index="1">
+          <we-menu slot="subMenu" index="1" style="left: 600px;top:200px;position: fixed;z-index: 999999;width: 300px">
             <we-menu-item icon-name="edit">二级选项一</we-menu-item>
             <we-menu-item>
 
@@ -401,7 +401,7 @@
 
           二级菜单
 
-          <we-menu slot="subMenu" >
+          <we-menu slot="subMenu">
             <we-menu-item>二级选项一</we-menu-item>
             <we-menu-item>
 
@@ -435,10 +435,51 @@
     <p></p>
 
     <!--横向菜单组件-->
+    <button @click="hMenuShow = !hMenuShow">展开/折叠</button>
+    <p></p>
+    <input v-model="hOpenMenuIndex" type="text">
+    <button @click="$refs.hMenu.open(hOpenMenuIndex)">展开指定菜单</button>
+    <input v-model="hCloseMenuIndex" type="text">
+    <input v-model="hCloseMenuIndex" type="text">
+    <button @click="$refs.hMenu.close(hCloseMenuIndex)">收起指定菜单</button>
+    <p></p>
+    <button @click="$refs.hMenu.openAllSubMenu()">打开根菜单下所有子菜单</button>
+    <button @click="$refs.hMenu.closeAllSubMenu()">收起根菜单下所有子菜单</button>
+    <p></p>
+    <button @click="hCollapse = !hCollapse">折叠/展开</button>
     <div style="height: 50px; width: 800px; position: relative; border: 1px solid #e5e5e5;">
-      <we-menu mode="horizontal">
-        <we-menu-item>羽毛球</we-menu-item>
-        <we-menu-item>乒乓球</we-menu-item>
+      <we-menu mode="horizontal"
+               v-model="hMenuShow"
+               index="0"
+               :collapse="hCollapse"
+               :collapseDelay="300"
+               ref="hMenu"
+               text-color="#ffffff"
+               background-color="#252525"
+               active-text-color="#ffff00"
+               active-background-color="#333333"
+               selected-text-color="#ffff00"
+               selected-background-color="#2199ed"
+               hover-text-color="#ff0000"
+               hover-background-color="#666666"
+      >
+        <we-menu-item>
+          <we-icon name="edit"></we-icon>
+          <span style="margin-left: 5px">羽毛球</span>
+        </we-menu-item>
+        <we-menu-item>
+          <we-icon name="edit"></we-icon>
+          <span style="margin-left: 5px">乒乓球</span>
+        </we-menu-item>
+        <we-menu-item>
+          <we-icon name="edit"></we-icon>
+          <span style="margin-left: 5px">二级菜单</span>
+
+          <we-menu slot="subMenu">
+
+          </we-menu>
+
+        </we-menu-item>
       </we-menu>
     </div>
 
@@ -772,6 +813,11 @@
         openMenuIndex: '0',
         closeMenuIndex: '0',
         collapse: false,
+
+        hMenuShow: true,
+        hOpenMenuIndex: '0',
+        hCloseMenuIndex: '0',
+        hCollapse: false,
 
 
         name: 'menu',

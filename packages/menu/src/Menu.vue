@@ -102,25 +102,25 @@
 
     provide() {
       return {
-        $_colors_: {
-          textColor: this.textColor || this.$_parentColors_.textColor,
-          backgroundColor: this.backgroundColor || this.$_parentColors_.backgroundColor,
-          activeTextColor: this.activeTextColor || this.$_parentColors_.activeTextColor,
-          activeBackgroundColor: this.activeBackgroundColor || this.$_parentColors_.activeBackgroundColor,
-          selectedTextColor: this.selectedTextColor || this.$_parentColors_.selectedTextColor,
-          selectedBackgroundColor: this.selectedBackgroundColor || this.$_parentColors_.selectedBackgroundColor,
-          hoverTextColor: this.hoverTextColor || this.$_parentColors_.hoverTextColor,
-          hoverBackgroundColor: this.hoverBackgroundColor || this.$_parentColors_.hoverBackgroundColor,
+        colors: {
+          textColor: this.textColor || this.parentColors.textColor,
+          backgroundColor: this.backgroundColor || this.parentColors.backgroundColor,
+          activeTextColor: this.activeTextColor || this.parentColors.activeTextColor,
+          activeBackgroundColor: this.activeBackgroundColor || this.parentColors.activeBackgroundColor,
+          selectedTextColor: this.selectedTextColor || this.parentColors.selectedTextColor,
+          selectedBackgroundColor: this.selectedBackgroundColor || this.parentColors.selectedBackgroundColor,
+          hoverTextColor: this.hoverTextColor || this.parentColors.hoverTextColor,
+          hoverBackgroundColor: this.hoverBackgroundColor || this.parentColors.hoverBackgroundColor,
         },
         indentNum: this.indent ? this.indentNum + 1 : this.indentNum,
         rootMenu: this.rootMenu,
-        menu: this,
+        menu: this
       };
     },
 
     inject: {
-      $_parentColors_: {
-        from: '$_colors_',
+      parentColors: {
+        from: 'colors',
         default() {
           return {};
         }
@@ -149,10 +149,10 @@
       return {
         show: this.value,
         isRoot: false,
-        $_opacityCache_: undefined,
-        $_showCache_: undefined,
-        $_collapseCache_: undefined,
-        bgc: this.backgroundColor || this.$_parentColors_.backgroundColor
+        opacityCache: undefined,
+        showCache: undefined,
+        collapseCache: undefined,
+        bgc: this.backgroundColor || this.parentColors.backgroundColor
       };
     },
 
@@ -282,8 +282,8 @@
       },
       handleAllSubMenuShow(restore) {
         if (restore === true) {
-          if (this.$_showCache_ === true) {
-            this.$_showCache_ = undefined;
+          if (this.showCache === true) {
+            this.showCache = undefined;
             //缓存为打开状态,此时应该打开
             this.show = true;
           }
@@ -301,8 +301,8 @@
         this.broadcast(`${this.prefixNameCls}Menu`, 'all-subMenu-un-show', memory);
       },
       handleAllSubMenuUnShow(memory) {
-        if (memory === true && this.$_showCache_ === undefined) {
-          this.$_showCache_ = this.show;
+        if (memory === true && this.showCache === undefined) {
+          this.showCache = this.show;
         }
         this.broadcast(`${this.prefixNameCls}Menu`, 'all-subMenu-un-show', memory);
         this.show = false;
@@ -330,7 +330,7 @@
         if (this.mode !== 'vertical') {
           return;
         }
-        this.$el.style.width = this.$_collapseCache_;
+        this.$el.style.width = this.collapseCache;
         this.openAllSubMenu(true);
       }
     },
@@ -353,14 +353,14 @@
     },
 
     mounted() {
-      this.$_collapseCache_ = this.$el.style.width;
+      this.collapseCache = this.$el.style.width;
       if (this.collapse) {
-        this.$_opacityCache_ = this.$el.style.opacity;
+        this.opacityCache = this.$el.style.opacity;
         this.$el.style.opacity = 0;
         this.$nextTick(() => {
           this._collapse();
           setTimeout(() => {
-            this.$el.style.opacity = this.$_opacityCache_;
+            this.$el.style.opacity = this.opacityCache;
           }, this.collapseDelay + 300);
         });
       }

@@ -7,11 +7,11 @@
          @mouseenter="handleMouseEnter"
          @mouseleave="handleMouseLeave"
     >
-      <div v-if="$_showArrow_ && hasSubMenu" :class="[titleArrowClass]">
+      <div v-if="showArrow && hasSubMenu" :class="[titleArrowClass]">
         <icon :name="expand ? 'angle-down' : 'angle-up'"></icon>
       </div>
       <div :class="[titleInnerClass]">
-        <div v-if="$_hasIcon_" :class="[titleInnerIconClass]">
+        <div v-if="hasDefaultIcon" :class="[titleInnerIconClass]">
           <slot name="icon">
             <icon :name="iconName"></icon>
           </slot>
@@ -22,9 +22,10 @@
       </div>
     </div>
     <slot name="subMenu"></slot>
-    <div :class="[verticalLineClass]"
-         :style="[verticalLineStyle]"
-    ></div>
+
+    <div v-if="isHorizontal" :class="[horizontalLineClass]" :style="[horizontalLineStyle]"></div>
+    <div v-else :class="[verticalLineClass]" :style="[verticalLineStyle]"></div>
+<div></div>
   </li>
 </template>
 
@@ -55,7 +56,7 @@
     },
 
     inject: {
-      $_colors_: ['$_colors_'],
+      colors: ['colors'],
       indentNum: {
         default: 0
       },
@@ -77,14 +78,16 @@
 
     data() {
       return {
+        menuMode: this.menu.mode,
+        accordion: this.menu.accordion,
         selected: this.value,
         expand: false,
         active: false,
         hover: false,
         hasSubMenu: false,
-        $_showArrow_: true,
-        $_hoverTextColorCache_: undefined,
-        $_hoverBackgroundColorCache_: undefined
+        showArrow: true,
+        hoverTextColorCache: undefined,
+        hoverBackgroundColorCache: undefined,
       };
     },
 
@@ -98,13 +101,20 @@
     },
 
     computed: {
-      $_hasIcon_() {
+      // 是否水平排列
+      isHorizontal() {
+        return this.rootMenuItem === this && this.menuMode === 'horizontal';
+      },
+      hasDefaultIcon() {
         return this.rootMenu.mode !== 'horizontal';
       },
       itemClass() {
         let cls = `${this.prefixCls}-menu-item`;
-        if (this.rootMenuItem === this && this.rootMenu.mode === 'horizontal') {
+        if (this.isHorizontal) {
           cls += ' is-horizontal';
+          if (this.hasSubMenu) {
+            cls += ' is-arrow';
+          }
         }
         return cls;
       },
@@ -116,7 +126,7 @@
       },
       titleInnerStyle() {
         return {
-          color: this.$_colors_.textColor
+          color: this.colors.textColor
         };
       },
       titleInnerIconClass() {
@@ -133,8 +143,8 @@
           return undefined;
         }
         return {
-          color: this.$_colors_.selectedTextColor,
-          backgroundColor: this.$_colors_.selectedBackgroundColor
+          color: this.colors.selectedTextColor,
+          backgroundColor: this.colors.selectedBackgroundColor
         };
       },
       activeClass() {
@@ -145,8 +155,8 @@
           return undefined;
         }
         return {
-          color: this.$_colors_.activeTextColor,
-          backgroundColor: this.$_colors_.activeBackgroundColor
+          color: this.colors.activeTextColor,
+          backgroundColor: this.colors.activeBackgroundColor
         };
       },
       titleArrowClass() {
@@ -172,7 +182,25 @@
           top: 0,
           height: `50px`,
           opacity: 1,
-          backgroundColor: this.$_colors_.activeTextColor
+          backgroundColor: this.colors.activeTextColor
+        };
+      },
+      horizontalLineClass() {
+        return `${this.prefixCls}-menu-horizontal-line`;
+      },
+      horizontalLineStyle() {
+        if (!this.hover && !this.selected) {
+          return {
+            bottom: 0,
+            width: 0,
+            opacity: 0
+          };
+        }
+        return {
+          bottom: 0,
+          width: `${this.$el.scrollWidth}px`,
+          opacity: 1,
+          backgroundColor: this.colors.activeTextColor
         };
       }
     },
@@ -193,7 +221,7 @@
       },
       'rootMenu.collapse': {
         handler(v) {
-          this.$_showArrow_ = !v;
+          this.showArrow = !v;
         },
         deep: true
       }
@@ -202,18 +230,15 @@
     methods: {
       handleMouseEnter(e) {
         this.hover = true;
-
-        this.$_hoverBackgroundColorCache_ = e.currentTarget.style.backgroundColor;
-        this.$_hoverTextColorCache_ = e.currentTarget.style.color;
-
-        e.currentTarget.style.color = this.$_colors_.hoverTextColor;
-        e.currentTarget.style.backgroundColor = this.$_colors_.hoverBackgroundColor;
-
+        this.hoverBackgroundColorCache = e.currentTarget.style.backgroundColor;
+        this.hoverTextColorCache = e.currentTarget.style.color;
+        e.currentTarget.style.color = this.colors.hoverTextColor;
+        e.currentTarget.style.backgroundColor = this.colors.hoverBackgroundColor;
       },
       handleMouseLeave(e) {
         this.hover = false;
-        e.currentTarget.style.backgroundColor = this.$_hoverBackgroundColorCache_;
-        e.currentTarget.style.color = this.$_hoverTextColorCache_;
+        e.currentTarget.style.backgroundColor = this.hoverBackgroundColorCache;
+        e.currentTarget.style.color = this.hoverTextColorCache;
       },
       handleClick(e) {
         if (this.disabled) {
@@ -230,7 +255,7 @@
         //通知根菜单
         this.dispatchRoot(`${this.prefixNameCls}Menu`, 'item-click', {menu: this.menu, item: this});
         //通知根菜单项激活
-        this.dispatchRoot(`${this.prefixNameCls}MenuItem`, 'item-click', {menu: this.menu, item: this});
+        this.dispatchRoot(`${this.prefixNameCls}MenuItem`, 'item-active', {menu: this.menu, item: this});
         this.selected = true;
         this.$emit('click', e, this);
       },
@@ -242,21 +267,21 @@
         }
         this.broadcast(`${this.prefixNameCls}MenuItem`, 'item-un-selected', {menu: menu, item: item});
       },
-      handleItemClick({menu, item}) {
+      handleItemActive({menu, item}) {
         this.active = true;
       }
     },
 
     created() {
       if (this.rootMenu) {
-        this.$_showArrow_ = !this.rootMenu.collapse;
+        this.showArrow = !this.rootMenu.collapse;
       }
       this.$on('item-un-selected', this.handleItemUnSelected);
-      this.$on('item-click', this.handleItemClick);
+      this.$on('item-active', this.handleItemActive);
     },
 
     mounted() {
-      // console.log(this.$_colors_)
+      console.log(this.$el.scrollLeft)
     }
 
   }
