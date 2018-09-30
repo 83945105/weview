@@ -35,11 +35,15 @@
 
 .@{menu-css-prefix}-external{
   position: relative;
-  top: 0;
-  bottom: 0;
   overflow-x: hidden;
   overflow-y: hidden;
-  transition: all .3s cubic-bezier(0,0,.2,1);
+  width: 100%;
+  transition: height .3s cubic-bezier(0,0,.2,1) , width .3s cubic-bezier(0,0,.2,1);
+
+  &.is-full{
+    top: 0;
+    bottom: 0;
+  }
 }
 .@{menu-css-prefix}{
   background-color: @menu-bg;
@@ -209,10 +213,10 @@
   font-size: @menu-item-font-size;
   list-style: none;
   cursor: pointer;
-  overflow: hidden;
   transition: border-color .3s, background-color .3s, color .3s;
   color: @menu-text-color;
   display: block;
+  position: relative;
   .mixin-border-box;
   .mixin-select-none;
 
@@ -224,7 +228,7 @@
     }
     &.is-arrow{
       .@{menu-css-prefix}-item-title-inner{
-        margin-right: 20px;
+        margin-right: 23px;
         padding: 0 0 0 15px;
       }
       .@{menu-css-prefix}-item-title{
@@ -232,6 +236,7 @@
       }
       .@{menu-css-prefix}-item-title-arrow{
         width: 20px;
+        margin-left: 3px;
       }
     }
   }
