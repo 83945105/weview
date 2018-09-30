@@ -378,23 +378,25 @@
 
           二级菜单
 
-          <we-menu slot="subMenu" index="1" style="left: 600px;top:200px;position: fixed;z-index: 999999;width: 300px">
-            <we-menu-item icon-name="edit">二级选项一</we-menu-item>
-            <we-menu-item>
+          <template slot="subMenu" slot-scope="{width}">
 
-              <we-icon name="edit" slot="icon"></we-icon>
+            <we-menu :accordion="false" index="1">
+              <we-menu-item icon-name="edit">二级选项一</we-menu-item>
+              <we-menu-item>
 
-              三级菜单
+                <we-icon name="edit" slot="icon"></we-icon>
 
-              <we-menu slot="subMenu">
-                <we-menu-group title="三级分组">
+                三级菜单
+
+                <we-menu :accordion="false" slot="subMenu">
                   <we-menu-item>三级选项一</we-menu-item>
                   <we-menu-item icon-name="edit">三级选项二</we-menu-item>
-                </we-menu-group>
-              </we-menu>
+                </we-menu>
 
-            </we-menu-item>
-          </we-menu>
+              </we-menu-item>
+            </we-menu>
+
+          </template>
 
         </we-menu-item>
         <we-menu-item icon-name="edit">
