@@ -519,17 +519,15 @@
     <div style="height: 50px; width: 800px; position: relative; border: 1px solid #e5e5e5;">
       <div class="we-menu is-full" :style="[{ backgroundColor }]">
         <div class="we-menu-inner">
-          <div class="we-menu-item is-horizontal"
-               @mouseenter="itemHorizontalMouseEnter($event)"
-               @mouseleave="itemHorizontalMouseLeave($event)">
+          <div class="we-menu-item is-horizontal">
             <div class="we-menu-item-title"
                  :style="[itemStyle, { backgroundColor }]"
                  @mouseenter="onMouseEnter($event)"
                  @mouseleave="onMouseLeave($event)">
-              <div class="we-menu-item-title-arrow"
-                   :style="[ itemArrowColor ]">
-                <we-icon name="angle-down"></we-icon>
-              </div>
+              <!--<div class="we-menu-item-title-arrow"-->
+                   <!--:style="[ itemArrowColor ]">-->
+                <!--<we-icon name="angle-down"></we-icon>-->
+              <!--</div>-->
               <div class="we-menu-item-title-inner">
                 <!--<div class="we-menu-item-title-inner-icon">-->
                 <!--<we-icon name="edit"></we-icon>-->
@@ -541,7 +539,7 @@
               </div>
             </div>
           </div>
-          <div class="we-menu-item is-horizontal"
+          <div class="we-menu-item is-horizontal is-arrow"
                @mouseenter="itemHorizontalMouseEnter($event)"
                @mouseleave="itemHorizontalMouseLeave($event)">
             <div class="we-menu-item-title"
@@ -558,7 +556,7 @@
                 <!--</div>-->
                 <div class="we-menu-item-title-inner-text">
                   <we-icon name="edit"></we-icon>
-                  <span>一级菜单</span>
+                  <span>一级菜单一级菜单</span>
                 </div>
               </div>
             </div>
@@ -575,65 +573,6 @@
     </div>
     <!--/横向菜单-->
 
-
-    <!--右键菜单-->
-    <div id="testMenu" class="we-menu we-menu-right is-shadow is-full" style="height: 176px; width: 220px; left: 0; top: 0;"
-         :style="[ menuBorderStyle ]">
-      <div class="we-menu-inner" style="top: 20px; bottom: 20px;" :style="[{ backgroundColor }]">
-        <div class="we-menu-item">
-          <div class="we-menu-item-title"
-               :style="[itemStyle]"
-               @mouseenter="onMouseEnter($event)"
-               @mouseleave="onMouseLeave($event)">
-            <div class="we-menu-item-title-arrow"
-                 :style="[ itemArrowColor ]">
-              <!--<we-icon name="angle-down"></we-icon>-->
-            </div>
-            <div class="we-menu-item-title-inner">
-              <div class="we-menu-item-title-inner-icon">
-                <we-icon name="edit"></we-icon>
-              </div>
-              <div class="we-menu-item-title-inner-text">一级菜单</div>
-            </div>
-          </div>
-          <div class="we-menu-item-group">
-            <h3 class="we-menu-item-group-title"
-                :style="[ textGroupColor, {'padding-left': textPaddingLeft*2 + `px`}]">分组</h3>
-            <div class="we-menu-item-title"
-                 :style="[itemStyle, { backgroundColor }]"
-                 @mouseenter="onMouseEnter($event)"
-                 @mouseleave="onMouseLeave($event)">
-              <div class="we-menu-item-title-arrow"
-                   :style="[ itemArrowColor ]">
-                <!--<we-icon name="angle-down"></we-icon>-->
-              </div>
-              <div class="we-menu-item-title-inner">
-                <div class="we-menu-item-title-inner-icon">
-                  <!--<we-icon name="edit"></we-icon>-->
-                </div>
-                <div class="we-menu-item-title-inner-text">一级菜单</div>
-              </div>
-            </div>
-            <div class="we-menu-item-title is-disabled"
-                 :style="[itemStyle, { backgroundColor }]"
-                 @mouseenter="onMouseEnter($event)"
-                 @mouseleave="onMouseLeave($event)">
-              <div class="we-menu-item-title-arrow"
-                   :style="[ itemArrowColor ]">
-                <!--<we-icon name="angle-down"></we-icon>-->
-              </div>
-              <div class="we-menu-item-title-inner">
-                <div class="we-menu-item-title-inner-icon">
-                  <!--<we-icon name="edit"></we-icon>-->
-                </div>
-                <div class="we-menu-item-title-inner-text">一级菜单</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--/右键菜单-->
     <br/><br/>
     <!--<div class="we-menu is-shadow" style="width: 220px;">-->
     <!--<div class="we-menu-item type-title">-->

@@ -1,26 +1,86 @@
 @import "./src/common/var.less";
 @import "./src/common/mixins.less";
 
-@scroll-bar-prefix-css: ~"@{css-prefix}scroll-bar";
+@scroll-bar-prefix: ~"@{css-prefix}scrollbar";
 
-@{scroll-bar-prefix-css}{
+.@{scroll-bar-prefix}{
   position: relative;
+  overflow: hidden;
 
-  &.hidden{
-    overflow: hidden;
-  }
-  &.all{
-    overflow-x: auto;
-    overflow-y: auto;
-  }
+  &-inner{
+    overflow: scroll;
+    height: 100%;
 
-  &.vertical{
-    overflow-x: hidden;
-    overflow-y: auto;
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
   }
 
-  &.horizontal{
-    overflow-x: auto;
-    overflow-y: hidden;
+  &:hover,
+  &:active,
+  &:focus {
+    > .@{scroll-bar-prefix}-bar {
+      opacity: 1;
+      transition: opacity 340ms ease-out;
+    }
+  }
+
+  &-bar{
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+    z-index: 1;
+    border-radius: @scroll-bar-border-radius;
+    -webkit-border-radius: @scroll-bar-border-radius;
+    -moz-border-radius: @scroll-bar-border-radius;
+    opacity: 0;
+    transition: opacity 120ms ease-out;
+
+    &-thumb{
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      border-radius: inherit;
+      background-color: @scroll-bar-background-color;
+      transition: .3s background-color;
+
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: @scroll-bar-hover-background-color;
+      }
+    }
+    &.is-vertical{
+      width: @scroll-bar-size;
+      top: 2px;
+    }
+    &.is-horizontal{
+      height: @scroll-bar-size;
+      left: 2px;
+    }
   }
 }
+//@{scroll-bar-prefix-css}{
+//  position: relative;
+//
+//  &.hidden{
+//    overflow: hidden;
+//  }
+//  &.all{
+//    overflow-x: auto;
+//    overflow-y: auto;
+//  }
+//
+//  &.vertical{
+//    overflow-x: hidden;
+//    overflow-y: auto;
+//  }
+//
+//  &.horizontal{
+//    overflow-x: auto;
+//    overflow-y: hidden;
+//  }
+//}
