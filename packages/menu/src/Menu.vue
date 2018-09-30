@@ -151,8 +151,9 @@
         isRoot: false,
         opacityCache: undefined,
         showCache: undefined,
-        collapseCache: undefined,
-        bgc: this.backgroundColor || this.parentColors.backgroundColor
+        collapseWidthCache: undefined,
+        bgc: this.backgroundColor || this.parentColors.backgroundColor,
+        isAccordion: this.accordion && this.mode === 'vertical'
       };
     },
 
@@ -162,9 +163,15 @@
         type: Boolean,
         default: true
       },
-      mode: {//菜单模式  vertical - 垂直  horizontal - 水平 仅对根菜单项有效
+      mode: {//菜单模式  vertical - 垂直  horizontal - 水平
         type: String,
-        default: 'vertical'
+        default: 'vertical',
+        validator(value) {
+          return [
+            'vertical',
+            'horizontal'
+          ].indexOf(value) !== -1
+        }
       },
       accordion: {//手风琴模式, 当菜单模式为 horizontal 模式时,强制关闭手风琴模式
         type: Boolean,
@@ -232,7 +239,7 @@
           this.broadcast(`${this.prefixNameCls}MenuItem`, 'item-un-selected', {menu: menu, item: item});
         } else {
           //因为通知的是根节点,如果当前节点不是根节点,不符合预期效果
-          throw new Error('this menu is not root.');
+          throw new Error('menu is not root.');
         }
       },
       handleItemExpand({menu, item}) {
@@ -330,7 +337,7 @@
         if (this.mode !== 'vertical') {
           return;
         }
-        this.$el.style.width = this.collapseCache;
+        this.$el.style.width = this.collapseWidthCache;
         this.openAllSubMenu(true);
       }
     },
@@ -339,6 +346,7 @@
       if (this.menuItem) {
         this.menuItem.hasSubMenu = true;
         this.menuItem.expand = this.value;
+        this.menuItem.isAccordion = this.isAccordion;
       } else {
         this.isRoot = true;
       }
@@ -353,7 +361,7 @@
     },
 
     mounted() {
-      this.collapseCache = this.$el.style.width;
+      this.collapseWidthCache = this.$el.style.width;
       if (this.collapse) {
         this.opacityCache = this.$el.style.opacity;
         this.$el.style.opacity = 0;

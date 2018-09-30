@@ -1,14 +1,12 @@
 <template>
-  <li :class="[itemClass]"
-      @click.stop="handleClick"
-  >
+  <li :class="[itemClass]" @click.stop="handleClick">
     <div :class="[titleClass, selectedClass, activeClass]"
          :style="[indentStyle, titleInnerStyle, selectedStyle, activeStyle]"
          @mouseenter="handleMouseEnter"
-         @mouseleave="handleMouseLeave"
-    >
+         @mouseleave="handleMouseLeave">
       <div v-if="showArrow && hasSubMenu" :class="[titleArrowClass]">
-        <icon :name="expand ? 'angle-down' : 'angle-up'"></icon>
+        <icon v-if="isAccordion" :name="expand ? 'angle-down' : 'angle-up'"></icon>
+        <icon v-else :name="expand ? 'angle-right' : 'angle-left'"></icon>
       </div>
       <div :class="[titleInnerClass]">
         <div v-if="hasDefaultIcon" :class="[titleInnerIconClass]">
@@ -21,11 +19,12 @@
         </div>
       </div>
     </div>
-    <slot name="subMenu"></slot>
+
+    <slot name="subMenu" :width="menuItemWidth"></slot>
 
     <div v-if="isHorizontal" :class="[horizontalLineClass]" :style="[horizontalLineStyle]"></div>
     <div v-else :class="[verticalLineClass]" :style="[verticalLineStyle]"></div>
-<div></div>
+
   </li>
 </template>
 
@@ -78,16 +77,18 @@
 
     data() {
       return {
+        menuItemWidth: undefined,
         menuMode: this.menu.mode,
         accordion: this.menu.accordion,
         selected: this.value,
-        expand: false,
         active: false,
         hover: false,
-        hasSubMenu: false,
-        showArrow: true,
         hoverTextColorCache: undefined,
         hoverBackgroundColorCache: undefined,
+        expand: false,
+        hasSubMenu: false,
+        isAccordion: true,
+        showArrow: true
       };
     },
 
@@ -103,7 +104,7 @@
     computed: {
       // 是否水平排列
       isHorizontal() {
-        return this.rootMenuItem === this && this.menuMode === 'horizontal';
+        return this.menuMode === 'horizontal';
       },
       hasDefaultIcon() {
         return this.rootMenu.mode !== 'horizontal';
@@ -281,7 +282,8 @@
     },
 
     mounted() {
-      console.log(this.$el.scrollLeft)
+      this.menuItemWidth = this.$el.scrollWidth;
+      this.menuItemWidth = '300px';
     }
 
   }
