@@ -25,6 +25,7 @@
     <div v-if="isHorizontal" :class="[horizontalLineClass]" :style="[horizontalLineStyle]"></div>
     <div v-else :class="[verticalLineClass]" :style="[verticalLineStyle]"></div>
 
+    <div class="we-common-clear"></div>
   </li>
 </template>
 
@@ -77,18 +78,16 @@
 
     data() {
       return {
-        menuItemWidth: undefined,
         menuMode: this.menu.mode,
         accordion: this.menu.accordion,
         selected: this.value,
+        expand: false,
         active: false,
         hover: false,
+        hasSubMenu: false,
+        showArrow: true,
         hoverTextColorCache: undefined,
         hoverBackgroundColorCache: undefined,
-        expand: false,
-        hasSubMenu: false,
-        isAccordion: true,
-        showArrow: true
       };
     },
 
@@ -104,7 +103,7 @@
     computed: {
       // 是否水平排列
       isHorizontal() {
-        return this.menuMode === 'horizontal';
+        return this.rootMenuItem === this && this.menuMode === 'horizontal';
       },
       hasDefaultIcon() {
         return this.rootMenu.mode !== 'horizontal';
@@ -282,8 +281,7 @@
     },
 
     mounted() {
-      this.menuItemWidth = this.$el.scrollWidth;
-      this.menuItemWidth = '300px';
+      console.log(this.$el.scrollLeft)
     }
 
   }
