@@ -1,6 +1,6 @@
 <template>
   <menu-collapse-transition>
-    <div v-show="show" :class="[menuExternalClass]" :style="[menuStyle]">
+    <div v-show="show" :class="[menuExternalClass]" :style="[menuStyle, showStyle]">
       <scroll-bar>
         <ul :class="[menuClass]" :style="[menuStyle]">
           <slot></slot>
@@ -112,7 +112,7 @@
           hoverTextColor: this.hoverTextColor || this.parentColors.hoverTextColor,
           hoverBackgroundColor: this.hoverBackgroundColor || this.parentColors.hoverBackgroundColor,
         },
-        indentNum: this.indent ? this.indentNum + 1 : this.indentNum,
+        indentNum: (this.indent && this.isAccordion) ? this.indentNum + 1 : this.indentNum,
         rootMenu: this.rootMenu,
         menu: this
       };
@@ -197,6 +197,19 @@
     },
 
     computed: {
+      showStyle() {
+        if (!this.menuItem) {
+          return undefined;
+        }
+        if (this.menuItem.isAccordion) {
+          return undefined;
+        }
+        return {
+          left: `${this.menuItem.menuItemWidth + 20}px`,
+          top: `${0 - 50}px`,
+          width: `${this.menuItem.menuItemWidth}px`
+        }
+      },
       menuExternalClass() {
         return `${this.prefixCls}-menu-external`;
       },
@@ -320,9 +333,6 @@
        * @private
        */
       _collapse() {
-        if (this.mode !== 'vertical') {
-          return;
-        }
         this.closeAllSubMenu(true);
         setTimeout(() => {
           this.$el.style.width = '50px';
@@ -334,9 +344,6 @@
        * @private
        */
       _expand() {
-        if (this.mode !== 'vertical') {
-          return;
-        }
         this.$el.style.width = this.collapseWidthCache;
         this.openAllSubMenu(true);
       }

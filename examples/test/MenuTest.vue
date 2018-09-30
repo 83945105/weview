@@ -380,9 +380,7 @@
 
           <template slot="subMenu" slot-scope="{width}">
 
-            <we-menu index="1" style="left: 600px;top:200px;position: fixed;z-index: 999999" :style="{
-              width: width
-            }">
+            <we-menu :accordion="false" index="1">
               <we-menu-item icon-name="edit">二级选项一</we-menu-item>
               <we-menu-item>
 
@@ -390,7 +388,7 @@
 
                 三级菜单
 
-                <we-menu slot="subMenu" mode="horizontal">
+                <we-menu :accordion="false" slot="subMenu">
                   <we-menu-item>三级选项一</we-menu-item>
                   <we-menu-item icon-name="edit">三级选项二</we-menu-item>
                 </we-menu>

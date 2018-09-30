@@ -1,5 +1,5 @@
 <template>
-  <li :class="[itemClass]" @click.stop="handleClick">
+  <li :class="[itemClass]" :style="[showStyle]" @click.stop="handleClick">
     <div :class="[titleClass, selectedClass, activeClass]"
          :style="[indentStyle, titleInnerStyle, selectedStyle, activeStyle]"
          @mouseenter="handleMouseEnter"
@@ -20,12 +20,13 @@
       </div>
     </div>
 
-    <slot name="subMenu" :width="menuItemWidth"></slot>
+    <slot name="subMenu" width="300px"></slot>
 
     <div v-if="isHorizontal" :class="[horizontalLineClass]" :style="[horizontalLineStyle]"></div>
     <div v-else :class="[verticalLineClass]" :style="[verticalLineStyle]"></div>
 
     <div class="we-common-clear"></div>
+
   </li>
 </template>
 
@@ -78,8 +79,10 @@
 
     data() {
       return {
+        menuItemWidth: undefined,
+        menuItemHeight: undefined,
         menuMode: this.menu.mode,
-        accordion: this.menu.accordion,
+        isAccordion: this.menu.isAccordion,
         selected: this.value,
         expand: false,
         active: false,
@@ -104,6 +107,14 @@
       // 是否水平排列
       isHorizontal() {
         return this.rootMenuItem === this && this.menuMode === 'horizontal';
+      },
+      showStyle() {
+        if (this.isAccordion) {
+          return undefined;
+        }
+        return {
+          height: `50px`
+        };
       },
       hasDefaultIcon() {
         return this.rootMenu.mode !== 'horizontal';
@@ -281,7 +292,8 @@
     },
 
     mounted() {
-      console.log(this.$el.scrollLeft)
+      this.menuItemWidth = this.$el.scrollWidth;
+      this.menuItemHeight = this.$el.scrollHeight;
     }
 
   }
