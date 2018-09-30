@@ -33,6 +33,11 @@
             "desc": "滚动条测试",
             "name": "ScrollBarTest",
             "path": "/scrollBarTest"
+          },
+          {
+            "desc": "页面提示测试",
+            "name": "PagePromptsTest",
+            "path": "/pagePromptsTest"
           }
         ]
       },
