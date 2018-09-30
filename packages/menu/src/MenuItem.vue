@@ -4,9 +4,9 @@
          :style="[indentStyle, titleInnerStyle, selectedStyle, activeStyle]"
          @mouseenter="handleMouseEnter"
          @mouseleave="handleMouseLeave">
-      <div v-if="showArrow && hasSubMenu" :class="[titleArrowClass]">
-        <icon v-if="isAccordion" :name="expand ? 'angle-down' : 'angle-up'"></icon>
-        <icon v-else :name="expand ? 'angle-right' : 'angle-left'"></icon>
+      <div v-if="showArrow && hasSubMenu" :class="[titleArrowClass, {'is-opened':expand}]">
+        <icon v-if="isAccordion" :name="isHorizontal ? 'angle-left' : 'angle-up'"></icon>
+        <icon v-else :name="isHorizontal ? 'angle-up' : 'angle-left'"></icon>
       </div>
       <div :class="[titleInnerClass]">
         <div v-if="hasDefaultIcon" :class="[titleInnerIconClass]">
@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <slot name="subMenu" width="300px"></slot>
+    <slot name="subMenu" :menu-item-width="menuItemWidth" :menu-item-height="menuItemHeight"></slot>
 
     <div v-if="isHorizontal" :class="[horizontalLineClass]" :style="[horizontalLineStyle]"></div>
     <div v-else :class="[verticalLineClass]" :style="[verticalLineStyle]"></div>
@@ -79,15 +79,18 @@
 
     data() {
       return {
+        isRoot: this === this.rootMenuItem,
         menuItemWidth: undefined,
         menuItemHeight: undefined,
+        menuItemTitleWidth: undefined,
         menuMode: this.menu.mode,
+        hasSubMenu: false,
+        //是否是手风琴排版,根据所属菜单排版确定,如果不是手风琴排版,必须固定高度
         isAccordion: this.menu.isAccordion,
         selected: this.value,
         expand: false,
         active: false,
         hover: false,
-        hasSubMenu: false,
         showArrow: true,
         hoverTextColorCache: undefined,
         hoverBackgroundColorCache: undefined,
@@ -182,7 +185,7 @@
         return `${this.prefixCls}-menu-vertical-line`;
       },
       verticalLineStyle() {
-        if (!this.active) {
+        if (!this.active || (!this.isRoot && this.isAccordion)) {
           return {
             top: 0,
             height: 0,
@@ -200,7 +203,7 @@
         return `${this.prefixCls}-menu-horizontal-line`;
       },
       horizontalLineStyle() {
-        if (!this.hover && !this.selected) {
+        if (!this.hover && !this.selected && !this.active) {
           return {
             bottom: 0,
             width: 0,
@@ -209,7 +212,7 @@
         }
         return {
           bottom: 0,
-          width: `${this.$el.scrollWidth}px`,
+          width: `${this.menuItemTitleWidth + (this.hasSubMenu ? 20 : 0)}px`,
           opacity: 1,
           backgroundColor: this.colors.activeTextColor
         };
@@ -261,12 +264,12 @@
           }
           this.expand = !this.expand;
           this.$emit('click', e, this);
-          return
+          return;
         }
         //通知根菜单
         this.dispatchRoot(`${this.prefixNameCls}Menu`, 'item-click', {menu: this.menu, item: this});
-        //通知根菜单项激活
-        this.dispatchRoot(`${this.prefixNameCls}MenuItem`, 'item-active', {menu: this.menu, item: this});
+        //通知菜单项激活
+        this.dispatch(`${this.prefixNameCls}MenuItem`, 'item-active', {menu: this.menu, item: this});
         this.selected = true;
         this.$emit('click', e, this);
       },
@@ -279,7 +282,10 @@
         this.broadcast(`${this.prefixNameCls}MenuItem`, 'item-un-selected', {menu: menu, item: item});
       },
       handleItemActive({menu, item}) {
-        this.active = true;
+        if (this.hasSubMenu) {
+          this.active = true;
+          this.dispatch(`${this.prefixNameCls}MenuItem`, 'item-active', {menu: this.menu, item: this});
+        }
       }
     },
 
@@ -294,6 +300,7 @@
     mounted() {
       this.menuItemWidth = this.$el.scrollWidth;
       this.menuItemHeight = this.$el.scrollHeight;
+      this.menuItemTitleWidth = this.$el.getElementsByTagName('div')[0].scrollWidth;
     }
 
   }
