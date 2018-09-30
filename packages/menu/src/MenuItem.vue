@@ -25,7 +25,7 @@
 
     <div v-if="isHorizontal" :class="[horizontalLineClass]" :style="[horizontalLineStyle]"></div>
     <div v-else :class="[verticalLineClass]" :style="[verticalLineStyle]"></div>
-<div></div>
+    <div class="we-common-clear"></div>
   </li>
 </template>
 
