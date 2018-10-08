@@ -1,10 +1,29 @@
 @import "./src/common/var.less";
 
-@btn-prefix-cls:~"@{css-prefix}page-prompts";
+@page-prompts-prefix-cls:~"@{css-prefix}page-prompts";
 
-.@{btn-prefix-cls}{
-  position: relative;
-
+.@{page-prompts-prefix-cls}{
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   -webkit-transform:translateX(-50%) translateY(-50%);
+  -moz-transform:translateX(-50%) translateY(-50%);
   transform:translateX(-50%) translateY(-50%);
+
+  &.is-full{
+    position: fixed;
+  }
+
+  &-picture{
+    height: 200px;
+    width: 200px;
+  }
+  &-text{
+    margin-top: @page-prompts-text-margin-top;
+    color: @page-prompts-text-color;
+  }
+  &-button{
+    margin-top: @page-prompts-button-margin-top;
+  }
 }
