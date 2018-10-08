@@ -6,6 +6,7 @@
           <slot></slot>
         </ul>
       </scroll-bar>
+      <div class="we-common-clear"></div>
     </div>
   </menu-collapse-transition>
 </template>
@@ -112,7 +113,7 @@
           hoverTextColor: this.hoverTextColor || this.parentColors.hoverTextColor,
           hoverBackgroundColor: this.hoverBackgroundColor || this.parentColors.hoverBackgroundColor,
         },
-        indentNum: (this.indent && this.isAccordion) ? this.indentNum + 1 : this.indentNum,
+        indentNum: (!this.indent || !this.isAccordion) ? 0 : this.indentNum + 1,
         rootMenu: this.rootMenu,
         menu: this
       };
@@ -148,11 +149,12 @@
     data() {
       return {
         show: this.value,
-        isRoot: false,
+        isRoot: this === this.rootMenu,
         opacityCache: undefined,
         showCache: undefined,
         collapseWidthCache: undefined,
         bgc: this.backgroundColor || this.parentColors.backgroundColor,
+        //是否是手风琴排版,如果不是手风琴排版,则所有subMenu都以弹出方式展开
         isAccordion: this.accordion && this.mode === 'vertical'
       };
     },
@@ -198,16 +200,29 @@
 
     computed: {
       showStyle() {
-        if (!this.menuItem) {
+        if (this.isRoot) {
+          //根节点在原始位置显示
           return undefined;
         }
         if (this.menuItem.isAccordion) {
+          //如果所属菜单项是手风琴模式,则在原始位置显示
           return undefined;
         }
+        //走到这里说明父菜单不是手风琴模式 => 弹出式显示菜单
+        if (this.parentMenu.mode === 'vertical') {
+          //如果父菜单是垂直模式, 那么应该水平弹出
+          return {
+            position: 'absolute',
+            left: `${this.menuItem.menuItemWidth + 1}px`,
+            top: `${0}px`,
+            width: `${this.menuItem.menuItemWidth}px`
+          }
+        }
+        //如果父菜单是水平模式, 那么应该垂直弹出
         return {
-          left: `${this.menuItem.menuItemWidth + 20}px`,
-          top: `${0 - 50}px`,
-          width: `${this.menuItem.menuItemWidth}px`
+          position: 'absolute',
+          left: `${0}px`,
+          top: `${54}px`
         }
       },
       menuExternalClass() {
@@ -234,6 +249,11 @@
       show(v) {
         if (this.menuItem) {
           this.menuItem.expand = v;
+        }
+        if (v) {
+          this.openAllSubMenu(true);
+        } else {
+          this.closeAllSubMenu(true);
         }
         this.$emit('input', v);
       },
@@ -301,6 +321,9 @@
         this.broadcast(`${this.prefixNameCls}Menu`, 'all-subMenu-show', restore);
       },
       handleAllSubMenuShow(restore) {
+        if (!this.isAccordion) {
+          return;
+        }
         if (restore === true) {
           if (this.showCache === true) {
             this.showCache = undefined;
@@ -353,9 +376,6 @@
       if (this.menuItem) {
         this.menuItem.hasSubMenu = true;
         this.menuItem.expand = this.value;
-        this.menuItem.isAccordion = this.isAccordion;
-      } else {
-        this.isRoot = true;
       }
       this.$on('item-click', this.handleItemClick);
       this.$on('item-expand', this.handleItemExpand);
@@ -379,6 +399,7 @@
           }, this.collapseDelay + 300);
         });
       }
+
     }
 
   }
