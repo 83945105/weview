@@ -285,9 +285,12 @@
       color: @menu-item-fc-disabled-color;
       cursor: not-allowed;
 
+      &.is-selected,
+      &.is-active,
       &:hover{
         background-color: transparent;
       }
+
       .@{menu-css-prefix}-item-title-arrow,
       .@{menu-css-prefix}-item-title-quick{
         color: @menu-item-fc-disabled-color;
