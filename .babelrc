@@ -1,16 +1,12 @@
 {
-  "presets": [["es2015", {"loose": true, "debug": true}]],
-  "plugins": ["transform-vue-jsx"],
-  "env": {
-    "utils": {
-      "plugins": [
-        ["module-resolver", {
-          "root": ["weview"],
-          "alias": {
-            "mixins": "./packages/src/mixins"
-          }
-        }]
-      ]
-    }
-  }
+  "presets": [["es2015", {"loose": true, "debug": true}], ["env"]],
+  "plugins": [
+    ["transform-vue-jsx"],
+    ["module-resolver", {
+      "root": ["./"],
+      "alias": {
+        "mixins": "./packages/src/mixins"
+      }
+    }]
+  ]
 }

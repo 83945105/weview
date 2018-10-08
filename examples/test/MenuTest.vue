@@ -412,7 +412,7 @@
 
               三级菜单
 
-              <we-menu :value="false" slot="subMenu" :accordion="false">
+              <we-menu :value="true" slot="subMenu" :accordion="false">
 
                 <we-menu-group title="分组">
 
@@ -458,7 +458,7 @@
     <p></p>
     <button @click="hCollapse = !hCollapse">折叠/展开</button>
     <div style="height: 50px; width: 800px; position: relative; border: 1px solid #e5e5e5;">
-      <we-menu mode="horizontal"
+<!--      <we-menu mode="horizontal"
                v-model="hMenuShow"
                index="0"
                :collapse="hCollapse"
@@ -501,7 +501,7 @@
           <span style="margin-left: 5px">乒乓球</span>
         </we-menu-item>
 
-      </we-menu>
+      </we-menu>-->
     </div>
 
     <!--横向菜单-->
@@ -863,7 +863,7 @@
         menuShow: true,
         openMenuIndex: '0',
         closeMenuIndex: '0',
-        collapse: false,
+        collapse: true,
 
         hMenuShow: true,
         hOpenMenuIndex: '0',

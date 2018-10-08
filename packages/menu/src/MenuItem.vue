@@ -98,6 +98,7 @@
     },
 
     props: {
+      index: String,//唯一标识,如果不设置将自动生成
       value: Boolean,//是否选中
       disabled: Boolean,//是否禁用,优先级高于menu
       iconName: {//图标名称

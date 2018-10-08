@@ -36,8 +36,10 @@
 .@{menu-css-prefix}-external{
   position: relative;
   width: 100%;
-  transition: height .3s cubic-bezier(0,0,.2,1) , width .3s cubic-bezier(0,0,.2,1);
 
+  &.is-collapse{
+    transition: height .3s cubic-bezier(0,0,.2,1) , width .3s cubic-bezier(0,0,.2,1);
+  }
   &.is-full{
     top: 0;
     bottom: 0;

@@ -1,6 +1,6 @@
-<template>
-  <menu-collapse-transition>
-    <div v-show="show" :class="[menuExternalClass]" :style="[menuStyle, showStyle]">
+<!--<template>
+  <menu-accordion-transition>
+    <div v-show="show" :class="[menuExternalClass]" :style="[menuStyle, showStyle, {width: this.menuWidth}]">
       <scroll-bar>
         <ul :class="[menuClass]" :style="[menuStyle]">
           <slot></slot>
@@ -8,10 +8,10 @@
       </scroll-bar>
       <div class="we-common-clear"></div>
     </div>
-  </menu-collapse-transition>
-</template>
+  </menu-accordion-transition>
+</template>-->
 
-<script>
+<script type="text/jsx">
 
   import Conf from '../../src/mixins/conf.js';
   import Emitter from '../../src/mixins/emitter.js';
@@ -20,8 +20,31 @@
 
   export default {
 
+    render(h) {
+      const component = (
+        <div v-show={this.show}
+             class={this.menuExternalClass}
+             style={[this.showStyle, this.menuStyle, {width: this.menuWidth}]}>
+          <scroll-bar>
+            <ul class={this.menuClass} style={this.menuStyle}>
+              {this.$slots.default}
+            </ul>
+          </scroll-bar>
+          <div class="we-common-clear"></div>
+        </div>
+      );
+      if (this.openAccordionTransition) {
+        return (
+          <menu-accordion-transition>
+            {component}
+          </menu-accordion-transition>
+        );
+      }
+      return component;
+    },
+
     components: {
-      ScrollBar: ScrollBar, 'menu-collapse-transition': {
+      ScrollBar: ScrollBar, 'menu-accordion-transition': {
         functional: true,
         render(createElement, context) {
           return createElement('transition', {
@@ -30,7 +53,6 @@
             },
             on: {
               beforeEnter(el) {
-                console.log(context.parent.openCollapseTransition)
                 if (!el.dataset) el.dataset = {};
                 el.dataset.oldHeight = el.style.height;
                 el.dataset.oldPaddingTop = el.style.paddingTop;
@@ -102,15 +124,6 @@
 
     mixins: [Conf, Emitter],
 
-/*    render(h) {
-      const component = (
-        <div>
-
-        </div>
-      );
-
-    },*/
-
     provide() {
       return {
         colors: {
@@ -160,15 +173,19 @@
 
     data() {
       return {
+        collapseWidth: '50px',
+        openAccordionTransition: false,
         openCollapseTransition: false,
         isRoot: this === this.rootMenu,
         show: true,
-        opacityCache: undefined,
         showCache: undefined,
-        collapseWidthCache: undefined,
         bgc: this.backgroundColor || this.parentColors.backgroundColor,
         //是否是手风琴排版,如果不是手风琴排版,则所有subMenu都以弹出方式展开
-        isAccordion: this.accordion && this.mode === 'vertical'
+        isAccordion: this.accordion && this.mode === 'vertical',
+        subMenus: [],
+        allSubMenus: [],
+        menuItems: [],
+        allMenuItems: []
       };
     },
 
@@ -188,6 +205,10 @@
           ].indexOf(value) !== -1
         }
       },
+      width: {//菜单宽度,仅当mode为 vertical 时有效
+        type: [Number, String],
+        default: 240
+      },
       accordion: {//手风琴模式, 当菜单模式为 horizontal 模式时,强制关闭手风琴模式
         type: Boolean,
         default: true
@@ -201,7 +222,11 @@
         type: Boolean,
         default: true
       },
-      collapseTransition: {
+      accordionTransition: {//是否开启手风琴动画
+        type: Boolean,
+        default: true
+      },
+      collapseTransition: {//是否开启折叠动画
         type: Boolean,
         default: true
       },
@@ -218,6 +243,18 @@
     },
 
     computed: {
+      menuWidth() {
+        if (this.mode !== 'vertical') {
+          return undefined;
+        }
+        if (this.collapse) {
+          return this.collapseWidth;
+        }
+        if (!isNaN(this.width)) {
+          return `${this.width}px`;
+        }
+        return this.width;
+      },
       showStyle() {
         if (this.isRoot) {
           //根节点在原始位置显示
@@ -232,7 +269,7 @@
           //如果父菜单是垂直模式, 那么应该水平弹出
           return {
             position: 'absolute',
-            left: `${this.menuItem.menuItemWidth + 1}px`,
+            left: `${this.menuItem.menuItemWidth + 21}px`,
             top: `${0}px`,
             width: `${this.menuItem.menuItemWidth}px`
           }
@@ -259,11 +296,7 @@
 
     watch: {
       value(v) {
-        if (this.menuItem) {
-          this.menuItem.expand = v;
-        } else {
-          this.show = v;
-        }
+        this.show = v;
       },
       show(v) {
         if (this.menuItem) {
@@ -340,7 +373,7 @@
         this.broadcast(`${this.prefixNameCls}Menu`, 'all-subMenu-show', restore);
       },
       handleAllSubMenuShow(restore) {
-        if (!this.isAccordion) {
+        if (!this.menuItem.isAccordion) {
           return;
         }
         if (restore === true) {
@@ -352,9 +385,6 @@
         } else if (restore === false) {
           this.show = true;
         }
-        setTimeout(() => {
-          this.broadcast(`${this.prefixNameCls}Menu`, 'all-subMenu-show', restore);
-        }, 300);
       },
       /**
        * 收起所有子菜单
@@ -366,7 +396,6 @@
         if (memory === true && this.showCache === undefined) {
           this.showCache = this.show;
         }
-        this.broadcast(`${this.prefixNameCls}Menu`, 'all-subMenu-un-show', memory);
         this.show = false;
       },
       /**
@@ -376,9 +405,9 @@
        */
       _collapse() {
         this.closeAllSubMenu(true);
-        setTimeout(() => {
-          this.$el.style.width = '50px';
-        }, this.collapseDelay);
+        /*        setTimeout(() => {
+                  this.$el.style.width = this.collapseWidth;
+                }, this.collapseDelay);*/
       },
       /**
        * 展开
@@ -386,16 +415,12 @@
        * @private
        */
       _expand() {
-        this.$el.style.width = this.collapseWidthCache;
+        this.$el.style.width = this.menuWidth;
         this.openAllSubMenu(true);
       }
     },
 
-    created() {
-      if (this.menuItem) {
-        this.menuItem.hasSubMenu = true;
-        this.menuItem.expand = this.value;
-      }
+    mounted() {
       this.$on('item-click', this.handleItemClick);
       this.$on('item-expand', this.handleItemExpand);
       this.$on('item-un-expand', this.handleItemUnExpand);
@@ -404,24 +429,27 @@
       this.$on('all-subMenu-show', this.handleAllSubMenuShow);
       this.$on('all-subMenu-un-show', this.handleAllSubMenuUnShow);
 
-    },
-
-    mounted() {
-      this.$nextTick(() => {
+      setTimeout(() => {
         this.show = this.value;
-
-      });
-      this.collapseWidthCache = this.$el.style.width;
-      if (this.collapse) {
-        this.opacityCache = this.$el.style.opacity;
-        this.$el.style.opacity = 0;
-        this.$nextTick(() => {
+        if (this.menuItem) {
+          this.menuItem.hasSubMenu = true;
+          this.menuItem.expand = this.show;
+        }
+        if (this.collapse) {
           this._collapse();
-          setTimeout(() => {
-            this.$el.style.opacity = this.opacityCache;
-          }, this.collapseDelay + 300);
-        });
-      }
+        }
+      }, 0);
+
+      /*      if (this.collapse) {
+              this.$nextTick(() => {
+                // this._collapse();
+                this.show = this.value;
+              });
+            } else {
+              this.show = this.value;
+              this.openAccordionTransition = this.accordionTransition;
+              this.openCollapseTransition = this.collapseTransition;
+            }*/
 
     }
 
