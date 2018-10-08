@@ -55,7 +55,7 @@
     computed: {
       indentStyle() {
         return {
-          paddingLeft: this.indentNum > 0 ? `${this.indentNum * 15 + 50}px` : '50px'
+          paddingLeft: `${this.indentNum * 15 + 50}px`
         };
       }
     },

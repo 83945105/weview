@@ -1,10 +1,10 @@
 <template>
   <li :class="[itemClass]" :style="[showStyle]" @click.stop="handleClick">
-    <div :class="[titleClass, selectedClass, activeClass]"
+    <div :class="[titleClass, selectedClass, activeClass, disabledClass]"
          :style="[indentStyle, titleInnerStyle, selectedStyle, activeStyle]"
          @mouseenter="handleMouseEnter"
          @mouseleave="handleMouseLeave">
-      <div v-if="showArrow && hasSubMenu" :class="[titleArrowClass, {'is-opened':expand}]">
+      <div v-if="showArrow && hasSubMenu" :class="[titleArrowClass, {'is-opened': expand}]">
         <icon v-if="isAccordion" :name="isHorizontal ? 'angle-left' : 'angle-up'"></icon>
         <icon v-else :name="isHorizontal ? 'angle-up' : 'angle-left'"></icon>
       </div>
@@ -99,7 +99,7 @@
 
     props: {
       value: Boolean,//是否选中
-      disabled: Boolean,//是否禁用
+      disabled: Boolean,//是否禁用,优先级高于menu
       iconName: {//图标名称
         type: String,
         default: ''
@@ -121,6 +121,9 @@
       },
       hasDefaultIcon() {
         return this.rootMenu.mode !== 'horizontal';
+      },
+      disabledClass() {
+        return this.disabled ? `is-disabled` : undefined;
       },
       itemClass() {
         let cls = `${this.prefixCls}-menu-item`;
@@ -178,7 +181,7 @@
       },
       indentStyle() {
         return {
-          paddingLeft: this.indentNum > 0 ? `${this.indentNum * 15}px` : undefined
+          paddingLeft: `${this.indentNum * 15}px`
         };
       },
       verticalLineClass() {
@@ -283,7 +286,9 @@
       },
       handleItemActive({menu, item}) {
         if (this.hasSubMenu) {
-          this.active = true;
+          if (!this.isAccordion || this.isRoot) {
+            this.active = true;
+          }
           this.dispatch(`${this.prefixNameCls}MenuItem`, 'item-active', {menu: this.menu, item: this});
         }
       }
