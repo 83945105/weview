@@ -404,23 +404,28 @@
 
           二级菜单02
 
-          <we-menu slot="subMenu" :accordion="false">
+          <we-menu slot="subMenu" :accordion="true">
             <we-menu-item>二级选项一</we-menu-item>
             <we-menu-item>
 
               三级菜单
 
               <we-menu slot="subMenu" :accordion="false">
-                <we-menu-item>三级选项一</we-menu-item>
-                <we-menu-item>三级选项二</we-menu-item>
+
+                <we-menu-group title="分组">
+
+                  <we-menu-item disabled>三级选项一</we-menu-item>
+                  <we-menu-item>三级选项二</we-menu-item>
+
+                </we-menu-group>
 
                 <we-menu-item>
 
                   四级菜单
 
                   <we-menu slot="subMenu" :accordion="false">
-                    <we-menu-item>四级选项一</we-menu-item>
-                    <we-menu-item>四级选项二</we-menu-item>
+                    <we-menu-item icon-name="edit">四级选项一</we-menu-item>
+                    <we-menu-item :value="true">四级选项二</we-menu-item>
                   </we-menu>
 
                 </we-menu-item>

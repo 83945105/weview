@@ -113,7 +113,7 @@
           hoverTextColor: this.hoverTextColor || this.parentColors.hoverTextColor,
           hoverBackgroundColor: this.hoverBackgroundColor || this.parentColors.hoverBackgroundColor,
         },
-        indentNum: (!this.indent || !this.isAccordion) ? 0 : this.indentNum + 1,
+        indentNum: (this.isRoot || !this.indent) ? this.indentNum : this.menuItem.isAccordion ? this.indentNum + 1 : 0,
         rootMenu: this.rootMenu,
         menu: this
       };
@@ -127,7 +127,7 @@
         }
       },
       indentNum: {//缩进号
-        default: -1
+        default: 0
       },
       rootMenu: {//根菜单,默认自身
         default() {
@@ -148,8 +148,8 @@
 
     data() {
       return {
-        show: this.value,
         isRoot: this === this.rootMenu,
+        show: this.value,
         opacityCache: undefined,
         showCache: undefined,
         collapseWidthCache: undefined,
@@ -375,7 +375,7 @@
     created() {
       if (this.menuItem) {
         this.menuItem.hasSubMenu = true;
-        this.menuItem.expand = this.value;
+        this.menuItem.expand = this.show;
       }
       this.$on('item-click', this.handleItemClick);
       this.$on('item-expand', this.handleItemExpand);
