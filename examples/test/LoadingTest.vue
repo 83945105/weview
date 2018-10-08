@@ -75,7 +75,8 @@
           text: '玩命加载中'
         },
         tableData: [],
-        tableLoading: false
+        tableLoading: false,
+        spinner: false
       };
     },
 

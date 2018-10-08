@@ -1,7 +1,7 @@
 <template>
   <li :class="[itemClass]" :style="[showStyle]" @click.stop="handleClick">
     <div :class="[titleClass, selectedClass, activeClass, disabledClass]"
-         :style="[indentStyle, titleInnerStyle, selectedStyle, activeStyle]"
+         :style="[indentStyle, titleInnerStyle, selectedStyle, activeStyle, disabledStyle ]"
          @mouseenter="handleMouseEnter"
          @mouseleave="handleMouseLeave">
       <div v-if="showArrow && hasSubMenu" :class="[titleArrowClass, {'is-opened': expand}]">
@@ -125,6 +125,15 @@
       disabledClass() {
         return this.disabled ? `is-disabled` : undefined;
       },
+      disabledStyle() {
+        if (!this.disabled) {
+          return;
+        }
+        return {
+          color: this.colors.disabledTextColor,
+          backgroundColor: this.colors.disabledBackgroundColor
+        };
+      },
       itemClass() {
         let cls = `${this.prefixCls}-menu-item`;
         if (this.isHorizontal) {
@@ -156,7 +165,7 @@
         return (!this.hasSubMenu && this.selected) ? 'is-selected' : undefined;
       },
       selectedStyle() {
-        if (!this.selected) {
+        if (!this.selected || this.disabled) {
           return undefined;
         }
         return {
@@ -168,7 +177,7 @@
         return (this.hasSubMenu && this.active) ? 'is-active' : undefined;
       },
       activeStyle() {
-        if (!this.active) {
+        if (!this.active || this.disabled) {
           return undefined;
         }
         return {
@@ -246,6 +255,9 @@
 
     methods: {
       handleMouseEnter(e) {
+        if (this.disabled) {
+          return;
+        }
         this.hover = true;
         this.hoverBackgroundColorCache = e.currentTarget.style.backgroundColor;
         this.hoverTextColorCache = e.currentTarget.style.color;
@@ -253,6 +265,9 @@
         e.currentTarget.style.backgroundColor = this.colors.hoverBackgroundColor;
       },
       handleMouseLeave(e) {
+        if (this.disabled) {
+          return;
+        }
         this.hover = false;
         e.currentTarget.style.backgroundColor = this.hoverBackgroundColorCache;
         e.currentTarget.style.color = this.hoverTextColorCache;

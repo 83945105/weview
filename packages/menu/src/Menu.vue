@@ -30,6 +30,7 @@
             },
             on: {
               beforeEnter(el) {
+                console.log(context.parent.openCollapseTransition)
                 if (!el.dataset) el.dataset = {};
                 el.dataset.oldHeight = el.style.height;
                 el.dataset.oldPaddingTop = el.style.paddingTop;
@@ -101,6 +102,15 @@
 
     mixins: [Conf, Emitter],
 
+/*    render(h) {
+      const component = (
+        <div>
+
+        </div>
+      );
+
+    },*/
+
     provide() {
       return {
         colors: {
@@ -112,6 +122,8 @@
           selectedBackgroundColor: this.selectedBackgroundColor || this.parentColors.selectedBackgroundColor,
           hoverTextColor: this.hoverTextColor || this.parentColors.hoverTextColor,
           hoverBackgroundColor: this.hoverBackgroundColor || this.parentColors.hoverBackgroundColor,
+          disabledTextColor: this.disabledTextColor || this.parentColors.disabledTextColor,
+          disabledBackgroundColor: this.disabledBackgroundColor || this.parentColors.disabledBackgroundColor
         },
         indentNum: (this.isRoot || !this.indent) ? this.indentNum : this.menuItem.isAccordion ? this.indentNum + 1 : 0,
         rootMenu: this.rootMenu,
@@ -148,8 +160,9 @@
 
     data() {
       return {
+        openCollapseTransition: false,
         isRoot: this === this.rootMenu,
-        show: this.value,
+        show: true,
         opacityCache: undefined,
         showCache: undefined,
         collapseWidthCache: undefined,
@@ -188,6 +201,10 @@
         type: Boolean,
         default: true
       },
+      collapseTransition: {
+        type: Boolean,
+        default: true
+      },
       textColor: String,//菜单文本颜色
       backgroundColor: String,//菜单背景颜色
       activeTextColor: String,//文本激活颜色
@@ -195,7 +212,9 @@
       selectedTextColor: String,//菜单选中文本颜色
       selectedBackgroundColor: String,//菜单选中背景颜色
       hoverTextColor: String,//悬停文本颜色
-      hoverBackgroundColor: String//悬停背景颜色
+      hoverBackgroundColor: String,//悬停背景颜色
+      disabledTextColor: String,//菜单禁用文本颜色
+      disabledBackgroundColor: String//菜单禁用背景颜色
     },
 
     computed: {
@@ -375,7 +394,7 @@
     created() {
       if (this.menuItem) {
         this.menuItem.hasSubMenu = true;
-        this.menuItem.expand = this.show;
+        this.menuItem.expand = this.value;
       }
       this.$on('item-click', this.handleItemClick);
       this.$on('item-expand', this.handleItemExpand);
@@ -388,6 +407,10 @@
     },
 
     mounted() {
+      this.$nextTick(() => {
+        this.show = this.value;
+
+      });
       this.collapseWidthCache = this.$el.style.width;
       if (this.collapse) {
         this.opacityCache = this.$el.style.opacity;
