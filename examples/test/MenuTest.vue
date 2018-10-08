@@ -368,6 +368,8 @@
                selected-background-color="#2199ed"
                hover-text-color="#ff0000"
                hover-background-color="#666666"
+               disabled-text-color="#999999"
+               disabled-background-color="transparent"
                style="height: 800px;left: 0px;top: 0px"
       >
         <we-menu-item icon-name="edit">我的工作台</we-menu-item>
@@ -410,7 +412,7 @@
 
               三级菜单
 
-              <we-menu slot="subMenu" :accordion="false">
+              <we-menu :value="false" slot="subMenu" :accordion="false">
 
                 <we-menu-group title="分组">
 
