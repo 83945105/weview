@@ -370,7 +370,7 @@
                hover-background-color="#666666"
                disabled-text-color="#999999"
                disabled-background-color="transparent"
-               style="height: 800px;left: 0px;top: 0px"
+               style="left: 0px;top: 0px;height: 100%;"
       >
         <we-menu-item icon-name="edit">我的工作台</we-menu-item>
         <we-menu-group title="分组">
@@ -381,9 +381,11 @@
 
           二级菜单
 
-          <template slot="subMenu" slot-scope="{menuItemWidth, menuItemHeight}">
+          <template slot="subMenu">
 
-            <we-menu :accordion="false" index="1">
+            <we-menu :accordion="false"
+                     subMenuMode="open"
+                     index="1">
               <we-menu-item icon-name="edit">二级选项一</we-menu-item>
               <we-menu-item>
 
@@ -392,7 +394,7 @@
                 三级菜单
 
                 <we-menu :accordion="false" slot="subMenu">
-                  <we-menu-item>三级选项一</we-menu-item>
+                  <we-menu-item icon-name="edit">三级选项一</we-menu-item>
                   <we-menu-item icon-name="edit">三级选项二</we-menu-item>
                 </we-menu>
 
@@ -407,8 +409,8 @@
           二级菜单02
 
           <we-menu slot="subMenu" :accordion="true">
-            <we-menu-item>二级选项一</we-menu-item>
-            <we-menu-item>
+            <we-menu-item icon-name="edit">二级选项一</we-menu-item>
+            <we-menu-item icon-name="edit">
 
               三级菜单
 
@@ -416,18 +418,18 @@
 
                 <we-menu-group title="分组">
 
-                  <we-menu-item disabled>三级选项一</we-menu-item>
-                  <we-menu-item>三级选项二</we-menu-item>
+                  <we-menu-item disabled icon-name="edit">三级选项一</we-menu-item>
+                  <we-menu-item icon-name="edit">三级选项二</we-menu-item>
 
                 </we-menu-group>
 
-                <we-menu-item>
+                <we-menu-item icon-name="edit">
 
                   四级菜单
 
                   <we-menu slot="subMenu" :accordion="false">
                     <we-menu-item icon-name="edit">四级选项一</we-menu-item>
-                    <we-menu-item :value="true">四级选项二</we-menu-item>
+                    <we-menu-item :value="true" icon-name="edit">四级选项二</we-menu-item>
                   </we-menu>
 
                 </we-menu-item>
@@ -457,8 +459,8 @@
     <button @click="$refs.hMenu.closeAllSubMenu()">收起根菜单下所有子菜单</button>
     <p></p>
     <button @click="hCollapse = !hCollapse">折叠/展开</button>
-    <div style="height: 50px; width: 800px; position: relative; border: 1px solid #e5e5e5;">
-<!--      <we-menu mode="horizontal"
+    <div style="position: relative; border: 1px solid #e5e5e5;">
+      <we-menu mode="horizontal"
                v-model="hMenuShow"
                index="0"
                :collapse="hCollapse"
@@ -487,9 +489,17 @@
 
           <we-menu slot="subMenu" style="z-index: 999999;width: 200px">
 
-            <we-menu-item>二级菜单项一</we-menu-item>
-            <we-menu-item>二级菜单项二</we-menu-item>
-            <we-menu-item>二级菜单项三</we-menu-item>
+            <we-menu-item icon-name="edit">二级菜单项一</we-menu-item>
+            <we-menu-item icon-name="edit">二级菜单项二</we-menu-item>
+            <we-menu-item icon-name="edit">二级菜单项二</we-menu-item>
+            <we-menu-item icon-name="edit">
+
+              <template slot="panel">
+                <div style="width: 60px;height: 60px;background-color: #ff0000;border-radius: 50%;float: left"></div>
+                <div style="float: left">ffffff<br>fff</div>
+              </template>
+
+            </we-menu-item>
 
 
           </we-menu>
@@ -501,7 +511,7 @@
           <span style="margin-left: 5px">乒乓球</span>
         </we-menu-item>
 
-      </we-menu>-->
+      </we-menu>
     </div>
 
     <!--横向菜单-->

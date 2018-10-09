@@ -35,12 +35,16 @@
 
 .@{menu-css-prefix}-external{
   position: relative;
-  width: 100%;
 
   &.is-collapse{
     transition: height .3s cubic-bezier(0,0,.2,1) , width .3s cubic-bezier(0,0,.2,1);
   }
-  &.is-full{
+
+  &.width-auto{
+    width: 100%;
+  }
+  &.height-auto{
+    position: absolute;
     top: 0;
     bottom: 0;
   }
@@ -236,6 +240,10 @@
       .@{menu-css-prefix}-item-title-arrow{
         width: 20px;
         margin-left: 3px;
+      }
+      .@{menu-css-prefix}-item-title-inner-icon{
+        width: 25px;
+        text-align: left;
       }
     }
   }

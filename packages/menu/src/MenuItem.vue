@@ -1,32 +1,36 @@
 <template>
-  <li :class="[itemClass]" :style="[showStyle]" @click.stop="handleClick">
-    <div :class="[titleClass, selectedClass, activeClass, disabledClass]"
-         :style="[indentStyle, titleInnerStyle, selectedStyle, activeStyle, disabledStyle ]"
-         @mouseenter="handleMouseEnter"
-         @mouseleave="handleMouseLeave">
-      <div v-if="showArrow && hasSubMenu" :class="[titleArrowClass, {'is-opened': expand}]">
-        <icon v-if="isAccordion" :name="isHorizontal ? 'angle-left' : 'angle-up'"></icon>
-        <icon v-else :name="isHorizontal ? 'angle-up' : 'angle-left'"></icon>
-      </div>
-      <div :class="[titleInnerClass]">
-        <div v-if="hasDefaultIcon" :class="[titleInnerIconClass]">
-          <slot name="icon">
-            <icon :name="iconName"></icon>
-          </slot>
+  <li :class="[itemClass]" @click.stop="handleClick">
+    <slot name="panel">
+      <div :class="[`${prefixCls}-menu-item-title`, selectedClass, activeClass, disabledClass]"
+           :style="[{
+          paddingLeft: `${indentNum * 15}px`,
+          color: menu.textColor || rootMenu.textColor
+         }, selectedStyle, activeStyle, disabledStyle]"
+           @mouseenter="handleMouseEnter"
+           @mouseleave="handleMouseLeave">
+        <div v-if="showArrow && hasSubMenu" :class="[`${prefixCls}-menu-item-title-arrow`, {'is-opened': expand}]">
+          <icon v-if="menu.subMenuModeIsOpen" :name="isHorizontal ? 'angle-up' : 'angle-left'"></icon>
+          <icon v-else :name="isHorizontal ? 'angle-left' : 'angle-up'"></icon>
         </div>
-        <div :class="[titleInnerTextClass]">
-          <slot></slot>
+        <div :class="[`${prefixCls}-menu-item-title-inner`]">
+          <div v-if="!isHorizontal" :class="[`${prefixCls}-menu-item-title-inner-icon`]">
+            <slot name="icon">
+              <icon :name="iconName"></icon>
+            </slot>
+          </div>
+          <div :class="[`${prefixCls}-menu-item-title-inner-text`]">
+            <slot></slot>
+          </div>
         </div>
       </div>
-    </div>
 
-    <slot name="subMenu" :menu-item-width="menuItemWidth" :menu-item-height="menuItemHeight"></slot>
+      <slot name="subMenu"></slot>
 
-    <div v-if="isHorizontal" :class="[horizontalLineClass]" :style="[horizontalLineStyle]"></div>
-    <div v-else :class="[verticalLineClass]" :style="[verticalLineStyle]"></div>
+      <div v-if="isHorizontal" :class="[`${prefixCls}-menu-horizontal-line`]" :style="[horizontalLineStyle]"></div>
+      <div v-else :class="[`${prefixCls}-menu-vertical-line`]" :style="[verticalLineStyle]"></div>
 
-    <div class="we-common-clear"></div>
-
+      <div :class="[`${prefixCls}-common-clear`]"></div>
+    </slot>
   </li>
 </template>
 
@@ -57,7 +61,6 @@
     },
 
     inject: {
-      colors: ['colors'],
       indentNum: {
         default: 0
       },
@@ -80,13 +83,8 @@
     data() {
       return {
         isRoot: this === this.rootMenuItem,
-        menuItemWidth: undefined,
-        menuItemHeight: undefined,
         menuItemTitleWidth: undefined,
-        menuMode: this.menu.mode,
         hasSubMenu: false,
-        //是否是手风琴排版,根据所属菜单排版确定,如果不是手风琴排版,必须固定高度
-        isAccordion: this.menu.isAccordion,
         selected: this.value,
         expand: false,
         active: false,
@@ -108,21 +106,6 @@
     },
 
     computed: {
-      // 是否水平排列
-      isHorizontal() {
-        return this.rootMenuItem === this && this.menuMode === 'horizontal';
-      },
-      showStyle() {
-        if (this.isAccordion) {
-          return undefined;
-        }
-        return {
-          height: `50px`
-        };
-      },
-      hasDefaultIcon() {
-        return this.rootMenu.mode !== 'horizontal';
-      },
       disabledClass() {
         return this.disabled ? `is-disabled` : undefined;
       },
@@ -131,9 +114,13 @@
           return;
         }
         return {
-          color: this.colors.disabledTextColor,
-          backgroundColor: this.colors.disabledBackgroundColor
+          color: this.menu.disabledTextColor || this.rootMenu.disabledTextColor,
+          backgroundColor: this.menu.disabledBackgroundColor || this.rootMenu.disabledBackgroundColor
         };
+      },
+      // 是否水平排列
+      isHorizontal() {
+        return this.rootMenuItem === this && this.menu.modeIsHorizontal;
       },
       itemClass() {
         let cls = `${this.prefixCls}-menu-item`;
@@ -145,23 +132,6 @@
         }
         return cls;
       },
-      titleClass() {
-        return `${this.prefixCls}-menu-item-title`;
-      },
-      titleInnerClass() {
-        return `${this.prefixCls}-menu-item-title-inner`;
-      },
-      titleInnerStyle() {
-        return {
-          color: this.colors.textColor
-        };
-      },
-      titleInnerIconClass() {
-        return `${this.prefixCls}-menu-item-title-inner-icon`;
-      },
-      titleInnerTextClass() {
-        return `${this.prefixCls}-menu-item-title-inner-text`;
-      },
       selectedClass() {
         return (!this.hasSubMenu && this.selected) ? 'is-selected' : undefined;
       },
@@ -170,8 +140,8 @@
           return undefined;
         }
         return {
-          color: this.colors.selectedTextColor,
-          backgroundColor: this.colors.selectedBackgroundColor
+          color: this.menu.selectedTextColor || this.rootMenu.selectedTextColor,
+          backgroundColor: this.menu.selectedBackgroundColor || this.rootMenu.selectedBackgroundColor
         };
       },
       activeClass() {
@@ -182,23 +152,12 @@
           return undefined;
         }
         return {
-          color: this.colors.activeTextColor,
-          backgroundColor: this.colors.activeBackgroundColor
+          color: this.menu.activeTextColor || this.rootMenu.activeTextColor,
+          backgroundColor: this.menu.activeBackgroundColor || this.rootMenu.activeBackgroundColor
         };
-      },
-      titleArrowClass() {
-        return `${this.prefixCls}-menu-item-title-arrow`;
-      },
-      indentStyle() {
-        return {
-          paddingLeft: `${this.indentNum * 15}px`
-        };
-      },
-      verticalLineClass() {
-        return `${this.prefixCls}-menu-vertical-line`;
       },
       verticalLineStyle() {
-        if (!this.active || (!this.isRoot && this.isAccordion)) {
+        if (!this.active || (!this.isRoot)) {
           return {
             top: 0,
             height: 0,
@@ -209,11 +168,8 @@
           top: 0,
           height: `50px`,
           opacity: 1,
-          backgroundColor: this.colors.activeTextColor
+          backgroundColor: this.menu.activeTextColor || this.rootMenu.activeTextColor
         };
-      },
-      horizontalLineClass() {
-        return `${this.prefixCls}-menu-horizontal-line`;
       },
       horizontalLineStyle() {
         if (!this.hover && !this.selected && !this.active) {
@@ -227,7 +183,7 @@
           bottom: 0,
           width: `${this.menuItemTitleWidth + (this.hasSubMenu ? 20 : 0)}px`,
           opacity: 1,
-          backgroundColor: this.colors.activeTextColor
+          backgroundColor: this.menu.activeTextColor || this.rootMenu.activeTextColor
         };
       }
     },
@@ -262,8 +218,8 @@
         this.hover = true;
         this.hoverBackgroundColorCache = e.currentTarget.style.backgroundColor;
         this.hoverTextColorCache = e.currentTarget.style.color;
-        e.currentTarget.style.color = this.colors.hoverTextColor;
-        e.currentTarget.style.backgroundColor = this.colors.hoverBackgroundColor;
+        e.currentTarget.style.color = this.menu.hoverTextColor || this.rootMenu.hoverTextColor;
+        e.currentTarget.style.backgroundColor = this.menu.hoverBackgroundColor || this.rootMenu.hoverBackgroundColor;
       },
       handleMouseLeave(e) {
         if (this.disabled) {
@@ -302,9 +258,7 @@
       },
       handleItemActive({menu, item}) {
         if (this.hasSubMenu) {
-          if (!this.isAccordion || this.isRoot) {
-            this.active = true;
-          }
+          this.active = true;
           this.dispatch(`${this.prefixNameCls}MenuItem`, 'item-active', {menu: this.menu, item: this});
         }
       }
@@ -319,9 +273,18 @@
     },
 
     mounted() {
-      this.menuItemWidth = this.$el.scrollWidth;
-      this.menuItemHeight = this.$el.scrollHeight;
       this.menuItemTitleWidth = this.$el.getElementsByTagName('div')[0].scrollWidth;
+
+
+      if (this.rootMenu === this.menu) {
+        this.menu.menuItems.push(this);
+        this.menu.allMenuItems.push(this);
+      } else {
+        this.rootMenu.allMenuItems.push(this);
+        this.menu.menuItems.push(this);
+        this.menu.allMenuItems.push(this);
+      }
+
     }
 
   }

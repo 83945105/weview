@@ -1,36 +1,39 @@
-<!--<template>
+<template>
   <menu-accordion-transition>
-    <div v-show="show" :class="[menuExternalClass]" :style="[menuStyle, showStyle, {width: this.menuWidth}]">
+    <div v-show="isShow"
+         :class="[`${prefixCls}-menu-external`, [isInit? `${prefixCls}-common-position-init` : undefined]]"
+         :style="[showStyle, menuStyle, {width: menuWidth}]">
       <scroll-bar>
-        <ul :class="[menuClass]" :style="[menuStyle]">
+        <ul :class="[`${prefixCls}-menu`]"
+            :style="[menuStyle]">
           <slot></slot>
         </ul>
       </scroll-bar>
-      <div class="we-common-clear"></div>
+      <div :class="[`${prefixCls}-common-clear`]"></div>
     </div>
   </menu-accordion-transition>
-</template>-->
+</template>
 
 <script type="text/jsx">
 
   import Conf from '../../src/mixins/conf.js';
   import Emitter from '../../src/mixins/emitter.js';
-
   import ScrollBar from '../../scroll-bar/src/ScrollBar.vue';
 
   export default {
 
-    render(h) {
+/*    render(h) {
       const component = (
-        <div v-show={this.show}
-             class={this.menuExternalClass}
+        <div v-show={this.isShow}
+             class={[`${this.prefixCls}-menu-external`, [this.isInit ? `${this.prefixCls}-common-position-init` : undefined]]}
              style={[this.showStyle, this.menuStyle, {width: this.menuWidth}]}>
           <scroll-bar>
-            <ul class={this.menuClass} style={this.menuStyle}>
+            <ul class={`${this.prefixCls}-menu`}
+                style={this.menuStyle}>
               {this.$slots.default}
             </ul>
           </scroll-bar>
-          <div class="we-common-clear"></div>
+          <div class={`${this.prefixCls}-common-clear`}></div>
         </div>
       );
       if (this.openAccordionTransition) {
@@ -41,7 +44,7 @@
         );
       }
       return component;
-    },
+    },*/
 
     components: {
       ScrollBar: ScrollBar, 'menu-accordion-transition': {
@@ -49,10 +52,15 @@
         render(createElement, context) {
           return createElement('transition', {
             props: {
-              mode: 'out-in'
+              mode: 'out-in',
+              appear: true
             },
             on: {
+              beforeAppear(el) {
+                console.log(5555)
+              },
               beforeEnter(el) {
+                console.log(el)
                 if (!el.dataset) el.dataset = {};
                 el.dataset.oldHeight = el.style.height;
                 el.dataset.oldPaddingTop = el.style.paddingTop;
@@ -64,7 +72,7 @@
               enter(el) {
                 el.dataset.oldOverflow = el.style.overflow;
                 if (el.scrollHeight !== 0) {
-                  el.style.height = el.scrollHeight + 'px';
+                  el.style.height = `${el.scrollHeight}px`;
                   el.style.paddingTop = el.dataset.oldPaddingTop;
                   el.style.paddingBottom = el.dataset.oldPaddingBottom;
                 } else {
@@ -88,7 +96,7 @@
                 el.dataset.oldPaddingTop = el.style.paddingTop;
                 el.dataset.oldPaddingBottom = el.style.paddingBottom;
                 el.dataset.oldOverflow = el.style.overflow;
-                el.style.height = el.scrollHeight + 'px';
+                el.style.height = `${el.scrollHeight}px`;
                 el.style.overflow = 'hidden';
               },
               leave(el) {
@@ -126,31 +134,13 @@
 
     provide() {
       return {
-        colors: {
-          textColor: this.textColor || this.parentColors.textColor,
-          backgroundColor: this.backgroundColor || this.parentColors.backgroundColor,
-          activeTextColor: this.activeTextColor || this.parentColors.activeTextColor,
-          activeBackgroundColor: this.activeBackgroundColor || this.parentColors.activeBackgroundColor,
-          selectedTextColor: this.selectedTextColor || this.parentColors.selectedTextColor,
-          selectedBackgroundColor: this.selectedBackgroundColor || this.parentColors.selectedBackgroundColor,
-          hoverTextColor: this.hoverTextColor || this.parentColors.hoverTextColor,
-          hoverBackgroundColor: this.hoverBackgroundColor || this.parentColors.hoverBackgroundColor,
-          disabledTextColor: this.disabledTextColor || this.parentColors.disabledTextColor,
-          disabledBackgroundColor: this.disabledBackgroundColor || this.parentColors.disabledBackgroundColor
-        },
-        indentNum: (this.isRoot || !this.indent) ? this.indentNum : this.menuItem.isAccordion ? this.indentNum + 1 : 0,
+        indentNum: (this.isRoot || !this.indent) ? this.indentNum : this.parentMenu.subMenuModeIsOpen ? 0 : this.indentNum + 1,
         rootMenu: this.rootMenu,
         menu: this
       };
     },
 
     inject: {
-      parentColors: {
-        from: 'colors',
-        default() {
-          return {};
-        }
-      },
       indentNum: {//缩进号
         default: 0
       },
@@ -169,24 +159,6 @@
       menuItem: {//所属menuItem
         default: null
       }
-    },
-
-    data() {
-      return {
-        collapseWidth: '50px',
-        openAccordionTransition: false,
-        openCollapseTransition: false,
-        isRoot: this === this.rootMenu,
-        show: true,
-        showCache: undefined,
-        bgc: this.backgroundColor || this.parentColors.backgroundColor,
-        //是否是手风琴排版,如果不是手风琴排版,则所有subMenu都以弹出方式展开
-        isAccordion: this.accordion && this.mode === 'vertical',
-        subMenus: [],
-        allSubMenus: [],
-        menuItems: [],
-        allMenuItems: []
-      };
     },
 
     props: {
@@ -209,10 +181,28 @@
         type: [Number, String],
         default: 240
       },
-      accordion: {//手风琴模式, 当菜单模式为 horizontal 模式时,强制关闭手风琴模式
-        type: Boolean,
-        default: true
+      subMenuMode: {//子菜单模式 local 在当前节点上展开 open 新打开菜单 当 mode 为 horizontal 时强制使用open
+        type: String,
+        default: 'local',
+        validator(value) {
+          return [
+            'local',
+            'open'
+          ].indexOf(value) !== -1
+        }
       },
+      subMenuHorizontalShift: {//子菜单水平位移
+        type: Number,
+        default: 0
+      },
+      subMenuVerticalShift: {//子菜单垂直位移
+        type: Number,
+        default: 0
+      },
+      /*      accordion: {//手风琴模式, 开启后每次至多展开一个子菜单
+              type: Boolean,
+              default: true
+            },*/
       collapse: Boolean,//是否水平折叠,仅当mode为 vertical 时有效
       collapseDelay: {//折叠延迟
         type: Number,
@@ -242,13 +232,34 @@
       disabledBackgroundColor: String//菜单禁用背景颜色
     },
 
+    data() {
+      return {
+        isInit: true,//是否是初始化
+        subMenus: [],
+        allSubMenus: [],
+        menuItems: [],
+        allMenuItems: [],
+        collapseWidth: 50,
+        openAccordionTransition: true,
+        openCollapseTransition: false,
+        isRoot: this === this.rootMenu,
+        isShow: true,
+        showCache: undefined,
+        isCollapse: this.collapse,
+        modeIsHorizontal: this.mode === 'horizontal',
+        subMenuModeIsOpen: this.mode === 'horizontal' || this.subMenuMode === 'open',
+        //是否是手风琴
+        // isAccordion: this.accordion && this.mode === 'vertical'
+      };
+    },
+
     computed: {
       menuWidth() {
         if (this.mode !== 'vertical') {
           return undefined;
         }
         if (this.collapse) {
-          return this.collapseWidth;
+          return `${this.collapseWidth}px`;
         }
         if (!isNaN(this.width)) {
           return `${this.width}px`;
@@ -260,60 +271,47 @@
           //根节点在原始位置显示
           return undefined;
         }
-        if (this.menuItem.isAccordion) {
-          //如果所属菜单项是手风琴模式,则在原始位置显示
+        if (!this.parentMenu.subMenuModeIsOpen) {
+          //如果上级菜单设置的子菜单模式不是打开 则在原位置显示
           return undefined;
         }
-        //走到这里说明父菜单不是手风琴模式 => 弹出式显示菜单
         if (this.parentMenu.mode === 'vertical') {
           //如果父菜单是垂直模式, 那么应该水平弹出
           return {
             position: 'absolute',
-            left: `${this.menuItem.menuItemWidth + 21}px`,
-            top: `${0}px`,
-            width: `${this.menuItem.menuItemWidth}px`
+            left: `${this.parentMenu.width + this.subMenuHorizontalShift}px`,
+            top: `${this.subMenuVerticalShift}px`
           }
         }
         //如果父菜单是水平模式, 那么应该垂直弹出
         return {
           position: 'absolute',
-          left: `${0}px`,
-          top: `${54}px`
+          left: `${this.subMenuHorizontalShift}px`,
+          top: `${50 + this.subMenuVerticalShift}px`
         }
-      },
-      menuExternalClass() {
-        return `${this.prefixCls}-menu-external`;
-      },
-      menuClass() {
-        return `${this.prefixCls}-menu`;
       },
       menuStyle() {
         return {
-          backgroundColor: this.bgc
+          backgroundColor: this.backgroundColor || this.rootMenu.backgroundColor
         };
       }
     },
 
     watch: {
       value(v) {
-        this.show = v;
+        this.isShow = v;
       },
-      show(v) {
+      isShow(v) {
         if (this.menuItem) {
           this.menuItem.expand = v;
-        }
-        if (v) {
-          this.openAllSubMenu(true);
-        } else {
-          this.closeAllSubMenu(true);
         }
         this.$emit('input', v);
       },
       collapse(v) {
         if (v) {
-          this._collapse();
+          this.closeAll();
         } else {
-          this._expand();
+          this.openAll();
         }
       }
     },
@@ -328,10 +326,10 @@
         }
       },
       handleItemExpand({menu, item}) {
-        this.show = true;
+        this.isShow = true;
       },
       handleItemUnExpand({menu, item}) {
-        this.show = false;
+        this.isShow = false;
       },
       /**
        * 展开指定菜单
@@ -344,11 +342,6 @@
         }
         this.broadcast(`${this.prefixNameCls}Menu`, 'menu-show', index);
       },
-      handleMenuShow(index) {
-        if (this.index === index) {
-          this.show = true;
-        }
-      },
       /**
        * 收起指定菜单
        * @param index 菜单唯一标识
@@ -360,63 +353,19 @@
         }
         this.broadcast(`${this.prefixNameCls}Menu`, 'menu-un-show', index);
       },
-      handleMenuUnShow(index) {
-        if (this.index === index) {
-          this.show = false;
-        }
-      },
       /**
-       * 打开所有子菜单
-       * @param restore 恢复收起前状态
-       */
-      openAllSubMenu(restore = true) {
-        this.broadcast(`${this.prefixNameCls}Menu`, 'all-subMenu-show', restore);
-      },
-      handleAllSubMenuShow(restore) {
-        if (!this.menuItem.isAccordion) {
-          return;
-        }
-        if (restore === true) {
-          if (this.showCache === true) {
-            this.showCache = undefined;
-            //缓存为打开状态,此时应该打开
-            this.show = true;
-          }
-        } else if (restore === false) {
-          this.show = true;
-        }
-      },
-      /**
-       * 收起所有子菜单
-       */
-      closeAllSubMenu(memory = true) {
-        this.broadcast(`${this.prefixNameCls}Menu`, 'all-subMenu-un-show', memory);
-      },
-      handleAllSubMenuUnShow(memory) {
-        if (memory === true && this.showCache === undefined) {
-          this.showCache = this.show;
-        }
-        this.show = false;
-      },
-      /**
-       * 折叠
-       * 仅当mode为vertical时生效
+       * 打开所有菜单
        * @private
        */
-      _collapse() {
-        this.closeAllSubMenu(true);
-        /*        setTimeout(() => {
-                  this.$el.style.width = this.collapseWidth;
-                }, this.collapseDelay);*/
+      openAll() {
+        this.allSubMenus.forEach(m => m.isShow = true);
       },
       /**
-       * 展开
-       * 仅当mode为vertical时生效
+       * 关闭所有菜单
        * @private
        */
-      _expand() {
-        this.$el.style.width = this.menuWidth;
-        this.openAllSubMenu(true);
+      closeAll() {
+        this.allSubMenus.forEach(m => m.isShow = false);
       }
     },
 
@@ -424,32 +373,42 @@
       this.$on('item-click', this.handleItemClick);
       this.$on('item-expand', this.handleItemExpand);
       this.$on('item-un-expand', this.handleItemUnExpand);
-      this.$on('menu-show', this.handleMenuShow);
-      this.$on('menu-un-show', this.handleMenuUnShow);
-      this.$on('all-subMenu-show', this.handleAllSubMenuShow);
-      this.$on('all-subMenu-un-show', this.handleAllSubMenuUnShow);
 
-      setTimeout(() => {
-        this.show = this.value;
-        if (this.menuItem) {
-          this.menuItem.hasSubMenu = true;
-          this.menuItem.expand = this.show;
-        }
-        if (this.collapse) {
-          this._collapse();
-        }
-      }, 0);
+      this.isShow = this.value;
+      if (!this.isRoot && this.rootMenu.collapse) {
+      }
 
       /*      if (this.collapse) {
               this.$nextTick(() => {
-                // this._collapse();
-                this.show = this.value;
+                // this.closeAll();
+                this.isShow = this.value;
               });
             } else {
-              this.show = this.value;
+              this.isShow = this.value;
               this.openAccordionTransition = this.accordionTransition;
               this.openCollapseTransition = this.collapseTransition;
             }*/
+      if (!this.isRoot) {
+        if (this.rootMenu === this.parentMenu) {
+          this.parentMenu.subMenus.push(this);
+          this.parentMenu.allSubMenus.push(this);
+        } else {
+          this.rootMenu.allSubMenus.push(this);
+          this.parentMenu.subMenus.push(this);
+          this.parentMenu.allSubMenus.push(this);
+        }
+      }
+
+      setTimeout(() => {
+        if (this.menuItem) {
+          this.menuItem.hasSubMenu = true;
+          this.menuItem.expand = this.isShow;
+        }
+        if (this.collapse) {
+          this.closeAll();
+          this.allSubMenus.forEach(m => m.isInit = false);
+        }
+      }, 0);
 
     }
 
