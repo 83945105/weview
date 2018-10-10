@@ -1,15 +1,18 @@
 <template>
-  <li :class="[itemClass]" @click.stop="handleClick">
+  <li :class="[itemClass]"
+      @click.stop="handleClick"
+  >
     <slot name="panel">
       <div :class="[`${prefixCls}-menu-item-title`, selectedClass, activeClass, disabledClass]"
            :style="[{
-          paddingLeft: `${indentNum * 15}px`,
-          color: menu.textColor || rootMenu.textColor
-         }, selectedStyle, activeStyle, disabledStyle]"
+            paddingLeft: `${indentNum * 15}px`,
+            color: menu.textColor || rootMenu.textColor
+           }, selectedStyle, activeStyle, disabledStyle]"
            @mouseenter="handleMouseEnter"
-           @mouseleave="handleMouseLeave">
+           @mouseleave="handleMouseLeave"
+      >
         <div v-if="showArrow && hasSubMenu" :class="[`${prefixCls}-menu-item-title-arrow`, {'is-opened': expand}]">
-          <icon v-if="menu.subMenuModeIsOpen" :name="isHorizontal ? 'angle-up' : 'angle-left'"></icon>
+          <icon v-if="subMenuModeIsOpen" :name="isHorizontal ? 'angle-up' : 'angle-left'"></icon>
           <icon v-else :name="isHorizontal ? 'angle-left' : 'angle-up'"></icon>
         </div>
         <div :class="[`${prefixCls}-menu-item-title-inner`]">
@@ -82,14 +85,17 @@
 
     data() {
       return {
-        isRoot: this === this.rootMenuItem,
-        menuItemTitleWidth: undefined,
-        hasSubMenu: false,
-        selected: this.value,
-        expand: false,
-        active: false,
-        hover: false,
+        isRoot: this === this.rootMenuItem,//是否是根菜单项
+        menuItemTitleWidth: undefined,//菜单项标题宽度
+        hasSubMenu: false,//是否拥有子菜单
+        subMenu: undefined,//子菜单
         showArrow: true,
+        selected: this.value,//是否选中
+        active: false,//是否激活
+        expand: false,//是否展开
+        hover: false,//是否悬浮
+        subMenuModeIsOpen: this.menu.mode === 'horizontal' || this.menu.subMenuMode === 'open',//子菜单是否是打开模式
+        isHorizontal: this.rootMenuItem === this && this.menu.mode === 'horizontal',        // 是否水平排列
         hoverTextColorCache: undefined,
         hoverBackgroundColorCache: undefined,
       };
@@ -117,10 +123,6 @@
           color: this.menu.disabledTextColor || this.rootMenu.disabledTextColor,
           backgroundColor: this.menu.disabledBackgroundColor || this.rootMenu.disabledBackgroundColor
         };
-      },
-      // 是否水平排列
-      isHorizontal() {
-        return this.rootMenuItem === this && this.menu.modeIsHorizontal;
       },
       itemClass() {
         let cls = `${this.prefixCls}-menu-item`;
@@ -193,20 +195,12 @@
         this.selected = v;
       },
       selected(v) {
-        this.$emit('input', v);
-      },
-      expand(v) {
-        if (v) {
-          this.broadcast(`${this.prefixNameCls}Menu`, 'item-expand', {menu: this.menu, item: this});
-        } else {
-          this.broadcast(`${this.prefixNameCls}Menu`, 'item-un-expand', {menu: this.menu, item: this});
+        if (this.value !== v) {
+          this.$emit('input', v);
         }
       },
-      'rootMenu.collapse': {
-        handler(v) {
-          this.showArrow = !v;
-        },
-        deep: true
+      expand(v) {
+        this.subMenu.isShow = v;
       }
     },
 
@@ -265,17 +259,8 @@
     },
 
     created() {
-      if (this.rootMenu) {
-        this.showArrow = !this.rootMenu.collapse;
-      }
       this.$on('item-un-selected', this.handleItemUnSelected);
       this.$on('item-active', this.handleItemActive);
-    },
-
-    mounted() {
-      this.menuItemTitleWidth = this.$el.getElementsByTagName('div')[0].scrollWidth;
-
-
       if (this.rootMenu === this.menu) {
         this.menu.menuItems.push(this);
         this.menu.allMenuItems.push(this);
@@ -283,6 +268,14 @@
         this.rootMenu.allMenuItems.push(this);
         this.menu.menuItems.push(this);
         this.menu.allMenuItems.push(this);
+      }
+    },
+
+    mounted() {
+      this.menuItemTitleWidth = this.$el.getElementsByTagName('div')[0].scrollWidth;
+      if(this.selected) {
+        //通知菜单项激活
+        this.dispatch(`${this.prefixNameCls}MenuItem`, 'item-active', {menu: this.menu, item: this});
       }
 
     }

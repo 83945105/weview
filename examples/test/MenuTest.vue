@@ -340,7 +340,6 @@
 
     <!--正常菜单-->
     <h3>正常菜单组件</h3>
-    <button @click="menuShow = !menuShow">展开/折叠</button>
     <p></p>
     <input v-model="openMenuIndex" type="text">
     <button @click="$refs.menu.open(openMenuIndex)">展开指定菜单</button>
@@ -350,12 +349,13 @@
     <button @click="$refs.menu.openAllSubMenu()">打开根菜单下所有子菜单</button>
     <button @click="$refs.menu.closeAllSubMenu()">收起根菜单下所有子菜单</button>
     <p></p>
+    <button @click="menuShow = !menuShow">打开/关闭</button>
     <button @click="collapse = !collapse">折叠/展开</button>
     <!--@mouseenter.native="collapse = false"-->
     <!--@mouseleave.native="collapse = true"-->
     <div style="height: 1000px; width: 220px; position: relative; border: 1px solid #e5e5e5;">
       <we-menu v-model="menuShow"
-               index="0"
+               index="根菜单"
                :accordion="true"
                :collapse="collapse"
                :collapseDelay="300"
@@ -370,7 +370,7 @@
                hover-background-color="#666666"
                disabled-text-color="#999999"
                disabled-background-color="transparent"
-               style="left: 0px;top: 0px;height: 100%;"
+               style="height: 100%;"
       >
         <we-menu-item icon-name="edit">我的工作台</we-menu-item>
         <we-menu-group title="分组">
@@ -385,15 +385,19 @@
 
             <we-menu :accordion="false"
                      subMenuMode="open"
-                     index="1">
-              <we-menu-item icon-name="edit">二级选项一</we-menu-item>
+                     index="二级菜单">
+
+              <we-menu-group title="分组">
+                <we-menu-item icon-name="edit">二级选项一</we-menu-item>
+              </we-menu-group>
+
               <we-menu-item>
 
                 <we-icon name="edit" slot="icon"></we-icon>
 
                 三级菜单
 
-                <we-menu :accordion="false" slot="subMenu">
+                <we-menu :accordion="false" slot="subMenu" index="三级菜单">
                   <we-menu-item icon-name="edit">三级选项一</we-menu-item>
                   <we-menu-item icon-name="edit">三级选项二</we-menu-item>
                 </we-menu>
@@ -408,13 +412,13 @@
 
           二级菜单02
 
-          <we-menu slot="subMenu" :accordion="true">
+          <we-menu slot="subMenu" :accordion="true" index="二级菜单02">
             <we-menu-item icon-name="edit">二级选项一</we-menu-item>
             <we-menu-item icon-name="edit">
 
-              三级菜单
+              三级菜单02
 
-              <we-menu :value="true" slot="subMenu" :accordion="false">
+              <we-menu :value="true" slot="subMenu" :accordion="false" index="三级菜单02">
 
                 <we-menu-group title="分组">
 
@@ -427,9 +431,15 @@
 
                   四级菜单
 
-                  <we-menu slot="subMenu" :accordion="false">
-                    <we-menu-item icon-name="edit">四级选项一</we-menu-item>
-                    <we-menu-item :value="true" icon-name="edit">四级选项二</we-menu-item>
+                  <we-menu slot="subMenu" :accordion="false" index="四级菜单">
+
+                    <we-menu-group title="分组">
+
+                      <we-menu-item icon-name="edit">四级选项一</we-menu-item>
+                      <we-menu-item :value="true" icon-name="edit">四级选项二</we-menu-item>
+
+                    </we-menu-group>
+
                   </we-menu>
 
                 </we-menu-item>

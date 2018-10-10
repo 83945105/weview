@@ -2,6 +2,7 @@
   <li class="we-menu-item-group">
     <h3 v-show="showTitle && title" class="we-menu-item-group-title" :style="[indentStyle]">{{title}}</h3>
     <ul>
+      <!--<li v-show="showTitle && title" class="we-menu-item-group-title" :style="[indentStyle]">{{title}}</li>-->
       <slot></slot>
     </ul>
   </li>

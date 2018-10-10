@@ -35,6 +35,7 @@
 
 .@{menu-css-prefix}-external{
   position: relative;
+  //transition: height .3s cubic-bezier(0,0,.2,1) , width .3s cubic-bezier(0,0,.2,1);
 
   &.is-collapse{
     transition: height .3s cubic-bezier(0,0,.2,1) , width .3s cubic-bezier(0,0,.2,1);
@@ -250,8 +251,10 @@
 
   &-group-title{
     .mixin-h1-default;
+    .mixin-ellipsis;
     font-size: 12px;
-    padding: 5px 0;
+    height: 28px;
+    line-height: 28px;
     color: @menu-item-group-title-color;
   }
 
