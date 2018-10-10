@@ -159,33 +159,33 @@
         };
       },
       verticalLineStyle() {
-        if (!this.active || (!this.isRoot)) {
+        if (this.isRoot && this.active) {
           return {
             top: 0,
-            height: 0,
-            opacity: 0
+            height: `50px`,
+            opacity: 1,
+            backgroundColor: this.menu.activeLineColor || this.rootMenu.activeLineColor
           };
         }
         return {
           top: 0,
-          height: `50px`,
-          opacity: 1,
-          backgroundColor: this.menu.activeTextColor || this.rootMenu.activeTextColor
+          height: 0,
+          opacity: 0
         };
       },
       horizontalLineStyle() {
-        if (!this.hover && !this.selected && !this.active) {
+        if (this.hover || this.selected || this.active) {
           return {
             bottom: 0,
-            width: 0,
-            opacity: 0
+            width: `${this.menuItemTitleWidth + (this.hasSubMenu ? 20 : 0)}px`,
+            opacity: 1,
+            backgroundColor: this.menu.activeLineColor || this.rootMenu.activeLineColor
           };
         }
         return {
           bottom: 0,
-          width: `${this.menuItemTitleWidth + (this.hasSubMenu ? 20 : 0)}px`,
-          opacity: 1,
-          backgroundColor: this.menu.activeTextColor || this.rootMenu.activeTextColor
+          width: 0,
+          opacity: 0
         };
       }
     },
@@ -273,7 +273,7 @@
 
     mounted() {
       this.menuItemTitleWidth = this.$el.getElementsByTagName('div')[0].scrollWidth;
-      if(this.selected) {
+      if (this.selected) {
         //通知菜单项激活
         this.dispatch(`${this.prefixNameCls}MenuItem`, 'item-active', {menu: this.menu, item: this});
       }
