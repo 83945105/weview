@@ -86,7 +86,6 @@
     data() {
       return {
         isRoot: this === this.rootMenuItem,//是否是根菜单项
-        menuItemTitleWidth: undefined,//菜单项标题宽度
         hasSubMenu: false,//是否拥有子菜单
         subMenu: undefined,//子菜单
         showArrow: true,
@@ -177,7 +176,6 @@
         if (this.hover || this.selected || this.active) {
           return {
             bottom: 0,
-            width: `${this.menuItemTitleWidth + (this.hasSubMenu ? 20 : 0)}px`,
             opacity: 1,
             backgroundColor: this.menu.activeLineColor || this.rootMenu.activeLineColor
           };
@@ -272,7 +270,6 @@
     },
 
     mounted() {
-      this.menuItemTitleWidth = this.$el.getElementsByTagName('div')[0].scrollWidth;
       if (this.selected) {
         //通知菜单项激活
         this.dispatch(`${this.prefixNameCls}MenuItem`, 'item-active', {menu: this.menu, item: this});

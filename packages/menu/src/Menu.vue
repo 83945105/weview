@@ -207,10 +207,6 @@
               default: true
             },*/
       collapse: Boolean,//是否水平折叠,仅当mode为 vertical 时有效
-      collapseDelay: {//折叠延迟
-        type: Number,
-        default: 0
-      },
       indent: {//是否开启缩进
         type: Boolean,
         default: true

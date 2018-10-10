@@ -481,6 +481,7 @@
                background-color="#252525"
                active-text-color="#ffff00"
                active-background-color="#333333"
+               active-line-color="#ff0000"
                selected-text-color="#ffff00"
                selected-background-color="#2199ed"
                hover-text-color="#ff0000"
