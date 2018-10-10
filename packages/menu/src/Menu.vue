@@ -227,6 +227,7 @@
       backgroundColor: String,//菜单背景颜色
       activeTextColor: String,//文本激活颜色
       activeBackgroundColor: String,//激活背景色
+      activeLineColor: String,//激活线颜色
       selectedTextColor: String,//菜单选中文本颜色
       selectedBackgroundColor: String,//菜单选中背景颜色
       hoverTextColor: String,//悬停文本颜色
