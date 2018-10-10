@@ -160,30 +160,25 @@
       verticalLineStyle() {
         if (this.isRoot && this.active) {
           return {
-            top: 0,
-            height: `50px`,
             opacity: 1,
             backgroundColor: this.menu.activeLineColor || this.rootMenu.activeLineColor
           };
         }
         return {
-          top: 0,
-          height: 0,
-          opacity: 0
+          opacity: 0,
+          backgroundColor: 'transparent'
         };
       },
       horizontalLineStyle() {
         if (this.hover || this.selected || this.active) {
           return {
-            bottom: 0,
             opacity: 1,
             backgroundColor: this.menu.activeLineColor || this.rootMenu.activeLineColor
           };
         }
         return {
-          bottom: 0,
-          width: 0,
-          opacity: 0
+          opacity: 0,
+          backgroundColor: 'transparent'
         };
       }
     },

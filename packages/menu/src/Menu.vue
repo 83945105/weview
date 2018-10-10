@@ -404,15 +404,12 @@
         this.isShow = !this.parentMenu.isCollapse && this.value && !this.menuItem.subMenuModeIsOpen;
         this.menuItem.expand = this.isShow;
       }
-
       if (this.isCollapse) {
         this.collapseMenu();
         this.menuItems.forEach(m => m.showArrow = false);
       } else {
         this.menuItems.forEach(m => m.showArrow = true);
       }
-
-
       setTimeout(() => {
         this.isInit = false;
         this.openAccordionTransition = true;
