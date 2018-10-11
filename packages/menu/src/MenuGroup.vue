@@ -1,8 +1,8 @@
 <template>
-  <li class="we-menu-item-group">
+  <li class="we-menu-item-group" :class="{'is-horizontal': menu.mode === 'horizontal'}">
     <div v-if="menu.mode === 'horizontal'" class="we-menu-item-group-split-vertical"
          :style="{
-          height: `${menu.height - 5 }px`
+          height: `${menu.height - 16 }px`
          }"
     ></div>
     <div v-else class="we-menu-item-group-split-horizontal"></div>
@@ -11,6 +11,7 @@
       <!--<li v-show="showTitle && title" class="we-menu-item-group-title" :style="[indentStyle]">{{title}}</li>-->
       <slot></slot>
     </ul>
+    <div :class="[`${prefixCls}-common-clear`]"></div>
   </li>
 </template>
 
