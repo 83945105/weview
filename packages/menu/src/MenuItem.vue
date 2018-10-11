@@ -26,6 +26,7 @@
           </div>
         </div>
       </div>
+      <div :class="[`${prefixCls}-common-clear`]"></div>
 
       <slot name="subMenu"></slot>
 

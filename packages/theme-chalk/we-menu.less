@@ -357,6 +357,9 @@
   &-group{
     position: relative;
 
+    &.is-horizontal{
+      float: left;
+    }
     &-title{
       .mixin-h1-default;
       .mixin-ellipsis;
@@ -367,12 +370,13 @@
       color: @menu-item-group-title-color;
     }
     &-split-vertical{
-      //position: absolute;
-      //top: 5px;
-      //left: 0;
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 10;
       width: 1px;
       font-size:0;
-      margin:0;
+      margin: 8px 0 0;
       padding:0;
       background-color: @menu-border-color-split;
     }
