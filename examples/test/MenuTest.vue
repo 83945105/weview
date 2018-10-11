@@ -356,7 +356,7 @@
     <div style="height: 1000px; width: 220px; position: relative; border: 1px solid #e5e5e5;">
       <we-menu v-model="menuShow"
                index="根菜单"
-               :accordion="true"
+               :accordion="false"
                :collapse="collapse"
                :collapseDelay="300"
                ref="menu"
@@ -374,10 +374,10 @@
                style="height: 100%;"
       >
         <we-menu-item icon-name="edit">我的工作台</we-menu-item>
-        <we-menu-group title="分组">
+        <we-menu-item-group title="分组">
           <we-menu-item icon-name="edit">选项一</we-menu-item>
           <we-menu-item icon-name="edit">选项二</we-menu-item>
-        </we-menu-group>
+        </we-menu-item-group>
         <we-menu-item icon-name="edit">
 
           二级菜单
@@ -388,9 +388,9 @@
                      subMenuMode="open"
                      index="二级菜单">
 
-              <we-menu-group title="分组">
+              <we-menu-item-group title="分组">
                 <we-menu-item icon-name="edit">二级选项一</we-menu-item>
-              </we-menu-group>
+              </we-menu-item-group>
 
               <we-menu-item>
 
@@ -421,12 +421,12 @@
 
               <we-menu :value="true" slot="subMenu" subMenuMode="open" :accordion="false" index="三级菜单02">
 
-                <we-menu-group title="分组">
+                <we-menu-item-group title="分组">
 
                   <we-menu-item disabled icon-name="edit">三级选项一</we-menu-item>
                   <we-menu-item icon-name="edit">三级选项二</we-menu-item>
 
-                </we-menu-group>
+                </we-menu-item-group>
 
                 <we-menu-item icon-name="edit">
 
@@ -434,12 +434,12 @@
 
                   <we-menu slot="subMenu" :accordion="false" index="四级菜单">
 
-                    <we-menu-group title="分组">
+                    <we-menu-item-group title="分组">
 
                       <we-menu-item icon-name="edit">四级选项一</we-menu-item>
                       <we-menu-item :value="true" icon-name="edit">四级选项二</we-menu-item>
 
-                    </we-menu-group>
+                    </we-menu-item-group>
 
                   </we-menu>
 
@@ -492,12 +492,12 @@
           <we-icon name="edit"></we-icon>
           <span style="margin-left: 5px">羽毛球</span>
         </we-menu-item>
-        <we-menu-group>
+        <we-menu-item-group>
           <we-menu-item>
             <we-icon name="edit"></we-icon>
             <span style="margin-left: 5px">乒乓球</span>
           </we-menu-item>
-        </we-menu-group>
+        </we-menu-item-group>
         <we-menu-item>
           <we-icon name="edit"></we-icon>
           <span style="margin-left: 5px">二级菜单</span>

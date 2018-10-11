@@ -20,11 +20,11 @@
 
   export default {
 
-    name: `${Conf.prefixCls}-menu-group`,
+    name: `${Conf.prefixCls}-menu-item-group`,
 
-    componentName: `${Conf.prefixNameCls}MenuGroup`,
+    componentName: `${Conf.prefixNameCls}MenuItemGroup`,
 
-    optionName: `menuGroup`,
+    optionName: `menuItemGroup`,
 
     mixins: [Conf],
 
