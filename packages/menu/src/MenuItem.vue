@@ -12,8 +12,8 @@
            @mouseleave="handleMouseLeave"
       >
         <div v-if="showArrow && hasSubMenu" :class="[`${prefixCls}-menu-item-title-arrow`, {'is-opened': expand}]">
-          <icon v-if="subMenuModeIsOpen" :name="isHorizontal ? 'angle-up' : 'angle-left'"></icon>
-          <icon v-else :name="isHorizontal ? 'angle-left' : 'angle-up'"></icon>
+          <icon v-if="subMenuModeIsOpen" :name="isHorizontal ? 'angle-down' : 'angle-right'"></icon>
+          <icon v-else :name="isHorizontal ? 'angle-right' : 'angle-down'"></icon>
         </div>
         <div :class="[`${prefixCls}-menu-item-title-inner`]">
           <div v-if="!isHorizontal" :class="[`${prefixCls}-menu-item-title-inner-icon`]">
@@ -193,7 +193,11 @@
         }
       },
       expand(v) {
-        this.subMenu.isShow = v;
+        if (v) {
+          this.subMenu.showMenu(false);
+        } else {
+          this.subMenu.hideMenu(false);
+        }
       }
     },
 
@@ -254,14 +258,8 @@
     created() {
       this.$on('item-un-selected', this.handleItemUnSelected);
       this.$on('item-active', this.handleItemActive);
-      if (this.rootMenu === this.menu) {
-        this.menu.menuItems.push(this);
-        this.menu.allMenuItems.push(this);
-      } else {
-        this.rootMenu.allMenuItems.push(this);
-        this.menu.menuItems.push(this);
-        this.menu.allMenuItems.push(this);
-      }
+      this.menu.addMenuItems(this);
+      this.menu.addAllMenuItems(this);
     },
 
     mounted() {

@@ -486,14 +486,18 @@
                hover-text-color="#ff0000"
                hover-background-color="#666666"
       >
+
+
         <we-menu-item>
           <we-icon name="edit"></we-icon>
           <span style="margin-left: 5px">羽毛球</span>
         </we-menu-item>
-        <we-menu-item>
-          <we-icon name="edit"></we-icon>
-          <span style="margin-left: 5px">乒乓球</span>
-        </we-menu-item>
+        <we-menu-group>
+          <we-menu-item>
+            <we-icon name="edit"></we-icon>
+            <span style="margin-left: 5px">乒乓球</span>
+          </we-menu-item>
+        </we-menu-group>
         <we-menu-item>
           <we-icon name="edit"></we-icon>
           <span style="margin-left: 5px">二级菜单</span>

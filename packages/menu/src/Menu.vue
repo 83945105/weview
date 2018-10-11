@@ -8,6 +8,7 @@
          :style="[showStyle, menuStyle,
          {
           width: menuWidth,
+          height: menuHeight,
           overflow: collapsing ? 'hidden' : undefined
          }]">
       <scroll-bar>
@@ -33,7 +34,7 @@
           const component = (
             <div v-show={this.isShow}
                  class={[`${this.prefixCls}-menu-external`, [this.isInit ? `${this.prefixCls}-common-position-init` : undefined]]}
-                 style={[this.showStyle, this.menuStyle, {width: this.menuWidth}]}>
+                 style={[this.showStyle, this.menuStyle, {width: this.menuWidth, height: this.menuHeight}]}>
               <scroll-bar>
                 <ul class={`${this.prefixCls}-menu`}
                     style={this.menuStyle}>
@@ -184,6 +185,10 @@
         type: [Number, String],
         default: 240
       },
+      height: {
+        type: [Number, String],//菜单高度,仅当mode为 horizontal 时有效
+        default: 50
+      },
       subMenuMode: {//子菜单模式 local 在当前节点上展开 open 新打开菜单 当 mode 为 horizontal 时强制使用open
         type: String,
         default: 'local',
@@ -202,10 +207,10 @@
         type: Number,
         default: 0
       },
-      /*      accordion: {//手风琴模式, 开启后每次至多展开一个子菜单
-              type: Boolean,
-              default: true
-            },*/
+      accordion: {//手风琴模式, 开启后每次至多展开一个子菜单
+        type: Boolean,
+        default: false
+      },
       collapse: Boolean,//是否水平折叠,仅当mode为 vertical 时有效
       indent: {//是否开启缩进
         type: Boolean,
@@ -240,6 +245,7 @@
         menuItems: [],//当前菜单下的菜单项
         allMenuItems: [],//当前菜单下的所有菜单项
         collapseWidth: 50,//折叠后的宽度
+        isAccordion: this.accordion && this.mode === 'vertical',//是否是手风琴模式
         openAccordionTransition: false,//是否开启手风琴动画
         openCollapseTransition: false,//是否开启折叠动画
         isRoot: this === this.rootMenu,//是否是根节点
@@ -247,9 +253,7 @@
         showCache: this.value,
         isCollapse: this.collapse,//是否折叠当前菜单
         collapsing: false,//是否折叠中
-        collapsingTimeIndex: undefined,
-        //是否是手风琴
-        // isAccordion: this.accordion && this.mode === 'vertical'
+        collapsingTimeIndex: undefined
       };
     },
 
@@ -265,6 +269,15 @@
           return `${this.width}px`;
         }
         return this.width;
+      },
+      menuHeight() {
+        if (this.mode !== 'horizontal') {
+          return undefined;
+        }
+        if (!isNaN(this.height)) {
+          return `${this.height}px`;
+        }
+        return this.height;
       },
       showStyle() {
         if (this.isRoot) {
@@ -308,14 +321,6 @@
         if (this.value !== v) {
           this.$emit('input', v);
         }
-        if (!v) {
-          //隐藏菜单时需要将所有open方式的子菜单也隐藏
-          this.subMenus.forEach(sm => {
-            if (sm.menuItem.subMenuModeIsOpen) {
-              sm.hideMenu();
-            }
-          });
-        }
       },
       collapse(v) {
         if (v) {
@@ -332,6 +337,24 @@
     },
 
     methods: {
+      addSubMenus(subMenu) {
+        this.subMenus.push(subMenu);
+      },
+      addAllSubMenus(subMenu) {
+        this.allSubMenus.push(subMenu);
+        if (this.parentMenu) {
+          this.parentMenu.addAllSubMenus(subMenu);
+        }
+      },
+      addMenuItems(menuItem) {
+        this.menuItems.push(menuItem);
+      },
+      addAllMenuItems(menuItem) {
+        this.allMenuItems.push(menuItem);
+        if (this.parentMenu) {
+          this.parentMenu.addAllMenuItems(menuItem);
+        }
+      },
       handleItemClick({menu, item}) {
         if (this.isRoot) {
           this.broadcast(`${this.prefixNameCls}MenuItem`, 'item-un-selected', {menu: menu, item: item});
@@ -340,24 +363,54 @@
           throw new Error('menu is not root.');
         }
       },
-      showMenu(restore = true) {
-        if (restore && this.showCache !== undefined) {
-          this.isShow = this.showCache;
-          this.showCache = undefined;
+      restoreMenu() {
+        if (this.showCache === undefined) {
           return;
+        }
+        this.isShow = this.showCache;
+      },
+      showMenu() {
+        if (this.isShow) {
+          return;
+        }
+        if (!this.isRoot) {
+          if (!this.isInit && this.parentMenu.isAccordion) {
+            this.parentMenu.subMenus.forEach(sm => {
+              if (sm !== this) {
+                sm.hideMenu(false);
+              }
+            });
+          }
         }
         this.isShow = true;
       },
       hideMenu(cache = true) {
-        if (cache && this.showCache === undefined) {
+        if (!this.isShow) {
+          return;
+        }
+        this.showCache = undefined;
+        if (cache) {
           this.showCache = this.isShow;
         }
+        //隐藏菜单时需要将所有open方式的子菜单也隐藏
+        this.allSubMenus.forEach(sm => {
+          if (sm.menuItem.subMenuModeIsOpen) {
+            sm.hideMenu();
+          }
+        });
         this.isShow = false;
       },
-      showSubMenu(restore = true) {
+      restoreSubMenu() {
         this.subMenus.forEach(sm => {
           if (!sm.menuItem.subMenuModeIsOpen) {
-            sm.showMenu(restore);
+            sm.restoreMenu();
+          }
+        });
+      },
+      showSubMenu() {
+        this.subMenus.forEach(sm => {
+          if (!sm.menuItem.subMenuModeIsOpen) {
+            sm.showMenu();
           }
         });
       },
@@ -372,7 +425,7 @@
       expandMenu() {
         this.menuItems.forEach(m => m.showArrow = true);
         setTimeout(() => {
-          this.showSubMenu(true);
+          this.restoreSubMenu();
         }, 0);
         this.isCollapse = false;
       }
@@ -381,14 +434,8 @@
     created() {
       this.$on('item-click', this.handleItemClick);
       if (!this.isRoot) {
-        if (this.rootMenu === this.parentMenu) {
-          this.parentMenu.subMenus.push(this);
-          this.parentMenu.allSubMenus.push(this);
-        } else {
-          this.rootMenu.allSubMenus.push(this);
-          this.parentMenu.subMenus.push(this);
-          this.parentMenu.allSubMenus.push(this);
-        }
+        this.parentMenu.addSubMenus(this);
+        this.parentMenu.addAllSubMenus(this);
         //将所属的菜单项 相关数据初始化
         this.menuItem.hasSubMenu = true;
         this.menuItem.subMenu = this;
@@ -396,6 +443,13 @@
     },
 
     mounted() {
+
+      setTimeout(() => {
+        // console.log(this.index)
+        // console.log(this.allSubMenus)
+      }, 300);
+
+
       if (this.isRoot) {
         //如果是根菜单,是否显示根据value判断
         this.isShow = this.value;

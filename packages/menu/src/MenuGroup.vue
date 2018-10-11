@@ -1,5 +1,11 @@
 <template>
   <li class="we-menu-item-group">
+    <div v-if="menu.mode === 'horizontal'" class="we-menu-item-group-split-vertical"
+         :style="{
+          height: `${menu.height - 5 }px`
+         }"
+    ></div>
+    <div v-else class="we-menu-item-group-split-horizontal"></div>
     <h3 v-show="showTitle && title" class="we-menu-item-group-title" :style="[indentStyle]">{{title}}</h3>
     <ul>
       <!--<li v-show="showTitle && title" class="we-menu-item-group-title" :style="[indentStyle]">{{title}}</li>-->
