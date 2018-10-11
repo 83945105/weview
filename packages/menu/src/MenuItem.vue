@@ -60,7 +60,8 @@
     provide() {
       return {
         rootMenuItem: this.rootMenuItem,
-        menuItem: this
+        menuItem: this,
+        menuItemGroup: null//阻止向下传递
       };
     },
 
@@ -79,7 +80,7 @@
         from: 'menuItem',
         default: null
       },
-      menuGroup: {
+      menuItemGroup: {
         default: null
       }
     },
@@ -259,8 +260,8 @@
     created() {
       this.$on('item-un-selected', this.handleItemUnSelected);
       this.$on('item-active', this.handleItemActive);
-      this.menu.addMenuItems(this);
-      this.menu.addAllMenuItems(this);
+      this.menu.addMenuItem(this);
+      this.menu.addAllMenuItem(this);
     },
 
     mounted() {

@@ -244,6 +244,7 @@
         allSubMenus: [],//当前菜单下所有子菜单
         menuItems: [],//当前菜单下的菜单项
         allMenuItems: [],//当前菜单下的所有菜单项
+        menuItemGroups: [],//当前菜单下的分组
         collapseWidth: 50,//折叠后的宽度
         isAccordion: this.accordion && this.mode === 'vertical',//是否是手风琴模式
         openAccordionTransition: false,//是否开启手风琴动画
@@ -323,6 +324,9 @@
         }
       },
       collapse(v) {
+        if (this.mode === 'horizontal') {
+          return;
+        }
         if (v) {
           this.collapseMenu();
         } else {
@@ -337,23 +341,26 @@
     },
 
     methods: {
-      addSubMenus(subMenu) {
+      addSubMenu(subMenu) {
         this.subMenus.push(subMenu);
       },
-      addAllSubMenus(subMenu) {
+      addAllSubMenu(subMenu) {
         this.allSubMenus.push(subMenu);
         if (this.parentMenu) {
-          this.parentMenu.addAllSubMenus(subMenu);
+          this.parentMenu.addAllSubMenu(subMenu);
         }
       },
-      addMenuItems(menuItem) {
+      addMenuItem(menuItem) {
         this.menuItems.push(menuItem);
       },
-      addAllMenuItems(menuItem) {
+      addAllMenuItem(menuItem) {
         this.allMenuItems.push(menuItem);
         if (this.parentMenu) {
-          this.parentMenu.addAllMenuItems(menuItem);
+          this.parentMenu.addAllMenuItem(menuItem);
         }
+      },
+      addMenuItemGroup(menuItemGroup) {
+        this.menuItemGroups.push(menuItemGroup);
       },
       handleItemClick({menu, item}) {
         if (this.isRoot) {
@@ -377,6 +384,14 @@
           if (!this.isInit && this.parentMenu.isAccordion) {
             this.parentMenu.subMenus.forEach(sm => {
               if (sm !== this) {
+                sm.hideMenu(false);
+              }
+            });
+          }
+          if (this.menuItem.subMenuModeIsOpen) {
+            //如果菜单是打开模式,应该将所有打开的菜单关闭
+            this.rootMenu.allSubMenus.forEach(sm => {
+              if (sm !== this && sm.menuItem.subMenuModeIsOpen) {
                 sm.hideMenu(false);
               }
             });
@@ -419,11 +434,13 @@
       },
       collapseMenu() {
         this.menuItems.forEach(m => m.showArrow = false);
+        this.menuItemGroups.forEach(m => m.showTitle = false);
         this.hideSubMenu(true);
         this.isCollapse = true;
       },
       expandMenu() {
         this.menuItems.forEach(m => m.showArrow = true);
+        this.menuItemGroups.forEach(m => m.showTitle = true);
         setTimeout(() => {
           this.restoreSubMenu();
         }, 0);
@@ -434,8 +451,8 @@
     created() {
       this.$on('item-click', this.handleItemClick);
       if (!this.isRoot) {
-        this.parentMenu.addSubMenus(this);
-        this.parentMenu.addAllSubMenus(this);
+        this.parentMenu.addSubMenu(this);
+        this.parentMenu.addAllSubMenu(this);
         //将所属的菜单项 相关数据初始化
         this.menuItem.hasSubMenu = true;
         this.menuItem.subMenu = this;
@@ -443,13 +460,6 @@
     },
 
     mounted() {
-
-      setTimeout(() => {
-        // console.log(this.index)
-        // console.log(this.allSubMenus)
-      }, 300);
-
-
       if (this.isRoot) {
         //如果是根菜单,是否显示根据value判断
         this.isShow = this.value;
@@ -461,14 +471,15 @@
       if (this.isCollapse) {
         this.collapseMenu();
         this.menuItems.forEach(m => m.showArrow = false);
+        this.menuItemGroups.forEach(m => m.showTitle = false);
       } else {
         this.menuItems.forEach(m => m.showArrow = true);
+        this.menuItemGroups.forEach(m => m.showTitle = true);
       }
       setTimeout(() => {
         this.isInit = false;
         this.openAccordionTransition = true;
       }, 300);
-
     }
 
   }

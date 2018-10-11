@@ -358,7 +358,6 @@
                index="根菜单"
                :accordion="false"
                :collapse="collapse"
-               :collapseDelay="300"
                ref="menu"
                text-color="#ffffff"
                background-color="#252525"
@@ -374,10 +373,15 @@
                style="height: 100%;"
       >
         <we-menu-item icon-name="edit">我的工作台</we-menu-item>
-        <we-menu-item-group title="分组">
+
+        <we-menu-item-group title="分组一" before-line>
           <we-menu-item icon-name="edit">选项一</we-menu-item>
+        </we-menu-item-group>
+
+        <we-menu-item-group title="分组二" before-line after-line>
           <we-menu-item icon-name="edit">选项二</we-menu-item>
         </we-menu-item-group>
+
         <we-menu-item icon-name="edit">
 
           二级菜单
@@ -385,7 +389,7 @@
           <template slot="subMenu">
 
             <we-menu :accordion="false"
-                     subMenuMode="open"
+                     sub-menu-mode="open"
                      index="二级菜单">
 
               <we-menu-item-group title="分组">
@@ -398,7 +402,7 @@
 
                 三级菜单
 
-                <we-menu :accordion="false" slot="subMenu" index="三级菜单">
+                <we-menu :sub-menu-horizontal-shift="1" :accordion="false" slot="subMenu" index="三级菜单">
                   <we-menu-item icon-name="edit">三级选项一</we-menu-item>
                   <we-menu-item icon-name="edit">三级选项二</we-menu-item>
                 </we-menu>
@@ -421,7 +425,7 @@
 
               <we-menu :value="true" slot="subMenu" subMenuMode="open" :accordion="false" index="三级菜单02">
 
-                <we-menu-item-group title="分组">
+                <we-menu-item-group title="分组" before-line after-line>
 
                   <we-menu-item disabled icon-name="edit">三级选项一</we-menu-item>
                   <we-menu-item icon-name="edit">三级选项二</we-menu-item>
@@ -432,7 +436,7 @@
 
                   四级菜单
 
-                  <we-menu slot="subMenu" :accordion="false" index="四级菜单">
+                  <we-menu :sub-menu-horizontal-shift="1" slot="subMenu" :accordion="false" index="四级菜单">
 
                     <we-menu-item-group title="分组">
 
@@ -475,12 +479,12 @@
                v-model="hMenuShow"
                index="0"
                :collapse="hCollapse"
-               :collapseDelay="300"
                ref="hMenu"
                text-color="#ffffff"
                background-color="#252525"
                active-text-color="#ffff00"
                active-background-color="#333333"
+               active-line-color="#ff0000"
                selected-text-color="#ffff00"
                selected-background-color="#2199ed"
                hover-text-color="#ff0000"
@@ -492,17 +496,19 @@
           <we-icon name="edit"></we-icon>
           <span style="margin-left: 5px">羽毛球</span>
         </we-menu-item>
-        <we-menu-item-group>
+        <we-menu-item-group title="分组" before-line after-line>
           <we-menu-item>
             <we-icon name="edit"></we-icon>
             <span style="margin-left: 5px">乒乓球</span>
           </we-menu-item>
         </we-menu-item-group>
+
+
         <we-menu-item>
           <we-icon name="edit"></we-icon>
           <span style="margin-left: 5px">二级菜单</span>
 
-          <we-menu slot="subMenu" style="z-index: 999999;width: 200px">
+          <we-menu :subMenuVerticalShift="4" slot="subMenu" style="z-index: 999999;width: 200px">
 
             <we-menu-item icon-name="edit">二级菜单项一</we-menu-item>
             <we-menu-item icon-name="edit">二级菜单项二</we-menu-item>
@@ -524,6 +530,15 @@
         <we-menu-item>
           <we-icon name="edit"></we-icon>
           <span style="margin-left: 5px">乒乓球</span>
+
+          <we-menu :subMenuVerticalShift="4" slot="subMenu" style="z-index: 999999;width: 200px">
+
+            <we-menu-item icon-name="edit">二级菜单项一</we-menu-item>
+            <we-menu-item icon-name="edit">二级菜单项二</we-menu-item>
+            <we-menu-item icon-name="edit">二级菜单项二</we-menu-item>
+
+          </we-menu>
+
         </we-menu-item>
 
       </we-menu>
