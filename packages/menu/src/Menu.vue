@@ -11,12 +11,10 @@
           height: menuHeight,
           overflow: collapsing ? 'hidden' : undefined
          }]">
-      <scroll-bar>
         <ul :class="[`${prefixCls}-menu`]"
             :style="[menuStyle]">
           <slot></slot>
         </ul>
-      </scroll-bar>
       <div :class="[`${prefixCls}-common-clear`]"></div>
     </div>
   </menu-accordion-transition>
