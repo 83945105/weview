@@ -162,24 +162,24 @@
       verticalLineStyle() {
         if (this.isRoot && this.active) {
           return {
-            opacity: 1,
+            transform: "scaleX(1)",
             backgroundColor: this.menu.activeLineColor || this.rootMenu.activeLineColor
           };
         }
         return {
-          opacity: 0,
+          transform: "scaleX(0)",
           backgroundColor: 'transparent'
         };
       },
       horizontalLineStyle() {
         if (this.hover || this.selected || this.active) {
           return {
-            opacity: 1,
+            transform: "scaleX(1)",
             backgroundColor: this.menu.activeLineColor || this.rootMenu.activeLineColor
           };
         }
         return {
-          opacity: 0,
+          transform: "scaleX(0)",
           backgroundColor: 'transparent'
         };
       }
