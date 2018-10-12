@@ -169,12 +169,22 @@ export function paramsMatching(matches = [], params = []) {
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 const propIsEnumerable = Object.prototype.propertyIsEnumerable;
 
-function toObject(val) {
-  if (val === null || val === undefined) {
-    throw new TypeError(`Cannot convert undefined or null to object`);
+function extend(to, _from) {
+  for (let key in _from) {
+    to[key] = _from[key];
   }
-  return Object(val);
-}
+  return to;
+};
+
+export function toObject(arr) {
+  var res = {};
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i]) {
+      extend(res, arr[i]);
+    }
+  }
+  return res;
+};
 
 function assignKey(to, from, key) {
   let val = from[key];

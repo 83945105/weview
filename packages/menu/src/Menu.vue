@@ -26,7 +26,7 @@
 
   import Conf from '../../src/mixins/conf.js';
   import Emitter from '../../src/mixins/emitter.js';
-  import ScrollBar from '../../scroll-bar/src/ScrollBar.vue';
+  import ScrollBar from '../../scrollbar/index.js';
 
   export default {
     /*

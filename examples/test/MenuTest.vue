@@ -353,7 +353,7 @@
     <button @click="collapse = !collapse">折叠/展开</button>
     <!--@mouseenter.native="collapse = false"-->
     <!--@mouseleave.native="collapse = true"-->
-    <div style="height: 1000px; width: 220px; position: relative; border: 1px solid #e5e5e5;">
+    <div style="height: 200px; width: 220px; position: relative; border: 1px solid #e5e5e5;">
       <we-menu v-model="menuShow"
                index="根菜单"
                :accordion="false"
