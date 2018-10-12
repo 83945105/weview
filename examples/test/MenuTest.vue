@@ -353,8 +353,7 @@
     <button @click="collapse = !collapse">折叠/展开</button>
     <!--@mouseenter.native="collapse = false"-->
     <!--@mouseleave.native="collapse = true"-->
-    <div style="height: 500px; width: 300px; position: relative; border: 1px solid #e5e5e5;">
-      <el-scrollbar style="height: 100%" :vertical="false">
+    <div style="height: 1000px;width: 240px; position: relative; border: 1px solid #e5e5e5;">
       <we-menu v-model="menuShow"
                index="根菜单"
                :accordion="false"
@@ -365,8 +364,6 @@
                active-text-color="#ffff00"
                active-background-color="#333333"
                active-line-color="#ff0000"
-               selected-text-color="#ffff00"
-               selected-background-color="#2199ed"
                hover-text-color="#ff0000"
                hover-background-color="#666666"
                disabled-text-color="#999999"
@@ -403,7 +400,11 @@
 
                 三级菜单
 
-                <we-menu :sub-menu-horizontal-shift="1" :accordion="false" slot="subMenu" index="三级菜单">
+                <we-menu slot="subMenu"
+                         :sub-menu-horizontal-shift="1"
+                         :accordion="false"
+                         index="三级菜单"
+                >
                   <we-menu-item icon-name="edit">三级选项一</we-menu-item>
                   <we-menu-item icon-name="edit">三级选项二</we-menu-item>
                 </we-menu>
@@ -437,12 +438,48 @@
 
                   四级菜单
 
-                  <we-menu :sub-menu-horizontal-shift="1" slot="subMenu" :accordion="false" index="四级菜单">
+                  <we-menu :sub-menu-horizontal-shift="1" subMenuMode="open" slot="subMenu" :accordion="false"
+                           index="四级菜单">
 
                     <we-menu-item-group title="分组">
+                      <we-menu-item :value="true" icon-name="edit">
+                        五级菜单一
 
+                        <we-menu :sub-menu-horizontal-shift="1" slot="subMenu" :accordion="false" index="五级菜单一">
+
+                          <we-menu-item-group title="分组">
+
+                            <we-menu-item icon-name="edit">四级选项一</we-menu-item>
+                            <we-menu-item icon-name="edit">四级选项二</we-menu-item>
+
+                          </we-menu-item-group>
+
+                        </we-menu>
+                      </we-menu-item>
                       <we-menu-item icon-name="edit">四级选项一</we-menu-item>
-                      <we-menu-item :value="true" icon-name="edit">四级选项二</we-menu-item>
+                      <we-menu-item icon-name="edit">
+                        五级菜单二
+
+                        <we-menu :sub-menu-horizontal-shift="1" subMenuMode="open" slot="subMenu" :accordion="false"
+                                 index="五级菜单二">
+
+                          <we-menu-item-group title="分组">
+
+                            <we-menu-item icon-name="edit">
+                              六级菜单一
+
+                              <we-menu :sub-menu-horizontal-shift="1" slot="subMenu" :accordion="false" index="六级菜单一">
+                                <we-menu-item icon-name="edit">四级选项二</we-menu-item>
+                              </we-menu>
+
+                            </we-menu-item>
+                            <we-menu-item :value="true" icon-name="edit">四级选项二</we-menu-item>
+
+                          </we-menu-item-group>
+
+                        </we-menu>
+
+                      </we-menu-item>
 
                     </we-menu-item-group>
 
@@ -457,7 +494,6 @@
         </we-menu-item>
         <we-menu-item icon-name="edit">后台系统</we-menu-item>
       </we-menu>
-      </el-scrollbar>
     </div>
     <!--/正常菜单-->
 
