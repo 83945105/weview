@@ -10,11 +10,14 @@
           width: menuWidth,
           height: menuHeight,
           overflow: collapsing ? 'hidden' : undefined
-         }]">
-        <ul :class="[`${prefixCls}-menu`]"
-            :style="[menuStyle]">
-          <slot></slot>
-        </ul>
+         }]"
+         @mouseenter.stop.self="handleMouseEnter"
+         @mouseleave.stop.self="handleMouseLeave"
+    >
+      <ul :class="[`${prefixCls}-menu`]"
+          :style="[menuStyle]">
+        <slot></slot>
+      </ul>
       <div :class="[`${prefixCls}-common-clear`]"></div>
     </div>
   </menu-accordion-transition>
@@ -197,6 +200,16 @@
           ].indexOf(value) !== -1
         }
       },
+      subMenuTrigger: {//子菜单打开触发方式 hover - 悬浮 click - 点击
+        type: String,
+        default: 'hover',
+        validator(value) {
+          return [
+            'hover',
+            'click'
+          ].indexOf(value) !== -1
+        }
+      },
       subMenuHorizontalShift: {//子菜单水平位移
         type: Number,
         default: 0
@@ -210,6 +223,10 @@
         default: false
       },
       collapse: Boolean,//是否水平折叠,仅当mode为 vertical 时有效
+      collapseDelay: {//水平折叠延迟
+        type: Number,
+        default: 0
+      },
       indent: {//是否开启缩进
         type: Boolean,
         default: true
@@ -238,6 +255,7 @@
     data() {
       return {
         isInit: true,//是否是初始化
+        locked: false,//是否锁定,锁定后无法进行任何操作
         subMenus: [],//当前菜单下的子菜单
         allSubMenus: [],//当前菜单下所有子菜单
         menuItems: [],//当前菜单下的菜单项
@@ -252,7 +270,8 @@
         showCache: this.value,
         isCollapse: this.collapse,//是否折叠当前菜单
         collapsing: false,//是否折叠中
-        collapsingTimeIndex: undefined
+        collapsingTimeIndex: undefined,
+        collapseDelayTimeIndex: undefined
       };
     },
 
@@ -294,6 +313,12 @@
             left: `${this.parentMenu.width + this.subMenuHorizontalShift}px`,
             top: `${this.subMenuVerticalShift}px`
           }
+          /*          console.log(`x: ${this.menuItem.subMenuOpenX} y: ${this.menuItem.subMenuOpenX}`)
+                    return {
+                      position: 'fixed',
+                      left: `${this.menuItem.subMenuOpenX + this.subMenuHorizontalShift}px`,
+                      top: `${this.menuItem.subMenuOpenY}px`
+                    }*/
         }
         //如果父菜单是水平模式, 那么应该垂直弹出
         return {
@@ -339,6 +364,18 @@
     },
 
     methods: {
+      handleMouseEnter(e) {
+        if (!this.isRoot && this.menuItem.subMenuTriggerIsHover) {
+          //清除所属 子菜单open 模式的菜单项至根菜单项的关闭定时
+          this.menuItem.clearSubMenuHoverLeaveTimeToRoot();
+        }
+      },
+      handleMouseLeave(e) {
+        if (!this.isRoot && this.menuItem.subMenuTriggerIsHover) {
+          //启动所属 子菜单open 模式的菜单项至根菜单项的关闭定时
+          this.menuItem.startSubMenuHoverLeaveTimeToRoot();
+        }
+      },
       addSubMenu(subMenu) {
         this.subMenus.push(subMenu);
       },
@@ -360,22 +397,38 @@
       addMenuItemGroup(menuItemGroup) {
         this.menuItemGroups.push(menuItemGroup);
       },
-      handleItemClick({menu, item}) {
-        if (this.isRoot) {
-          this.broadcast(`${this.prefixNameCls}MenuItem`, 'item-un-selected', {menu: menu, item: item});
-        } else {
-          //因为通知的是根节点,如果当前节点不是根节点,不符合预期效果
-          throw new Error('menu is not root.');
+      lockMenu() {
+        if (this.locked) {
+          return;
+        }
+        this.locked = true;
+      },
+      unLockMenu() {
+        if (!this.locked) {
+          return;
+        }
+        this.locked = false;
+      },
+      lockToRootMenu() {
+        this.lockMenu();
+        if (!this.isRoot) {
+          this.parentMenu.lockToRootMenu();
+        }
+      },
+      unLockToRootMenu() {
+        this.unLockMenu();
+        if (!this.isRoot) {
+          this.parentMenu.unLockToRootMenu();
         }
       },
       restoreMenu() {
-        if (this.showCache === undefined) {
+        if (this.locked || this.showCache === undefined) {
           return;
         }
         this.isShow = this.showCache;
       },
       showMenu() {
-        if (this.isShow) {
+        if (this.locked || this.isShow) {
           return;
         }
         if (!this.isRoot) {
@@ -387,18 +440,21 @@
             });
           }
           if (this.menuItem.subMenuModeIsOpen) {
-            //如果菜单是打开模式,应该将所有打开的菜单关闭
+            //如果菜单是打开模式,应该将当前菜单到根菜单之外的所有open菜单关闭
+            //现将不需要关闭的菜单锁定,关闭其余菜单后在解除锁定
+            this.lockToRootMenu();
             this.rootMenu.allSubMenus.forEach(sm => {
               if (sm !== this && sm.menuItem.subMenuModeIsOpen) {
                 sm.hideMenu(false);
               }
             });
+            this.unLockToRootMenu();
           }
         }
         this.isShow = true;
       },
       hideMenu(cache = true) {
-        if (!this.isShow) {
+        if (this.locked || !this.isShow) {
           return;
         }
         this.showCache = undefined;
@@ -431,12 +487,22 @@
         this.subMenus.forEach(m => m.hideMenu(cache));
       },
       collapseMenu() {
+        if (this.locked) {
+          return;
+        }
+        window.clearTimeout(this.collapseDelayTimeIndex);
         this.menuItems.forEach(m => m.showArrow = false);
         this.menuItemGroups.forEach(m => m.showTitle = false);
         this.hideSubMenu(true);
-        this.isCollapse = true;
+        this.collapseDelayTimeIndex = setTimeout(() => {
+          this.isCollapse = true;
+        }, this.collapseDelay);
       },
       expandMenu() {
+        if (this.locked) {
+          return;
+        }
+        window.clearTimeout(this.collapseDelayTimeIndex);
         this.menuItems.forEach(m => m.showArrow = true);
         this.menuItemGroups.forEach(m => m.showTitle = true);
         setTimeout(() => {
@@ -447,7 +513,6 @@
     },
 
     created() {
-      this.$on('item-click', this.handleItemClick);
       if (!this.isRoot) {
         this.parentMenu.addSubMenu(this);
         this.parentMenu.addAllSubMenu(this);
