@@ -54,6 +54,10 @@
           "desc": "单选按钮",
           "name": "RadioTest",
           "path": "/radioTest"
+        },{
+          "desc": "复选按钮",
+          "name": "CheckboxTest",
+          "path": "/checkboxTest"
         }]
       },
       {

@@ -1,0 +1,99 @@
+@import "./src/common/var.less";
+@import "./src/common/mixins.less";
+
+@checkbox-button-prefix-css: ~"@{css-prefix}checkbox-button";
+
+.button-size(@padding;@font-size;@border-radius){
+  padding: @padding;
+  font-size:@font-size;
+  border-radius:@border-radius;
+}
+.button-color(@color;@background;@border){
+  background-color:@background;
+  border-color:@border;
+  color:@color;
+}
+
+.@{checkbox-button-prefix-css}{
+  position: relative;
+  display: inline-block;
+  outline: none;
+
+  &-inner{
+    position: relative;
+    display: inline-block;
+    line-height: 1;
+    cursor: pointer;
+    vertical-align: middle;
+    background-color: @checkbox-default-fill;
+    border: 1px solid @checkbox-default-border;
+    border-left: 0;
+    .mixin-wordwrap;
+    .mixin-border-box;
+    transition: all .2s ease-in;
+    .button-size(@checkbox-button-default-padding;@checkbox-button-default-font-size;0);
+  }
+
+  &:first-child{
+    .@{checkbox-button-prefix-css}-inner{
+    border-radius: 3px 0 0 3px;
+    border-left: 1px solid @checkbox-default-border;
+    }
+  }
+  &:last-child{
+    .@{checkbox-button-prefix-css}-inner{
+    border-radius: 0 3px 3px 0;
+    }
+  }
+
+  &.is-disabled{
+    cursor: not-allowed;
+    .button-color(@checkbox-disable-color;@checkbox-disable-fill;@checkbox-disable-border);
+
+    .@{checkbox-button-prefix-css}-inner{
+      cursor: not-allowed;
+    }
+
+    &.is-checked{
+      .@{checkbox-button-prefix-css}-inner{
+        .button-color(@checkbox-disable-color;@checkbox-disable-fill;@checkbox-disable-border);
+      }
+    }
+    &:hover{
+      color: @checkbox-disable-color;
+    }
+  }
+
+  &.is-checked{
+    .@{checkbox-button-prefix-css}-inner{
+      .button-color(@checkbox-primary-color;@checkbox-primary-fill;@checkbox-primary-border);
+    }
+    .@{checkbox-button-prefix-css}-inner:first-child{
+      border-left: 0;
+    }
+  }
+
+  &:hover{
+    color: @checkbox-primary-fill;
+  }
+
+  &-large .@{checkbox-button-prefix-css}-inner{
+    .button-size(@checkbox-button-large-padding; @checkbox-button-large-font-size; 0);
+  }
+
+  &-small .@{checkbox-button-prefix-css}-inner{
+    .button-size(@checkbox-button-small-padding; @checkbox-button-small-font-size; 0;);
+  }
+
+  &-mini .@{checkbox-button-prefix-css}-inner{
+    .button-size(@checkbox-button-mini-padding; @checkbox-button-mini-font-size; 0;);
+  }
+
+  &-original{
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: -1;
+  }
+}

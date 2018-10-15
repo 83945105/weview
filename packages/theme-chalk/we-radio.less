@@ -37,7 +37,12 @@
 
   &.is-checked{
     .@{radio-prefix-css}-input-inner{
-      .radio-style-setting(@radio-checked-color,@radio-checked-color);
+      .radio-style-setting(@radio-bg-color,@radio-checked-color);
+
+      &::after{
+        opacity: 1;
+        transition: all 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+      }
     }
 
     &.is-bordered{
@@ -62,6 +67,8 @@
       .@{radio-prefix-css}-input-inner{
         .radio-style-setting(@radio-disabled-color,@radio-border-color);
         &::after{
+          opacity: 1;
+          transition: all 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
           background-color: #cccccc;
         }
       }
@@ -98,28 +105,33 @@
     outline: none;
     line-height: 1;
     position: relative;
-    vertical-align: middle;
+    vertical-align: sub;
+    font-variant: tabular-nums;
 
     &-inner{
-      display: inline-block;
-      width: 12px;
-      height: 12px;
+      display: block;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
       position: relative;
-      .radio-style-setting(@radio-bg-color,@radio-border-color);
-      transition: all .15s ease-in;
+      top: 0;
+      left: 0;
+      transition: all .3s;
       cursor: pointer;
+      .radio-style-setting(@radio-bg-color,@radio-border-color);
 
       &::after{
-        width: 6px;
-        height: 6px;
-        border-radius: 100%;
+        width: 8px;
+        height: 8px;
+        border-radius: 8px;
         content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%) scale(1);
-        background-color:  @radio-bg-color;
+        display: block;
+        opacity: 0;
+        position: relative;
+        top: 3px;
+        left: 3px;
+        background-color: @radio-checked-color;
+        transition: all 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
       }
       &:hover{
         .radio-style-setting(@radio-bg-color,@radio-checked-color);
