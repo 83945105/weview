@@ -1,0 +1,109 @@
+@import "./src/common/var.less";
+@import "./src/common/mixins.less";
+
+@skeleton-prefix: ~"@{css-prefix}skeleton";
+
+.picture-size(@width; @height){
+  width: @width;
+  height: @height;
+
+  &.is-circle{
+    border-radius: @width / 2;
+  }
+}
+
+@-webkit-keyframes skeleton-loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+@keyframes skeleton-loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+.animation-effect(){
+  background: -webkit-linear-gradient(left, @skeleton-bg 25%, @skeleton-gradient-bg 37%, @skeleton-bg 63%);
+  background: linear-gradient(90deg, @skeleton-bg 25%, @skeleton-gradient-bg 37%, @skeleton-bg 63%);
+  -webkit-animation: skeleton-loading 1.6s ease infinite;
+  animation: skeleton-loading 1.6s ease infinite;
+  background-size: 400% 100%;
+}
+
+.@{skeleton-prefix}{
+  display: table;
+  width: 100%;
+
+  &.is-animation{
+    .@{skeleton-prefix}-picture-one{
+      .animation-effect();
+    }
+    .@{skeleton-prefix}-content-title{
+      .animation-effect();
+    }
+    .@{skeleton-prefix}-content-paragraph > li{
+      .animation-effect();
+    }
+  }
+
+  &-picture{
+    display: table-cell;
+    vertical-align: top;
+
+    &.is-left{
+      padding-right: 15px;
+    }
+
+    &.is-right{
+      padding-left: 15px;
+    }
+
+    &-one{
+      background-color: @skeleton-bg;
+      .picture-size(@skeleton-default-picture-width; @skeleton-default-picture-height);
+
+      &.large{
+        .picture-size(@skeleton-large-picture-width; @skeleton-large-picture-height);
+      }
+
+      &.small{
+        .picture-size(@skeleton-small-picture-width; @skeleton-small-picture-height);
+      }
+
+      &.mini{
+        .picture-size(@skeleton-mini-picture-width; @skeleton-mini-picture-height);
+      }
+    }
+  }
+
+  &-content{
+    display: table-cell;
+    vertical-align: top;
+    width: 100%;
+
+    &-title{
+      .mixin-h1-default;
+      height: @skeleton-title-height;
+      background-color: @skeleton-bg;
+      margin-top: @skeleton-title-spacing;
+    }
+
+    &-paragraph{
+      .mixin-ul-default;
+      margin-top: @skeleton-paragraph-spacing;
+
+      & > li{
+        height: @skeleton-title-height;
+        background-color: @skeleton-bg;
+        margin-top: @skeleton-paragraph-li-spacing;
+      }
+    }
+  }
+}
