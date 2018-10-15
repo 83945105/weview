@@ -15,6 +15,11 @@
           <icon v-if="subMenuModeIsOpen" :name="isHorizontal ? 'angle-down' : 'angle-right'"></icon>
           <icon v-else :name="isHorizontal ? 'angle-right' : 'angle-down'"></icon>
         </div>
+
+        <div :class="[`${prefixCls}-menu-item-title-prompt`]">
+          Ctrl+Shift+U
+        </div>
+
         <div :class="[`${prefixCls}-menu-item-title-inner`]">
           <div v-if="!isHorizontal" :class="[`${prefixCls}-menu-item-title-inner-icon`]">
             <slot name="icon">
