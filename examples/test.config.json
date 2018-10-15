@@ -38,6 +38,11 @@
             "desc": "页面提示测试",
             "name": "PagePromptsTest",
             "path": "/pagePromptsTest"
+          },
+          {
+            "desc": "骨架屏测试",
+            "name": "SkeletonTest",
+            "path": "/skeletonTest"
           }
         ]
       },
