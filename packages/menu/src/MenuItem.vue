@@ -228,6 +228,7 @@
           if (!this.subMenuTriggerIsHover || this.menu.collapse) {
             return;
           }
+          this.clearSubMenuHoverLeaveTimeToRoot();
           this.expand = true;
         }
       },
