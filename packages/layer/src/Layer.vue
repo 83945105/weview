@@ -39,10 +39,10 @@
         <div v-if="showFooter" :class="[footerClass]">
           <slot name="footer">
             <div :class="[`${prefixCls}-layer-footer-inner`, footerAlignClass]">
-              <button @click="handleClickCancelButton" style="margin-right:5px;">{{cancelButtonText}}</button>
-              <button type="primary" :loading="confirmButtonLoading" @click="handleClickConfirmButton">
+              <we-button @click="handleClickCancelButton" style="margin-right:5px;">{{cancelButtonText}}</we-button>
+              <we-button type="primary" :loading="confirmButtonLoading" @click="handleClickConfirmButton">
                 {{confirmButtonText}}
-              </button>
+              </we-button>
             </div>
           </slot>
         </div>
@@ -74,13 +74,13 @@
   import Global from '../../src/mixins/global.js';
   import PopupManager from '../../src/utils/popup.js';
 
-  import WeButton from '../../button/src/Button.vue';
-  import WeIcon from '../../icon/src/Icon.vue';
+  import Button from '../../button/src/Button.vue';
+  import Icon from '../../icon/src/Icon.vue';
   import Animation from '../../animation/src/Animation.vue';
 
   export default {
 
-    components: {WeButton: WeButton, Icon: WeIcon, Animation: Animation},
+    components: {WeButton: Button, Icon: Icon, Animation: Animation},
 
     name: `${Conf.prefixCls}-layer`,
 
