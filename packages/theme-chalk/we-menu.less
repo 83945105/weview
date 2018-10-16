@@ -4,27 +4,41 @@
 @menu-css-prefix: ~"@{css-prefix}menu";
 @submenu-css-prefix: ~"@{css-prefix}submenu";
 
-.menu-size(@width; @height; @lineHeight) {
+.menu-size(@width; @height; @lineHeight; @fontSize; @group-title-height; @group-title-line-height; @group-title-padding-top; @group-title-font-size) {
   .@{menu-css-prefix}-item {
     &-title{
       &-arrow {
         height: @height;
         line-height: @lineHeight;
+        font-size: @fontSize;
       }
       &-prompt {
         line-height: @lineHeight;
       }
-
+      &-arrow{
+        font-size: @fontSize;
+      }
       &-inner {
         &-icon {
           width: @width;
           height: @height;
           line-height: @lineHeight;
+          font-size: @fontSize;
         }
         &-text {
           height: @height;
           line-height: @lineHeight;
+          font-size: @fontSize;
         }
+      }
+    }
+
+    &-group{
+      &-title {
+        height: @group-title-height;
+        line-height: @group-title-line-height;
+        padding-top: @group-title-padding-top;
+        font-size: @group-title-font-size;
       }
     }
   }
@@ -166,16 +180,43 @@
   }
 
   &-size {
-    &-lager {
-      .menu-size(@menu-size-lager-width; @menu-size-lager-height; @menu-size-lager-line-height);
+    &-large {
+      .menu-size(
+        @menu-size-large-width;
+        @menu-size-large-height;
+        @menu-size-large-line-height;
+        @menu-size-large-font-size;
+        @menu-size-group-title-large-height;
+        @menu-size-group-title-large-line-height;
+        @menu-size-group-title-large-padding-top;
+        @menu-size-group-title-large-font-size;
+      );
     }
 
     &-small {
-      .menu-size(@menu-size-small-width; @menu-size-small-height; @menu-size-small-line-height);
+      .menu-size(
+        @menu-size-small-width;
+        @menu-size-small-height;
+        @menu-size-small-line-height;
+        @menu-size-small-font-size;
+        @menu-size-group-title-small-height;
+        @menu-size-group-title-small-line-height;
+        @menu-size-group-title-small-padding-top;
+        @menu-size-group-title-small-font-size;
+      );
     }
 
     &-mini {
-      .menu-size(@menu-size-mini-width; @menu-size-mini-height; @menu-size-mini-line-height);
+      .menu-size(
+        @menu-size-mini-width;
+        @menu-size-mini-height;
+        @menu-size-mini-line-height;
+        @menu-size-mini-font-size;
+        @menu-size-group-title-mini-height;
+        @menu-size-group-title-mini-line-height;
+        @menu-size-group-title-mini-padding-top;
+        @menu-size-group-title-mini-font-size;
+      );
     }
   }
 }
