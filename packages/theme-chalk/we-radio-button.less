@@ -77,16 +77,18 @@
     color: @radio-primary-fill;
   }
 
-  &-large .@{radio-button-prefix-css}-inner{
-    .button-size(@radio-button-large-padding; @radio-button-large-font-size; 0);
-  }
+  &-size {
+    &-large .@{radio-button-prefix-css}-inner {
+      .button-size(@radio-button-large-padding; @radio-button-large-font-size; 0);
+    }
 
-  &-small .@{radio-button-prefix-css}-inner{
-    .button-size(@radio-button-small-padding; @radio-button-small-font-size; 0;);
-  }
+    &-small .@{radio-button-prefix-css}-inner {
+      .button-size(@radio-button-small-padding; @radio-button-small-font-size; 0;);
+    }
 
-  &-mini .@{radio-button-prefix-css}-inner{
-    .button-size(@radio-button-mini-padding; @radio-button-mini-font-size; 0;);
+    &-mini .@{radio-button-prefix-css}-inner {
+      .button-size(@radio-button-mini-padding; @radio-button-mini-font-size; 0;);
+    }
   }
 
   &-original{

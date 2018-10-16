@@ -69,16 +69,18 @@
       background-color: @skeleton-bg;
       .picture-size(@skeleton-default-picture-width; @skeleton-default-picture-height);
 
-      &.large{
-        .picture-size(@skeleton-large-picture-width; @skeleton-large-picture-height);
-      }
+      &-size{
+        &.large{
+          .picture-size(@skeleton-large-picture-width; @skeleton-large-picture-height);
+        }
 
-      &.small{
-        .picture-size(@skeleton-small-picture-width; @skeleton-small-picture-height);
-      }
+        &.small{
+          .picture-size(@skeleton-small-picture-width; @skeleton-small-picture-height);
+        }
 
-      &.mini{
-        .picture-size(@skeleton-mini-picture-width; @skeleton-mini-picture-height);
+        &.mini{
+          .picture-size(@skeleton-mini-picture-width; @skeleton-mini-picture-height);
+        }
       }
     }
   }

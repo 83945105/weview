@@ -45,15 +45,15 @@
       <div class="module-content">
         <div>
           <div class="we-radio-group">
-            <label class="we-radio-button we-radio-button-large" :class="[buttonRadio1 === `rdo3-1` ? 'is-checked' :'']">
+            <label class="we-radio-button we-radio-button-size-large" :class="[buttonRadio1 === `rdo3-1` ? 'is-checked' :'']">
               <input value="rdo3-1" v-model="buttonRadio1" type="radio" class="we-radio-button-original" />
               <span class="we-radio-button-inner">选项3-1</span>
             </label>
-            <label class="we-radio-button we-radio-button-large" :class="[buttonRadio1 === `rdo3-2` ? 'is-checked' :'']">
+            <label class="we-radio-button we-radio-button-size-large" :class="[buttonRadio1 === `rdo3-2` ? 'is-checked' :'']">
               <input value="rdo3-2" v-model="buttonRadio1" type="radio" class="we-radio-button-original" />
               <span class="we-radio-button-inner">选项3-2</span>
             </label>
-            <label class="we-radio-button we-radio-button-large" :class="[buttonRadio1 === `rdo3-3` ? 'is-checked' :'']">
+            <label class="we-radio-button we-radio-button-size-large" :class="[buttonRadio1 === `rdo3-3` ? 'is-checked' :'']">
               <input value="rdo3-3" v-model="buttonRadio1" type="radio" class="we-radio-button-original" />
               <span class="we-radio-button-inner">选项3-3</span>
             </label>
@@ -77,15 +77,15 @@
         </div>
         <div class="module-spacing">
           <div class="we-radio-group">
-            <label class="we-radio-button we-radio-button-small" :class="[buttonRadio3 === `rdo5-1` ? 'is-checked' :'']">
+            <label class="we-radio-button we-radio-button-size-small" :class="[buttonRadio3 === `rdo5-1` ? 'is-checked' :'']">
               <input value="rdo5-1" v-model="buttonRadio3" type="radio" class="we-radio-button-original" />
               <span class="we-radio-button-inner">选项5-1</span>
             </label>
-            <label class="we-radio-button we-radio-button-small" :class="[buttonRadio3 === `rdo5-2` ? 'is-checked' :'']">
+            <label class="we-radio-button we-radio-button-size-small" :class="[buttonRadio3 === `rdo5-2` ? 'is-checked' :'']">
               <input value="rdo5-2" v-model="buttonRadio3" type="radio" class="we-radio-button-original" />
               <span class="we-radio-button-inner">选项5-2</span>
             </label>
-            <label class="we-radio-button we-radio-button-small" :class="[buttonRadio3 === `rdo5-3` ? 'is-checked' :'']">
+            <label class="we-radio-button we-radio-button-size-small" :class="[buttonRadio3 === `rdo5-3` ? 'is-checked' :'']">
               <input value="rdo5-3" v-model="buttonRadio3" type="radio" class="we-radio-button-original" />
               <span class="we-radio-button-inner">选项5-3</span>
             </label>
@@ -93,15 +93,15 @@
         </div>
         <div class="module-spacing">
           <div class="we-radio-group">
-            <label class="we-radio-button we-radio-button-mini is-disabled" :class="[buttonRadio4 === `rdo6-1` ? 'is-checked' :'']">
+            <label class="we-radio-button we-radio-button-size-mini is-disabled" :class="[buttonRadio4 === `rdo6-1` ? 'is-checked' :'']">
               <input value="rdo6-1" type="radio" class="we-radio-button-original" />
               <span class="we-radio-button-inner">选项6-1</span>
             </label>
-            <label class="we-radio-button we-radio-button-mini is-disabled" :class="[buttonRadio4 === `rdo6-2` ? 'is-checked' :'']">
+            <label class="we-radio-button we-radio-button-size-mini is-disabled" :class="[buttonRadio4 === `rdo6-2` ? 'is-checked' :'']">
               <input value="rdo6-2" type="radio" class="we-radio-button-original" />
               <span class="we-radio-button-inner">选项6-2</span>
             </label>
-            <label class="we-radio-button we-radio-button-mini is-disabled" :class="[buttonRadio4 === `rdo6-3` ? 'is-checked' :'']">
+            <label class="we-radio-button we-radio-button-size-mini is-disabled" :class="[buttonRadio4 === `rdo6-3` ? 'is-checked' :'']">
               <input value="rdo6-3" type="radio" class="we-radio-button-original" />
               <span class="we-radio-button-inner">选项6-3</span>
             </label>

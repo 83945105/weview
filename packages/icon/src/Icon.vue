@@ -36,10 +36,10 @@
         return `${this.prefixCls}-icon-${this.name}`;
       },
       typeClass() {
-        return `${this.prefixCls}-icon-${this.type}`;
+        return `${this.prefixCls}-icon-type-${this.type}`;
       },
       sizeClass() {
-        return this.size ? `${this.prefixCls}-icon-${this.size}` : undefined;
+        return this.size ? `${this.prefixCls}-icon-size-${this.size}` : undefined;
       },
       loadingClass() {
         return this.loading ? `${this.prefixCls}-icon-loading` : undefined;

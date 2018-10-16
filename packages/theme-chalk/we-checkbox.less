@@ -106,16 +106,18 @@
   &.is-bordered {
     .button-size(@checkbox-default-padding; @checkbox-default-font-size; @checkbox-default-border-radius; @checkbox-default-border);
 
-    &.@{checkbox-prefix-css}-large{
-      .button-size(@checkbox-large-padding; @checkbox-large-font-size; @checkbox-large-border-radius; @checkbox-primary-border);
-    }
+    &.@{checkbox-prefix-css}-size{
+      &-large{
+        .button-size(@checkbox-large-padding; @checkbox-large-font-size; @checkbox-large-border-radius; @checkbox-primary-border);
+      }
 
-    &.@{checkbox-prefix-css}-small{
-      .button-size(@checkbox-small-padding; @checkbox-small-font-size; @checkbox-small-border-radius; @checkbox-primary-border);
-    }
+      &-small{
+        .button-size(@checkbox-small-padding; @checkbox-small-font-size; @checkbox-small-border-radius; @checkbox-primary-border);
+      }
 
-    &.@{checkbox-prefix-css}-mini{
-      .button-size(@checkbox-mini-padding; @checkbox-mini-font-size; @checkbox-mini-border-radius; @checkbox-primary-border);
+      &-mini{
+        .button-size(@checkbox-mini-padding; @checkbox-mini-font-size; @checkbox-mini-border-radius; @checkbox-primary-border);
+      }
     }
   }
 

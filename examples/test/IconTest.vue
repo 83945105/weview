@@ -9,7 +9,7 @@
       <template v-for="(name, idx) in names">
         <li :key="name">
           <div class="icon-one">
-            <we-icon :key="name" :name="names[idx]" type="large" :loading="loading"></we-icon>
+            <we-icon :key="name" :name="names[idx]" size="large" :loading="loading"></we-icon>
             <div class="icon-name">{{names[idx]}}</div>
           </div>
         </li>

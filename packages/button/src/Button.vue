@@ -76,10 +76,10 @@
         if(this.size === 'default') {
           return undefined;
         }
-        return `${this.prefixCls}-button-${this.size}`;
+        return `${this.prefixCls}-button-size-${this.size}`;
       },
       typeClass() {
-        return `${this.prefixCls}-button-${this.type}`;
+        return `${this.prefixCls}-button-type-${this.type}`;
       },
       plainClass() {
         return this.plain ? `is-plain` : '';

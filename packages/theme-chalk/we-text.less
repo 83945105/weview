@@ -77,16 +77,18 @@
     width: 30px;
   }
 
-  &-large{
-    font-size: @text-large-font-size;
-  }
+  &-size{
+    &-large{
+      font-size: @text-large-font-size;
+    }
 
-  &-small{
-    font-size: @text-small-font-size;
-  }
+    &-small{
+      font-size: @text-small-font-size;
+    }
 
-  &-mini{
-    font-size: @text-mini-font-size;
+    &-mini{
+      font-size: @text-mini-font-size;
+    }
   }
 
   &-inner{
@@ -111,18 +113,19 @@
       outline: 0;
     }
 
-    &-large{
-      .text-size(@text-large-height; @text-large-font-size; @text-large-border-radius);
-    }
+    &-size{
+      &-large{
+        .text-size(@text-large-height; @text-large-font-size; @text-large-border-radius);
+      }
 
-    &-small{
-      .text-size(@text-small-height; @text-small-font-size; @text-small-border-radius);
-    }
+      &-small{
+        .text-size(@text-small-height; @text-small-font-size; @text-small-border-radius);
+      }
 
-    &-mini{
-      .text-size(@text-mini-height; @text-mini-font-size; @text-mini-border-radius);
+      &-mini{
+        .text-size(@text-mini-height; @text-mini-font-size; @text-mini-border-radius);
+      }
     }
-
     &-prefix{
       padding-left: 30px;
     }
@@ -140,49 +143,51 @@
       border-radius: 100px;
     }
 
-    &-default{
-      background-color: @text-default-fill;
-      border-color: @text-default-border;
-      color: @text-default-color;
+    &-type{
+      &-default{
+        background-color: @text-default-fill;
+        border-color: @text-default-border;
+        color: @text-default-color;
 
-      &.tac{
-        text-align: center;
-      }
-      &.tar{
-        text-align: right;
-      }
-
-      &:focus {
-        border-color:tint(@text-default-focus-border, 60%);
-      }
-
-      &.is-disabled{
-        cursor: not-allowed;
-        background-color: tint(@text-default-border, 70%);
-        border-color: tint(@text-default-border, 30%);
-        color: tint(@text-default-color, 70%);
-
-        &::-webkit-input-placeholder{
-          color: tint(@text-default-color, 60%);
+        &.tac{
+          text-align: center;
         }
-        &::-moz-placeholder{
-          color: tint(@text-default-color, 60%);
+        &.tar{
+          text-align: right;
         }
-        &::-moz-placeholder{
-          color: tint(@text-default-color, 60%);
+
+        &:focus {
+          border-color:tint(@text-default-focus-border, 60%);
         }
-        &::-ms-input-placeholder{
-          color: tint(@text-default-color, 60%);
+
+        &.is-disabled{
+          cursor: not-allowed;
+          background-color: tint(@text-default-border, 70%);
+          border-color: tint(@text-default-border, 30%);
+          color: tint(@text-default-color, 70%);
+
+          &::-webkit-input-placeholder{
+            color: tint(@text-default-color, 60%);
+          }
+          &::-moz-placeholder{
+            color: tint(@text-default-color, 60%);
+          }
+          &::-moz-placeholder{
+            color: tint(@text-default-color, 60%);
+          }
+          &::-ms-input-placeholder{
+            color: tint(@text-default-color, 60%);
+          }
         }
       }
-    }
 
-    &-success{
-      .text-variant(@text-success-color; @text-success-fill; @text-success-border);
-    }
+      &-success{
+        .text-variant(@text-success-color; @text-success-fill; @text-success-border);
+      }
 
-    &-error{
-      .text-variant(@text-error-border; @text-error-fill; @text-error-border);
+      &-error{
+        .text-variant(@text-error-border; @text-error-fill; @text-error-border);
+      }
     }
   }
 
