@@ -31,7 +31,10 @@
 
     props: {
       size: String,//default large small mini
-      type: String,//default primary success info warning danger text
+      type: {//default primary success info warning danger text
+        type: String,
+        default: 'default'
+      },
       nativeType: {//button submit reset
         type: String,
         default: 'button'
