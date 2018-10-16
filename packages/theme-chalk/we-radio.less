@@ -82,16 +82,18 @@
   &.is-bordered {
     .button-size(@radio-default-padding; @radio-default-font-size; @radio-default-border-radius; @radio-default-border);
 
-    &.@{radio-prefix-css}-large{
-      .button-size(@radio-large-padding; @radio-large-font-size; @radio-large-border-radius; @radio-primary-border);
-    }
+    &.@{radio-prefix-css}-size{
+      &-large{
+        .button-size(@radio-large-padding; @radio-large-font-size; @radio-large-border-radius; @radio-primary-border);
+      }
 
-    &.@{radio-prefix-css}-small{
-      .button-size(@radio-small-padding; @radio-small-font-size; @radio-small-border-radius; @radio-primary-border);
-    }
+      &-small{
+        .button-size(@radio-small-padding; @radio-small-font-size; @radio-small-border-radius; @radio-primary-border);
+      }
 
-    &.@{radio-prefix-css}-mini{
-      .button-size(@radio-mini-padding; @radio-mini-font-size; @radio-mini-border-radius; @radio-primary-border);
+      &-mini{
+        .button-size(@radio-mini-padding; @radio-mini-font-size; @radio-mini-border-radius; @radio-primary-border);
+      }
     }
   }
 

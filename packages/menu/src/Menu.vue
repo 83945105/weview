@@ -14,7 +14,7 @@
          @mouseenter.stop.self="handleMouseEnter"
          @mouseleave.stop.self="handleMouseLeave"
     >
-      <ul :class="[`${prefixCls}-menu`]"
+      <ul :class="[`${prefixCls}-menu`]" class="we-menu-size-small"
           :style="[menuStyle]">
         <slot></slot>
       </ul>

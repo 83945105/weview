@@ -38,15 +38,15 @@
       <div class="module-content">
         <div>
           <div class="we-checkbox-group">
-            <label class="we-checkbox-button we-checkbox-button-large" :class="{'is-checked':normalCheckbox11}">
+            <label class="we-checkbox-button we-checkbox-button-size-large" :class="{'is-checked':normalCheckbox11}">
               <input value="rdo3-1" v-model="normalCheckbox11" type="checkbox" class="we-checkbox-button-original" />
               <span class="we-checkbox-button-inner">选项3-1</span>
             </label>
-            <label class="we-checkbox-button we-checkbox-button-large" :class="{'is-checked':normalCheckbox12}">
+            <label class="we-checkbox-button we-checkbox-button-size-large" :class="{'is-checked':normalCheckbox12}">
               <input value="rdo3-2" v-model="normalCheckbox12" type="checkbox" class="we-checkbox-button-original" />
               <span class="we-checkbox-button-inner">选项3-2</span>
             </label>
-            <label class="we-checkbox-button we-checkbox-button-large" :class="{'is-checked':normalCheckbox13}">
+            <label class="we-checkbox-button we-checkbox-button-size-large" :class="{'is-checked':normalCheckbox13}">
               <input value="rdo3-3" v-model="normalCheckbox13" type="checkbox" class="we-checkbox-button-original" />
               <span class="we-checkbox-button-inner">选项3-3</span>
             </label>
@@ -70,15 +70,15 @@
         </div>
         <div class="module-spacing">
           <div class="we-checkbox-group">
-            <label class="we-checkbox-button we-checkbox-button-small" :class="{'is-checked':normalCheckbox11}">
+            <label class="we-checkbox-button we-checkbox-button-size-small" :class="{'is-checked':normalCheckbox11}">
               <input value="rdo5-1" v-model="normalCheckbox11" type="checkbox" class="we-checkbox-button-original" />
               <span class="we-checkbox-button-inner">选项5-1</span>
             </label>
-            <label class="we-checkbox-button we-checkbox-button-small" :class="{'is-checked':normalCheckbox12}">
+            <label class="we-checkbox-button we-checkbox-button-size-small" :class="{'is-checked':normalCheckbox12}">
               <input value="rdo5-2" v-model="normalCheckbox12" type="checkbox" class="we-checkbox-button-original" />
               <span class="we-checkbox-button-inner">选项5-2</span>
             </label>
-            <label class="we-checkbox-button we-checkbox-button-small" :class="{'is-checked':normalCheckbox13}">
+            <label class="we-checkbox-button we-checkbox-button-size-small" :class="{'is-checked':normalCheckbox13}">
               <input value="rdo5-3" v-model="normalCheckbox13" type="checkbox" class="we-checkbox-button-original" />
               <span class="we-checkbox-button-inner">选项5-3</span>
             </label>
@@ -86,15 +86,15 @@
         </div>
         <div class="module-spacing">
           <div class="we-checkbox-group">
-            <label class="we-checkbox-button we-checkbox-button-mini is-disabled" :class="[buttonRadio4 === `rdo6-1` ? 'is-checked' :'']">
+            <label class="we-checkbox-button we-checkbox-button-size-mini is-disabled" :class="[buttonRadio4 === `rdo6-1` ? 'is-checked' :'']">
               <input value="rdo6-1" type="checkbox" class="we-checkbox-button-original" />
               <span class="we-checkbox-button-inner">选项6-1</span>
             </label>
-            <label class="we-checkbox-button we-checkbox-button-mini is-disabled" :class="[buttonRadio4 === `rdo6-2` ? 'is-checked' :'']">
+            <label class="we-checkbox-button we-checkbox-button-size-mini is-disabled" :class="[buttonRadio4 === `rdo6-2` ? 'is-checked' :'']">
               <input value="rdo6-2" type="checkbox" class="we-checkbox-button-original" />
               <span class="we-checkbox-button-inner">选项6-2</span>
             </label>
-            <label class="we-checkbox-button we-checkbox-button-mini is-disabled" :class="[buttonRadio4 === `rdo6-3` ? 'is-checked' :'']">
+            <label class="we-checkbox-button we-checkbox-button-size-mini is-disabled" :class="[buttonRadio4 === `rdo6-3` ? 'is-checked' :'']">
               <input value="rdo6-3" type="checkbox" class="we-checkbox-button-original" />
               <span class="we-checkbox-button-inner">选项6-3</span>
             </label>

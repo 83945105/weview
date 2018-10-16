@@ -94,6 +94,11 @@
             "desc": "询问框测试",
             "name": "ConfirmTest",
             "path": "/confirmTest"
+          },
+          {
+            "desc": "文字提示",
+            "name": "TooltipTest",
+            "path": "/tooltipTest"
           }
         ]
       },

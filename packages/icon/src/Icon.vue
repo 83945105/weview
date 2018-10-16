@@ -36,13 +36,13 @@
         return `${this.prefixCls}-icon-${this.name}`;
       },
       typeClass() {
-        return `${this.prefixCls}-icon-${this.type}`;
+        return `${this.prefixCls}-icon-type-${this.type}`;
       },
       iconSize() {
         return this.size || (this.$WEVIEW || {}).size;
       },
       sizeClass() {
-        return this.iconSize ? `${this.prefixCls}-icon-${this.iconSize}` : undefined;
+        return this.iconSize ? `${this.prefixCls}-icon-size-${this.iconSize}` : undefined;
       },
       loadingClass() {
         return this.loading ? `${this.prefixCls}-icon-loading` : undefined;

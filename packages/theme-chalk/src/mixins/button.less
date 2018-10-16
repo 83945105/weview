@@ -183,16 +183,18 @@
     outline: 0;
   }
 
-  &-large{
-    .button-size(@button-large-padding; @button-large-font-size; @button-large-border-radius);
-  }
+  &-size{
+    &-large{
+      .button-size(@button-large-padding; @button-large-font-size; @button-large-border-radius);
+    }
 
-  &-small{
-    .button-size(@button-small-padding; @button-small-font-size; @button-small-border-radius);
-  }
+    &-small{
+      .button-size(@button-small-padding; @button-small-font-size; @button-small-border-radius);
+    }
 
-  &-mini{
-    .button-size(@button-mini-padding; @button-mini-font-size; @button-mini-border-radius);
+    &-mini{
+      .button-size(@button-mini-padding; @button-mini-font-size; @button-mini-border-radius);
+    }
   }
 
   &.is-rectangle{

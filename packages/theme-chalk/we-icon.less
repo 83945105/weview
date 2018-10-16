@@ -26,38 +26,42 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  &-large{
-    font-size:@icon-size-large;
-  }
-  &-small {
-    font-size:@icon-size-small;
-  }
-  &-mini {
-    font-size:@icon-size-mini;
-  }
-
-  &-default {
-    color:inherit;
+  &-size{
+    &-large{
+      font-size:@icon-size-large;
+    }
+    &-small {
+      font-size:@icon-size-small;
+    }
+    &-mini {
+      font-size:@icon-size-mini;
+    }
   }
 
-  &-primary {
-    color:@icon-primary-color;
-  }
+  &-type{
+    &-default {
+      color:inherit;
+    }
 
-  &-success{
-    color:@icon-success-color;
-  }
+    &-primary {
+      color:@icon-primary-color;
+    }
 
-  &-info{
-    color:@icon-info-color;
-  }
+    &-success{
+      color:@icon-success-color;
+    }
 
-  &-warning{
-    color:@icon-warning-color;
-  }
+    &-info{
+      color:@icon-info-color;
+    }
 
-  &-danger{
-    color:@icon-danger-color;
+    &-warning{
+      color:@icon-warning-color;
+    }
+
+    &-danger{
+      color:@icon-danger-color;
+    }
   }
 
   &-rotate-90{

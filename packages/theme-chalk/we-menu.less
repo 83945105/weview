@@ -4,82 +4,60 @@
 @menu-css-prefix: ~"@{css-prefix}menu";
 @submenu-css-prefix: ~"@{css-prefix}submenu";
 
-@-webkit-keyframes zoomIn {
-  from {
-    opacity: 0;
-    -webkit-transform: scale3d(0.3, 0.3, 0.3);
-    transform: scale3d(0.3, 0.3, 0.3);
+.menu-size(@width; @height; @lineHeight) {
+  .@{menu-css-prefix}-item {
+    &-title{
+      &-arrow {
+        height: @height;
+        line-height: @lineHeight;
+      }
+      &-prompt {
+        line-height: @lineHeight;
+      }
+
+      &-inner {
+        &-icon {
+          width: @width;
+          height: @height;
+          line-height: @lineHeight;
+        }
+        &-text {
+          height: @height;
+          line-height: @lineHeight;
+        }
+      }
+    }
   }
 
-  50% {
-    opacity: 1;
+  .@{menu-css-prefix}-vertical-line{
+    height: @height;
   }
 }
 
-@keyframes zoomIn {
-  from {
-    opacity: 0;
-    -webkit-transform: scale3d(0.3, 0.3, 0.3);
-    transform: scale3d(0.3, 0.3, 0.3);
-  }
-
-  50% {
-    opacity: 1;
-  }
-}
-
-.zoomIn {
-  -webkit-animation-name: zoomIn;
-  animation-name: zoomIn;
-}
-
-.@{menu-css-prefix}-external{
+.@{menu-css-prefix}-external {
   position: relative;
-  //transition: height .3s cubic-bezier(0,0,.2,1) , width .3s cubic-bezier(0,0,.2,1);
 
-  &.is-collapse{
-    transition: height .3s cubic-bezier(0,0,.2,1) , width .3s cubic-bezier(0,0,.2,1);
+  &.is-collapse {
+    transition: height .3s cubic-bezier(0, 0, .2, 1), width .3s cubic-bezier(0, 0, .2, 1);
   }
 
-  &.width-auto{
+  &.width-auto {
     width: 100%;
   }
-  &.height-auto{
+  &.height-auto {
     position: absolute;
     top: 0;
     bottom: 0;
   }
 }
-.@{menu-css-prefix}{
+
+.@{menu-css-prefix} {
   background-color: @menu-bg;
   position: relative;
   width: 100%;
   .mixin-default;
 
-  //&-item{
-  //  .we-menu-item-title-arrow{
-  //    opacity: 0;
-  //  }
-  //  .we-menu-item-title-inner-text{
-  //    opacity: 0;
-  //  }
-  //  .we-menu-item-group{
-  //    opacity: 0;
-  //  }
-  //}
-
-  //&-child{
-  //  opacity: 0;
-  //  transition: opacity .3s;
-  //  -webkit-transition: opacity .3s;
-  //  -moz-transition: opacity .3s;
-  //
-  //  &.is-fold{
-  //    opacity: 1;
-  //  }
-  //}
-
-  &.is-full{
+  &.is-full {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -88,21 +66,21 @@
     z-index: 1;
   }
 
-  & ul{
+  & ul {
     margin: 0;
     padding: 0;
   }
 
-  &:hover{
-    .@{menu-css-prefix}-vertical-line{
+  &:hover {
+    .@{menu-css-prefix}-vertical-line {
       transform: scaleX(1);
     }
-    .@{menu-css-prefix}-horizontal-line{
+    .@{menu-css-prefix}-horizontal-line {
       transform: scaleX(1);
     }
   }
 
-  &-vertical-line{
+  &-vertical-line {
     position: absolute;
     top: 0;
     left: 0;
@@ -115,7 +93,7 @@
     background-color: @menu-vertical-line;
   }
 
-  &-horizontal-line{
+  &-horizontal-line {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -128,23 +106,23 @@
     background-color: @menu-vertical-line;
   }
 
-  &-scroll{
+  &-scroll {
     .mixin-scrollbar;
 
-    &.all{
-    .mixin-all-scroll;
+    &.all {
+      .mixin-all-scroll;
     }
 
-    &.vertical{
+    &.vertical {
       .mixin-v-scroll;
     }
 
-    &.horizontal{
+    &.horizontal {
       .mixin-h-scroll;
     }
   }
 
-  &-arrow{
+  &-arrow {
     position: absolute;
     left: 0;
     right: 0;
@@ -153,31 +131,31 @@
     text-align: center;
     cursor: pointer;
 
-    &:active{
+    &:active {
       opacity: .8;
     }
 
-    &:hover{
+    &:hover {
       background-color: @menu-item-hover-bg;
     }
 
-    &-up{
+    &-up {
       top: 0;
     }
 
-    &-down{
+    &-down {
       bottom: 0;
     }
 
-    &.is-disabled{
+    &.is-disabled {
       color: @menu-item-fc-disabled-color;
       cursor: not-allowed;
 
-      &:hover{
+      &:hover {
         background-color: transparent;
       }
 
-      &:active{
+      &:active {
         opacity: 1;
       }
     }
@@ -186,9 +164,23 @@
   &-transition {
     transition: .3s all ease-in-out;
   }
+
+  &-size {
+    &-lager {
+      .menu-size(@menu-size-lager-width; @menu-size-lager-height; @menu-size-lager-line-height);
+    }
+
+    &-small {
+      .menu-size(@menu-size-small-width; @menu-size-small-height; @menu-size-small-line-height);
+    }
+
+    &-mini {
+      .menu-size(@menu-size-mini-width; @menu-size-mini-height; @menu-size-mini-line-height);
+    }
+  }
 }
 
-.@{menu-css-prefix}-item{
+.@{menu-css-prefix}-item {
   font-size: @menu-item-font-size;
   list-style: none;
   cursor: pointer;
@@ -199,102 +191,103 @@
   .mixin-border-box;
   .mixin-select-none;
 
-  &.is-horizontal{
+  &.is-horizontal {
     float: left;
-    .@{menu-css-prefix}-item-title-inner{
+
+    .@{menu-css-prefix}-item-title-inner {
       margin-right: 0;
       padding: 0 15px 0 15px;
     }
-    &.is-arrow{
-      .@{menu-css-prefix}-item-title-inner{
+    &.is-arrow {
+      .@{menu-css-prefix}-item-title-inner {
         margin-right: 23px;
         padding: 0 0 0 15px;
       }
-      .@{menu-css-prefix}-item-title{
+      .@{menu-css-prefix}-item-title {
         padding-right: 12px;
       }
-      .@{menu-css-prefix}-item-title-arrow{
+      .@{menu-css-prefix}-item-title-arrow {
         width: 20px;
         margin-left: 3px;
       }
-      .@{menu-css-prefix}-item-title-inner-icon{
+      .@{menu-css-prefix}-item-title-inner-icon {
         width: 25px;
         text-align: left;
       }
     }
   }
 
-  &-title{
+  &-title {
     overflow: hidden;
     position: relative;
     .mixin-border-box;
 
-    &.is-hover{
+    &.is-hover {
       background-color: @menu-item-hover-bg;
     }
 
-    &.is-active{
+    &.is-active {
       color: @menu-active-text-color;
       background-color: @menu-item-hover-bg;
 
-      &-arrow{
+      &-arrow {
         color: @menu-active-text-color;
       }
 
-      &:hover{
+      &:hover {
         background-color: @menu-active-text-bg;
       }
     }
 
-    &.is-selected{
+    &.is-selected {
       color: @menu-title-selected-color;
       background-color: @menu-title-selected-bg;
 
-      &:hover{
+      &:hover {
         background-color: @menu-title-selected-bg;
       }
 
       &-arrow,
-      &-quick{
+      &-quick {
         color: @menu-title-selected-color;
       }
     }
 
-    &.is-disabled{
+    &.is-disabled {
       color: @menu-item-fc-disabled-color;
       cursor: not-allowed;
 
       &.is-selected,
       &.is-active,
-      &:hover{
+      &:hover {
         background-color: transparent;
       }
 
       .@{menu-css-prefix}-item-title-arrow,
-      .@{menu-css-prefix}-item-title-quick{
+      .@{menu-css-prefix}-item-title-quick {
         color: @menu-item-fc-disabled-color;
       }
     }
 
-    &-inner{
+    &-inner {
       margin-right: 30px;
 
-      &.is-full{
+      &.is-full {
         margin-right: 0;
       }
 
-      &.is-quick{
+      &.is-quick {
         margin-right: 35%;
       }
 
-      &-icon{
+      &-icon {
         float: left;
         width: 50px;
         height: 50px;
         line-height: 50px;
         text-align: center;
       }
-      &-text{
+      &-text {
         overflow: hidden;
         height: 50px;
         line-height: 50px;
@@ -303,7 +296,7 @@
       }
     }
 
-    &-prompt{
+    &-prompt {
       .mixin-ellipsis;
       .mixin-border-box;
       display: block;
@@ -315,7 +308,7 @@
       color: @menu-item-quick-color;
     }
 
-    &-arrow{
+    &-arrow {
       font-size: 12px;
       float: right;
       width: 30px;
@@ -331,7 +324,7 @@
       -ms-transform: rotate(0deg);
       transform: rotate(0deg);
 
-      &.is-opened{
+      &.is-opened {
         -webkit-transform: rotate(180deg);
         -ms-transform: rotate(180deg);
         transform: rotate(180deg);
@@ -339,13 +332,13 @@
     }
   }
 
-  &-group{
+  &-group {
     position: relative;
 
-    &.is-horizontal{
+    &.is-horizontal {
       float: left;
     }
-    &-title{
+    &-title {
       .mixin-h1-default;
       .mixin-ellipsis;
       font-size: 12px;
@@ -354,37 +347,37 @@
       padding-top: 10px;
       color: @menu-item-group-title-color;
     }
-    &-split-vertical{
+    &-split-vertical {
       position: absolute;
       top: 0;
       z-index: 10;
       width: 1px;
-      font-size:0;
+      font-size: 0;
       margin: 8px 0 0;
-      padding:0;
+      padding: 0;
       background-color: @menu-border-color-split;
 
-      &-left-space{
+      &-left-space {
         margin-left: 3px;
         padding-left: 4px;
       }
-      &-right-space{
+      &-right-space {
         margin-right: 3px;
         padding-right: 4px;
       }
 
-      &.is-before-line{
+      &.is-before-line {
         left: 0;
       }
-      &.is-after-line{
+      &.is-after-line {
         right: 0;
       }
     }
 
-    &-split-horizontal{
+    &-split-horizontal {
       height: 1px;
       line-height: 1px;
-      font-size:0;
+      font-size: 0;
       margin: 0px 10px 3px;
       padding: 3px 0 0;
       border: none;

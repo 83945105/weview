@@ -77,16 +77,18 @@
     color: @checkbox-primary-fill;
   }
 
-  &-large .@{checkbox-button-prefix-css}-inner{
-    .button-size(@checkbox-button-large-padding; @checkbox-button-large-font-size; 0);
-  }
+  &-size{
+    &-large .@{checkbox-button-prefix-css}-inner{
+      .button-size(@checkbox-button-large-padding; @checkbox-button-large-font-size; 0);
+    }
 
-  &-small .@{checkbox-button-prefix-css}-inner{
-    .button-size(@checkbox-button-small-padding; @checkbox-button-small-font-size; 0;);
-  }
+    &-small .@{checkbox-button-prefix-css}-inner{
+      .button-size(@checkbox-button-small-padding; @checkbox-button-small-font-size; 0;);
+    }
 
-  &-mini .@{checkbox-button-prefix-css}-inner{
-    .button-size(@checkbox-button-mini-padding; @checkbox-button-mini-font-size; 0;);
+    &-mini .@{checkbox-button-prefix-css}-inner{
+      .button-size(@checkbox-button-mini-padding; @checkbox-button-mini-font-size; 0;);
+    }
   }
 
   &-original{

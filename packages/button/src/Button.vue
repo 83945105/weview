@@ -31,10 +31,7 @@
 
     props: {
       size: String,//default large small mini
-      type: {//default primary success info warning danger text
-        type: String,
-        default: 'default'
-      },
+      type: String,//default primary success info warning danger text
       nativeType: {//button submit reset
         type: String,
         default: 'button'
@@ -72,10 +69,13 @@
         return this.size || (this.$WEVIEW || {}).size;
       },
       sizeClass() {
-        return this.buttonSize ? `${this.prefixCls}-button-${this.buttonSize}` : undefined;
+        return this.buttonSize ? `${this.prefixCls}-button-size-${this.buttonSize}` : undefined;
+      },
+      buttonType() {
+        return this.type || (this.$WEVIEW || {}).type;
       },
       typeClass() {
-        return `${this.prefixCls}-button-${this.type}`;
+        return this.buttonType ? `${this.prefixCls}-button-type-${this.buttonType}` : undefined;
       },
       plainClass() {
         return this.plain ? `is-plain` : '';
