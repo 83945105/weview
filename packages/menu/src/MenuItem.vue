@@ -12,8 +12,8 @@
            @mouseleave.stop.self="handleMouseLeave"
       >
         <div v-if="showArrow && hasSubMenu" :class="[`${prefixCls}-menu-item-title-arrow`, {'is-opened': expand}]">
-          <icon v-if="subMenuModeIsOpen" :name="isHorizontal ? 'angle-down' : 'angle-right'"></icon>
-          <icon v-else :name="isHorizontal ? 'angle-right' : 'angle-down'"></icon>
+          <icon v-if="subMenuModeIsOpen" :name="isHorizontal ? 'angle-down' : 'angle-right'" size="default"></icon>
+          <icon v-else :name="isHorizontal ? 'angle-right' : 'angle-down'" size="default"></icon>
         </div>
 
         <div v-else-if="prompt && showArrow" :class="[`${prefixCls}-menu-item-title-prompt`]">{{prompt}}</div>
@@ -21,7 +21,7 @@
         <div :class="[`${prefixCls}-menu-item-title-inner`]">
           <div v-if="!isHorizontal" :class="[`${prefixCls}-menu-item-title-inner-icon`]">
             <slot name="icon">
-              <icon :name="iconName"></icon>
+              <icon :name="iconName" size="default"></icon>
             </slot>
           </div>
           <div :class="[`${prefixCls}-menu-item-title-inner-text`]">

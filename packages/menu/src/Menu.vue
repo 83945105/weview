@@ -279,7 +279,7 @@
       sizeClass() {
         return this.menuSize ? `${this.prefixCls}-menu-size-${this.menuSize}` : undefined;
       },
-      collapseWidth() {//折叠后的宽度
+      iconWidth() {// 图标宽度 控制 折叠后的宽度
         if (this.menuSize === 'mini') {
           return 32;
         }
@@ -296,7 +296,7 @@
           return undefined;
         }
         if (this.isCollapse) {
-          return `${this.collapseWidth}px`;
+          return `${this.iconWidth}px`;
         }
         if (!isNaN(this.width)) {
           return `${this.width}px`;
@@ -307,7 +307,7 @@
         if (this.mode !== 'horizontal') {
           return undefined;
         }
-        let height = this.height || this.collapseWidth;
+        let height = this.height || this.iconWidth;
         if (!isNaN(height)) {
           return `${height}px`;
         }

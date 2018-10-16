@@ -18,7 +18,7 @@ Vue.use(ElementUI);
 import weview from '../packages/index.js';
 // import '../lib/theme-chalk/index.css';
 Vue.use(weview, {
-  size: 'large'
+  // size: 'small'
 });
 
 
