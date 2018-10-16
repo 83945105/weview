@@ -8,8 +8,8 @@
       <ul class="icon-list">
       <template v-for="(name, idx) in names">
         <li :key="name">
-          <div class="icon-one">
-            <we-icon :key="name" :name="names[idx]" type="large" :loading="loading"></we-icon>
+          <div class="icon-one" style="font-size: 22px">
+            <we-icon :key="name" :name="names[idx]" :loading="loading"></we-icon>
             <div class="icon-name">{{names[idx]}}</div>
           </div>
         </li>

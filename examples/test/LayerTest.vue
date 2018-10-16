@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <we-layer v-model="normalLayer">
+    <we-layer v-model="normalLayer" icon-name="edit">
       <div>这是一个普通的弹窗</div>
     </we-layer>
 
@@ -47,8 +47,12 @@
     >
 
 
-      <div style="width: 5000px;height: 600px;font-size: 20px;padding: 10px">
+      <div style="width: 5000px;height: 600px;font-size: 20px;padding: 10px"  slot-scope="scope">
         你可以像缩放windows系统窗口那样将鼠标放在边框上缩放窗口
+        <p></p>
+        宽：{{scope.width}}
+        <p></p>
+        高：{{scope.height}}
       </div>
 
       <!--      <template slot-scope="{ width, height }">

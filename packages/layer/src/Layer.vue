@@ -1,18 +1,23 @@
 <template>
   <div>
-    <div v-if="visible && showMask" :class="[maskClass, maskBgClass, customMaskClass]" :style="maskStyle"
-         @click="maskClose"></div>
-    <animation :name="_animationName" @before-enter="animationBeforeEnter" @after-leave="animationAfterLeave">
+    <div v-if="visible && showMask"
+         :class="[`${prefixCls}-layer-mask`, `${prefixCls}-layer-mask-bg`, customMaskClass]"
+         :style="{
+          zIndex: zIndex
+         }"
+         @click.stop="maskClose"
+    ></div>
+    <animation :name="_animationName_" @before-enter="animationBeforeEnter" @after-leave="animationAfterLeave">
       <div v-show="visible" :class="[layerClass, customClass]" :style="style">
         <div v-if="showHeader" :class="[headerClass, dragClass]" @mousedown="dragMousedown">
           <slot name="header">
-            <div :class="[titleClass]">
-              <div v-if="iconName" :class="[titleIconClass]">
-                <icon :name="iconName" :type="iconType" :size="iconSize"></icon>
+            <div :class="`${prefixCls}-layer-header-title`">
+              <div v-if="iconName" :class="`${prefixCls}-layer-header-title-icon`">
+                <icon :name="iconName"></icon>
               </div>
-              <div :class="[titleTextClass]" :title="title">{{title}}</div>
+              <div :class="[`${prefixCls}-layer-header-title-text`]" :title="title">{{title}}</div>
             </div>
-            <div :class="iconBtnClass">
+            <div :class="`${prefixCls}-layer-header-icon-btn`">
               <div class="title-icon" v-show="false">
                 <icon name="minimize"></icon>
               </div>
@@ -26,13 +31,14 @@
             </div>
           </slot>
         </div>
-        <div :class="[contentClass]" :style="{height: __contentHeight}">
-          <icon v-if="showClose && !showHeader" name="close" :class="deleteClass" @click.native="close"></icon>
-          <slot :width="__width" :height="__contentHeight"></slot>
+        <div :class="`${prefixCls}-layer-content`" :style="{height: __contentHeight__}">
+          <icon v-if="showClose && !showHeader" name="close" :class="`${prefixCls}-message-button-close`"
+                @click.native="close"></icon>
+          <slot :width="__width__" :height="__contentHeight__"></slot>
         </div>
         <div v-if="showFooter" :class="[footerClass]">
           <slot name="footer">
-            <div :class="[footerInnerClass, footerAlignClass]">
+            <div :class="[`${prefixCls}-layer-footer-inner`, footerAlignClass]">
               <button @click="handleClickCancelButton" style="margin-right:5px;">{{cancelButtonText}}</button>
               <button type="primary" :loading="confirmButtonLoading" @click="handleClickConfirmButton">
                 {{confirmButtonText}}
@@ -194,26 +200,21 @@
       },
       onClose: Function,
       animationName: String,
-      iconName: String,
-      iconType: String,
-      iconSize: {
-        type: String,
-        default: "large"
-      }
+      iconName: String
     },
 
     computed: {
-      _width() {
+      _width_() {
         return this.layerWidth ? parseFloat(`${this.layerWidth}`.replace(/[^0-9,.]/g, "")) : undefined;
       },
-      __width() {
-        return this._width ? this._width > 100 ? `${this._width}px` : `${this._width}%` : undefined;
+      __width__() {
+        return this._width_ ? this._width_ > 100 ? `${this._width_}px` : `${this._width_}%` : undefined;
       },
-      _height() {
+      _height_() {
         return this.layerHeight ? parseFloat(`${this.layerHeight}`.replace(/[^0-9,.]/g, "")) : undefined;
       },
-      __height() {
-        return this._height ? this._height > 100 ? `${this._height}px` : `${this._height}%` : undefined;
+      __height__() {
+        return this._height_ ? this._height_ > 100 ? `${this._height_}px` : `${this._height_}%` : undefined;
       },
       headerHeight() {
         return (this.showHeader && this.headerDom) ? this.headerDom.clientHeight : 0;
@@ -221,37 +222,26 @@
       footerHeight() {
         return (this.showFooter && this.footerDom) ? this.footerDom.clientHeight : 0;
       },
-      __contentHeight() {
-        if (!this._height) {
+      __contentHeight__() {
+        if (!this._height_) {
           return undefined;
         }
-        if (this._height > 100) {
-          return `${this._height - this.headerHeight - this.footerHeight - 1}px`;
+        if (this._height_ > 100) {
+          return `${this._height_ - this.headerHeight - this.footerHeight - 1}px`;
         }
-        let wh = this.windowHeight * this._height / 100;
+        let wh = this.windowHeight * this._height_ / 100;
         let hh = this.headerHeight;
         let fh = this.footerHeight;
         return `${(1 - hh / wh - fh / wh) * 100}%`;
       },
-      maskStyle() {
-        return {
-          zIndex: this.zIndex
-        }
-      },
       style() {
         return {
-          width: this.__width,
-          height: this.__height,
+          width: this.__width__,
+          height: this.__height__,
           left: `${this.x}px`,
           top: `${this.y}px`,
           zIndex: this.zIndex + 1
         };
-      },
-      maskClass() {
-        return `${this.prefixCls}-layer-mask`;
-      },
-      maskBgClass() {
-        return `${this.prefixCls}-layer-mask-bg`;
       },
       layerClass() {
         return `${this.prefixCls}-layer`;
@@ -259,35 +249,11 @@
       headerClass() {
         return `${this.prefixCls}-layer-header`;
       },
-      titleClass() {
-        return `${this.prefixCls}-layer-header-title`;
-      },
-      titleIconClass() {
-        return `${this.prefixCls}-layer-header-title-icon`;
-      },
-      titleTextClass() {
-        return `${this.prefixCls}-layer-header-title-text`;
-      },
-      iconBtnClass() {
-        return `${this.prefixCls}-layer-header-icon-btn`;
-      },
-      closeIconClass() {
-        return `${this.prefixCls}-layer-header-close`;
-      },
-      deleteClass() {
-        return `${this.prefixCls}-message-button-close`;
-      },
-      contentClass() {
-        return `${this.prefixCls}-layer-content`;
-      },
       footerClass() {
         return `${this.prefixCls}-layer-footer`;
       },
       resizeClass() {
         return `${this.prefixCls}-layer-drag`;
-      },
-      footerInnerClass() {
-        return `${this.prefixCls}-layer-footer-inner`;
       },
       footerAlignClass() {
         switch (this.footerAlign) {
@@ -304,7 +270,7 @@
       dragClass() {
         return this.drag ? 'move' : undefined;
       },
-      _animationName() {
+      _animationName_() {
         if (this.animationName !== undefined) {
           return this.animationName;
         } else if (this.position === 'left') {
@@ -401,7 +367,7 @@
       },
       EscClose(e) {
         if (this.visible && this.escCloseable) {
-          if (e.keyCode === 27) {
+          if ([e.keyCode, e.which].includes(27)) {
             this.close();
           }
         }
