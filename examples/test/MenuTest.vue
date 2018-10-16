@@ -370,7 +370,7 @@
                disabled-background-color="transparent"
                style="height: 100%;"
       >
-        <we-menu-item icon-name="edit">我的工作台</we-menu-item>
+        <we-menu-item icon-name="edit" :value="true" prompt="Ctrl+Enter">我的工作台</we-menu-item>
 
         <we-menu-item-group title="分组一" before-line>
           <we-menu-item icon-name="edit">选项一</we-menu-item>

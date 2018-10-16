@@ -16,9 +16,7 @@
           <icon v-else :name="isHorizontal ? 'angle-right' : 'angle-down'"></icon>
         </div>
 
-        <div :class="[`${prefixCls}-menu-item-title-prompt`]">
-          Ctrl+Shift+U
-        </div>
+        <div v-else-if="prompt && showArrow" :class="[`${prefixCls}-menu-item-title-prompt`]">{{prompt}}</div>
 
         <div :class="[`${prefixCls}-menu-item-title-inner`]">
           <div v-if="!isHorizontal" :class="[`${prefixCls}-menu-item-title-inner-icon`]">
@@ -90,6 +88,17 @@
       }
     },
 
+    props: {
+      index: String,//唯一标识,如果不设置将自动生成
+      value: Boolean,//是否选中
+      prompt: String,//提示
+      disabled: Boolean,//是否禁用,优先级高于menu
+      iconName: {//图标名称
+        type: String,
+        default: ''
+      }
+    },
+
     data() {
       return {
         isRoot: this === this.rootMenuItem,//是否是根菜单项
@@ -108,16 +117,6 @@
         subMenuOpenX: 0,
         subMenuOpenY: 0
       };
-    },
-
-    props: {
-      index: String,//唯一标识,如果不设置将自动生成
-      value: Boolean,//是否选中
-      disabled: Boolean,//是否禁用,优先级高于menu
-      iconName: {//图标名称
-        type: String,
-        default: ''
-      }
     },
 
     computed: {
@@ -326,7 +325,7 @@
     mounted() {
       if (this.value && !this.hasSubMenu) {
         this.selected = true;
-        this.parentMenuItem.handleItemActive({menu: this.menu, item: this});
+        this.parentMenuItem && this.parentMenuItem.handleItemActive({menu: this.menu, item: this});
       }
     }
   }
