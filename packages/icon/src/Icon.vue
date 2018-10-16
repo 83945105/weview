@@ -38,8 +38,11 @@
       typeClass() {
         return `${this.prefixCls}-icon-type-${this.type}`;
       },
+      iconSize() {
+        return this.size || (this.$WEVIEW || {}).size;
+      },
       sizeClass() {
-        return this.size ? `${this.prefixCls}-icon-size-${this.size}` : undefined;
+        return this.iconSize ? `${this.prefixCls}-icon-size-${this.iconSize}` : undefined;
       },
       loadingClass() {
         return this.loading ? `${this.prefixCls}-icon-loading` : undefined;

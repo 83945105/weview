@@ -48,8 +48,10 @@ const install = function (Vue, options = {}) {
     components[idx].install(Vue, options[components[idx].optionName]);
   }
 
-  const WEVIEW = {};
-  WEVIEW.zIndex = options.zIndex || 1024;
+  const WEVIEW = {
+    zIndex: options.zIndex || 1024,
+    size: options.size || ''
+  };
   PopupManager.zIndex = WEVIEW.zIndex;
 
   Vue.prototype.$WEVIEW = WEVIEW;

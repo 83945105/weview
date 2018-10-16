@@ -1,10 +1,9 @@
 <template>
-  <button
-    :disabled="buttonDisabled"
-    :autofocus="autofocus"
-    :type="nativeType"
-    :class="[buttonClass, sizeClass, typeClass, plainClass, disabledClass, shapeClass]"
-    @click="handleClick"
+  <button :disabled="buttonDisabled"
+          :autofocus="autofocus"
+          :type="nativeType"
+          :class="[buttonClass, sizeClass, typeClass, plainClass, disabledClass, shapeClass]"
+          @click="handleClick"
   >
     <icon v-if="showLeftIcon" :name="_iconName" :type="iconType" :loading="loading"></icon>
     <span v-if="$slots.default"><slot></slot></span>
@@ -31,11 +30,8 @@
     mixins: [Conf],
 
     props: {
-      size: {//default large small mini
-        type: String,
-        default: 'default'
-      },
-      type: {//default primary success info warning danger
+      size: String,//default large small mini
+      type: {//default primary success info warning danger text
         type: String,
         default: 'default'
       },
@@ -72,14 +68,17 @@
       buttonClass() {
         return `${this.prefixCls}-button`;
       },
+      buttonSize() {
+        return this.size || (this.$WEVIEW || {}).size;
+      },
       sizeClass() {
-        if(this.size === 'default') {
-          return undefined;
-        }
-        return `${this.prefixCls}-button-size-${this.size}`;
+        return this.buttonSize ? `${this.prefixCls}-button-size-${this.buttonSize}` : undefined;
+      },
+      buttonType() {
+        return this.type || (this.$WEVIEW || {}).type;
       },
       typeClass() {
-        return `${this.prefixCls}-button-type-${this.type}`;
+        return this.buttonType ? `${this.prefixCls}-button-type-${this.buttonType}` : undefined;
       },
       plainClass() {
         return this.plain ? `is-plain` : '';

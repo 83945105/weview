@@ -17,7 +17,9 @@ Vue.use(ElementUI);
 
 import weview from '../packages/index.js';
 // import '../lib/theme-chalk/index.css';
-Vue.use(weview);
+Vue.use(weview, {
+  // size: 'mini'
+});
 
 
 import DemoBlock from './components/demo-block';
