@@ -23,6 +23,8 @@ import Radio from './radio/index.js';
 import Menu from './menu/index.js';
 import MenuItem from './menu-item/index.js';
 import MenuItemGroup from './menu-item-group/index.js';
+import Skeleton from './skeleton/index.js';
+import {$Skeleton} from './skeleton/index.js';
 
 import PopupManager from './src/utils/popup.js';
 
@@ -38,7 +40,8 @@ const components = [
   Radio,
   Menu,
   MenuItem,
-  MenuItemGroup
+  MenuItemGroup,
+  Skeleton
 ];
 
 const install = function (Vue, options = {}) {
@@ -74,7 +77,9 @@ export {
   Radio,
   Menu,
   MenuItem,
-  MenuItemGroup
+  MenuItemGroup,
+  Skeleton,
+  $Skeleton
 }
 
 export default install;

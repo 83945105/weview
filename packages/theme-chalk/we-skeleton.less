@@ -70,15 +70,15 @@
       .picture-size(@skeleton-default-picture-width; @skeleton-default-picture-height);
 
       &-size{
-        &.large{
+        &-large{
           .picture-size(@skeleton-large-picture-width; @skeleton-large-picture-height);
         }
 
-        &.small{
+        &-small{
           .picture-size(@skeleton-small-picture-width; @skeleton-small-picture-height);
         }
 
-        &.mini{
+        &-mini{
           .picture-size(@skeleton-mini-picture-width; @skeleton-mini-picture-height);
         }
       }
@@ -105,6 +105,28 @@
         height: @skeleton-title-height;
         background-color: @skeleton-bg;
         margin-top: @skeleton-paragraph-li-spacing;
+      }
+    }
+  }
+
+  &-fail-prompt{
+    text-align: center;
+    position: relative;
+    top: 50%;
+    left: 0;
+    padding: 15px;
+    -wekkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    transform: translateY(-50%);
+
+    &-link{
+      text-decoration:none;
+      color: @skeleton-fail-prompt-link;
+      &:hover{
+        color: @skeleton-fail-prompt-link-hover;
+      }
+      &:active{
+        opacity: .6;
       }
     }
   }

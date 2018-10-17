@@ -25,35 +25,35 @@ export function toHumpFormat(str = "") {
 }
 
 export function isString(obj) {
-  return Object.prototype.toString.call(obj) === "[object String]";
+  return Object.prototype.toString.call(obj).toLowerCase() === "[object string]";
 }
 
 export function isNumber(obj) {
-  return Object.prototype.toString.call(obj) === "[object Number]";
+  return Object.prototype.toString.call(obj).toLowerCase() === "[object number]";
 }
 
 export function isBoolean(obj) {
-  return Object.prototype.toString.call(obj) === "[object Boolean]";
+  return Object.prototype.toString.call(obj).toLowerCase() === "[object boolean]";
 }
 
 export function isObject(obj) {
-  return Object.prototype.toString.call(obj) === "[object Object]";
+  return Object.prototype.toString.call(obj).toLowerCase() === "[object object]";
 }
 
 export function isArray(obj) {
-  return Object.prototype.toString.call(obj) === "[object Array]";
+  return Object.prototype.toString.call(obj).toLowerCase() === "[object array]";
 }
 
 export function isFunction(obj) {
-  return Object.prototype.toString.call(obj) === "[object Function]";
+  return Object.prototype.toString.call(obj).toLowerCase() === "[object function]";
 }
 
 export function isNull(obj) {
-  return Object.prototype.toString.call(obj) === "[object Null]";
+  return Object.prototype.toString.call(obj).toLowerCase() === "[object null]";
 }
 
 export function isUndefined(obj) {
-  return Object.prototype.toString.call(obj) === "[object Undefined]";
+  return Object.prototype.toString.call(obj).toLowerCase() === "[object undefined]";
 }
 
 export function isExist(obj) {
