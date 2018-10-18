@@ -370,7 +370,7 @@
                disabled-background-color="transparent"
                style="height: 100%;"
       >
-        <we-menu-item icon-name="edit">我的工作台</we-menu-item>
+        <we-menu-item icon-name="edit" :value="true" prompt="Ctrl+Enter">我的工作台</we-menu-item>
 
         <we-menu-item-group title="分组一" before-line>
           <we-menu-item icon-name="edit">选项一</we-menu-item>
@@ -396,7 +396,7 @@
 
               <we-menu-item>
 
-                <we-icon name="edit" slot="icon"></we-icon>
+                <we-icon name="edit" slot="icon" size="large"></we-icon>
 
                 三级菜单
 
@@ -531,19 +531,19 @@
 
 
         <we-menu-item>
-          <we-icon name="edit"></we-icon>
+          <we-icon name="edit" size="mini"></we-icon>
           <span style="margin-left: 5px">羽毛球</span>
         </we-menu-item>
         <we-menu-item-group title="分组" before-line after-line>
           <we-menu-item>
-            <we-icon name="edit"></we-icon>
+            <we-icon name="edit" size="mini"></we-icon>
             <span style="margin-left: 5px">乒乓球</span>
           </we-menu-item>
         </we-menu-item-group>
 
 
         <we-menu-item>
-          <we-icon name="edit"></we-icon>
+          <we-icon name="edit" size="mini"></we-icon>
           <span style="margin-left: 5px">二级菜单</span>
 
           <we-menu :subMenuVerticalShift="4" slot="subMenu" style="z-index: 999999;width: 200px">
@@ -566,7 +566,7 @@
         </we-menu-item>
 
         <we-menu-item>
-          <we-icon name="edit"></we-icon>
+          <we-icon name="edit" size="mini"></we-icon>
           <span style="margin-left: 5px">乒乓球</span>
 
           <we-menu :subMenuVerticalShift="4" slot="subMenu" style="z-index: 999999;width: 200px">

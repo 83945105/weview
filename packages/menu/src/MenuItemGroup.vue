@@ -20,7 +20,7 @@
     <h3 v-show="showTitle && title && menu.mode === 'vertical'"
         :class="[`${prefixCls}-menu-item-group-title`]"
         :style="[{
-          paddingLeft: `${indentNum * 15 + 50}px`
+          paddingLeft: `${indentNum * 15 + menu.iconWidth}px`
         }]"
     >{{title}}</h3>
 
@@ -34,7 +34,7 @@
       ></div>
       <div v-else-if="menu.mode === 'horizontal'"
            :class="[`${prefixCls}-menu-item-group-split-vertical is-after-line`]"
-           :style="{height: `${menu.height - 16}px`}"></div>
+           :style="{height: `${(menu.height || menu.iconWidth) - 16}px`}"></div>
     </template>
 
     <div :class="[`${prefixCls}-common-clear`]"></div>
@@ -78,9 +78,7 @@
 
     data() {
       return {
-        showTitle: true,
-        provideComponentType: undefined,//前一个组件 menuItem - 菜单项 menuItemGroup - 菜单项分组
-        nextComponentType: undefined//后一个组件
+        showTitle: true
       };
     },
 

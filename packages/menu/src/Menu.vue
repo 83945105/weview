@@ -7,14 +7,14 @@
          }]"
          :style="[showStyle, menuStyle,
          {
-          width: menuWidth,
-          height: menuHeight,
+          width: menuVerticalWidth,
+          height: menuHorizontalHeight,
           overflow: collapsing ? 'hidden' : undefined
          }]"
          @mouseenter.stop.self="handleMouseEnter"
          @mouseleave.stop.self="handleMouseLeave"
     >
-      <ul :class="[`${prefixCls}-menu`]" class="we-menu-size-small"
+      <ul :class="[`${prefixCls}-menu`, sizeClass]"
           :style="[menuStyle]">
         <slot></slot>
       </ul>
@@ -35,7 +35,7 @@
           const component = (
             <div v-show={this.isShow}
                  class={[`${this.prefixCls}-menu-external`, [this.isInit ? `${this.prefixCls}-common-position-init` : undefined]]}
-                 style={[this.showStyle, this.menuStyle, {width: this.menuWidth, height: this.menuHeight}]}>
+                 style={[this.showStyle, this.menuStyle, {width: this.menuVerticalWidth, height: this.menuHorizontalHeight}]}>
               <scroll-bar>
                 <ul class={`${this.prefixCls}-menu`}
                     style={this.menuStyle}>
@@ -172,6 +172,7 @@
         type: Boolean,
         default: true
       },
+      size: String,//菜单尺寸
       mode: {//菜单模式  vertical - 垂直  horizontal - 水平
         type: String,
         default: 'vertical',
@@ -186,10 +187,7 @@
         type: [Number, String],
         default: 240
       },
-      height: {
-        type: [Number, String],//菜单高度,仅当mode为 horizontal 时有效
-        default: 50
-      },
+      height: [Number, String],// 菜单高度,仅当mode为 horizontal 时有效
       subMenuMode: {//子菜单模式 local 在当前节点上展开 open 新打开菜单 当 mode 为 horizontal 时强制使用open
         type: String,
         default: 'local',
@@ -261,7 +259,6 @@
         menuItems: [],//当前菜单下的菜单项
         allMenuItems: [],//当前菜单下的所有菜单项
         menuItemGroups: [],//当前菜单下的分组
-        collapseWidth: 50,//折叠后的宽度
         isAccordion: this.accordion && this.mode === 'vertical',//是否是手风琴模式
         openAccordionTransition: false,//是否开启手风琴动画
         openCollapseTransition: false,//是否开启折叠动画
@@ -276,26 +273,45 @@
     },
 
     computed: {
-      menuWidth() {
+      menuSize() {
+        return this.size || (this.$WEVIEW || {}).size;
+      },
+      sizeClass() {
+        return this.menuSize ? `${this.prefixCls}-menu-size-${this.menuSize}` : undefined;
+      },
+      iconWidth() {// 图标宽度 控制 折叠后的宽度
+        if (this.menuSize === 'mini') {
+          return 32;
+        }
+        if (this.menuSize === 'small') {
+          return 40;
+        }
+        if (this.menuSize === 'large') {
+          return 60;
+        }
+        return 50;
+      },
+      menuVerticalWidth() {
         if (this.mode !== 'vertical') {
           return undefined;
         }
         if (this.isCollapse) {
-          return `${this.collapseWidth}px`;
+          return `${this.iconWidth}px`;
         }
         if (!isNaN(this.width)) {
           return `${this.width}px`;
         }
         return this.width;
       },
-      menuHeight() {
+      menuHorizontalHeight() {
         if (this.mode !== 'horizontal') {
           return undefined;
         }
-        if (!isNaN(this.height)) {
-          return `${this.height}px`;
+        let height = this.height || this.iconWidth;
+        if (!isNaN(height)) {
+          return `${height}px`;
         }
-        return this.height;
+        return height;
       },
       showStyle() {
         if (this.isRoot) {
