@@ -174,12 +174,22 @@
       },
       handleClickReload() {
         this.visible = true;
+        this.$emit('reload');
       },
       startTimeout() {
         if (!this.timeout) {
           return;
         }
         this.timeoutIndex = setTimeout(() => this.visible = 500, this.timeout);
+      },
+      start() {
+        this.visible = true;
+      },
+      finish() {
+        this.visible = false;
+      },
+      error(errorCode = 500) {
+        this.visible = errorCode;
       }
     },
 

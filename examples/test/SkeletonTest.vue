@@ -1,5 +1,39 @@
 <template>
   <div>
+    <!--JS-->
+    <div class="first-title">JS</div>
+    <we-button @click="$skeleton.startAll()">全部开始</we-button>
+    <we-button @click="$skeleton.finishAll()">全部完成</we-button>
+    <we-button @click="$skeleton.errorAll(403)">全部403</we-button>
+    <we-button @click="jsSkeleton.start()">骨架屏</we-button>
+    <we-button @click="jsSkeleton.error(404)">加载失败</we-button>
+    <we-button @click="jsSkeleton.finish()">原内容</we-button>
+    <div class="module-main">
+      <div id="skeleton01" class="module-content" style="height: 200px">
+
+        6+4646464646464
+        <we-button type="primary" :loading="true">按钮</we-button>
+
+      </div>
+    </div>
+    <!--/JS-->
+    <!--指令-->
+    <div class="first-title">指令</div>
+    <we-button @click="$skeleton.startAll()">全部开始</we-button>
+    <we-button @click="$skeleton.finishAll()">全部完成</we-button>
+    <we-button @click="$skeleton.errorAll(403)">全部403</we-button>
+    <we-button @click="jsShowOne = 1">骨架屏</we-button>
+    <we-button @click="jsShowOne = 403">加载失败</we-button>
+    <we-button @click="jsShowOne = 0">原内容</we-button>
+    <div class="module-main">
+      <div v-skeleton="{value: jsShowOne, animation: true}" class="module-content" style="height: 200px">
+
+        2333333333333333333333333333
+        <we-button type="primary" :loading="true">按钮2</we-button>
+
+      </div>
+    </div>
+    <!--/JS-->
     <!--基本-->
     <div class="first-title">基本</div>
     <we-button @click="showOne = 1">骨架屏</we-button>
@@ -7,8 +41,7 @@
     <we-button @click="showOne = 0">原内容</we-button>
     <div class="module-main">
       <div class="module-content" style="height: 200px">
-
-        <we-skeleton v-model="showOne" :paragraph-rows="3" :timeout="3000"
+        <we-skeleton ref="skeleton02" v-model="showOne" :paragraph-rows="3" :timeout="3000"
                      :paragraph-width="['100%', '90%', '80%', '70%', '60%', '50%', '40%']"
         >
           654646
@@ -21,7 +54,6 @@
           2
           34
         </we-skeleton>
-
       </div>
     </div>
     <!--/基本-->
@@ -73,14 +105,20 @@
     },
     data() {
       return {
+        jsShowOne: 1,
+        jsSkeleton: undefined,
         showOne: 1
       }
     },
 
     computed: {},
 
-    created() {
-      this.$skeleton();
+    mounted() {
+
+      this.jsSkeleton = this.$skeleton({
+        target: '#skeleton01'
+      });
+
     }
   }
 </script>

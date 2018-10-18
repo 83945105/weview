@@ -1,6 +1,6 @@
 import Skeleton from './src/Skeleton.vue';
 import $Skeleton from './src/skeleton.js';
-// import LoadingDirective from './src/directive.js';
+import SkeletonDirective from './src/directive.js';
 
 const merge = require('webpack-merge');
 
@@ -12,7 +12,7 @@ Skeleton.install = function (Vue, options = DefaultLoadingOptions) {
 
   Vue.component(Skeleton.name, Skeleton);
 
-  // Vue.use(LoadingDirective);
+  Vue.use(SkeletonDirective);
 
   let opts = merge(DefaultLoadingOptions, options);
 

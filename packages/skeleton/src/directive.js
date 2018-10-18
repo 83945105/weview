@@ -1,19 +1,23 @@
-import {$Loading} from '../index.js';
+import {$Skeleton} from '../index.js';
+import merge from "../../src/utils/merge.js";
+import {isBoolean, isNumber, isObject} from "../../src/utils/util.js";
 
-const merge = require('webpack-merge');
+const SkeletonDirective = {};
 
-const LoadingDirective = {};
-
-LoadingDirective.install = Vue => {
+SkeletonDirective.install = Vue => {
   if (Vue.prototype.$isServer) {
     return;
   }
 
-  const typeCallback = (opts, objectCallback, booleanCallback) => {
-    if (typeof opts === 'object') {
-      objectCallback();
-    } else if (typeof opts === 'boolean') {
-      booleanCallback();
+  const typeCallback = (target, options) => {
+    if (isObject(target)) {
+      options.objectCallback && options.objectCallback();
+    } else if (isBoolean(target)) {
+      options.booleanCallback && options.booleanCallback();
+    } else if (isNumber(target)) {
+      options.numberCallback && options.numberCallback();
+    } else {
+      throw new Error('options type error.');
     }
   };
 
@@ -21,45 +25,51 @@ LoadingDirective.install = Vue => {
     if (el.vm) {
       return;
     }
-    let opts = {
-      target: el
-    };
-    typeCallback(binding.value, () => {
-      opts = merge({target: el}, binding.value, binding.modifiers);
-    }, () => {
-      opts = {
-        target: el,
-        value: binding.value
-      };
-      opts = merge(opts, binding.modifiers);
+    let options = {};
+    typeCallback(binding.value, {
+      objectCallback: () => {
+        options = merge({target: el}, binding.value, binding.modifiers);
+      },
+      booleanCallback: () => {
+        options = merge({target: el, value: binding.value}, binding.modifiers);
+      },
+      numberCallback: () => {
+        options = merge({target: el, value: binding.value}, binding.modifiers);
+      }
     });
-    if (opts.value) {
-      el.vm = $Loading(opts);
+    if (options.value) {
+      el.vm = $Skeleton(options);
     }
   };
 
-  Vue.directive('loading', {
+  Vue.directive('skeleton', {
     bind(el, binding, vnode) {
       create(el, binding);
     },
     update(el, binding, vnode, oldVnode) {
       if (binding.oldValue !== binding.value) {
-        let v = false;
-        typeCallback(binding.value, () => {
-          v = binding.value.value || false;
-        }, () => {
-          v = binding.value;
+        let value;
+        typeCallback(binding.value, {
+          objectCallback: () => {
+            value = binding.value.value || false;
+          },
+          booleanCallback: () => {
+            value = binding.value;
+          },
+          numberCallback: () => {
+            value = binding.value;
+          }
         });
-        if (v) {
-          create(el, binding);
+        if (value === true || value === 1) {
+          el.vm && el.vm.start();
+        } else if (value === false || value === 0) {
+          el.vm && el.vm.finish();
         } else {
-          el.vm && el.vm.close();
-          el.vm = undefined;
+          el.vm && el.vm.error(value);
         }
       }
     }
   });
-
 };
 
-export default LoadingDirective;
+export default SkeletonDirective;
