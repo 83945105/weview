@@ -96,6 +96,11 @@
             "path": "/confirmTest"
           },
           {
+            "desc": "PopperJs测试",
+            "name": "PopperJsTest",
+            "path": "/popperJsTest"
+          },
+          {
             "desc": "文字提示",
             "name": "TooltipTest",
             "path": "/tooltipTest"

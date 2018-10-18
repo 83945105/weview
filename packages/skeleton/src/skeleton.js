@@ -7,6 +7,14 @@ const Default = {};
 let seed = 1;
 let instances = [];
 
+export const getId = function () {
+  return `skeleton-${seed++}`;
+};
+
+export const addInstance = function (instance) {
+  instances.push(instance);
+};
+
 const Skeleton = (options = {}) => {
   if (Vue.prototype.$isServer) {
     return;
@@ -19,7 +27,7 @@ const Skeleton = (options = {}) => {
 
   const html = options.target.innerHTML;
 
-  let id = `layer-${seed++}`;
+  let id = getId();
 
   let vm = new Vue({
     render(h) {
@@ -47,7 +55,7 @@ const Skeleton = (options = {}) => {
 
   skeleton.id = id;
 
-  instances.push(skeleton);
+  addInstance(skeleton);
 
   return skeleton;
 

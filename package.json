@@ -44,10 +44,11 @@
   "style": "lib/theme-chalk/index.css",
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
+    "popper.js": "^1.14.4",
+    "resize-observer-polyfill": "^1.5.0",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
-    "wetemplate": "0.0.3-dev",
-    "resize-observer-polyfill": "^1.5.0"
+    "wetemplate": "0.0.3-dev"
   },
   "peerDependencies": {
     "vue": "^2.5.2",
