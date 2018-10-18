@@ -1,0 +1,211 @@
+@import "./src/common/var.less";
+@import "./src/common/mixins.less";
+
+@popover-css-prefix: ~"@{css-prefix}popover";
+
+.popover-type(@popover-bg; @popover-color; @popover-shadow; @popover-border-color; @popover-border-bg) {
+  .@{popover-css-prefix}-inner {
+    background-color: @popover-bg;
+    color: @popover-color;
+    -webkit-box-shadow: @popover-shadow;
+    box-shadow: @popover-shadow;
+    border: 1px solid @popover-border-color;
+  }
+
+  .@{popover-css-prefix}-arrow {
+    &-top,
+    &-topLeft,
+    &-topRight {
+      border-top-color: @popover-border-color;
+      &::after {
+        border-top-color: @popover-border-bg;
+      }
+    }
+
+    &-right,
+    &-rightTop,
+    &-rightBottom {
+      border-right-color: @popover-border-color;
+      &::after {
+        border-right-color: @popover-border-bg;
+      }
+    }
+
+    &-bottom,
+    &-bottomLeft,
+    &-bottomRight {
+      border-bottom-color: @popover-border-color;
+      &::after {
+        border-bottom-color: @popover-border-bg;
+      }
+    }
+
+    &-left,
+    &-leftTop,
+    &-leftBottom {
+      border-left-color: @popover-border-color;
+      &::after {
+        border-left-color: @popover-border-bg;
+      }
+    }
+  }
+}
+
+.@{popover-css-prefix} {
+  .mixin-default;
+  .mixin-border-box;
+  line-height: 1.4;
+  position: absolute;
+  display: block;
+  max-width: 300px;
+
+  &-type {
+    &-dark {
+      .popover-type(@popover-dark-bg; @popover-dark-color; @popover-dark-shadow; @popover-dark-border-color; @popover-dark-border-bg);
+      .@{popover-css-prefix}-inner-title{
+        border-bottom-color: #999999;
+      }
+    }
+    &-light {
+      .popover-type(@popover-light-bg; @popover-light-color; @popover-light-shadow; @popover-light-border-color; @popover-light-border-bg);
+      .@{popover-css-prefix}-inner-title{
+        border-bottom-color: #dddddd;
+      }
+    }
+  }
+
+  &-inner {
+    .mixin-scrollbar;
+    .mixin-h-scroll;
+    border-radius: @popover-radius;
+    padding: @popover-default-size;
+
+    &-title {
+      font-size: @popover-default-title-font-size;
+      padding: @popover-default-title-size;
+      border-bottom: 1px dotted transparent;
+    }
+
+    &-content {
+      .mixin-wordwrap;
+      line-height: 1.6;
+      padding: @popover-default-content-size;
+    }
+
+    &-button {
+      padding: @popover-default-button-size;
+      &.is-center {
+        text-align: center;
+      }
+      &.is-right {
+        text-align: right;
+      }
+    }
+  }
+
+  &-arrow,
+  &-arrow::after {
+    .mixin-border-box;
+    content: " ";
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    border: solid transparent;
+  }
+
+  &-arrow {
+    z-index: 1;
+    border-width: 10px;
+  }
+  &-arrow::after {
+    z-index: 0;
+    border-width: 8px;
+  }
+
+  &-arrow {
+    &-top,
+    &-topLeft,
+    &-topRight {
+      bottom: -7px;
+      border-width: 8px 8px 0 8px;
+      &::after {
+        bottom: -7px;
+        left: -8px;
+      }
+    }
+    &-top {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    &-topLeft {
+      left: 14px;
+    }
+    &-topRight {
+      right: 14px;
+    }
+
+    &-right,
+    &-rightTop,
+    &-rightBottom {
+      left: -7px;
+      border-width: 8px 8px 8px 0;
+      &::after {
+        bottom: -8px;
+        left: -7px;
+      }
+    }
+    &-right {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    &-rightTop {
+      bottom: 8px;
+    }
+    &-rightBottom {
+      top: 8px;
+    }
+
+    &-bottom,
+    &-bottomLeft,
+    &-bottomRight {
+      top: -7px;
+      border-width: 0 8px 8px 8px;
+      &::after {
+        top: -7px;
+        left: -8px;
+      }
+    }
+    &-bottom {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    &-bottomLeft {
+      left: 14px;
+    }
+    &-bottomRight {
+      right: 14px;
+    }
+
+    &-left,
+    &-leftTop,
+    &-leftBottom {
+      right: -7px;
+      border-width: 8px 0 8px 8px;
+      &::after {
+        bottom: -8px;
+        right: -7px;
+      }
+    }
+    &-left {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    &-leftTop {
+      bottom: 8px;
+    }
+    &-leftBottom {
+      top: 8px;
+    }
+  }
+}

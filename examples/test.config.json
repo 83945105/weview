@@ -99,6 +99,11 @@
             "desc": "文字提示",
             "name": "TooltipTest",
             "path": "/tooltipTest"
+          },
+          {
+            "desc": "弹出框",
+            "name": "PopoverTest",
+            "path": "/PopoverTest"
           }
         ]
       },
