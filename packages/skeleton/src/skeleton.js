@@ -15,43 +15,45 @@ export const addInstance = function (instance) {
   instances.push(instance);
 };
 
-const Skeleton = (options = {}) => {
+const Skeleton = (properties = {}) => {
+
   if (Vue.prototype.$isServer) {
     return;
   }
-  options = merge({}, Default, options);
-  if (typeof options.target === 'string') {
-    options.target = document.querySelector(options.target);
+  const __props__ = merge({}, Default, properties);
+  if (typeof __props__.target === 'string') {
+    __props__.target = document.querySelector(__props__.target);
   }
-  options.target = options.target || document.body;
+  __props__.target = __props__.target || document.body;
 
-  const html = options.target.innerHTML;
+  const html = __props__.target.innerHTML;
 
   let id = getId();
 
-  let vm = new Vue({
+  let component = new Vue({
     render(h) {
-      options.value = true;
       return h(WeSkeleton, {
-        props: options,
+        props: merge({}, __props__, {
+          value: true
+        }),
         scopedSlots: {
           default: props => {
-            return options.render ? options.render(h, props) : h('div', {
+            return __props__.render ? __props__.render(h, props) : h('div', {
               domProps: {
                 innerHTML: html
               }
             });
           },
           error: props => {
-            return options.errorRender ? options.errorRender(h, props) : undefined;
+            return __props__.errorRender ? __props__.errorRender(h, props) : undefined;
           }
         }
       });
     }
   }).$mount();
-  options.target.innerHTML = '';
-  options.target.appendChild(vm.$el);
-  const skeleton = vm.$children[0];
+  __props__.target.innerHTML = '';
+  __props__.target.appendChild(component.$el);
+  const skeleton = component.$children[0];
 
   skeleton.id = id;
 

@@ -22,7 +22,6 @@
 
     mounted() {
 
-      setTimeout(() => {
         let reference = document.body.querySelector(".my-button");
         let tip = document.body.querySelector(".tip");
 
@@ -36,7 +35,6 @@
           },
           modifiers: {},
         });
-      }, 1000)
 
     }
   }

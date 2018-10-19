@@ -212,6 +212,12 @@
         if (this.value !== v) {
           this.$emit('input', v);
         }
+        if (v) {
+          this.handleItemSelected();
+          this.$emit('selected', v, this);
+        } else {
+          this.$emit('un-selected', v, this);
+        }
       },
       expand(v) {
         if (v) {
@@ -282,12 +288,13 @@
             return;
           }
           this.expand = !this.expand;
-          this.$emit('click', e, this);
           return;
         }
-        if (this.selected) {
-          return;
+        if (!this.selected) {
+          this.selected = true;
         }
+      },
+      handleItemSelected() {
         //关闭所在菜单到根菜单之外所有打开的菜单
         this.menu.lockToRootMenu();
         this.rootMenu.allSubMenus.forEach(sm => {
@@ -298,21 +305,21 @@
         this.menu.unLockToRootMenu();
         //取消所有菜单项选中效果
         this.rootMenu.allMenuItems.forEach(m => {
-          m.selected = false;
-          m.active = false;
+          if (m !== this) {
+            m.selected = false;
+            m.active = false;
+          }
         });
         //如果有上级菜单项,使其激活
         if (this.parentMenuItem) {
-          this.parentMenuItem.handleItemActive({menu: this.menu, item: this});
+          this.parentMenuItem.handleItemActiveToRoot({menu: this.menu, item: this});
         }
-        this.selected = true;
-        this.$emit('click', e, this);
       },
-      handleItemActive({menu, item}) {
+      handleItemActiveToRoot({menu, item}) {
         this.active = true;
         //如果有上级菜单项,使其激活
         if (this.parentMenuItem) {
-          this.parentMenuItem.handleItemActive({menu: menu, item: item});
+          this.parentMenuItem.handleItemActiveToRoot({menu: menu, item: item});
         }
       }
     },
@@ -325,7 +332,7 @@
     mounted() {
       if (this.value && !this.hasSubMenu) {
         this.selected = true;
-        this.parentMenuItem && this.parentMenuItem.handleItemActive({menu: this.menu, item: this});
+        this.parentMenuItem && this.parentMenuItem.handleItemActiveToRoot({menu: this.menu, item: this});
       }
     }
   }

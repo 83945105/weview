@@ -1,7 +1,10 @@
 <template>
-  <div class="we-tooltip we-tooltip-type-dark" style="top: 48px; left: 373px;">
-    <div class="we-tooltip-inner">
-      <div class="we-tooltip-inner-content">
+  <div :class="[
+        `${prefixCls}-tooltip`,
+        effect === '' ? `${prefixCls}-tooltip-type-dark` : `${prefixCls}-tooltip-type-light`
+        ]">
+    <div :class="`${prefixCls}-tooltip-inner`">
+      <div :class="`${prefixCls}-tooltip-inner-content`">
         <slot>{{content}}</slot>
       </div>
     </div>
@@ -41,18 +44,18 @@
         default: 'bottom',
         validator(value) {
           return [
-            "left",
             "top",
-            "right",
+            "top-start",
+            "top-end",
             "bottom",
-            "topLeft",
-            "topRight",
-            "bottomLeft",
-            "bottomRight",
-            "leftTop",
-            "leftBottom",
-            "rightTop",
-            "rightBottom"
+            "bottom-start",
+            "bottom-end",
+            "left",
+            "left-start",
+            "left-end",
+            "right",
+            "right-start",
+            "right-end"
           ].indexOf(value) !== -1;
         }
       }

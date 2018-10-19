@@ -10,6 +10,7 @@
     <p></p>
     <button @click="$refs.menu.openAllSubMenu()">打开根菜单下所有子菜单</button>
     <button @click="$refs.menu.closeAllSubMenu()">收起根菜单下所有子菜单</button>
+    <button @click="selectedValue01 = true">测试非点击触发选中切换</button>
     <p></p>
     <button @click="menuShow = !menuShow">打开/关闭</button>
     <button @click="collapse = !collapse">折叠/展开</button>
@@ -53,7 +54,7 @@
                      index="二级菜单">
 
               <we-menu-item-group title="分组">
-                <we-menu-item icon-name="edit">二级选项一</we-menu-item>
+                <we-menu-item v-model="selectedValue01" icon-name="edit">二级选项一</we-menu-item>
               </we-menu-item-group>
 
               <we-menu-item>
@@ -293,6 +294,7 @@
         openMenuIndex: '0',
         closeMenuIndex: '0',
         collapse: false,
+        selectedValue01: false,
 
         hMenuShow: true,
         hOpenMenuIndex: '0',
