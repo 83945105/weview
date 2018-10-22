@@ -107,8 +107,8 @@
         subMenuModeIsOpen: this.menu.mode === 'horizontal' || this.menu.subMenuMode === 'open',//子菜单是否是打开模式
         subMenuTriggerIsHover: (this.menu.mode === 'horizontal' || this.menu.subMenuMode === 'open') && this.menu.subMenuTrigger === 'hover',//子菜单是否是悬浮触发
         subMenuHoverLeaveTimeIndex: undefined,
-        showArrow: true,
-        selected: false,//是否选中
+        showArrow: !this.menu.isCollapse,
+        selected: this.value,//是否选中
         active: false,//是否激活
         expand: false,//是否展开
         hover: false,//是否悬浮
@@ -205,22 +205,25 @@
     },
 
     watch: {
-      value(v) {
-        this.selected = v;
+      value(val) {
+        this.selected = val;
       },
-      selected(v) {
-        if (this.value !== v) {
-          this.$emit('input', v);
-        }
-        if (v) {
-          this.handleItemSelected();
-          this.$emit('selected', v, this);
-        } else {
-          this.$emit('un-selected', v, this);
+      selected: {
+        immediate: true,
+        handler(val) {
+          if (this.value !== val) {
+            this.$emit('input', val);
+          }
+          if (val) {
+            this.handleItemSelected();
+            this.$emit('selected', val, this);
+          } else {
+            this.$emit('un-selected', val, this);
+          }
         }
       },
-      expand(v) {
-        if (v) {
+      expand(val) {
+        if (val) {
           this.subMenu.showMenu(false);
         } else {
           this.subMenu.hideMenu(false);
@@ -276,7 +279,7 @@
         }
       },
       handleClick(e) {
-        if (this.disabled) {
+        if (this.disabled || this.$slots.panel) {
           return;
         }
         /*        console.log(e.offsetX)
@@ -327,13 +330,7 @@
     created() {
       this.menu.addMenuItem(this);
       this.menu.addAllMenuItem(this);
-    },
-
-    mounted() {
-      if (this.value && !this.hasSubMenu) {
-        this.selected = true;
-        this.parentMenuItem && this.parentMenuItem.handleItemActiveToRoot({menu: this.menu, item: this});
-      }
     }
+
   }
 </script>

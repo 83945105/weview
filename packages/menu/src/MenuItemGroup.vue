@@ -78,7 +78,7 @@
 
     data() {
       return {
-        showTitle: true
+        showTitle: !this.menu.isCollapse,
       };
     },
 

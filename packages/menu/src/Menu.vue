@@ -3,14 +3,16 @@
     <div v-show="isShow"
          :class="[`${prefixCls}-menu-external`, [isInit? `${prefixCls}-common-position-init` : undefined],
          {
-          'is-collapse': openAccordionTransition
+          'is-collapse': openCollapseTransition,
+          'is-accordion': openAccordionTransition,
+          'is-accordion-collapse': openCollapseTransition && openAccordionTransition
          }]"
          :style="[showStyle, menuStyle,
          {
           width: menuVerticalWidth,
           height: menuHorizontalHeight,
           overflow: collapsing ? 'hidden' : undefined,
-          zIndex: menuZindex
+          zIndex: menuZIndex
          }]"
          @mouseenter.stop.self="handleMouseEnter"
          @mouseleave.stop.self="handleMouseLeave"
@@ -28,7 +30,6 @@
 
   import Conf from '../../src/mixins/conf.js';
   import Emitter from '../../src/mixins/emitter.js';
-  import ScrollBar from '../../scrollbar/index.js';
   import PopupManager from '../../src/utils/popup.js';
 
   export default {
@@ -58,7 +59,7 @@
         },*/
 
     components: {
-      ScrollBar: ScrollBar, 'menu-accordion-transition': {
+      'menu-accordion-transition': {
         functional: true,
         render(createElement, context) {
           return createElement('transition', {
@@ -296,7 +297,7 @@
         }
         return 50;
       },
-      menuZindex() {
+      menuZIndex() {
         return this.zIndex + 1;
       },
       menuVerticalWidth() {
@@ -359,28 +360,29 @@
     },
 
     watch: {
-      value(v) {
-        this.isShow = v;
+      value(val) {
+        this.isShow = val;
       },
-      isShow(v) {
+      isShow(val) {
         if (this.menuItem) {
-          this.menuItem.expand = v;
+          this.menuItem.expand = val;
         }
-        if (this.value !== v) {
-          this.$emit('input', v);
+        if (this.value !== val) {
+          this.$emit('input', val);
         }
       },
-      collapse(v) {
+      collapse(val) {
+        //这里不直接赋值给isCollapse是因为要先收起 再根据 设置的延迟 再 collapse 所以调用方法
         if (this.mode === 'horizontal') {
           return;
         }
-        if (v) {
+        if (val) {
           this.collapseMenu();
         } else {
           this.expandMenu();
         }
       },
-      isCollapse() {
+      isCollapse(val) {
         window.clearTimeout(this.collapsingTimeIndex);
         this.collapsing = true;
         this.collapsingTimeIndex = setTimeout(() => this.collapsing = false, 300);
@@ -511,7 +513,7 @@
         this.subMenus.forEach(m => m.hideMenu(cache));
       },
       collapseMenu() {
-        if (this.locked) {
+        if (this.locked || this.isCollapse) {
           return;
         }
         window.clearTimeout(this.collapseDelayTimeIndex);
@@ -523,7 +525,7 @@
         }, this.collapseDelay);
       },
       expandMenu() {
-        if (this.locked) {
+        if (this.locked || !this.isCollapse) {
           return;
         }
         window.clearTimeout(this.collapseDelayTimeIndex);
@@ -555,17 +557,10 @@
         this.isShow = !this.parentMenu.isCollapse && this.value && !this.menuItem.subMenuModeIsOpen;
         this.menuItem.expand = this.isShow;
       }
-      if (this.isCollapse) {
-        this.collapseMenu();
-        this.menuItems.forEach(m => m.showArrow = false);
-        this.menuItemGroups.forEach(m => m.showTitle = false);
-      } else {
-        this.menuItems.forEach(m => m.showArrow = true);
-        this.menuItemGroups.forEach(m => m.showTitle = true);
-      }
       setTimeout(() => {
         this.isInit = false;
-        this.openAccordionTransition = true;
+        this.openAccordionTransition = this.accordionTransition;
+        this.openCollapseTransition = this.collapseTransition;
       }, 300);
     }
 

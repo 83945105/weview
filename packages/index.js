@@ -25,6 +25,7 @@ import MenuItem from './menu-item/index.js';
 import MenuItemGroup from './menu-item-group/index.js';
 import Skeleton from './skeleton/index.js';
 import {$Skeleton} from './skeleton/index.js';
+import Tooltip from './tooltip/index.js';
 
 import PopupManager from './src/utils/popup.js';
 
@@ -41,7 +42,8 @@ const components = [
   Menu,
   MenuItem,
   MenuItemGroup,
-  Skeleton
+  Skeleton,
+  Tooltip
 ];
 
 const install = function (Vue, options = {}) {
@@ -79,7 +81,8 @@ export {
   MenuItem,
   MenuItemGroup,
   Skeleton,
-  $Skeleton
+  $Skeleton,
+  Tooltip
 }
 
 export default install;

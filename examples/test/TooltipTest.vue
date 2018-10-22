@@ -5,52 +5,57 @@
       <div class="module-content">
         <div class="tooltip-layout-main" ref="direction8">
           <div class="tooltip-layout" style="margin-left: 70px">
-            <we-button size="small" class="tooltip-btn"
-                       @mouseenter.native.stop="isTopLeftShow =! isTopLeftShow"
-                       @mouseleave.native.stop="isTopLeftShow =! isTopLeftShow">TL</we-button>
-            <we-button size="small" class="tooltip-btn"
-                       @mouseenter.native.stop="isTopShow =! isTopShow"
-                       @mouseleave.native.stop="isTopShow =! isTopShow">Top
+            <we-tooltip content="23333333333333333333">
+              <we-button size="small" class="tooltip-btn">TL</we-button>
+            </we-tooltip>
+            <we-button size="small" class="tooltip-btn">Top
             </we-button>
-            <we-button size="small" class="tooltip-btn"
-                       @mouseenter.native.stop="isTopRightShow =! isTopRightShow"
-                       @mouseleave.native.stop="isTopRightShow =! isTopRightShow">TR</we-button>
+            <we-button size="small" class="tooltip-btn">TR</we-button>
           </div>
 
           <div class="tooltip-layout is-left">
             <we-button size="small" class="tooltip-btn"
                        @mouseenter.native.stop="isLeftTopShow =! isLeftTopShow"
-                       @mouseleave.native.stop="isLeftTopShow =! isLeftTopShow">LT</we-button>
+                       @mouseleave.native.stop="isLeftTopShow =! isLeftTopShow">LT
+            </we-button>
             <we-button size="small" class="tooltip-btn"
                        @mouseenter.native.stop="isLeftShow =! isLeftShow"
-                       @mouseleave.native.stop="isLeftShow =! isLeftShow">Left</we-button>
+                       @mouseleave.native.stop="isLeftShow =! isLeftShow">Left
+            </we-button>
             <we-button size="small" class="tooltip-btn"
                        @mouseenter.native.stop="isLeftBottomShow =! isLeftBottomShow"
-                       @mouseleave.native.stop="isLeftBottomShow =! isLeftBottomShow">LB</we-button>
+                       @mouseleave.native.stop="isLeftBottomShow =! isLeftBottomShow">LB
+            </we-button>
           </div>
 
           <div class="tooltip-layout is-right">
             <we-button size="small" class="tooltip-btn"
                        @mouseenter.native.stop="isRightTopShow =! isRightTopShow"
-                       @mouseleave.native.stop="isRightTopShow =! isRightTopShow">RT</we-button>
+                       @mouseleave.native.stop="isRightTopShow =! isRightTopShow">RT
+            </we-button>
             <we-button size="small" class="tooltip-btn"
                        @mouseenter.native.stop="isRightShow =! isRightShow"
-                       @mouseleave.native.stop="isRightShow =! isRightShow">Right</we-button>
+                       @mouseleave.native.stop="isRightShow =! isRightShow">Right
+            </we-button>
             <we-button size="small" class="tooltip-btn"
                        @mouseenter.native.stop="isRightBottomShow =! isRightBottomShow"
-                       @mouseleave.native.stop="isRightBottomShow =! isRightBottomShow">RB</we-button>
+                       @mouseleave.native.stop="isRightBottomShow =! isRightBottomShow">RB
+            </we-button>
           </div>
 
           <div class="tooltip-layout tooltip-layout-clear" style="margin-left: 70px">
             <we-button size="small" class="tooltip-btn"
                        @mouseenter.native.stop="isBottomLeftShow =! isBottomLeftShow"
-                       @mouseleave.native.stop="isBottomLeftShow =! isBottomLeftShow">BL</we-button>
+                       @mouseleave.native.stop="isBottomLeftShow =! isBottomLeftShow">BL
+            </we-button>
             <we-button size="small" class="tooltip-btn"
                        @mouseenter.native.stop="isBottomShow =! isBottomShow"
-                       @mouseleave.native.stop="isBottomShow =! isBottomShow">Bottom</we-button>
+                       @mouseleave.native.stop="isBottomShow =! isBottomShow">Bottom
+            </we-button>
             <we-button size="small" class="tooltip-btn"
                        @mouseenter.native.stop="isBottomRightShow =! isBottomRightShow"
-                       @mouseleave.native.stop="isBottomRightShow =! isBottomRightShow">BR</we-button>
+                       @mouseleave.native.stop="isBottomRightShow =! isBottomRightShow">BR
+            </we-button>
           </div>
 
           <!--TopLeft-->
@@ -210,7 +215,8 @@
       <div class="module-content">
         <we-button size="small" class="tooltip-btn"
                    @mouseenter.native.stop="isDarkShow =! isDarkShow"
-                   @mouseleave.native.stop="isDarkShow =! isDarkShow">Dark</we-button>
+                   @mouseleave.native.stop="isDarkShow =! isDarkShow">Dark
+        </we-button>
         <we-button size="small" class="tooltip-btn"
                    @mouseenter.native.stop="isLightShow =! isLightShow"
                    @mouseleave.native.stop="isLightShow =! isLightShow">Light
@@ -248,10 +254,11 @@
 <script>
   import weButton from "../../packages/button/src/Button.vue";
   import weAnimation from "../../packages/animation/src/Animation.vue";
+
   export default {
     name: "tooltip-test",
 
-    components:{weButton, weAnimation},
+    components: {weButton, weAnimation},
 
     data() {
       return {
@@ -279,8 +286,7 @@
       };
     },
 
-    methods: {
-    },
+    methods: {},
 
     created() {
     },

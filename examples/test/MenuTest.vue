@@ -18,6 +18,8 @@
     <!--@mouseleave.native="collapse = true"-->
     <div style="height: 1000px;width: 240px; position: relative; border: 1px solid #e5e5e5;">
       <we-menu v-model="menuShow"
+               :accordion-transition="true"
+               :collapse-transition="true"
                index="根菜单"
                :accordion="false"
                :collapse="collapse"
@@ -242,6 +244,12 @@
 
         </we-menu-item>
 
+        <we-menu-item-group before-line after-line>
+          <we-menu-item>
+            <we-icon name="edit" slot="panel" style="font-size: 22px"></we-icon>
+          </we-menu-item>
+        </we-menu-item-group>
+
       </we-menu>
     </div>
 
@@ -293,7 +301,7 @@
         menuShow: true,
         openMenuIndex: '0',
         closeMenuIndex: '0',
-        collapse: false,
+        collapse: true,
         selectedValue01: false,
 
         hMenuShow: true,

@@ -59,6 +59,9 @@
   display: block;
   max-width: 260px;
 
+  &-rel {
+    display: inline-block;
+  }
   &-type {
     &-dark {
       .tooltip-type(@tooltip-dark-bg; @tooltip-dark-color; @tooltip-dark-shadow; @tooltip-dark-border-color; @tooltip-dark-border-bg);
@@ -73,7 +76,7 @@
     .mixin-h-scroll;
     border-radius: @tooltip-radius;
 
-    &-content{
+    &-content {
       .mixin-wordwrap;
       padding: @tooltip-default-size;
     }
@@ -90,11 +93,11 @@
     border: solid transparent;
   }
 
-  &-arrow{
+  &-arrow {
     z-index: 1;
     border-width: 10px;
   }
-  &-arrow::after{
+  &-arrow::after {
     z-index: 0;
     border-width: 8px;
   }
@@ -105,7 +108,7 @@
     &-topRight {
       bottom: -7px;
       border-width: 8px 8px 0 8px;
-      &::after{
+      &::after {
         bottom: -7px;
         left: -8px;
       }
@@ -126,7 +129,7 @@
     &-rightBottom {
       left: -7px;
       border-width: 8px 8px 8px 0;
-      &::after{
+      &::after {
         bottom: -8px;
         left: -7px;
       }
@@ -147,7 +150,7 @@
     &-bottomRight {
       top: -7px;
       border-width: 0 8px 8px 8px;
-      &::after{
+      &::after {
         top: -7px;
         left: -8px;
       }
@@ -168,7 +171,7 @@
     &-leftBottom {
       right: -7px;
       border-width: 8px 0 8px 8px;
-      &::after{
+      &::after {
         bottom: -8px;
         right: -7px;
       }
