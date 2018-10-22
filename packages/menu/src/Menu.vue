@@ -9,7 +9,8 @@
          {
           width: menuVerticalWidth,
           height: menuHorizontalHeight,
-          overflow: collapsing ? 'hidden' : undefined
+          overflow: collapsing ? 'hidden' : undefined,
+          zIndex: menuZindex
          }]"
          @mouseenter.stop.self="handleMouseEnter"
          @mouseleave.stop.self="handleMouseLeave"
@@ -28,6 +29,7 @@
   import Conf from '../../src/mixins/conf.js';
   import Emitter from '../../src/mixins/emitter.js';
   import ScrollBar from '../../scrollbar/index.js';
+  import PopupManager from '../../src/utils/popup.js';
 
   export default {
     /*
@@ -188,6 +190,12 @@
         default: 240
       },
       height: [Number, String],// 菜单高度,仅当mode为 horizontal 时有效
+      zIndex: {
+        type: Number,
+        default() {
+          return PopupManager.nextZIndex();
+        }
+      },
       subMenuMode: {//子菜单模式 local 在当前节点上展开 open 新打开菜单 当 mode 为 horizontal 时强制使用open
         type: String,
         default: 'local',
@@ -290,6 +298,9 @@
           return 60;
         }
         return 50;
+      },
+      menuZindex() {
+        return this.zIndex + 1;
       },
       menuVerticalWidth() {
         if (this.mode !== 'vertical') {
