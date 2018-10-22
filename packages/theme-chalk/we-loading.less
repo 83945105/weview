@@ -1,47 +1,143 @@
 @import "./src/common/var.less";
 @import "./src/common/mixins.less";
 
-@loading-css-prefix:~"@{css-prefix}loading";
+@loading-css-prefix: ~"@{css-prefix}loading";
 
-.@{loading-css-prefix}{
-  &-mask{
-    position:absolute;
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
-    z-index:999;
-    background-color:fade(@loading-mask-bg,@loading-mask-shade-percent);
+.spinner-size(@width; @height; @line-height){
+  width: @width;
+  height: @height;
+  line-height: @line-height;
+}
 
-    &.is-full{
-      position:fixed;
+.@{loading-css-prefix} {
+  &-mask {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background-color: fade(@loading-mask-bg, @loading-mask-shade-percent);
+
+    &.is-full {
+      position: fixed;
     }
   }
 
-  &-parent-relative{
+  &-parent-relative {
     position: relative !important;
   }
 
-  &-parent-hidden{
+  &-parent-hidden {
     overflow: hidden !important;
   }
 
-  &-content{
-    position:absolute;
-    top:50%;
-    left:50%;
-    min-width:10px;
-    text-align:center;
-    -webkit-transform:translateX(-50%) translateY(-50%);
-    -moz-transform:translateX(-50%) translateY(-50%);
-    transform:translateX(-50%) translateY(-50%);
+  &-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 10px;
+    text-align: center;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
 
-    &-text{
+    &-text {
       .mixin-h1-default;
-      margin-top:6px;
-      font-size:@loading-font-size;
-      font-weight:@loading-font-weight;
-      color:@loading-color-primary;
+      margin-top: 4px;
+      font-size: @loading-font-size;
+      font-weight: @loading-font-weight;
+      color: @loading-text-color;
     }
+  }
+
+  &-spinner {
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    width: 100%;
+    text-align: center;
+    position: absolute;
+
+    &-inner {
+      margin: 0 auto;
+      .spinner-size(@loading-spinner-default-size; @loading-spinner-default-size; @loading-spinner-default-size);
+      position: relative;
+
+      &-size {
+        &-large {
+          .spinner-size(@loading-spinner-large-size; @loading-spinner-large-size; @loading-spinner-large-size);
+        }
+        &-small {
+          .spinner-size(@loading-spinner-small-size; @loading-spinner-small-size; @loading-spinner-small-size);
+        }
+        &-mini {
+          .spinner-size(@loading-spinner-mini-size; @loading-spinner-mini-size; @loading-spinner-mini-size);
+        }
+      }
+
+      &-icon {
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        position: absolute;
+
+        & > img {
+          display: block;
+          width: 70%;
+          height: 70%;
+          margin: 15% auto;
+          -webkit-border-radius: 50%;
+          -moz-border-radius: 50%;
+          border-radius: 50%;
+        }
+      }
+
+      &-circular {
+        height: 100%;
+        width: 100%;
+        animation: loading-rotate 1.5s ease-in-out infinite;
+        & > .icon {
+          animation: loading-dash 1.5s ease-in-out infinite;
+          stroke-dasharray: 90, 150;
+          stroke-dashoffset: 0;
+          stroke-width: 2;
+          stroke: @color-primary;
+          stroke-linecap: round;
+        }
+      }
+    }
+
+    &-text {
+      .mixin-h1-default;
+      margin-top: 4px;
+      font-size: @loading-font-size;
+      font-weight: @loading-font-weight;
+      color: @loading-spinner-text-color;
+    }
+  }
+}
+
+@keyframes loading-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loading-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -40px;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -120px;
   }
 }
