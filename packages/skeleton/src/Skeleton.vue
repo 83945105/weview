@@ -47,6 +47,7 @@
 
   import Animation from '../../animation/src/Animation.vue';
   import Button from '../../button/src/Button.vue';
+  import {getId, addInstance} from "./skeleton.js";
 
   export default {
 
@@ -90,7 +91,7 @@
         type: [String, Number],
         default: '50%'
       },
-      errorCode: {
+      errorCode: {//自定义错误代码的显示文本
         type: Object,
         default() {
           return {};
@@ -194,6 +195,8 @@
     },
 
     mounted() {
+      this.id = getId();
+      addInstance(this);
       this.visible = this.value;
     },
 

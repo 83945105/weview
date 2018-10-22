@@ -210,17 +210,14 @@
         type: String,
         default: 'hover',
         validator(value) {
-          return [
-            'hover',
-            'click'
-          ].indexOf(value) !== -1
+          return ['hover', 'click'].indexOf(value) !== -1
         }
       },
-      subMenuHorizontalShift: {//子菜单水平位移
+      subMenuHorizontalOffset: {//子菜单水平位移
         type: Number,
         default: 0
       },
-      subMenuVerticalShift: {//子菜单垂直位移
+      subMenuVerticalOffset: {//子菜单垂直位移
         type: Number,
         default: 0
       },
@@ -337,21 +334,21 @@
           //如果父菜单是垂直模式, 那么应该水平弹出
           return {
             position: 'absolute',
-            left: `${this.parentMenu.width + this.subMenuHorizontalShift}px`,
-            top: `${this.subMenuVerticalShift}px`
+            left: `${this.parentMenu.width + this.subMenuHorizontalOffset}px`,
+            top: `${this.subMenuVerticalOffset}px`
           }
           /*          console.log(`x: ${this.menuItem.subMenuOpenX} y: ${this.menuItem.subMenuOpenX}`)
                     return {
                       position: 'fixed',
-                      left: `${this.menuItem.subMenuOpenX + this.subMenuHorizontalShift}px`,
+                      left: `${this.menuItem.subMenuOpenX + this.subMenuHorizontalOffset}px`,
                       top: `${this.menuItem.subMenuOpenY}px`
                     }*/
         }
         //如果父菜单是水平模式, 那么应该垂直弹出
         return {
           position: 'absolute',
-          left: `${this.subMenuHorizontalShift}px`,
-          top: `${50 + this.subMenuVerticalShift}px`
+          left: `${this.subMenuHorizontalOffset}px`,
+          top: `${(this.height || this.iconWidth) + this.subMenuVerticalOffset}px`
         }
       },
       menuStyle() {
