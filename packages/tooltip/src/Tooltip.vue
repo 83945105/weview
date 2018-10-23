@@ -1,31 +1,20 @@
 <template>
-  <div :class="[`${prefixCls}-tooltip-rel`]"
-       @mouseenter="handleMouseEnter"
-       @mouseleave="handleMouseLeave"
-  >
-    <div ref="reference">
-      <slot></slot>
-    </div>
-    <div ref="popper"
-         v-show="popperVisible"
-         :class="[
-          `${prefixCls}-tooltip`,
-          effect === '' ? `${prefixCls}-tooltip-type-dark` : `${prefixCls}-tooltip-type-light`
-         ]">
-      <div :class="`${prefixCls}-tooltip-inner`">
-        <div :class="`${prefixCls}-tooltip-inner-content`">
-          <slot name="content">{{content}}</slot>
-        </div>
+  <div :class="[
+        `${prefixCls}-tooltip`,
+        effect === '' ? `${prefixCls}-tooltip-type-dark` : `${prefixCls}-tooltip-type-light`
+        ]">
+    <div :class="`${prefixCls}-tooltip-inner`">
+      <div :class="`${prefixCls}-tooltip-inner-content`">
+        <slot>{{content}}</slot>
       </div>
-      <div class="we-tooltip-arrow we-tooltip-arrow-topLeft"></div>
     </div>
+    <div class="we-tooltip-arrow we-tooltip-arrow-topLeft"></div>
   </div>
 </template>
 
 <script>
 
   import Conf from '../../src/mixins/conf.js';
-  import Popper from '../../src/mixins/popper.js';
 
   import Animation from '../../animation/src/Animation.vue';
 
@@ -39,7 +28,7 @@
 
     optionName: `tooltip`,
 
-    mixins: [Conf, Popper],
+    mixins: [Conf],
 
     props: {
       effect: {
@@ -70,28 +59,6 @@
           ].indexOf(value) !== -1;
         }
       }
-    },
-
-    data() {
-      return {
-        timeoutIndex: undefined
-      };
-    },
-
-    methods: {
-      handleMouseEnter(e) {
-        if (this.timeoutIndex) {
-          window.clearTimeout(this.timeoutIndex);
-        }
-        this.timeoutIndex = setTimeout(() => this.popperVisible = true, 500);
-      },
-      handleMouseLeave(e) {
-
-      }
-    },
-
-    mounted() {
-      this.updatePopper();
     }
   }
 </script>

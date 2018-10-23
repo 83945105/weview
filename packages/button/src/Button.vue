@@ -30,7 +30,10 @@
     mixins: [Conf],
 
     props: {
-      size: String,//default large small mini
+      size: {//default large small mini
+        type: String,
+        default: 'default'
+      },
       type: {//default primary success info warning danger text
         type: String,
         default: 'default'
@@ -72,6 +75,9 @@
         return this.size || (this.$WEVIEW || {}).size;
       },
       sizeClass() {
+        if(this.buttonType==='text'){
+          return this.buttonSize ? `${this.prefixCls}-button-size-text-${this.buttonSize}` : undefined;
+        }
         return this.buttonSize ? `${this.prefixCls}-button-size-${this.buttonSize}` : undefined;
       },
       buttonType() {

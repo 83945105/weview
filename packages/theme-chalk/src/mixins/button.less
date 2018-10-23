@@ -1,171 +1,180 @@
 @import "../common/mixins.less";
 @import "../common/var.less";
 
-.button-size(@padding;@font-size;@border-radius){
+.button-size(@padding;@font-size;@border-radius) {
   padding: @padding;
-  font-size:@font-size;
-  border-radius:@border-radius;
+  font-size: @font-size;
+  border-radius: @border-radius;
 }
 
-.button-color(@color;@background;@border){
-  background-color:@background;
-  border-color:@border;
-  color:@color;
+.button-size(@padding;@font-size;) {
+  padding: @padding;
+  font-size: @font-size;
+}
+
+.button-color(@color;@background;@border) {
+  background-color: @background;
+  border-color: @border;
+  color: @color;
 }
 
 /*plain-text*/
-.mixin-plain-type(@color;@background;@border;@is-type) when (@is-type = 2){
-  background-color:mix(@color,@background,90%);
-  border-color:mix(@border,@background,60%);
-  color:@background;
+.mixin-plain-type(@color;@background;@border;@is-type) when (@is-type = 2) {
+  background-color: mix(@color, @background, 90%);
+  border-color: mix(@border, @background, 60%);
+  color: @background;
 
-  &:hover{
-    background-color:@background;
-    border-color:@background;
-    color:@color;
+  &:hover {
+    background-color: @background;
+    border-color: @background;
+    color: @color;
   }
-  &:active{
-    background-color:mix(@color-white,@background,@button-active-shade-percent);
-    border-color:mix(@color-white,@background,@button-active-shade-percent);
-    color:@color;
+  &:active {
+    background-color: mix(@color-white, @background, @button-active-shade-percent);
+    border-color: mix(@color-white, @background, @button-active-shade-percent);
+    color: @color;
   }
 }
 
 /*2:text*/
-.mixin-plain-type(@color;@background;@border;@is-type) when (@is-type = 2){
-  background-color:@background;
-  border-color:@border;
-  color:@color;
+.mixin-plain-type(@color;@background;@border;@is-type) when (@is-type = 2) {
+  background-color: @background;
+  border-color: @border;
+  color: @color;
 
-  &:hover{
-    color: tint(@color,20%);
+  &:hover {
+    color: tint(@color, 20%);
   }
-  &:active{
+  &:active {
     color: tint(@button-text-color, 70%);
   }
 }
+
 /*1:default*/
-.mixin-plain-type(@color;@background;@border;@is-type) when (@is-type = 1){
-  background-color:@background;
-  border-color:@border;
-  color:@color;
+.mixin-plain-type(@color;@background;@border;@is-type) when (@is-type = 1) {
+  background-color: @background;
+  border-color: @border;
+  color: @color;
 
-  &:hover{
-    background-color:@color-white;
-    border-color:@color-primary;
-    color:@color-primary;
+  &:hover {
+    background-color: @color-white;
+    border-color: @color-primary;
+    color: @color-primary;
   }
-  &:active{
-    background-color:mix(@color-white,@color-primary,@button-active-shade-percent);
-    border-color:mix(@color-white,@color-primary,@button-active-shade-percent);
-    color:@color;
+  &:active {
+    background-color: mix(@color-white, @color-primary, @button-active-shade-percent);
+    border-color: mix(@color-white, @color-primary, @button-active-shade-percent);
+    color: @color;
   }
 }
+
 /*0:other*/
-.mixin-plain-type(@color;@background;@border;@is-type) when (@is-type = 0){
-  background-color:mix(@color,@background,90%);
-  border-color:mix(@border,@background,60%);
-  color:@background;
+.mixin-plain-type(@color;@background;@border;@is-type) when (@is-type = 0) {
+  background-color: mix(@color, @background, 90%);
+  border-color: mix(@border, @background, 60%);
+  color: @background;
 
-  &:hover{
-    background-color:@background;
-    border-color:@background;
-    color:@color;
+  &:hover {
+    background-color: @background;
+    border-color: @background;
+    color: @color;
   }
-  &:active{
-    background-color:mix(@color-white,@background,@button-active-shade-percent);
-    border-color:mix(@color-white,@background,@button-active-shade-percent);
-    color:@color;
+  &:active {
+    background-color: mix(@color-white, @background, @button-active-shade-percent);
+    border-color: mix(@color-white, @background, @button-active-shade-percent);
+    color: @color;
   }
 }
 
-.button-plain(@color;@background;@border;@is-type: 0){
+.button-plain(@color;@background;@border;@is-type: 0) {
 
-  .mixin-plain-type(@color;@background;@border;@is-type);
+  .mixin-plain-type(@color; @background; @border; @is-type);
 
-  &.is-disabled{
+  &.is-disabled {
     &,
     &:hover,
-    &:active{
-      background-color:tint(@border,90%);
-      border-color:tint(@border,70%);
-      color:tint(@border,50%);
+    &:active {
+      background-color: tint(@border, 90%);
+      border-color: tint(@border, 70%);
+      color: tint(@border, 50%);
     }
   }
 }
 
 /*2:text*/
-.mixin-type(@color;@background;@border;@is-type) when (@is-type = 2){
-  background-color:@background;
-  border-color:@border;
-  color:@color;
+.mixin-type(@color;@background;@border;@is-type) when (@is-type = 2) {
+  background-color: @background;
+  border-color: @border;
+  color: @color;
 
-  &:hover{
-    color:tint(@color,20%);
+  &:hover {
+    color: tint(@color, 20%);
   }
-  &:active{
+  &:active {
     color: tint(@color, 80%);
   }
 }
-/*1:default*/
-.mixin-type(@color;@background;@border;@is-type) when (@is-type = 1){
-  background-color:@background;
-  border-color:@border;
-  color:@color;
 
-  &:hover{
-    background-color:tint(@color-primary,92%);
-    border-color:@color-primary;
-    color:@color-primary;
+/*1:default*/
+.mixin-type(@color;@background;@border;@is-type) when (@is-type = 1) {
+  background-color: @background;
+  border-color: @border;
+  color: @color;
+
+  &:hover {
+    background-color: tint(@color-primary, 92%);
+    border-color: @color-primary;
+    color: @color-primary;
   }
-  &:active{
-    background-color:mix(@color-white,@color-primary,@button-active-shade-percent);
-    border-color:mix(@color-white,@color-primary,@button-active-shade-percent);
-    color:@color;
+  &:active {
+    background-color: mix(@color-white, @color-primary, @button-active-shade-percent);
+    border-color: mix(@color-white, @color-primary, @button-active-shade-percent);
+    color: @color;
   }
 }
-/*0:other*/
-.mixin-type(@color;@background;@border;@is-type) when (@is-type = 0){
-  background-color:@background;
-  border-color:@border;
-  color:@color;
 
-  &:hover{
-    background-color:mix(@color,@background,@button-hover-tint-percent);
-    border-color:mix(@color,@border,@button-hover-tint-percent);
-    color:@color;
+/*0:other*/
+.mixin-type(@color;@background;@border;@is-type) when (@is-type = 0) {
+  background-color: @background;
+  border-color: @border;
+  color: @color;
+
+  &:hover {
+    background-color: mix(@color, @background, @button-hover-tint-percent);
+    border-color: mix(@color, @border, @button-hover-tint-percent);
+    color: @color;
   }
   &:active,
-  &.is-active{
-    background-color:mix(@background,@background,@button-active-shade-percent);
-    border-color:mix(@border,@border,@button-active-shade-percent);
-    color:@color;
+  &.is-active {
+    background-color: mix(@background, @background, @button-active-shade-percent);
+    border-color: mix(@border, @border, @button-active-shade-percent);
+    color: @color;
   }
 }
 
-.button-variant(@color;@background;@border;@is-type: 0){
-  .mixin-type(@color;@background;@border;@is-type);
-  &.is-disabled{
+.button-variant(@color;@background;@border;@is-type: 0) {
+  .mixin-type(@color; @background; @border; @is-type);
+  &.is-disabled {
     &,
     &:hover,
     &:active {
       cursor: not-allowed;
-      background-color:mix(@color-white,@background,70%);
-      border-color:mix(@color-white,@border,70%);
+      background-color: mix(@color-white, @background, 70%);
+      border-color: mix(@color-white, @border, 70%);
       color: tint(@color, 70%);
     }
   }
 
-  &.is-plain{
-    .button-plain(@color;@background;@border;@is-type);
+  &.is-plain {
+    .button-plain(@color; @background; @border; @is-type);
   }
 }
 
 .btn() {
   .mixin-default;
   display: inline-block;
-  line-height:1;
-  white-space:nowrap;
+  line-height: 1;
+  white-space: nowrap;
   margin-bottom: 0;
   font-weight: @button-font-weight;
   text-align: center;
@@ -175,7 +184,6 @@
   background-image: none;
   border: 1px solid transparent;
   transition: color @transition-time linear, background-color @transition-time linear, border @transition-time linear, box-shadow @transition-time linear;
-  .button-size(@button-default-padding;@button-default-font-size;@button-default-border-radius);
 
   &,
   &:active,
@@ -183,64 +191,80 @@
     outline: 0;
   }
 
-  &-size{
-    &-large{
+  &-size {
+    &-default {
+      .button-size(@button-default-padding; @button-default-font-size; @button-default-border-radius);
+    }
+    &-large {
       .button-size(@button-large-padding; @button-large-font-size; @button-large-border-radius);
     }
-
-    &-small{
+    &-small {
       .button-size(@button-small-padding; @button-small-font-size; @button-small-border-radius);
     }
-
-    &-mini{
+    &-mini {
       .button-size(@button-mini-padding; @button-mini-font-size; @button-mini-border-radius);
     }
   }
 
-  &.is-rectangle{
+  &-size-text {
+    &-default {
+      .button-size(@button-text-default-padding; @button-text-default-font-size;);
+    }
+    &-large {
+      .button-size(@button-text-large-padding; @button-text-large-font-size;);
+    }
+    &-small {
+      .button-size(@button-text-small-padding; @button-text-small-font-size;);
+    }
+    &-mini {
+      .button-size(@button-text-mini-padding; @button-text-mini-font-size;);
+    }
+  }
+
+  &.is-rectangle {
     -webkit-border-radius: 0;
     border-radius: 0;
   }
 
-  &.is-round{
+  &.is-round {
     -webkit-border-radius: 100px;
     border-radius: 100px;
   }
 
-  &.is-circle{
+  &.is-circle {
     -webkit-border-radius: 50%;
     border-radius: 50%;
     padding: 8px;
   }
 }
 
-.btn-default(){
-  .button-variant(@button-default-color;@button-default-fill;@button-default-border;1);
+.btn-default() {
+  .button-variant(@button-default-color; @button-default-fill; @button-default-border; 1);
 }
 
-.btn-primary(){
-  .button-variant(@button-primary-color;@button-primary-fill;@button-primary-border);
+.btn-primary() {
+  .button-variant(@button-primary-color; @button-primary-fill; @button-primary-border);
 }
 
-.btn-success(){
-  .button-variant(@button-success-color;@button-success-fill;@button-success-border);
+.btn-success() {
+  .button-variant(@button-success-color; @button-success-fill; @button-success-border);
 }
 
-.btn-info(){
-  .button-variant(@button-info-color;@button-info-fill;@button-info-border);
+.btn-info() {
+  .button-variant(@button-info-color; @button-info-fill; @button-info-border);
 }
 
-.btn-warning(){
-  .button-variant(@button-warning-color;@button-warning-fill;@button-warning-border);
+.btn-warning() {
+  .button-variant(@button-warning-color; @button-warning-fill; @button-warning-border);
 }
 
-.btn-danger(){
-  .button-variant(@button-danger-color;@button-danger-fill;@button-danger-border);
+.btn-danger() {
+  .button-variant(@button-danger-color; @button-danger-fill; @button-danger-border);
 }
 
-.btn-text(){
-  .mixin-type(@button-text-color;@button-text-fill;@button-text-border;@is-type: 2);
-  &.is-disabled{
+.btn-text() {
+  .mixin-type(@button-text-color; @button-text-fill; @button-text-border;@is-type: 2);
+  &.is-disabled {
     &,
     &:hover,
     &:active {
@@ -249,9 +273,9 @@
     }
   }
 
-  &.is-plain{
-    .mixin-type(@button-text-color;@button-text-fill;@button-text-border;@is-type: 2);
-    &.is-disabled{
+  &.is-plain {
+    .mixin-type(@button-text-color; @button-text-fill; @button-text-border;@is-type: 2);
+    &.is-disabled {
       &,
       &:hover,
       &:active {
