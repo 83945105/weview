@@ -39,7 +39,7 @@
         <div v-if="showFooter" :class="[footerClass]">
           <slot name="footer">
             <div :class="[`${prefixCls}-layer-footer-inner`, footerAlignClass]">
-              <we-button @click="handleClickCancelButton" style="margin-right:5px;">{{cancelButtonText}}</we-button>
+              <we-button @click="handleClickCancelButton">{{cancelButtonText}}</we-button>
               <we-button type="primary" :loading="confirmButtonLoading" @click="handleClickConfirmButton">
                 {{confirmButtonText}}
               </we-button>
