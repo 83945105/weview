@@ -1,6 +1,5 @@
 <template>
   <li :class="[itemClass]"
-      @click.stop="handleClick"
   >
     <slot name="panel">
       <div :class="[`${prefixCls}-menu-item-title`, hoverClass, activeClass, selectedClass, disabledClass]"
@@ -8,36 +7,41 @@
             paddingLeft: `${indentNum * 15}px`,
             color: menu.textColor || rootMenu.textColor
            }, hoverStyle, activeStyle, selectedStyle, disabledStyle]"
+           @click.stop="handleClick"
            @mouseenter.stop.self="handleMouseEnter"
            @mouseleave.stop.self="handleMouseLeave"
       >
-        <div v-if="showArrow && hasSubMenu" :class="[`${prefixCls}-menu-item-title-arrow`, {'is-opened': expand}]">
+        <div v-show="showArrow"
+             :class="[`${prefixCls}-menu-item-title-arrow`, {'is-opened': expand}]">
           <icon v-if="subMenuModeIsOpen" :name="isHorizontal ? 'angle-down' : 'angle-right'" size="default"></icon>
           <icon v-else :name="isHorizontal ? 'angle-right' : 'angle-down'" size="default"></icon>
         </div>
 
-        <div v-else-if="prompt && showArrow" :class="[`${prefixCls}-menu-item-title-prompt`]">{{prompt}}</div>
+        <div v-show="showPrompt" :class="[`${prefixCls}-menu-item-title-prompt`]">{{prompt}}</div>
 
         <div :class="[`${prefixCls}-menu-item-title-inner`]">
-          <div v-if="!isHorizontal" :class="[`${prefixCls}-menu-item-title-inner-icon`]">
+          <div v-if="showIcon" :class="[`${prefixCls}-menu-item-title-inner-icon`]">
             <slot name="icon">
               <icon :name="iconName" size="default"></icon>
             </slot>
           </div>
-          <div :class="[`${prefixCls}-menu-item-title-inner-text`]">
-            <slot></slot>
-          </div>
+          <slot name="content">
+            <div :class="[`${prefixCls}-menu-item-title-inner-text`,{'is-left': !showIcon, 'is-right': !showArrow && !showPrompt}]">
+              <slot></slot>
+            </div>
+          </slot>
         </div>
       </div>
       <div :class="[`${prefixCls}-common-clear`]"></div>
 
-      <slot name="subMenu"></slot>
-
       <div v-if="isHorizontal" :class="[`${prefixCls}-menu-horizontal-line`]" :style="[horizontalLineStyle]"></div>
       <div v-else :class="[`${prefixCls}-menu-vertical-line`]" :style="[verticalLineStyle]"></div>
 
-      <div :class="[`${prefixCls}-common-clear`]"></div>
     </slot>
+
+    <slot name="subMenu"></slot>
+
+    <div :class="[`${prefixCls}-common-clear`]"></div>
   </li>
 </template>
 
@@ -91,8 +95,16 @@
     props: {
       index: String,//唯一标识,如果不设置将自动生成
       value: Boolean,//是否选中
+      arrow: {//是否显示箭头
+        type: Boolean,
+        default: true
+      },
       prompt: String,//提示
       disabled: Boolean,//是否禁用,优先级高于menu
+      icon: {//是否显示图标,仅对菜单为水平排列有效
+        Boolean,
+        default: true
+      },
       iconName: {//图标名称
         type: String,
         default: ''
@@ -107,7 +119,7 @@
         subMenuModeIsOpen: this.menu.mode === 'horizontal' || this.menu.subMenuMode === 'open',//子菜单是否是打开模式
         subMenuTriggerIsHover: (this.menu.mode === 'horizontal' || this.menu.subMenuMode === 'open') && this.menu.subMenuTrigger === 'hover',//子菜单是否是悬浮触发
         subMenuHoverLeaveTimeIndex: undefined,
-        showArrow: !this.menu.isCollapse,
+        showRight: !this.menu.isCollapse,//是否显示右侧
         selected: this.value,//是否选中
         active: false,//是否激活
         expand: false,//是否展开
@@ -120,6 +132,15 @@
     },
 
     computed: {
+      showArrow() {
+        return this.arrow && this.showRight && this.hasSubMenu;
+      },
+      showPrompt() {
+        return !this.showArrow && this.prompt && this.showRight;
+      },
+      showIcon() {
+        return this.icon && !this.isHorizontal;
+      },
       disabledClass() {
         return this.disabled ? `is-disabled` : undefined;
       },
@@ -228,6 +249,12 @@
         } else {
           this.subMenu.hideMenu(false);
         }
+      },
+      'menu.isCollapse': {
+        handler(v) {
+          this.showRight = !v;
+        },
+        deep: true
       }
     },
 

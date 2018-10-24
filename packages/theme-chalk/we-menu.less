@@ -6,7 +6,7 @@
 
 .menu-size(@width; @height; @lineHeight; @fontSize; @group-title-height; @group-title-line-height; @group-title-padding-top; @group-title-font-size) {
   .@{menu-css-prefix}-item {
-    &-title{
+    &-title {
       &-arrow {
         height: @height;
         line-height: @lineHeight;
@@ -15,7 +15,7 @@
       &-prompt {
         line-height: @lineHeight;
       }
-      &-arrow{
+      &-arrow {
         font-size: @fontSize;
       }
       &-inner {
@@ -33,7 +33,7 @@
       }
     }
 
-    &-group{
+    &-group {
       &-title {
         height: @group-title-height;
         line-height: @group-title-line-height;
@@ -43,7 +43,7 @@
     }
   }
 
-  .@{menu-css-prefix}-vertical-line{
+  .@{menu-css-prefix}-vertical-line {
     height: @height;
   }
 }
@@ -54,10 +54,10 @@
   &.is-collapse {
     transition: width .3s cubic-bezier(0, 0, .2, 1);
   }
-  &.is-accordion{
+  &.is-accordion {
     transition: height .3s cubic-bezier(0, 0, .2, 1);
   }
-  &.is-accordion-collapse{
+  &.is-accordion-collapse {
     transition: height .3s cubic-bezier(0, 0, .2, 1), width .3s cubic-bezier(0, 0, .2, 1);
   }
 
@@ -188,40 +188,19 @@
   &-size {
     &-large {
       .menu-size(
-        @menu-size-large-width;
-        @menu-size-large-height;
-        @menu-size-large-line-height;
-        @menu-size-large-font-size;
-        @menu-size-group-title-large-height;
-        @menu-size-group-title-large-line-height;
-        @menu-size-group-title-large-padding-top;
-        @menu-size-group-title-large-font-size;
+        @menu-size-large-width; @menu-size-large-height; @menu-size-large-line-height; @menu-size-large-font-size; @menu-size-group-title-large-height; @menu-size-group-title-large-line-height; @menu-size-group-title-large-padding-top; @menu-size-group-title-large-font-size;
       );
     }
 
     &-small {
       .menu-size(
-        @menu-size-small-width;
-        @menu-size-small-height;
-        @menu-size-small-line-height;
-        @menu-size-small-font-size;
-        @menu-size-group-title-small-height;
-        @menu-size-group-title-small-line-height;
-        @menu-size-group-title-small-padding-top;
-        @menu-size-group-title-small-font-size;
+        @menu-size-small-width; @menu-size-small-height; @menu-size-small-line-height; @menu-size-small-font-size; @menu-size-group-title-small-height; @menu-size-group-title-small-line-height; @menu-size-group-title-small-padding-top; @menu-size-group-title-small-font-size;
       );
     }
 
     &-mini {
       .menu-size(
-        @menu-size-mini-width;
-        @menu-size-mini-height;
-        @menu-size-mini-line-height;
-        @menu-size-mini-font-size;
-        @menu-size-group-title-mini-height;
-        @menu-size-group-title-mini-line-height;
-        @menu-size-group-title-mini-padding-top;
-        @menu-size-group-title-mini-font-size;
+        @menu-size-mini-width; @menu-size-mini-height; @menu-size-mini-line-height; @menu-size-mini-font-size; @menu-size-group-title-mini-height; @menu-size-group-title-mini-line-height; @menu-size-group-title-mini-padding-top; @menu-size-group-title-mini-font-size;
       );
     }
   }
@@ -230,7 +209,6 @@
 .@{menu-css-prefix}-item {
   font-size: @menu-item-font-size;
   list-style: none;
-  cursor: pointer;
   transition: border-color .3s, background-color .3s, color .3s;
   color: @menu-text-color;
   display: block;
@@ -267,6 +245,7 @@
   &-title {
     overflow: hidden;
     position: relative;
+    cursor: pointer;
     .mixin-border-box;
 
     &.is-hover {
@@ -317,7 +296,6 @@
     }
 
     &-inner {
-      margin-right: 30px;
 
       &.is-full {
         margin-right: 0;
@@ -340,6 +318,14 @@
         line-height: 50px;
         .mixin-border-box;
         .mixin-ellipsis;
+
+        &.is-left {
+          margin-left: 15px;
+        }
+
+        &.is-right {
+          margin-right: 15px;
+        }
       }
     }
 

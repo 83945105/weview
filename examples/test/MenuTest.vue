@@ -38,14 +38,14 @@
         <we-menu-item icon-name="edit" :value="true" prompt="Ctrl+Enter">我的工作台</we-menu-item>
 
         <we-menu-item-group title="分组一" before-line>
-          <we-menu-item icon-name="edit">选项一</we-menu-item>
+          <we-menu-item icon-name="edit" :icon="false">选项一</we-menu-item>
         </we-menu-item-group>
 
         <we-menu-item-group title="分组二" before-line after-line>
           <we-menu-item icon-name="edit">选项二</we-menu-item>
         </we-menu-item-group>
 
-        <we-menu-item icon-name="edit">
+        <we-menu-item icon-name="edit" :arrow="false">
 
           二级菜单
 
@@ -68,10 +68,38 @@
                 <we-menu slot="subMenu"
                          :sub-menu-horizontal-offset="1"
                          :accordion="false"
+                         sub-menu-mode="open"
                          index="三级菜单"
                 >
-                  <we-menu-item icon-name="edit">三级选项一</we-menu-item>
-                  <we-menu-item icon-name="edit">三级选项二</we-menu-item>
+                  <we-menu-item :icon="true" icon-name="edit" prompt="Enter+Shift">
+                    <template slot="content">
+                    <div style="overflow: hidden">三级选项一三级选项一三级选项一三级选项一三级选项一三级选项一</div>
+                    </template>
+                  </we-menu-item>
+                  <we-menu-item :icon="true" icon-name="edit">
+                    三级选项二&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+                    <we-menu slot="subMenu"
+                             :sub-menu-horizontal-offset="1"
+                             :accordion="false"
+                             index="四级菜单一"
+                    >
+                      <we-menu-item :icon="false" icon-name="edit">
+                        <template slot="content">
+                          四级选项一&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+                        </template>
+
+
+
+                      </we-menu-item>
+                      <we-menu-item :icon="false" icon-name="edit">四级选项二&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&</we-menu-item>
+                    </we-menu>
+                  </we-menu-item>
+
+                  <we-menu-item :icon="true" icon-name="edit">
+
+                    <template slot="panel">564456464</template>
+
+                  </we-menu-item>
                 </we-menu>
 
               </we-menu-item>
@@ -211,6 +239,11 @@
           <we-icon name="edit" size="mini"></we-icon>
           <span style="margin-left: 5px">二级菜单</span>
 
+          <template slot="panel">
+            <div style="width: 60px;height: 60px;background-color: #ff0000;border-radius: 50%;float: left"></div>
+            <div style="float: left">ffffff<br>fff</div>
+          </template>
+
           <we-menu :sub-menu-vertical-offset="4" slot="subMenu" style="z-index: 999999;width: 200px">
 
             <we-menu-item icon-name="edit">二级菜单项一</we-menu-item>
@@ -301,7 +334,7 @@
         menuShow: true,
         openMenuIndex: '0',
         closeMenuIndex: '0',
-        collapse: true,
+        collapse: false,
         selectedValue01: false,
 
         hMenuShow: true,

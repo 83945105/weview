@@ -517,7 +517,7 @@
           return;
         }
         window.clearTimeout(this.collapseDelayTimeIndex);
-        this.menuItems.forEach(m => m.showArrow = false);
+        this.menuItems.forEach(m => m.showRight = false);
         this.menuItemGroups.forEach(m => m.showTitle = false);
         this.hideSubMenu(true);
         this.collapseDelayTimeIndex = setTimeout(() => {
@@ -529,7 +529,7 @@
           return;
         }
         window.clearTimeout(this.collapseDelayTimeIndex);
-        this.menuItems.forEach(m => m.showArrow = true);
+        this.menuItems.forEach(m => m.showRight = true);
         this.menuItemGroups.forEach(m => m.showTitle = true);
         setTimeout(() => {
           this.restoreSubMenu();
