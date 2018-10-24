@@ -53,9 +53,6 @@ const Confirm = function (opts) {
     opts.footerRender = function (h) {
       let btn = [];
       btn.push(h(WeButton, {
-        style: {
-          marginRight: '8px'
-        },
         on: {
           click(e) {
             opts.clickCancel && opts.clickCancel(e);
