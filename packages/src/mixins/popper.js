@@ -76,6 +76,8 @@ export default {
 
       options.placement = this.placement;
 
+      console.log(options)
+
       if (!options.modifiers) {
         options.modifiers = {};
       }

@@ -5,7 +5,7 @@
       <div class="module-content">
         <div class="tooltip-layout-main" ref="direction8">
           <div class="tooltip-layout" style="margin-left: 70px">
-            <we-tooltip content="23333333333333333333">
+            <we-tooltip placement="top" content="23333333333333333333">
               <we-button size="small" class="tooltip-btn">TL</we-button>
             </we-tooltip>
             <we-button size="small" class="tooltip-btn">Top

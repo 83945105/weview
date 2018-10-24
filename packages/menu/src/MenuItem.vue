@@ -26,7 +26,10 @@
             </slot>
           </div>
           <slot name="content">
-            <div :class="[`${prefixCls}-menu-item-title-inner-text`,{'is-left': !showIcon, 'is-right': !showArrow && !showPrompt}]">
+            <div :class="[
+                  `${prefixCls}-menu-item-title-inner-text`,
+                  {'is-left': !showIcon && !isHorizontal, 'is-right': !showArrow && !showPrompt && !isHorizontal}
+                 ]">
               <slot></slot>
             </div>
           </slot>
