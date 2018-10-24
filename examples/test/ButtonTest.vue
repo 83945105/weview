@@ -116,11 +116,17 @@
           <we-button type="primary" size="small" icon-name="search-o">小型按钮</we-button>
           <we-button type="primary" size="mini" icon-name="search-o">超小按钮</we-button>
         </div>
-        <div style="margin-top:15px;">
+        <div style="margin-top:15px;font-size:0;">
           <we-button type="primary" size="large">大型按钮</we-button>
           <we-button type="primary">默认尺寸</we-button>
           <we-button type="primary" size="small">小型按钮</we-button>
           <we-button type="primary" size="mini">超小按钮</we-button>
+        </div>
+        <div style="margin-top:15px;">
+          <we-button type="text" size="large">大型按钮</we-button>
+          <we-button type="text">默认尺寸</we-button>
+          <we-button type="text" size="small">小型按钮</we-button>
+          <we-button type="text" size="mini">超小按钮</we-button>
         </div>
       </div>
     </div>

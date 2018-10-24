@@ -6,6 +6,10 @@
 .@{btn-prefix-cls}{
   .btn;
 
+  & + & {
+    margin-left: @button-spacing;
+  }
+
   &-type-default {
     .btn-default;
   }
