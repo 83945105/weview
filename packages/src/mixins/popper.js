@@ -26,6 +26,9 @@ export default {
     },
     reference: Object,//参照物
     popper: Object,//弹层
+    offset: {
+      default: 0
+    }
 
 
   },
@@ -45,7 +48,7 @@ export default {
     },
     popperVisible(val) {
       if (val) {
-
+        this.updatePopper();
       } else {
 
       }
@@ -88,12 +91,14 @@ export default {
       options.modifiers.offset.offset = this.offset;
 
       options.onCreate = () => {
+        console.log(111)
         this.$nextTick(this.updatePopper);
         this.$emit('created', this);
       };
 
       this.popperJS = new Popper(reference, popper, options);
     },
+
     updatePopper() {
       if (isServer) {
         return;
