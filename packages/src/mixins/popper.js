@@ -18,10 +18,20 @@ export default {
       type: String,
       default: 'bottom'
     },
+    boundariesPadding: {
+      type: Number,
+      default: 50
+    },
     popperOptions: {//popper.js 配置项
       type: Object,
       default() {
-        return {};
+        return {
+          modifiers: {
+            computeStyle: {
+              gpuAcceleration: false,
+            }
+          }
+        };
       }
     },
     reference: Object,//参照物
@@ -79,8 +89,6 @@ export default {
 
       options.placement = this.placement;
 
-      console.log(options)
-
       if (!options.modifiers) {
         options.modifiers = {};
       }
@@ -91,7 +99,6 @@ export default {
       options.modifiers.offset.offset = this.offset;
 
       options.onCreate = () => {
-        console.log(111)
         this.$nextTick(this.updatePopper);
         this.$emit('created', this);
       };

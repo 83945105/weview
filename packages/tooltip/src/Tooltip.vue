@@ -6,19 +6,22 @@
     >
       <slot></slot>
     </div>
-    <div v-show="popperVisible"
-         ref="popper"
-         :class="[
-        `${prefixCls}-tooltip`,
-        effect === '' ? `${prefixCls}-tooltip-type-dark` : `${prefixCls}-tooltip-type-light`
-       ]">
-      <div :class="`${prefixCls}-tooltip-inner`">
-        <div :class="`${prefixCls}-tooltip-inner-content`">
-          <slot name="content">{{content}}</slot>
+    <animation name="fadeIn">
+      <div v-show="popperVisible"
+           ref="popper"
+           :class="[
+            `${prefixCls}-tooltip`,
+            offsetClass,
+            effect === 'dark' ? `${prefixCls}-tooltip-type-dark` : `${prefixCls}-tooltip-type-light`
+           ]">
+        <div :class="`${prefixCls}-tooltip-inner`">
+          <div :class="`${prefixCls}-tooltip-inner-content`">
+            <slot name="content">{{content}}</slot>
+          </div>
         </div>
+        <div :class="[`${prefixCls}-tooltip-arrow`, arrowPlacementClass]"></div>
       </div>
-      <div class="we-tooltip-arrow we-tooltip-arrow-topLeft"></div>
-    </div>
+    </animation>
   </div>
 </template>
 
@@ -49,7 +52,7 @@
           return ['dark', 'light'].indexOf(value) !== -1;
         }
       },
-      content: String,//显示内容
+      content: [String, Number],//显示内容
       placement: {//出现的位置
         type: String,
         default: 'bottom',
@@ -85,6 +88,69 @@
         openDelayIndex: undefined,
         hideDelayIndex: undefined
       };
+    },
+
+    computed: {
+      offsetClass() {
+        switch (this.placement) {
+          case 'top':
+            return `is-top`;
+          case 'top-start':
+            return `is-top`;
+          case 'top-end':
+            return `is-top`;
+          case 'bottom':
+            return `is-bottom`;
+          case 'bottom-start':
+            return `is-bottom`;
+          case 'bottom-end':
+            return `is-bottom`;
+          case 'left':
+            return `is-left`;
+          case 'left-start':
+            return `is-left`;
+          case 'left-end':
+            return `is-left`;
+          case 'right':
+            return `is-right`;
+          case 'right-start':
+            return `is-right`;
+          case 'right-end':
+            return `is-right`;
+          default:
+            return undefined;
+        }
+      },
+      arrowPlacementClass() {
+        switch (this.placement) {
+          case 'top':
+            return `${this.prefixCls}-tooltip-arrow-top`;
+          case 'top-start':
+            return `${this.prefixCls}-tooltip-arrow-topLeft`;
+          case 'top-end':
+            return `${this.prefixCls}-tooltip-arrow-topRight`;
+          case 'bottom':
+            return `${this.prefixCls}-tooltip-arrow-bottom`;
+          case 'bottom-start':
+            return `${this.prefixCls}-tooltip-arrow-bottomLeft`;
+          case 'bottom-end':
+            return `${this.prefixCls}-tooltip-arrow-bottomRight`;
+          case 'left':
+            return `${this.prefixCls}-tooltip-arrow-left`;
+          case 'left-start':
+            return `${this.prefixCls}-tooltip-arrow-leftTop`;
+          case 'left-end':
+            return `${this.prefixCls}-tooltip-arrow-leftBottom`;
+          case 'right':
+            return `${this.prefixCls}-tooltip-arrow-right`;
+          case 'right-start':
+            return `${this.prefixCls}-tooltip-arrow-rightTop`;
+          case 'right-end':
+            return `${this.prefixCls}-tooltip-arrow-rightBottom`;
+          default:
+            return undefined;
+        }
+      }
     },
 
     methods: {
