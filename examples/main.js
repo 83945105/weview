@@ -9,11 +9,18 @@ Vue.config.productionTip = false;
 
 import wetemplate from 'wetemplate';
 import 'wetemplate/lib/theme-chalk/index.css';
+
 Vue.use(wetemplate);
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+
 Vue.use(ElementUI);
+
+import iView from 'iview';
+import 'iview/dist/styles/iview.css';
+
+Vue.use(iView);
 
 import weview from '../packages/index.js';
 // import '../lib/theme-chalk/index.css';
