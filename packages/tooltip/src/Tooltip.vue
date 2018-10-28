@@ -21,7 +21,7 @@
             <slot name="content">{{content}}</slot>
           </div>
         </div>
-        <div :class="[`${prefixCls}-tooltip-arrow`, arrowPlacementClass]"></div>
+        <div :class="[`${prefixCls}-tooltip-arrow`]"></div>
       </div>
     </transition>
   </div>

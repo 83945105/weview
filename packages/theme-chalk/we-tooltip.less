@@ -2,6 +2,7 @@
 @import "./src/common/mixins.less";
 
 @tooltip-css-prefix: ~"@{css-prefix}tooltip";
+@tooltip-arrow-css-prefix: ~"@{css-prefix}tooltip-arrow";
 
 .tooltip-type(@tooltip-bg; @tooltip-color; @tooltip-shadow; @tooltip-border-color; @tooltip-border-bg) {
   .@{tooltip-css-prefix}-inner {
@@ -12,41 +13,39 @@
     border: 1px solid @tooltip-border-color;
   }
 
-  .@{tooltip-css-prefix}-arrow {
-    &-top,
-    &-topLeft,
-    &-topRight {
-      border-top-color: @tooltip-border-color;
-      &::after {
-        border-top-color: @tooltip-border-bg;
-      }
+  &[x-placement^="top"] .@{tooltip-arrow-css-prefix},
+  &[x-placement^="top-start"] .@{tooltip-arrow-css-prefix},
+  &[x-placement^="top-end"] .@{tooltip-arrow-css-prefix}{
+    border-top-color: @tooltip-border-color;
+    &::after {
+      border-top-color: @tooltip-border-bg;
     }
+  }
 
-    &-right,
-    &-rightTop,
-    &-rightBottom {
-      border-right-color: @tooltip-border-color;
-      &::after {
-        border-right-color: @tooltip-border-bg;
-      }
+  &[x-placement^="right"] .@{tooltip-arrow-css-prefix},
+  &[x-placement^="right-start"] .@{tooltip-arrow-css-prefix},
+  &[x-placement^="right-end"] .@{tooltip-arrow-css-prefix}{
+    border-right-color: @tooltip-border-color;
+    &::after {
+      border-right-color: @tooltip-border-bg;
     }
+  }
 
-    &-bottom,
-    &-bottomLeft,
-    &-bottomRight {
-      border-bottom-color: @tooltip-border-color;
-      &::after {
-        border-bottom-color: @tooltip-border-bg;
-      }
+  &[x-placement^="bottom"] .@{tooltip-arrow-css-prefix},
+  &[x-placement^="bottom-start"] .@{tooltip-arrow-css-prefix},
+  &[x-placement^="bottom-end"] .@{tooltip-arrow-css-prefix}{
+    border-bottom-color: @tooltip-border-color;
+    &::after {
+      border-bottom-color: @tooltip-border-bg;
     }
+  }
 
-    &-left,
-    &-leftTop,
-    &-leftBottom {
-      border-left-color: @tooltip-border-color;
-      &::after {
-        border-left-color: @tooltip-border-bg;
-      }
+  &[x-placement^="left"] .@{tooltip-arrow-css-prefix},
+  &[x-placement^="left-start"] .@{tooltip-arrow-css-prefix},
+  &[x-placement^="left-end"] .@{tooltip-arrow-css-prefix}{
+    border-left-color: @tooltip-border-color;
+    &::after {
+      border-left-color: @tooltip-border-bg;
     }
   }
 }
@@ -59,19 +58,17 @@
   display: block;
   max-width: 260px;
   visibility: visible;
-  //position: absolute;
-  //transform-origin: center top 0px;
 
-  &.is-top{
+  &[x-placement^="top"] {
     padding-bottom: 12px;
   }
-  &.is-bottom{
+  &[x-placement^="bottom"] {
     padding-top: 12px;
   }
-  &.is-left{
+  &[x-placement^="left"] {
     padding-right: 7px;
   }
-  &.is-right{
+  &[x-placement^="right"] {
     padding-left: 7px;
   }
 
@@ -98,8 +95,8 @@
     }
   }
 
-  &-arrow,
-  &-arrow::after {
+  .@{tooltip-arrow-css-prefix},
+  .@{tooltip-arrow-css-prefix}::after {
     .mixin-border-box;
     content: " ";
     position: absolute;
@@ -109,98 +106,100 @@
     border: solid transparent;
   }
 
-  &-arrow {
+  .@{tooltip-arrow-css-prefix} {
     z-index: 1;
     border-width: 10px;
   }
-  &-arrow::after {
+  .@{tooltip-arrow-css-prefix}::after {
     z-index: 0;
     border-width: 8px;
   }
 
-  &-arrow {
-    &-top,
-    &-topLeft,
-    &-topRight {
-      bottom: 5px;
-      border-width: 8px 8px 0 8px;
-      &::after {
-        bottom: -7px;
-        left: -8px;
-      }
+  &[x-placement^="top"] .@{tooltip-arrow-css-prefix} {
+    bottom: 5px;
+    border-width: 8px 8px 0 8px;
+    &::after {
+      bottom: -7px;
+      left: -8px;
     }
-    &-top {
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    &-topLeft {
-      left: 14px;
-    }
-    &-topRight {
-      right: 14px;
-    }
+  }
+  &[x-placement^="top"] .@{tooltip-arrow-css-prefix}{
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  &[x-placement^="top-start"] .@{tooltip-arrow-css-prefix}{
+    left: 14px;
+    transform: none;
+  }
+  &[x-placement^="top-end"] .@{tooltip-arrow-css-prefix}{
+    right: 14px;
+    left: auto;
+    transform: none;
+  }
 
-    &-right,
-    &-rightTop,
-    &-rightBottom {
-      left: 0px;
-      border-width: 8px 8px 8px 0;
-      &::after {
-        bottom: -8px;
-        left: -7px;
-      }
+  &[x-placement^="right"] .@{tooltip-arrow-css-prefix} {
+    left: 0px;
+    border-width: 8px 8px 8px 0;
+    &::after {
+      bottom: -8px;
+      left: -7px;
     }
-    &-right {
-      top: 50%;
-      transform: translateY(-50%);
-    }
-    &-rightTop {
-      bottom: 8px;
-    }
-    &-rightBottom {
-      top: 8px;
-    }
+  }
+  &[x-placement^="right"] .@{tooltip-arrow-css-prefix}{
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  &[x-placement^="right-start"] .@{tooltip-arrow-css-prefix}{
+    bottom: 7px;
+    top: auto;
+    transform: none;
+  }
+  &[x-placement^="right-end"] .@{tooltip-arrow-css-prefix}{
+    top: 7px;
+    transform: none;
+  }
 
-    &-bottom,
-    &-bottomLeft,
-    &-bottomRight {
-      top: 5px;
-      border-width: 0 8px 8px 8px;
-      &::after {
-        top: -7px;
-        left: -8px;
-      }
+  &[x-placement^="bottom"] .@{tooltip-arrow-css-prefix} {
+    top: 5px;
+    border-width: 0 8px 8px 8px;
+    &::after {
+      bottom: -8px;
+      left: -7px;
     }
-    &-bottom {
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    &-bottomLeft {
-      left: 14px;
-    }
-    &-bottomRight {
-      right: 14px;
-    }
+  }
+  &[x-placement^="bottom"] .@{tooltip-arrow-css-prefix}{
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  &[x-placement^="bottom-start"] .@{tooltip-arrow-css-prefix}{
+    left: 14px;
+    transform: none;
+  }
+  &[x-placement^="bottom-end"] .@{tooltip-arrow-css-prefix}{
+    right: 14px;
+    left: auto;
+    transform: none;
+  }
 
-    &-left,
-    &-leftTop,
-    &-leftBottom {
-      right: 0px;
-      border-width: 8px 0 8px 8px;
-      &::after {
-        bottom: -8px;
-        right: -7px;
-      }
+  &[x-placement^="left"] .@{tooltip-arrow-css-prefix} {
+    right: 0px;
+    border-width: 8px 0 8px 8px;
+    &::after {
+      bottom: -8px;
+      right: -7px;
     }
-    &-left {
-      top: 50%;
-      transform: translateY(-50%);
-    }
-    &-leftTop {
-      bottom: 8px;
-    }
-    &-leftBottom {
-      top: 8px;
-    }
+  }
+  &[x-placement^="left"] .@{tooltip-arrow-css-prefix}{
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  &[x-placement^="left-start"] .@{tooltip-arrow-css-prefix}{
+    bottom: 7px;
+    top: auto;
+    transform: none;
+  }
+  &[x-placement^="left-end"] .@{tooltip-arrow-css-prefix}{
+    top: 7px;
+    transform: none;
   }
 }
