@@ -31,6 +31,32 @@
       <div style="font-size: 20px">点击确定按钮进行校验,校验成功后关闭弹层</div>
     </we-layer>
 
+    <!--<el-dialog-->
+      <!--title="提示"-->
+      <!--:visible.sync="visible"-->
+      <!--width="30%"-->
+      <!--:before-close="handleClose">-->
+      <!--<span>-->
+        <!--<el-select-->
+          <!--v-model="value10"-->
+          <!--multiple-->
+          <!--filterable-->
+          <!--allow-create-->
+          <!--default-first-option-->
+          <!--placeholder="请选择文章标签" :popper-append-to-body="false">-->
+          <!--<el-option-->
+            <!--v-for="item in options5"-->
+            <!--:key="item.value"-->
+            <!--:label="item.label"-->
+            <!--:value="item.value">-->
+          <!--</el-option>-->
+        <!--</el-select>-->
+      <!--</span>-->
+      <!--<span slot="footer" class="dialog-footer">-->
+      <!--<el-button @click="dialogVisible = false">取 消</el-button>-->
+      <!--<el-button type="primary" @click="dialogVisible = false">确 定</el-button>-->
+      <!--</span>-->
+    <!--</el-dialog>-->
     <we-layer
       v-model="visible"
       :width="50"
@@ -46,8 +72,22 @@
       @click-confirm="confirm"
     >
 
+      <div style="width: 5000px;height: 600px;font-size: 20px;padding: 10px" slot-scope="scope">
 
-      <div style="width: 5000px;height: 600px;font-size: 20px;padding: 10px"  slot-scope="scope">
+        <el-select
+          v-model="value10"
+          multiple
+          filterable
+          allow-create
+          default-first-option
+          placeholder="请选择文章标签" :popper-append-to-body="false">
+          <el-option
+            v-for="item in options5"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
         你可以像缩放windows系统窗口那样将鼠标放在边框上缩放窗口
         <p></p>
         宽：{{scope.width}}
@@ -152,7 +192,19 @@
         visible: false,
         o: {
           value: false
-        }
+        },
+
+        options5: [{
+          value: 'HTML',
+          label: 'HTML'
+        }, {
+          value: 'CSS',
+          label: 'CSS'
+        }, {
+          value: 'JavaScript',
+          label: 'JavaScript'
+        }],
+        value10: []
       };
     },
 
