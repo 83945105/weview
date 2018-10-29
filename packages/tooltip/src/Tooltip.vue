@@ -3,25 +3,27 @@
     <div ref="reference"
          @mouseenter="handleMouseEnter"
          @mouseleave="handleMouseLeave"
+         v-click-out-side-x.capture="handleClickOutside"
     >
       <slot></slot>
     </div>
-    <animation name="fadeIn">
+    <transition name="fade">
       <div v-show="popperVisible"
            ref="popper"
            :class="[
             `${prefixCls}-tooltip`,
             offsetClass,
             effect === 'dark' ? `${prefixCls}-tooltip-type-dark` : `${prefixCls}-tooltip-type-light`
-           ]">
+           ]"
+           v-transfer-dom>
         <div :class="`${prefixCls}-tooltip-inner`">
           <div :class="`${prefixCls}-tooltip-inner-content`">
             <slot name="content">{{content}}</slot>
           </div>
         </div>
-        <div :class="[`${prefixCls}-tooltip-arrow`, arrowPlacementClass]"></div>
+        <div :class="[`${prefixCls}-tooltip-arrow`]"></div>
       </div>
-    </animation>
+    </transition>
   </div>
 </template>
 
@@ -29,18 +31,18 @@
 
   import Conf from '../../src/mixins/conf.js';
   import Popper from '../../src/mixins/popper.js';
-
-  import Animation from '../../animation/src/Animation.vue';
+  import {directive as ClickOutSideX} from 'v-click-outside-x';
+  import TransferDom from '../../src/directives/transfer-dom.js';
 
   export default {
-
-    components: {Animation: Animation},
 
     name: `${Conf.prefixCls}-tooltip`,
 
     componentName: `${Conf.prefixNameCls}Tooltip`,
 
     optionName: `tooltip`,
+
+    directives: {ClickOutSideX, TransferDom},
 
     mixins: [Conf, Popper],
 
@@ -80,13 +82,13 @@
       hideDelay: {//隐藏延迟, 为0时不会自动隐藏
         type: Number,
         default: 100
-      }
+      },
+      manual: Boolean//手动模式,开启后mouseenter、mouseleave 事件将不会生效
     },
 
     data() {
       return {
-        openDelayIndex: undefined,
-        hideDelayIndex: undefined
+        delayIndex: undefined,
       };
     },
 
@@ -154,25 +156,31 @@
     },
 
     methods: {
+      handleClickOutside(e) {
+        console.log(e)
+      },
       handleMouseEnter(e) {
-        if (this.hideDelayIndex) {
-          window.clearTimeout(this.hideDelayIndex);
+        if (this.manual) {
+          return;
         }
-        if (this.openDelayIndex) {
-          window.clearTimeout(this.openDelayIndex);
+        if (this.delayIndex) {
+          window.clearTimeout(this.delayIndex);
         }
-        this.openDelayIndex = setTimeout(() => {
+        this.delayIndex = setTimeout(() => {
           this.popperVisible = true;
         }, this.openDelay);
       },
       handleMouseLeave(e) {
-        if (this.hideDelayIndex) {
-          window.clearTimeout(this.hideDelayIndex);
+        if (this.manual) {
+          return;
         }
-        if (this.openDelayIndex) {
-          window.clearTimeout(this.openDelayIndex);
+        if (this.delayIndex) {
+          window.clearTimeout(this.delayIndex);
         }
-        this.hideDelayIndex = setTimeout(() => {
+        if (this.hideDelay === 0) {
+          return;
+        }
+        this.delayIndex = setTimeout(() => {
           this.popperVisible = false;
         }, this.hideDelay);
       },
