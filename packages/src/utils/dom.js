@@ -14,15 +14,15 @@ const camelCase = function (name) {
   }).replace(MOZ_HACK_REGEXP, 'Moz$1');
 };
 
-export const on = (function() {
+export const on = (function () {
   if (!isServer && document.addEventListener) {
-    return function(element, event, handler) {
+    return function (element, event, handler) {
       if (element && event && handler) {
         element.addEventListener(event, handler, false);
       }
     };
   } else {
-    return function(element, event, handler) {
+    return function (element, event, handler) {
       if (element && event && handler) {
         element.attachEvent('on' + event, handler);
       }
@@ -30,15 +30,15 @@ export const on = (function() {
   }
 })();
 
-export const off = (function() {
+export const off = (function () {
   if (!isServer && document.removeEventListener) {
-    return function(element, event, handler) {
+    return function (element, event, handler) {
       if (element && event) {
         element.removeEventListener(event, handler, false);
       }
     };
   } else {
-    return function(element, event, handler) {
+    return function (element, event, handler) {
       if (element && event) {
         element.detachEvent('on' + event, handler);
       }
@@ -54,15 +54,15 @@ export function hasClass(el, cls) {
   } else {
     return (' ' + el.className + ' ').indexOf(' ' + cls + ' ') > -1;
   }
-};
+}
 
 export function addClass(el, cls) {
   if (!el) return;
-  var curClass = el.className;
-  var classes = (cls || '').split(' ');
+  let curClass = el.className;
+  let classes = (cls || '').split(' ');
 
-  for (var i = 0, j = classes.length; i < j; i++) {
-    var clsName = classes[i];
+  for (let i = 0, j = classes.length; i < j; i++) {
+    let clsName = classes[i];
     if (!clsName) continue;
 
     if (el.classList) {
@@ -74,15 +74,15 @@ export function addClass(el, cls) {
   if (!el.classList) {
     el.className = curClass;
   }
-};
+}
 
 export function removeClass(el, cls) {
   if (!el || !cls) return;
-  var classes = cls.split(' ');
-  var curClass = ' ' + el.className + ' ';
+  let classes = cls.split(' ');
+  let curClass = ' ' + el.className + ' ';
 
-  for (var i = 0, j = classes.length; i < j; i++) {
-    var clsName = classes[i];
+  for (let i = 0, j = classes.length; i < j; i++) {
+    let clsName = classes[i];
     if (!clsName) continue;
 
     if (el.classList) {
@@ -94,7 +94,7 @@ export function removeClass(el, cls) {
   if (!el.classList) {
     el.className = trim(curClass);
   }
-};
+}
 
 export const getStyle = ieVersion < 9 ? function (element, styleName) {
   if (isServer) return;
@@ -125,7 +125,7 @@ export const getStyle = ieVersion < 9 ? function (element, styleName) {
     styleName = 'cssFloat';
   }
   try {
-    var computed = document.defaultView.getComputedStyle(element, '');
+    let computed = document.defaultView.getComputedStyle(element, '');
     return element.style[styleName] || computed ? computed[styleName] : null;
   } catch (e) {
     return element.style[styleName];
@@ -136,7 +136,7 @@ export function setStyle(element, styleName, value) {
   if (!element || !styleName) return;
 
   if (typeof styleName === 'object') {
-    for (var prop in styleName) {
+    for (let prop in styleName) {
       if (styleName.hasOwnProperty(prop)) {
         setStyle(element, prop, styleName[prop]);
       }
@@ -149,4 +149,4 @@ export function setStyle(element, styleName, value) {
       element.style[styleName] = value;
     }
   }
-};
+}

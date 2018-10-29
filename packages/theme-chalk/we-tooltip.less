@@ -56,7 +56,6 @@
   line-height: 1.4;
   position: absolute;
   display: block;
-  max-width: 260px;
   visibility: visible;
 
   &[x-placement^="top"] {
@@ -66,10 +65,10 @@
     padding-top: 12px;
   }
   &[x-placement^="left"] {
-    padding-right: 7px;
+    padding-right: 12px;
   }
   &[x-placement^="right"] {
-    padding-left: 7px;
+    padding-left: 12px;
   }
 
   &-rel {
@@ -89,9 +88,25 @@
     .mixin-h-scroll;
     border-radius: @tooltip-radius;
 
+    &-title {
+      font-size: @tooltip-default-title-font-size;
+      padding: @tooltip-default-title-size;
+      border-bottom: 1px dotted transparent;
+    }
+
     &-content {
       .mixin-wordwrap;
       padding: @tooltip-default-size;
+    }
+
+    &-bottom {
+      padding: @tooltip-default-button-size;
+      &.is-center {
+        text-align: center;
+      }
+      &.is-right {
+        text-align: right;
+      }
     }
   }
 
@@ -115,7 +130,7 @@
     border-width: 8px;
   }
 
-  &[x-placement^="top"] .@{tooltip-arrow-css-prefix} {
+  .@{tooltip-arrow-css-prefix}-top {
     bottom: 5px;
     border-width: 8px 8px 0 8px;
     &::after {
@@ -123,21 +138,21 @@
       left: -8px;
     }
   }
-  &[x-placement^="top"] .@{tooltip-arrow-css-prefix}{
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  &[x-placement^="top-start"] .@{tooltip-arrow-css-prefix}{
-    left: 14px;
-    transform: none;
-  }
-  &[x-placement^="top-end"] .@{tooltip-arrow-css-prefix}{
-    right: 14px;
-    left: auto;
-    transform: none;
-  }
+  //&[x-placement^="top"] .@{tooltip-arrow-css-prefix}{
+  //  left: 50%;
+  //  transform: translateX(-50%);
+  //}
+  //&[x-placement^="top-start"] .@{tooltip-arrow-css-prefix}{
+  //  left: 14px;
+  //  transform: none;
+  //}
+  //&[x-placement^="top-end"] .@{tooltip-arrow-css-prefix}{
+  //  right: 14px;
+  //  left: auto;
+  //  transform: none;
+  //}
 
-  &[x-placement^="right"] .@{tooltip-arrow-css-prefix} {
+  .@{tooltip-arrow-css-prefix}-right {
     left: 0px;
     border-width: 8px 8px 8px 0;
     &::after {
@@ -145,43 +160,43 @@
       left: -7px;
     }
   }
-  &[x-placement^="right"] .@{tooltip-arrow-css-prefix}{
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  &[x-placement^="right-start"] .@{tooltip-arrow-css-prefix}{
-    bottom: 7px;
-    top: auto;
-    transform: none;
-  }
-  &[x-placement^="right-end"] .@{tooltip-arrow-css-prefix}{
-    top: 7px;
-    transform: none;
-  }
+  //&[x-placement^="right"] .@{tooltip-arrow-css-prefix}{
+  //  top: 50%;
+  //  transform: translateY(-50%);
+  //}
+  //&[x-placement^="right-start"] .@{tooltip-arrow-css-prefix}{
+  //  bottom: 7px;
+  //  top: auto;
+  //  transform: none;
+  //}
+  //&[x-placement^="right-end"] .@{tooltip-arrow-css-prefix}{
+  //  top: 7px;
+  //  transform: none;
+  //}
 
-  &[x-placement^="bottom"] .@{tooltip-arrow-css-prefix} {
+  .@{tooltip-arrow-css-prefix}-bottom {
     top: 5px;
     border-width: 0 8px 8px 8px;
     &::after {
-      bottom: -8px;
-      left: -7px;
+      top: -7px;
+      left: -8px;
     }
   }
-  &[x-placement^="bottom"] .@{tooltip-arrow-css-prefix}{
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  &[x-placement^="bottom-start"] .@{tooltip-arrow-css-prefix}{
-    left: 14px;
-    transform: none;
-  }
-  &[x-placement^="bottom-end"] .@{tooltip-arrow-css-prefix}{
-    right: 14px;
-    left: auto;
-    transform: none;
-  }
+  //&[x-placement^="bottom"] .@{tooltip-arrow-css-prefix}{
+  //  left: 50%;
+  //  transform: translateX(-50%);
+  //}
+  //&[x-placement^="bottom-start"] .@{tooltip-arrow-css-prefix}{
+  //  left: 14px;
+  //  transform: none;
+  //}
+  //&[x-placement^="bottom-end"] .@{tooltip-arrow-css-prefix}{
+  //  right: 14px;
+  //  left: auto;
+  //  transform: none;
+  //}
 
-  &[x-placement^="left"] .@{tooltip-arrow-css-prefix} {
+  .@{tooltip-arrow-css-prefix}-left {
     right: 0px;
     border-width: 8px 0 8px 8px;
     &::after {
@@ -189,17 +204,17 @@
       right: -7px;
     }
   }
-  &[x-placement^="left"] .@{tooltip-arrow-css-prefix}{
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  &[x-placement^="left-start"] .@{tooltip-arrow-css-prefix}{
-    bottom: 7px;
-    top: auto;
-    transform: none;
-  }
-  &[x-placement^="left-end"] .@{tooltip-arrow-css-prefix}{
-    top: 7px;
-    transform: none;
-  }
+  //&[x-placement^="left"] .@{tooltip-arrow-css-prefix}{
+  //  top: 50%;
+  //  transform: translateY(-50%);
+  //}
+  //&[x-placement^="left-start"] .@{tooltip-arrow-css-prefix}{
+  //  bottom: 7px;
+  //  top: auto;
+  //  transform: none;
+  //}
+  //&[x-placement^="left-end"] .@{tooltip-arrow-css-prefix}{
+  //  top: 7px;
+  //  transform: none;
+  //}
 }

@@ -91,17 +91,12 @@
             "path": "/confirmTest"
           },
           {
-            "desc": "PopperJs测试",
-            "name": "PopperJsTest",
-            "path": "/popperJsTest"
-          },
-          {
-            "desc": "文字提示",
+            "desc": "Tooltip 文字提示测试",
             "name": "TooltipTest",
             "path": "/tooltipTest"
           },
           {
-            "desc": "弹出框",
+            "desc": "Popover 气泡卡片测试",
             "name": "PopoverTest",
             "path": "/PopoverTest"
           }

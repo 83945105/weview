@@ -26,6 +26,7 @@ import MenuItemGroup from './menu-item-group/index.js';
 import Skeleton from './skeleton/index.js';
 import {$Skeleton} from './skeleton/index.js';
 import Tooltip from './tooltip/index.js';
+import Popover from './popover/index.js';
 
 import PopupManager from './src/utils/popup.js';
 
@@ -43,7 +44,8 @@ const components = [
   MenuItem,
   MenuItemGroup,
   Skeleton,
-  Tooltip
+  Tooltip,
+  Popover
 ];
 
 const install = function (Vue, options = {}) {
@@ -53,7 +55,8 @@ const install = function (Vue, options = {}) {
 
   const WEVIEW = {
     zIndex: options.zIndex || 1024,
-    size: options.size || ''
+    size: options.size || '',
+    appendToBody: options.appendToBody || ''
   };
   PopupManager.zIndex = WEVIEW.zIndex;
 
@@ -82,7 +85,8 @@ export {
   MenuItemGroup,
   Skeleton,
   $Skeleton,
-  Tooltip
+  Tooltip,
+  Popover
 }
 
 export default install;

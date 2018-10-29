@@ -3,25 +3,29 @@
     <div ref="reference"
          @mouseenter="handleMouseEnter"
          @mouseleave="handleMouseLeave"
-         v-click-out-side-x.capture="handleClickOutside"
     >
       <slot></slot>
     </div>
     <transition name="fade">
-      <div v-show="popperVisible"
+      <div v-show="!disabled && popperVisible"
            ref="popper"
            :class="[
             `${prefixCls}-tooltip`,
-            offsetClass,
             effect === 'dark' ? `${prefixCls}-tooltip-type-dark` : `${prefixCls}-tooltip-type-light`
            ]"
-           v-transfer-dom>
-        <div :class="`${prefixCls}-tooltip-inner`">
-          <div :class="`${prefixCls}-tooltip-inner-content`">
-            <slot name="content">{{content}}</slot>
+           v-transfer-dom="{value: appendToBody}"
+           :style="{
+            maxWidth: maxWidth ? !isNaN(maxWidth) ? `${maxWidth}px` : maxWidth : undefined,
+            zIndex: this.zIndex
+           }"
+      >
+        <slot name="panel">
+          <div :class="`${prefixCls}-tooltip-inner`">
+            <div :class="`${prefixCls}-tooltip-inner-content`">
+              <slot name="content">{{content}}</slot>
+            </div>
           </div>
-        </div>
-        <div :class="[`${prefixCls}-tooltip-arrow`]"></div>
+        </slot>
       </div>
     </transition>
   </div>
@@ -31,8 +35,9 @@
 
   import Conf from '../../src/mixins/conf.js';
   import Popper from '../../src/mixins/popper.js';
-  import {directive as ClickOutSideX} from 'v-click-outside-x';
+  import PopupManager from '../../src/utils/popup.js';
   import TransferDom from '../../src/directives/transfer-dom.js';
+  import {hasClass} from "../../src/utils/dom.js";
 
   export default {
 
@@ -42,7 +47,7 @@
 
     optionName: `tooltip`,
 
-    directives: {ClickOutSideX, TransferDom},
+    directives: {TransferDom},
 
     mixins: [Conf, Popper],
 
@@ -55,6 +60,7 @@
         }
       },
       content: [String, Number],//显示内容
+      maxWidth: [Number, String],//最大宽度
       placement: {//出现的位置
         type: String,
         default: 'bottom',
@@ -75,6 +81,7 @@
           ].indexOf(value) !== -1;
         }
       },
+      disabled: Boolean,//是否禁用
       openDelay: {//出现延迟
         type: Number,
         default: 0
@@ -83,7 +90,13 @@
         type: Number,
         default: 100
       },
-      manual: Boolean//手动模式,开启后mouseenter、mouseleave 事件将不会生效
+      manual: Boolean,//手动模式,开启后mouseenter、mouseleave 事件将不会生效
+      appendToBody: {//是否插入到body下
+        type: Boolean,
+        default() {
+          return !this.$WEVIEW || this.$WEVIEW.appendToBody === '' ? true : this.$WEVIEW.appendToBody;
+        }
+      }
     },
 
     data() {
@@ -93,71 +106,104 @@
     },
 
     computed: {
-      offsetClass() {
-        switch (this.placement) {
-          case 'top':
-            return `is-top`;
-          case 'top-start':
-            return `is-top`;
-          case 'top-end':
-            return `is-top`;
-          case 'bottom':
-            return `is-bottom`;
-          case 'bottom-start':
-            return `is-bottom`;
-          case 'bottom-end':
-            return `is-bottom`;
-          case 'left':
-            return `is-left`;
-          case 'left-start':
-            return `is-left`;
-          case 'left-end':
-            return `is-left`;
-          case 'right':
-            return `is-right`;
-          case 'right-start':
-            return `is-right`;
-          case 'right-end':
-            return `is-right`;
-          default:
-            return undefined;
-        }
-      },
-      arrowPlacementClass() {
-        switch (this.placement) {
-          case 'top':
-            return `${this.prefixCls}-tooltip-arrow-top`;
-          case 'top-start':
-            return `${this.prefixCls}-tooltip-arrow-topLeft`;
-          case 'top-end':
-            return `${this.prefixCls}-tooltip-arrow-topRight`;
-          case 'bottom':
-            return `${this.prefixCls}-tooltip-arrow-bottom`;
-          case 'bottom-start':
-            return `${this.prefixCls}-tooltip-arrow-bottomLeft`;
-          case 'bottom-end':
-            return `${this.prefixCls}-tooltip-arrow-bottomRight`;
-          case 'left':
-            return `${this.prefixCls}-tooltip-arrow-left`;
-          case 'left-start':
-            return `${this.prefixCls}-tooltip-arrow-leftTop`;
-          case 'left-end':
-            return `${this.prefixCls}-tooltip-arrow-leftBottom`;
-          case 'right':
-            return `${this.prefixCls}-tooltip-arrow-right`;
-          case 'right-start':
-            return `${this.prefixCls}-tooltip-arrow-rightTop`;
-          case 'right-end':
-            return `${this.prefixCls}-tooltip-arrow-rightBottom`;
-          default:
-            return undefined;
+      zIndex() {
+        if (this.popperVisible) {
+          return PopupManager.nextZIndex();
+        } else {
+          return 0;
         }
       }
     },
 
     methods: {
-      handleClickOutside(e) {
-        console.log(e)
+      onUpdate(e) {
+        let referenceOffset = e.offsets.reference;
+        let popperOffset = e.offsets.popper;
+        let popperEl = e.instance.popper;
+        let arrowCls = this.prefixCls + '-tooltip-arrow';
+
+        let arrowEl;
+        if (hasClass(popperEl.lastElementChild, arrowCls)) {
+          arrowEl = popperEl.lastElementChild;
+        } else {
+          arrowEl = document.createElement("div");
+          e.instance.popper.appendChild(arrowEl);
+        }
+        switch (e.placement) {
+          case 'top':
+            arrowEl.className = this.prefixCls + '-tooltip-arrow we-tooltip-arrow-top';
+            arrowEl.style = undefined;
+            arrowEl.style.left = `${referenceOffset.left - popperOffset.left + referenceOffset.width / 2 - 8}px`;
+            arrowEl.style.bottom = `${4}px`;
+            break;
+          case 'top-start':
+            arrowEl.className = this.prefixCls + '-tooltip-arrow we-tooltip-arrow-top';
+            arrowEl.style = undefined;
+            arrowEl.style.left = `${referenceOffset.left - popperOffset.left + 10}px`;
+            arrowEl.style.bottom = `${4}px`;
+            break;
+          case 'top-end':
+            arrowEl.className = this.prefixCls + '-tooltip-arrow we-tooltip-arrow-top';
+            arrowEl.style = undefined;
+            arrowEl.style.left = `${referenceOffset.left - popperOffset.left + referenceOffset.width - 26}px`;
+            arrowEl.style.bottom = `${4}px`;
+            break;
+          case 'bottom':
+            arrowEl.className = this.prefixCls + '-tooltip-arrow we-tooltip-arrow-bottom';
+            arrowEl.style = undefined;
+            arrowEl.style.left = `${referenceOffset.left - popperOffset.left + referenceOffset.width / 2 - 8}px`;
+            arrowEl.style.top = `${4}px`;
+            break;
+          case 'bottom-start':
+            arrowEl.className = this.prefixCls + '-tooltip-arrow we-tooltip-arrow-bottom';
+            arrowEl.style = undefined;
+            arrowEl.style.left = `${referenceOffset.left - popperOffset.left + 10}px`;
+            arrowEl.style.top = `${4}px`;
+            break;
+          case 'bottom-end':
+            arrowEl.className = this.prefixCls + '-tooltip-arrow we-tooltip-arrow-bottom';
+            arrowEl.style = undefined;
+            arrowEl.style.left = `${referenceOffset.left - popperOffset.left + referenceOffset.width - 26}px`;
+            arrowEl.style.top = `${4}px`;
+            break;
+          case 'left':
+            arrowEl.className = this.prefixCls + '-tooltip-arrow we-tooltip-arrow-left';
+            arrowEl.style = undefined;
+            arrowEl.style.right = `${4}px`;
+            arrowEl.style.top = `${referenceOffset.top - popperOffset.top + referenceOffset.height / 2 - 8}px`;
+            break;
+          case 'left-start':
+            arrowEl.className = this.prefixCls + '-tooltip-arrow we-tooltip-arrow-left';
+            arrowEl.style = undefined;
+            arrowEl.style.right = `${4}px`;
+            arrowEl.style.top = `${referenceOffset.top - popperOffset.top + 10}px`;
+            break;
+          case 'left-end':
+            arrowEl.className = this.prefixCls + '-tooltip-arrow we-tooltip-arrow-left';
+            arrowEl.style = undefined;
+            arrowEl.style.right = `${4}px`;
+            arrowEl.style.top = `${referenceOffset.top - popperOffset.top + referenceOffset.height - 26}px`;
+            break;
+          case 'right':
+            arrowEl.className = this.prefixCls + '-tooltip-arrow we-tooltip-arrow-right';
+            arrowEl.style = undefined;
+            arrowEl.style.left = `${4}px`;
+            arrowEl.style.top = `${referenceOffset.top - popperOffset.top + referenceOffset.height / 2 - 8}px`;
+            break;
+          case 'right-start':
+            arrowEl.className = this.prefixCls + '-tooltip-arrow we-tooltip-arrow-right';
+            arrowEl.style = undefined;
+            arrowEl.style.left = `${4}px`;
+            arrowEl.style.top = `${referenceOffset.top - popperOffset.top + 10}px`;
+            break;
+          case 'right-end':
+            arrowEl.className = this.prefixCls + '-tooltip-arrow we-tooltip-arrow-right';
+            arrowEl.style = undefined;
+            arrowEl.style.left = `${4}px`;
+            arrowEl.style.top = `${referenceOffset.top - popperOffset.top + referenceOffset.height - 26}px`;
+            break;
+          default:
+        }
       },
       handleMouseEnter(e) {
         if (this.manual) {
@@ -183,7 +229,7 @@
         this.delayIndex = setTimeout(() => {
           this.popperVisible = false;
         }, this.hideDelay);
-      },
+      }
     }
 
   }

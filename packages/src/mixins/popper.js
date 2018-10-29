@@ -8,7 +8,7 @@ const isServer = Vue.prototype.$isServer;
 const Popper = isServer ? function () {
 } : require('popper.js/dist/umd/popper.js');
 
-import PopupManager from '../../src/utils/popup.js';
+import {isFunction} from "../utils/util.js";
 
 export default {
 
@@ -39,8 +39,6 @@ export default {
     offset: {
       default: 0
     }
-
-
   },
 
   data() {
@@ -102,6 +100,10 @@ export default {
         this.$nextTick(this.updatePopper);
         this.$emit('created', this);
       };
+
+      if (isFunction(this.onUpdate)) {
+        options.onUpdate = this.onUpdate;
+      }
 
       this.popperJS = new Popper(reference, popper, options);
     },

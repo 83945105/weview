@@ -2,6 +2,7 @@
 // Thanks to: https://github.com/calebroseland/vue-dom-portal
 
 import merge from "../utils/merge.js";
+import {isBoolean, isObject} from "../utils/util.js";
 
 /**
  * Get target DOM Node
@@ -12,82 +13,80 @@ function getTarget(node) {
   if (node === void 0) {
     return document.body
   }
-
-  if (typeof node === 'string' && node.indexOf('?') === 0) {
-    return document.body
-  } else if (typeof node === 'string' && node.indexOf('?') > 0) {
-    node = node.split('?')[0]
-  }
-
   if (node === 'body' || node === true) {
     return document.body
   }
-
   return node instanceof window.Node ? node : document.querySelector(node)
-}
-
-function getShouldUpdate(node) {
-  // do not updated by default
-  if (!node) {
-    return false
-  }
-  if (typeof node === 'string' && node.indexOf('?') > 0) {
-    try {
-      const config = JSON.parse(node.split('?')[1])
-      return config.autoUpdate || false
-    } catch (e) {
-      return false
-    }
-  }
-  return false
 }
 
 const directive = {
   inserted(el, {value}, vnode) {
-    el.className = el.className ? el.className + ' v-transfer-dom' : 'v-transfer-dom'
-    const parentNode = el.parentNode
-    const home = document.createComment('')
-    let hasMovedOut = false
+    let transfer = true;
+    let appendToBody = true;
+    let target = document.body;
 
-    if (value !== false) {
-      parentNode.replaceChild(home, el) // moving out, el is no longer in the document
-      getTarget(value).appendChild(el) // moving into new place
+    if (isBoolean(value)) {
+      transfer = value;
+    } else if (isObject(value)) {
+      transfer = value.value === void 0 ? true : value.value !== false;
+      appendToBody = value.appendToBody === void 0 ? false : value.appendToBody === true;
+      target = appendToBody ? document.body : value.target;
+    }
+    if (!transfer) return;
+
+    el.className = el.className ? el.className + ' v-transfer-dom' : 'v-transfer-dom';
+    const parentNode = el.parentNode;
+    const home = document.createComment('');
+    let hasMovedOut = false;
+
+    if (target !== false) {
+      parentNode.replaceChild(home, el); // moving out, el is no longer in the document
+      getTarget(target).appendChild(el); // moving into new place
       hasMovedOut = true
     }
     if (!el.__transferDomData) {
       el.__transferDomData = {
         parentNode: parentNode,
         home: home,
-        target: getTarget(value),
+        target: getTarget(target),
         hasMovedOut: hasMovedOut
       }
     }
   },
   componentUpdated(el, {value}) {
-    const shouldUpdate = getShouldUpdate(value)
-    if (!shouldUpdate) {
-      return
-    }
-    // need to make sure children are done updating (vs. `update`)
-    const ref$1 = el.__transferDomData
-    // homes.get(el)
-    const parentNode = ref$1.parentNode
-    const home = ref$1.home
-    const hasMovedOut = ref$1.hasMovedOut // recall where home is
+    let transfer = true;
+    let appendToBody = true;
+    let target = document.body;
 
-    if (!hasMovedOut && value) {
+    if (isBoolean(value)) {
+      transfer = value;
+    } else if (isObject(value)) {
+      transfer = value.value === void 0 ? true : value.value !== false;
+      appendToBody = value.appendToBody === void 0 ? false : value.appendToBody === true;
+      target = appendToBody ? document.body : value.target;
+    }
+    if (!transfer) return;
+
+    // need to make sure children are done updating (vs. `update`)
+    const ref$1 = el.__transferDomData;
+    // homes.get(el)
+    const parentNode = ref$1.parentNode;
+    const home = ref$1.home;
+    const hasMovedOut = ref$1.hasMovedOut; // recall where home is
+
+    if (!hasMovedOut && target) {
       // remove from document and leave placeholder
-      parentNode.replaceChild(home, el)
+      parentNode.replaceChild(home, el);
       // append to target
-      getTarget(value).appendChild(el)
-      el.__transferDomData = merge({}, el.__transferDomData, {hasMovedOut: true, target: getTarget(value)})
-    } else if (hasMovedOut && value === false) {
+      getTarget(target).appendChild(el);
+      el.__transferDomData = merge({}, el.__transferDomData, {hasMovedOut: true, target: getTarget(target)})
+    } else if (hasMovedOut && target === false) {
       // previously moved, coming back home
-      parentNode.replaceChild(el, home)
-      el.__transferDomData = merge({}, el.__transferDomData, {hasMovedOut: false, target: getTarget(value)})
-    } else if (value) {
+      parentNode.replaceChild(el, home);
+      el.__transferDomData = merge({}, el.__transferDomData, {hasMovedOut: false, target: getTarget(target)})
+    } else if (target) {
       // already moved, going somewhere else
-      getTarget(value).appendChild(el)
+      getTarget(target).appendChild(el)
     }
   },
   unbind: function unbind(el, binding) {
