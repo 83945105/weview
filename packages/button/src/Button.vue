@@ -2,7 +2,16 @@
   <button :disabled="buttonDisabled"
           :autofocus="autofocus"
           :type="nativeType"
-          :class="[buttonClass, sizeClass, typeClass, plainClass, disabledClass, shapeClass]"
+          :class="[
+            `${prefixCls}-button`,
+            sizeClass,
+            `${prefixCls}-button-type-${type}`,
+            shapeClass,
+            {
+              'is-plain': plain,
+              'is-disabled': buttonDisabled
+            }
+          ]"
           @click="handleClick"
   >
     <icon v-if="showLeftIcon" :name="_iconName" :type="iconType" :loading="loading"></icon>
@@ -32,7 +41,9 @@
     props: {
       size: {//default large small mini
         type: String,
-        default: 'default'
+        default() {
+          return !this.$WEVIEW || this.$WEVIEW.size === '' ? 'default' : this.$WEVIEW.size;
+        }
       },
       type: {//default primary success info warning danger text
         type: String,
@@ -42,61 +53,43 @@
         type: String,
         default: 'button'
       },
-      plain: Boolean,
-      shape: String,//rectangle round circle
+      plain: Boolean,//朴素风格
+      shape: String,//形状 rectangle round circle
       autofocus: Boolean,
-      round: Boolean,
-      circle: Boolean,
-      disabled: Boolean,
-      loading: Boolean,
-      loadingIconName: {
+      round: Boolean,//圆角
+      circle: Boolean,//圆形
+      disabled: Boolean,//禁用
+      loading: Boolean,//开启加载特效
+      loadingIconName: {//加载特效的图标名称
         type: String,
-        default: 'loading-drop'
+        default: 'loading-snakes'
       },
-      iconName: String,
-      iconType: String,
-      iconPosition: {
+      iconName: String,//图标名称
+      iconType: String,//图标类型
+      iconPosition: {//图标位置 left 左边 right 右边
         type: String,
-        default: 'left'
+        default: 'left',
+        validator(value) {
+          return ['left', 'right'].indexOf(value) !== -1;
+        }
       }
     },
 
     computed: {
-      showLeftIcon() {
-        return (this.loading && this.iconPosition === 'left') || (this.iconName && this.iconPosition === 'left');
-      },
-      showRightIcon() {
-        return (this.loading && this.iconPosition === 'right') || (this.iconName && this.iconPosition === 'right');
-      },
-      buttonClass() {
-        return `${this.prefixCls}-button`;
-      },
-      buttonSize() {
-        return this.size || (this.$WEVIEW || {}).size;
-      },
-      sizeClass() {
-        if(this.buttonType==='text'){
-          return this.buttonSize ? `${this.prefixCls}-button-size-text-${this.buttonSize}` : undefined;
-        }
-        return this.buttonSize ? `${this.prefixCls}-button-size-${this.buttonSize}` : undefined;
-      },
-      buttonType() {
-        return this.type || (this.$WEVIEW || {}).type;
-      },
-      typeClass() {
-        return this.buttonType ? `${this.prefixCls}-button-type-${this.buttonType}` : undefined;
-      },
-      plainClass() {
-        return this.plain ? `is-plain` : '';
-      },
       buttonDisabled() {
         return this.loading || this.disabled;
       },
-      disabledClass() {
-        return this.buttonDisabled ? `is-disabled` : '';
+      showLeftIcon() {
+        return (this.loading && this.iconPosition === 'left') || (this.iconName !== void 0 && this.iconPosition === 'left');
       },
-      _iconName() {
-        return this.loading ? this.loadingIconName : this.iconName;
+      showRightIcon() {
+        return (this.loading && this.iconPosition === 'right') || (this.iconName !== void 0 && this.iconPosition === 'right');
+      },
+      sizeClass() {
+        if (this.type === 'text') {
+          return `${this.prefixCls}-button-size-text-${this.size}`;
+        }
+        return `${this.prefixCls}-button-size-${this.size}`;
       },
       shapeClass() {
         switch (this.shape) {
@@ -109,6 +102,9 @@
           default:
             return undefined;
         }
+      },
+      _iconName() {
+        return this.loading ? this.loadingIconName : this.iconName;
       }
     },
 

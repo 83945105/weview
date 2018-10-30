@@ -22,9 +22,8 @@ SkeletonDirective.install = Vue => {
   };
 
   const create = (el, binding) => {
-    if (el.vm) {
-      return;
-    }
+    if (el.vm) return;
+
     let options = {};
     typeCallback(binding.value, {
       objectCallback: () => {
@@ -47,26 +46,25 @@ SkeletonDirective.install = Vue => {
       create(el, binding);
     },
     update(el, binding, vnode, oldVnode) {
-      if (binding.oldValue !== binding.value) {
-        let value;
-        typeCallback(binding.value, {
-          objectCallback: () => {
-            value = binding.value.value || false;
-          },
-          booleanCallback: () => {
-            value = binding.value;
-          },
-          numberCallback: () => {
-            value = binding.value;
-          }
-        });
-        if (value === true || value === 1) {
-          el.vm && el.vm.start();
-        } else if (value === false || value === 0) {
-          el.vm && el.vm.finish();
-        } else {
-          el.vm && el.vm.error(value);
+      if (binding.oldValue === binding.value) return;
+      let value;
+      typeCallback(binding.value, {
+        objectCallback: () => {
+          value = binding.value.value || false;
+        },
+        booleanCallback: () => {
+          value = binding.value;
+        },
+        numberCallback: () => {
+          value = binding.value;
         }
+      });
+      if (value === true || value === 1) {
+        el.vm && el.vm.start();
+      } else if (value === false || value === 0) {
+        el.vm && el.vm.finish();
+      } else {
+        el.vm && el.vm.error(value);
       }
     }
   });

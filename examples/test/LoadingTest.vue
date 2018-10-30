@@ -1,77 +1,93 @@
 <template>
   <div>
-    <div style="width: 300px;height: 300px;border:1px solid #57ee36;">
-      <we-loading :value="true" animation-name="fadeRight"></we-loading>
-    </div>
-
-    <div style="height:300px;width:300px;border:1px solid #246aee;margin-top:15px;">
-      <we-loading :value="true" background="rgba(0,0,0,0.8)" text="玩命加载中" :loading-speed="1"></we-loading>
-    </div>
-
-    <div style="background-color: #EEEEEE; width: 400px; height: 200px;position: relative">
-      <div class="we-loading-spinner">
-        <div class="we-loading-spinner-inner we-loading-spinner-inner-size-default">
-          <div class="we-loading-spinner-inner-icon">
-            <!--<img src="../../static/src/images/weview_logo.png" />-->
-            <!--<we-icon name="heart-o" size="large"></we-icon>-->
-          </div>
-          <svg class="we-loading-spinner-inner-circular" viewBox="25 25 50 50">
-            <circle class="icon" cx="50" cy="50" r="20" fill="none"/>
-          </svg>
+    <div class="page-title">Loading加载特效</div>
+    <div class="first-title">组件方式</div>
+    <div class="module-main">
+      <div class="module-content" style="overflow: hidden">
+        <div style="border: 1px solid red; width: 200px; height: 200px; float:left;">
+          <we-loading :value="true"></we-loading>
         </div>
-        <div class="we-loading-spinner-text">
-          加载中
+
+        <div style="border: 1px solid red; width: 200px; height: 200px; float:left;margin-left: 10px;">
+          <we-loading :value="true" text="加载中"></we-loading>
         </div>
+
+        <div style="border: 1px solid red; width: 200px; height: 200px; float:left;margin-left: 10px;">
+          <we-loading :value="true">
+            <we-icon slot="logo" name="home"></we-icon>
+          </we-loading>
+        </div>
+
       </div>
     </div>
 
-    <div id="loadingDom"
-         @click="handleClick">
-      点我使用$loading开启加载特效
-      <div style="height: 200px; overflow: auto">
-        <div style="height: 1000px;"></div>
+    <div class="first-title">服务方式</div>
+    <div class="module-main">
+      <div class="module-content" style="overflow: hidden">
+        <we-button @click="() => {
+          loading01 = this.$loading({
+            target: '#loading01'
+          })
+        }">开启loading01
+        </we-button>
+        <we-button @click="() => {
+          loading01.close();
+        }">关闭loading01
+        </we-button>
+      </div>
+      <div class="module-content" style="overflow: hidden">
+        <we-button @click="() => {
+          loading02 = this.$loading({
+            target: '#loading02',
+            text: '玩命加载中'
+          })
+        }">开启loading02
+        </we-button>
+        <we-button @click="() => {
+          loading02.close();
+        }">关闭loading02
+        </we-button>
+      </div>
+      <div class="module-content" style="overflow: hidden">
+        <we-button @click="() => {
+          loading03 = this.$loading({
+            target: '#loading03',
+            logoRender(h, props) {
+              return h('we-icon', {
+                props: {
+                  name: 'home'
+                }
+              });
+            }
+          })
+        }">开启loading03
+        </we-button>
+        <we-button @click="() => {
+          loading03.close();
+        }">关闭loading03
+        </we-button>
       </div>
     </div>
 
-    <div id="loadingDom2"
-         style="width: 300px;height: 300px;border:1px solid #ee43e1;margin-top:15px;overflow-x:hidden;overflow-y: auto;">
-      使用按钮开启加载特效
-      <div style="height:1000px"></div>
+    <div class="module-main" style="margin-top: 5px">
+      <div class="module-content" style="overflow: hidden">
+        <div id="loading01" style="border: 1px solid red; width: 200px; height: 200px; float:left;">
+          <h1 style="display: table-cell;vertical-align: middle;height: 200px; width: 200px; text-align: center">
+            loading01</h1>
+        </div>
+
+        <div id="loading02" style="border: 1px solid red; width: 200px; height: 200px; float:left;margin-left: 10px;">
+          <h1 style="display: table-cell;vertical-align: middle;height: 200px; width: 200px; text-align: center">
+            loading02</h1>
+        </div>
+
+        <div id="loading03" style="border: 1px solid red; width: 200px; height: 200px; float:left;margin-left: 10px;">
+          <h1 style="display: table-cell;vertical-align: middle;height: 200px; width: 200px; text-align: center">
+            loading03</h1>
+        </div>
+
+      </div>
     </div>
-
-    <we-button @click="instance = $loading({target: '#loadingDom2'})">开启特效</we-button>
-    <we-button @click="instance.close()">关闭</we-button>
-    <we-button @click="$loading.close(instance)">实例关闭</we-button>
-    <we-button @click="$loading.close(instance.id)">ID关闭</we-button>
-
-    <div id="loadingDom3" style="width: 300px;height: 300px;border:1px solid #52ee47;margin-top:15px;">
-      第一个
-    </div>
-
-    <div id="loadingDom4" style="width: 300px;height: 300px;border:1px solid #8dc7ee;margin-top:15px;">
-      第二个
-    </div>
-
-    <div>
-      <we-button @click="$loading({target: '#loadingDom3'})">开启第一个</we-button>
-      <we-button @click="$loading({target: '#loadingDom4'})">开启第二个</we-button>
-      <we-button @click="$loading.closeAll()">关闭全部</we-button>
-    </div>
-
-    <div style="margin-top: 20px">
-      <we-button type="danger" @click="fullscreenLoading">全屏loading</we-button>
-    </div>
-
-    <div style="margin-top: 20px"></div>
-
-    <el-table v-loading="tableLoading" :height="500" :data="tableData" stripe border
-              style="overflow: inherit">
-      <el-table-column label="资源名称" column-key="name" prop="name" min-width="200" align="center"></el-table-column>
-    </el-table>
-    <div style="margin-top: 20px">
-      <we-button type="danger" @click="handleTableLoading">表格Loading</we-button>
-    </div>
-
   </div>
 </template>
 
@@ -81,51 +97,23 @@
 
     data() {
       return {
-        loading: undefined,
-        instance: undefined,
-        o: {
-          value: false,
-          text: '玩命加载中'
-        },
-        tableData: [],
-        tableLoading: false,
-        spinner: false
+        value01: false,
+        value02: false,
+        value03: false,
+        value04: false,
+        value05: false,
+        value06: false,
+
+        loading01: undefined,
+        loading02: undefined,
+        loading03: undefined,
+        loading04: undefined,
+        loading05: undefined,
+        loading06: undefined,
       };
     },
 
-    methods: {
-      handleClick() {
-
-        if (this.loading) {
-          this.loading = this.loading.close();
-          this.loading = undefined;
-        } else {
-          this.loading = this.$loading({target: '#loadingDom', animationName: 'fadeRight'});
-        }
-      },
-      fullscreenLoading() {
-        let l = this.$loading();
-        setTimeout(() => {
-          l.close();
-        }, 3000);
-      },
-      timeoutCloseVLoading() {
-        this.o.value = true;
-        setTimeout(() => {
-          this.o.value = false;
-        }, 3000);
-      },
-      handleTableLoading() {
-        this.tableLoading = true;
-        setTimeout(() => {
-          let rows = [{
-            name: '1'
-          }];
-          this.tableData = rows;
-          this.tableLoading = false;
-        }, 1000);
-      }
-    },
+    methods: {},
 
     created() {
     },
@@ -135,3 +123,81 @@
     }
   }
 </script>
+
+<style scoped>
+  .page-title {
+    font-size: 32px;
+    font-weight: normal;
+    margin: 30px 0px 15px 0px;
+    color: #333333;
+  }
+
+  .first-title {
+    font-size: 22px;
+    font-weight: normal;
+    margin: 30px 0px 15px 0px;
+    color: #333333;
+  }
+
+  .module-main {
+    border: 1px solid #EEEEEE;
+  }
+
+  .module-main:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .module-content {
+    padding: 15px;
+  }
+
+  .module-code {
+    padding: 12px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #EEEEEE;
+  }
+
+  .module-fold {
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #FFFFFF;
+    border-top: 1px solid #EEEEEE;
+    color: #999999;
+  }
+
+  .module-fold:hover {
+    background-color: #fcfcfc;
+  }
+
+  .popover-layout-main {
+    width: 338px;
+  }
+
+  .popover-layout-clear {
+    clear: both;
+  }
+
+  .popover-layout .popover-btn {
+    width: 60px;
+    margin: 5px 3px;
+  }
+
+  .popover-layout.is-left {
+    float: left;
+    width: 60px;
+  }
+
+  .popover-layout.is-left .popover-btn {
+    margin: 5px;
+  }
+
+  .popover-layout.is-right {
+    float: right;
+    width: 60px;
+  }
+
+  .popover-layout.is-right .popover-btn {
+    margin: 5px;
+  }
+</style>

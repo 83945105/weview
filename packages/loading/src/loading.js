@@ -1,98 +1,95 @@
 import Vue from 'vue';
 import WeLoading from './Loading.vue';
-import {isObject, isString} from "../../src/utils/util.js";
+import merge from "../../src/utils/merge.js";
 
-const merge = require('webpack-merge');
+const Default = {
+  target: document.body,
+  fullscreen: false
+};
 
 let seed = 1;
-let instance;
 let instances = [];
 let globalInstance;
 
-function removeInstance(vm) {
+export const getId = function () {
+  return `loading-${seed++}`;
+};
+
+export const addInstance = function (instance) {
+  instances.push(instance);
+};
+
+function removeInstance(instance) {
   for (let i = 0; i < instances.length; i++) {
-    if (instances[i].id === vm.id) {
+    if (instances[i].id === instance.id) {
       instances.splice(i, 1);
       break;
     }
   }
-  if (globalInstance && globalInstance.id === vm.id) {
+  if (globalInstance && globalInstance.id === instance.id) {
     globalInstance = undefined;
   }
 }
 
-const Default = {
-  target: document.body
-};
-
-const Loading = function (opts = {}) {
+const Loading = function (properties = {}) {
   if (Vue.prototype.$isServer) {
     return;
   }
+  const __props__ = merge({}, Default, properties);
+  if (typeof __props__.target === 'string') {
+    __props__.target = document.querySelector(__props__.target);
+  }
+  __props__.target = __props__.target || document.body;
 
-  let target;
-
-  if (isString(opts)) {
-    target = document.querySelector(`${opts}`);
-    opts = merge(Default, {
-      target: target
-    });
-  } else if (opts instanceof HTMLElement) {
-    opts = merge(Default, {
-      target: opts
-    });
-  } else if (isObject(opts)) {
-    target = opts.target;
-    if (isString(target)) {
-      target = document.querySelector(`${target}`);
-    } else if (!(target instanceof HTMLElement)) {
-      target = undefined;
-    }
-    opts = merge(Default, opts, {
-      target: target
-    });
-  } else {
-    opts = merge(Default, {});
+  if (__props__.target === document.body) {
+    __props__.fullscreen = true;
   }
 
-  if (opts.target === document.body) {
-    opts.fullscreen = true;
-  }
-
-  if (opts.fullscreen && globalInstance) {
+  if (__props__.fullscreen && globalInstance) {
     return globalInstance;
   }
 
-  let id = `loading-${seed++}`;
+  let id = getId();
 
-  let vm = new Vue({
+  let component = new Vue({
     render(h) {
-      opts.value = true;
       return h(WeLoading, {
-        props: opts,
+        props: merge({}, __props__, {
+          value: true
+        }),
         on: {
-          animationAfterLeave(el, vm) {
-            removeInstance(vm);
+          remove(vm) {
             vm.destroy();
+            removeInstance(vm);
+          }
+        },
+        scopedSlots: {
+          logo: (props) => {
+            return __props__.logoRender ? __props__.logoRender(h, props) : undefined;
+          },
+          default: (props) => {
+            return __props__.render ? __props__.render(h, props) : undefined;
           }
         }
       });
     }
   }).$mount();
 
-  opts.target.appendChild(vm.$el);
+  __props__.target.appendChild(component.$el);
 
-  instance = vm.$children[0];
+  const Loading = component.$children[0];
 
-  instance.id = id;
+  Loading.id = id;
 
-  if (opts.fullscreen) {
-    globalInstance = instance;
+  addInstance(Loading);
+
+  if (__props__.fullscreen) {
+    globalInstance = Loading;
   } else {
-    instances.push(instance);
+    instances.push(Loading);
   }
 
-  return instance;
+  return Loading;
 };
 
 Loading.close = function (target) {

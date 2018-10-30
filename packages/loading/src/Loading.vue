@@ -1,25 +1,44 @@
 <template>
-  <animation :name="_animationName" @after-leave="animationAfterLeave">
-    <div v-show="visible" :class="[maskClass, maskBgClass, fullscreenClass]" :style="maskBgStyle">
-      <div :class="[contentClass]">
-        <icon :name="iconName" type="primary" :loading="true" :loading-speed="loadingSpeed" size="large"></icon>
-        <h3 :class="[textClass]">{{text}}</h3>
+  <transition name="fade">
+    <div v-show="visible"
+         :class="[
+          `${prefixCls}-loading-mask`,
+          `${prefixCls}-loading-mask-black`,
+          {'is-full': fullscreen}
+         ]"
+         :style="{
+          'backgroundColor': this.background,
+          zIndex: zIndex
+         }">
+      <div :class="`${prefixCls}-loading-spinner`">
+        <slot>
+          <div :class="[`${prefixCls}-loading-spinner-inner`, `${prefixCls}-loading-spinner-inner-size-${size}`]">
+            <div :class="`${prefixCls}-loading-spinner-inner-icon`">
+              <slot name="logo"></slot>
+            </div>
+            <svg :class="`${prefixCls}-loading-spinner-inner-circular`" viewBox="25 25 50 50">
+              <circle class="icon" cx="50" cy="50" r="20" fill="none"/>
+            </svg>
+          </div>
+        </slot>
+        <div v-if="text !== void 0" :class="`${prefixCls}-loading-spinner-text`">{{text}}</div>
       </div>
     </div>
-  </animation>
+  </transition>
 </template>
 
 <script>
 
+  import PopupManager from '../../src/utils/popup.js';
   import {hasClass, addClass, removeClass, getStyle} from '../../src/utils/dom.js';
   import Conf from '../../src/mixins/conf.js';
+  import {getId, addInstance} from './loading.js';
 
   import Icon from '../../icon/src/Icon.vue';
-  import Animation from '../../animation/src/Animation.vue';
 
   export default {
 
-    components: {Icon: Icon, Animation: Animation},
+    components: {Icon: Icon},
 
     name: `${Conf.prefixCls}-loading`,
 
@@ -29,93 +48,51 @@
 
     mixins: [Conf],
 
+    props: {
+      value: Boolean,//是否显示加载特效
+      text: String,//加载文字提示
+      size: {//default large small mini
+        type: String,
+        default() {
+          return 'default';
+        }
+      },
+      background: String,//背景颜色
+      fullscreen: Boolean//是否全屏
+    },
+
     data() {
       return {
-        visible: false,
-        parentStyle: undefined
+        visible: false
       };
     },
 
-    props: {
-      value: Boolean,
-      iconName: {
-        type: String,
-        default: 'loading-drop'
+    watch: {
+      value(val) {
+        this.visible = val;
       },
-      loadingSpeed: Number,
-      target: {
-        type: [String, HTMLElement],
-        default() {
-          return document.body;
-        }
-      },
-      text: {
-        type: String,
-        default: '加载中'
-      },
-      background: String,
-      customClass: String,
-      fullscreen: Boolean,
-      animationName: String
-    },
-
-    computed: {
-      maskClass() {
-        return `${this.prefixCls}-loading-mask`;
-      },
-      maskBgClass() {
-        return `${this.prefixCls}-loading-mask-black`;
-      },
-      maskBgStyle() {
-        return {
-          'backgroundColor': this.background
-        };
-      },
-      contentClass() {
-        return `${this.prefixCls}-loading-content`;
-      },
-      textClass() {
-        return `${this.prefixCls}-loading-content-text`;
-      },
-      fullscreenClass() {
-        return this.fullscreen ? 'is-full' : undefined;
-      },
-      _animationName() {
-        if (this.animationName !== undefined) {
-          return this.animationName;
+      visible(val) {
+        if (val) {
+          this.addParentScrollClass();
         } else {
-          return 'fadeIn';
+          this.removeParentScrollClass();
         }
+        this.$emit('input', val);
       }
     },
 
-    watch: {
-      value(v) {
-        this.visible = v;
-      },
-      visible(v) {
-        this.$emit('input', v);
+    computed: {
+      zIndex() {
+        if (this.visible) {
+          return PopupManager.nextZIndex();
+        } else {
+          return 0;
+        }
       }
     },
 
     methods: {
-      close() {
-        if (this.visible) {
-          this.visible = false;
-        }
-      },
-      destroy() {
-        this.$emit('destroy', this.id);
-        this.$destroy(true);
-        this.$el.parentNode.removeChild(this.$el);
-      },
-      animationAfterLeave(el) {
-        this.$emit('animationAfterLeave', el, this);
-      }
-    },
-
-    mounted() {
-      this.$nextTick(() => {
+      addParentScrollClass() {
         let parent = this.fullscreen ? document.body : (this.$el.parentNode || document.body);
         this.$el.originalPosition = getStyle(parent, 'position');
         this.$el.originalOverflow = getStyle(parent, 'overflow');
@@ -125,14 +102,32 @@
         if (this.fullscreen && !hasClass(parent, `${this.prefixCls}-loading-parent-hidden`)) {
           addClass(parent, `${this.prefixCls}-loading-parent-hidden`);
         }
-        this.visible = this.value;
-      });
+      },
+      removeParentScrollClass() {
+        let parent = this.fullscreen ? document.body : (this.$el.parentNode || document.body);
+        removeClass(parent, `${this.prefixCls}-loading-parent-relative`);
+        removeClass(parent, `${this.prefixCls}-loading-parent-hidden`);
+        this.$emit('remove', this);
+      },
+      open() {
+        if (this.visible) return;
+        this.visible = true;
+      },
+      close() {
+        if (!this.visible) return;
+        this.visible = false;
+      },
+      destroy() {
+        this.$emit('destroy', this.id);
+        this.$destroy(true);
+        this.$el.parentNode.removeChild(this.$el);
+      }
     },
 
-    beforeDestroy() {
-      let parent = this.fullscreen ? document.body : (this.$el.parentNode || document.body);
-      removeClass(parent, `${this.prefixCls}-loading-parent-relative`);
-      removeClass(parent, `${this.prefixCls}-loading-parent-hidden`);
+    mounted() {
+      this.id = getId();
+      addInstance(this);
+      this.visible = this.value;
     }
 
   }

@@ -16,7 +16,6 @@ export const addInstance = function (instance) {
 };
 
 const Skeleton = (properties = {}) => {
-
   if (Vue.prototype.$isServer) {
     return;
   }

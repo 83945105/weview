@@ -1,6 +1,6 @@
 import {$Loading} from '../index.js';
-
-const merge = require('webpack-merge');
+import merge from "../../src/utils/merge.js";
+import {isBoolean, isObject} from "../../src/utils/util";
 
 const LoadingDirective = {};
 
@@ -9,32 +9,32 @@ LoadingDirective.install = Vue => {
     return;
   }
 
-  const typeCallback = (opts, objectCallback, booleanCallback) => {
-    if (typeof opts === 'object') {
-      objectCallback();
-    } else if (typeof opts === 'boolean') {
-      booleanCallback();
+  const typeCallback = (target, options) => {
+    if (isObject(target)) {
+      options.objectCallback && options.objectCallback();
+    } else if (isBoolean(target)) {
+      options.booleanCallback && options.booleanCallback();
+    } else {
+      throw new Error('options type error.');
     }
   };
 
   const create = (el, binding) => {
-    if (el.vm) {
-      return;
-    }
-    let opts = {
-      target: el
-    };
-    typeCallback(binding.value, () => {
-      opts = merge({target: el}, binding.value, binding.modifiers);
-    }, () => {
-      opts = {
-        target: el,
-        value: binding.value
-      };
-      opts = merge(opts, binding.modifiers);
+    if (el.vm) return;
+
+    let options = {};
+
+    typeCallback(binding.value, {
+      objectCallback: () => {
+        options = merge({target: el}, binding.value, binding.modifiers);
+      },
+      booleanCallback: () => {
+        options = merge({target: el, value: binding.value}, binding.modifiers);
+      }
     });
-    if (opts.value) {
-      el.vm = $Loading(opts);
+
+    if (options.value) {
+      el.vm = $Loading(options);
     }
   };
 
@@ -43,20 +43,16 @@ LoadingDirective.install = Vue => {
       create(el, binding);
     },
     update(el, binding, vnode, oldVnode) {
-      if (binding.oldValue !== binding.value) {
-        let v = false;
-        typeCallback(binding.value, () => {
-          v = binding.value.value || false;
-        }, () => {
-          v = binding.value;
-        });
-        if (v) {
-          create(el, binding);
-        } else {
-          el.vm && el.vm.close();
-          el.vm = undefined;
+      if (binding.oldValue === binding.value) return;
+      let value;
+      typeCallback(binding.value, {
+        objectCallback: () => {
+          value = binding.value.value || false;
+        },
+        booleanCallback: () => {
+          value = binding.value;
         }
-      }
+      });
     }
   });
 

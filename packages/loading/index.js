@@ -1,5 +1,5 @@
 import Loading from './src/Loading.vue';
-import $Loading from './src/Loading.js';
+import $Loading from './src/loading.js';
 import LoadingDirective from './src/directive.js';
 
 const merge = require('webpack-merge');

@@ -16,7 +16,6 @@
 
     computed: {
       bodyClass() {
-        console.log(this.prefixCls)
         return `${this.prefixCls}-main`;
       }
     }
