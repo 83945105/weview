@@ -1,8 +1,11 @@
 <template>
   <div :class="[`${prefixCls}-tooltip-rel`]">
     <div ref="reference"
-         @mouseenter="handleMouseEnter"
-         @mouseleave="handleMouseLeave"
+         @mouseenter="handleMouseEnterReference"
+         @mouseleave="handleMouseLeaveReference"
+         @mousedown="handleMouseDownReference"
+         @mouseup="handleMouseUpReference"
+         @click="handleClickReference"
     >
       <slot></slot>
     </div>
@@ -18,6 +21,8 @@
             maxWidth: maxWidth ? !isNaN(maxWidth) ? `${maxWidth}px` : maxWidth : undefined,
             zIndex: this.zIndex
            }"
+           @mouseenter="handleMouseEnterPopper"
+           @mouseleave="handleMouseLeavePopper"
       >
         <slot name="panel">
           <div :class="`${prefixCls}-tooltip-inner`">
@@ -52,6 +57,13 @@
     mixins: [Conf, Popper],
 
     props: {
+      trigger: {//触发方式 click - 点击 focus 聚焦 hover 悬浮 manual 手动
+        type: String,
+        default: 'hover',
+        validator(value) {
+          return ['click', 'focus', 'hover'].indexOf(value) !== -1;
+        }
+      },
       effect: {
         type: String,//主题 dark light
         default: 'dark',
@@ -101,6 +113,7 @@
 
     data() {
       return {
+        isManual: this.manual || this.trigger === 'manual',
         delayIndex: undefined,
       };
     },
@@ -205,23 +218,97 @@
           default:
         }
       },
-      handleMouseEnter(e) {
-        if (this.manual) {
+      handleMouseEnterReference(e) {
+        if (this.disabled || this.isManual || this.trigger !== 'hover') {
           return;
         }
         if (this.delayIndex) {
           window.clearTimeout(this.delayIndex);
+          this.delayIndex = undefined
         }
         this.delayIndex = setTimeout(() => {
           this.popperVisible = true;
         }, this.openDelay);
       },
-      handleMouseLeave(e) {
-        if (this.manual) {
+      handleMouseLeaveReference(e) {
+        if (this.disabled || this.isManual || this.trigger !== 'hover') {
           return;
         }
         if (this.delayIndex) {
           window.clearTimeout(this.delayIndex);
+          this.delayIndex = undefined
+        }
+        if (this.hideDelay === 0) {
+          return;
+        }
+        this.delayIndex = setTimeout(() => {
+          this.popperVisible = false;
+        }, this.hideDelay);
+      },
+      handleMouseDownReference(e) {
+        if (this.disabled || this.isManual || this.trigger !== 'focus') {
+          return;
+        }
+        if (this.delayIndex) {
+          window.clearTimeout(this.delayIndex);
+          this.delayIndex = undefined
+        }
+        this.delayIndex = setTimeout(() => {
+          this.popperVisible = true;
+        }, this.openDelay);
+      },
+      handleMouseUpReference(e) {
+        if (this.disabled || this.isManual || this.trigger !== 'focus') {
+          return;
+        }
+        if (this.delayIndex) {
+          window.clearTimeout(this.delayIndex);
+          this.delayIndex = undefined
+        }
+        if (this.hideDelay === 0) {
+          return;
+        }
+        this.delayIndex = setTimeout(() => {
+          this.popperVisible = false;
+        }, this.hideDelay);
+      },
+      handleClickReference(e) {
+        if (this.disabled || this.isManual || this.trigger !== 'click') {
+          return;
+        }
+        if (this.popperVisible) {
+          if (this.delayIndex) {
+            window.clearTimeout(this.delayIndex);
+            this.delayIndex = undefined;
+          }
+          if (this.hideDelay === 0) {
+            return;
+          }
+          this.delayIndex = setTimeout(() => {
+            this.popperVisible = false;
+          }, this.hideDelay);
+        } else {
+          if (this.delayIndex) {
+            window.clearTimeout(this.delayIndex);
+            this.delayIndex = undefined
+          }
+          this.delayIndex = setTimeout(() => {
+            this.popperVisible = true;
+          }, this.openDelay);
+        }
+      },
+      handleMouseEnterPopper(e) {
+        if (this.disabled || this.isManual || this.trigger !== 'hover') {
+          return;
+        }
+        if (this.delayIndex) {
+          window.clearTimeout(this.delayIndex);
+          this.delayIndex = undefined;
+        }
+      },
+      handleMouseLeavePopper(e) {
+        if (this.disabled || this.isManual || this.trigger !== 'hover') {
+          return;
         }
         if (this.hideDelay === 0) {
           return;

@@ -5,8 +5,9 @@
       <div class="module-content">
         <div class="tooltip-layout-main" ref="direction8">
 
-          <div class="tooltip-layout" style="margin-left: 70px;">
-            <we-tooltip placement="top-start" content="top-start 文字提示 占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位">
+          <div class="tooltip-layout" style="margin-left: 65px;">
+            <we-tooltip placement="top-start"
+                        content="top-start 文字提示 占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位">
               <we-button size="small" class="tooltip-btn">上左</we-button>
             </we-tooltip>
             <we-tooltip placement="top" content="top 文字提示 占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位">
@@ -18,37 +19,48 @@
           </div>
 
           <div class="tooltip-layout is-left">
-            <we-tooltip placement="left-start" max-width="100px" content="left-start 文字提示 占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位">
+            <we-tooltip placement="left-start" max-width="100px"
+                        content="left-start 文字提示 占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位">
               <we-button size="small" class="tooltip-btn">左上</we-button>
             </we-tooltip>
-            <we-tooltip placement="left" max-width="100px" content="left 文字提示 占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位">
+            <br/><br/>
+            <we-tooltip placement="left" max-width="100px"
+                        content="left 文字提示 占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位">
               <we-button size="small" class="tooltip-btn">左边</we-button>
             </we-tooltip>
-            <we-tooltip placement="left-end" max-width="100px" content="left-end 文字提示 占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位">
+            <br/><br/>
+            <we-tooltip placement="left-end" max-width="100px"
+                        content="left-end 文字提示 占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位">
               <we-button size="small" class="tooltip-btn">左下</we-button>
             </we-tooltip>
           </div>
 
           <div class="tooltip-layout is-right">
-            <we-tooltip placement="right-start" max-width="100px" content="right-start 文字提示 占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位">
+            <we-tooltip placement="right-start" max-width="100px"
+                        content="right-start 文字提示 占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位">
               <we-button size="small" class="tooltip-btn">右上</we-button>
             </we-tooltip>
+            <br/><br/>
             <we-tooltip placement="right" max-width="100px" content="right 文字提示 占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位">
               <we-button size="small" class="tooltip-btn">右边</we-button>
             </we-tooltip>
-            <we-tooltip placement="right-end" max-width="100px" content="right-end 文字提示 占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位">
+            <br/><br/>
+            <we-tooltip placement="right-end" max-width="100px"
+                        content="right-end 文字提示 占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位">
               <we-button size="small" class="tooltip-btn">右下</we-button>
             </we-tooltip>
           </div>
 
-          <div class="tooltip-layout tooltip-layout-clear" style="margin-left: 70px">
-            <we-tooltip placement="bottom-start" content="bottom-start 文字提示 占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位">
+          <div class="tooltip-layout tooltip-layout-clear" style="margin-left: 65px">
+            <we-tooltip placement="bottom-start"
+                        content="bottom-start 文字提示 占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位">
               <we-button size="small" class="tooltip-btn">下左</we-button>
             </we-tooltip>
             <we-tooltip placement="bottom" content="bottom 文字提示 占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位">
               <we-button size="small" class="tooltip-btn" style="margin: 0 9px;">下边</we-button>
             </we-tooltip>
-            <we-tooltip placement="bottom-end" content="bottom-end 文字提示 占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位">
+            <we-tooltip placement="bottom-end"
+                        content="bottom-end 文字提示 占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位占位">
               <we-button size="small" class="tooltip-btn">下右</we-button>
             </we-tooltip>
           </div>
@@ -62,50 +74,54 @@
       <div class="module-content">
         <div class="tooltip-layout-main" ref="direction8">
 
-          <div class="tooltip-layout" style="margin-left: 70px">
-            <we-tooltip placement="top-start" content="top-start 文字提示" effect="light">
+          <div class="tooltip-layout" style="margin-left: 65px;">
+            <we-tooltip effect="light" placement="top-start" content="top-start 文字提示">
               <we-button size="small" class="tooltip-btn">上左</we-button>
             </we-tooltip>
-            <we-tooltip placement="top" content="top 文字提示" effect="light">
+            <we-tooltip effect="light" placement="top" content="top 文字提示">
               <we-button size="small" class="tooltip-btn" style="margin: 0 9px;">上边</we-button>
             </we-tooltip>
-            <we-tooltip placement="top-end" content="top-end 文字提示" effect="light">
+            <we-tooltip effect="light" placement="top-end" content="top-end 文字提示">
               <we-button size="small" class="tooltip-btn">上右</we-button>
             </we-tooltip>
           </div>
 
           <div class="tooltip-layout is-left">
-            <we-tooltip placement="left-start" content="left-start 文字提示" effect="light">
+            <we-tooltip effect="light" placement="left-start" content="left-start 文字提示">
               <we-button size="small" class="tooltip-btn">左上</we-button>
             </we-tooltip>
-            <we-tooltip placement="left" content="left 文字提示" effect="light">
+            <br/><br/>
+            <we-tooltip effect="light" placement="left" content="left 文字提示">
               <we-button size="small" class="tooltip-btn">左边</we-button>
             </we-tooltip>
-            <we-tooltip placement="left-end" content="left-end 文字提示" effect="light">
+            <br/><br/>
+            <we-tooltip effect="light" placement="left-end" content="left-end 文字提示">
               <we-button size="small" class="tooltip-btn">左下</we-button>
             </we-tooltip>
           </div>
 
           <div class="tooltip-layout is-right">
-            <we-tooltip placement="right-start" content="right-start 文字提示" effect="light">
+            <we-tooltip effect="light" placement="right-start" content="right-start 文字提示">
               <we-button size="small" class="tooltip-btn">右上</we-button>
             </we-tooltip>
-            <we-tooltip placement="right" content="right 文字提示" effect="light">
+            <br/><br/>
+            <we-tooltip effect="light" placement="right" content="right 文字提示">
               <we-button size="small" class="tooltip-btn">右边</we-button>
             </we-tooltip>
-            <we-tooltip placement="right-end" content="right-end 文字提示" effect="light">
+            <br/><br/>
+            <we-tooltip effect="light" placement="right-end" content="right-end 文字提示">
               <we-button size="small" class="tooltip-btn">右下</we-button>
             </we-tooltip>
           </div>
 
-          <div class="tooltip-layout tooltip-layout-clear" style="margin-left: 70px">
-            <we-tooltip placement="bottom-start" content="bottom-start 文字提示" effect="light">
+          <div class="tooltip-layout tooltip-layout-clear" style="margin-left: 65px">
+            <we-tooltip effect="light" placement="bottom-start" content="bottom-start 文字提示">
               <we-button size="small" class="tooltip-btn">下左</we-button>
             </we-tooltip>
-            <we-tooltip placement="bottom" content="bottom 文字提示" effect="light">
+            <we-tooltip effect="light" placement="bottom" content="bottom 文字提示">
               <we-button size="small" class="tooltip-btn" style="margin: 0 9px;">下边</we-button>
             </we-tooltip>
-            <we-tooltip placement="bottom-end" content="bottom-end 文字提示" effect="light">
+            <we-tooltip effect="light" placement="bottom-end" content="bottom-end 文字提示">
               <we-button size="small" class="tooltip-btn">下右</we-button>
             </we-tooltip>
           </div>
@@ -118,15 +134,18 @@
     <div class="module-main">
       <div class="module-content">
 
-        <we-tooltip v-model="show01" max-width="200px" placement="right" manual content="超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本">
+        <we-tooltip v-model="show01" max-width="200px" placement="right-end" manual
+                    content="超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本">
           <we-button @click="show01 = !show01">we-view超长文本提示</we-button>
         </we-tooltip>
 
-        <el-tooltip v-model="show02" :hide-after="0" manual content="超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示">
+        <el-tooltip v-model="show02" :hide-after="0" :manual="true" :enterable="true"
+                    content="超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示">
           <we-button @click="show02 = !show02">element-ui超长文本提示</we-button>
         </el-tooltip>
 
-        <Tooltip :max-width="200" content="超长文本提示超长文本提示超长文本提示超长文本本提示超长文本本提本本提示超长文本本本本提示超长文本本本本提示超长文本本示超长文本本提示超长文本提示超长文本提示超长文本提示">
+        <Tooltip :max-width="200" placement="right-end"
+                 content="超长文本提示超长文本提示超长文本提示超长文本本提示超长文本本提本本提示超长文本本本本提示超长文本本本本提示超长文本本示超长文本本提示超长文本提示超长文本提示超长文本提示">
           <we-button>iview超长文本提示</we-button>
         </Tooltip>
 
@@ -137,7 +156,8 @@
     <div class="module-main">
       <div class="module-content">
 
-        <we-tooltip disabled v-model="show01" max-width="200px" placement="right" manual content="超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本">
+        <we-tooltip disabled v-model="show01" max-width="200px" placement="right" manual
+                    content="超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本">
           <we-button @click="show01 = !show01">禁用</we-button>
         </we-tooltip>
 
@@ -232,7 +252,7 @@
   }
 
   .tooltip-layout.is-left .tooltip-btn {
-    margin: 5px;
+    /*margin: 5px;*/
   }
 
   .tooltip-layout.is-right {
@@ -241,6 +261,6 @@
   }
 
   .tooltip-layout.is-right .tooltip-btn {
-    margin: 5px;
+    /*margin: 5px;*/
   }
 </style>

@@ -1,77 +1,48 @@
 <template>
   <div>
-    <div class="page-title">Popover弹出框</div>
+    <div class="page-title">Popover气泡卡片</div>
     <div class="first-title">主题</div>
     <div class="module-main">
       <div class="module-content">
-        <we-button size="small" class="popover-btn"
-                   @mouseenter.native.stop="handleMouseEnter"
-                   @mouseleave.native.stop="handleMouseLeave">Dark hover
-        </we-button>
-        <we-button size="small" class="popover-btn"
-                   @click.native.stop="isLightShow =! isLightShow"
-                   @blur.native.stop="isLightShow =! isLightShow">Light click
-        </we-button>
-        <!--Dark-->
-        <we-animation name="fadeIn"
-                      @mouseenter.native.stop="handleDarkMouseEnter"
-                      @mouseleave.native.stop="handleDarkMouseLeave">
-          <template v-if="isDarkShow">
-            <div class="we-popover we-popover-type-dark" style="top: 29px; left: 300px;">
-              <div class="we-popover-inner">
-                <div class="we-popover-inner-title">提示标题</div>
-                <div class="we-popover-inner-content">文字提示内容文字提示内容文字提示内容文字提示内容文字提示内容</div>
-              </div>
-              <div class="we-popover-arrow we-popover-arrow-topLeft"></div>
-            </div>
-          </template>
-        </we-animation>
-        <!--/Dark-->
-        <!--Light-->
-        <we-animation name="fadeIn">
-          <template v-if="isLightShow">
-            <div class="we-popover we-popover-type-light" style="top: 50px; left: 390px;">
-              <div class="we-popover-inner">
-                <div class="we-popover-inner-title">提示标题</div>
-                <div class="we-popover-inner-content">文字提示内容文字提示内容</div>
-              </div>
-              <div class="we-popover-arrow we-popover-arrow-topLeft"></div>
-            </div>
-          </template>
-        </we-animation>
-        <!--/Light-->
+        <we-popover title="默认主题" content="这是一个气泡卡片">
+          <we-button>默认</we-button>
+        </we-popover>
+        <we-popover effect="dark" title="黑色主题" content="这是一个气泡卡片">
+          <we-button>Dark</we-button>
+        </we-popover>
       </div>
     </div>
 
-    <div class="first-title">嵌套操作</div>
+    <div class="first-title">类型</div>
     <div class="module-main">
       <div class="module-content">
-        <we-button size="small" class="popover-btn"
-                   @click.native.stop="isDeleteShow =! isDeleteShow">删除
-        </we-button>
-        <!--DeleteShow-->
-        <we-animation name="fadeIn">
-          <template v-if="isDeleteShow">
-            <div class="we-popover we-popover-type-light" style="top: 103px; left: 215px;">
-              <div class="we-popover-inner is-button" style="width: 220px;">
-                <div class="we-popover-inner-title">提示标题</div>
-                <div class="we-popover-inner-content">
-                  订单编号：20181017123456<br/>确定要删除吗？
-                </div>
-                <div class="we-popover-inner-button is-right">
-                  <we-button size="mini" class="popover-btn"
-                             @click.native.stop="isDeleteShow =! isDeleteShow">取消
-                  </we-button>
-                  <we-button size="mini" type="primary" class="popover-btn"
-                             @click.native.stop="isDeleteShow =! isDeleteShow">确定
-                  </we-button>
-                </div>
-              </div>
-              <div class="we-popover-arrow we-popover-arrow-top"></div>
-            </div>
+        <we-popover title="警告" type="alert"
+                    :content="alertConfirmButtonOptions.loading ? '通知中...通知完成后将自动关闭气泡' : '请通知管理员'"
+                    confirm-button-text="收到"
+                    :confirm-button-options="alertConfirmButtonOptions"
+                    @click-confirm-button="handleClickAlertConfirmButton">
+          <we-button>警告</we-button>
+        </we-popover>
+        <we-popover title="请确认" type="confirm"
+                    confirm-button-text="删了吧"
+                    :cancel-button-text="confirmConfirmButtonOptions.loading ? '你没有想的机会了' : '我再想想'"
+                    :cancel-button-options="confirmCancelButtonOptions"
+                    :confirm-button-options="confirmConfirmButtonOptions"
+                    @click-cancel-button="handleClickConfirmCancelButton"
+                    @click-confirm-button="handleClickConfirmConfirmButton">
+
+          <template slot="content">
+            <template v-if="confirmConfirmButtonOptions.loading">
+              <span style="color: red">删除中...</span>删除完成后将自动关闭气泡
+            </template>
+            <template v-else>
+              您确定要<span style="color: red">删除</span>该信息吗？
+            </template>
           </template>
-        </we-animation>
-        <!--/DeleteShow-->
+
+          <we-button>确认</we-button>
+
+        </we-popover>
       </div>
     </div>
   </div>
@@ -88,48 +59,37 @@
 
     data() {
       return {
-        tooltipBaseTop: 0,
-        tooltipBaseLeft: 0,
-        isTopLeftShow: false,
-        isTopShow: false,
-        isTopRightShow: false,
-
-        isRightTopShow: false,
-        isRightShow: false,
-        isRightBottomShow: false,
-
-        isBottomLeftShow: false,
-        isBottomShow: false,
-        isBottomRightShow: false,
-
-        isLeftTopShow: false,
-        isLeftShow: false,
-        isLeftBottomShow: false,
-
-        isDarkShow: false,
-        isHoverTimeOut: undefined,
-        isLightShow: false,
-
-        isDeleteShow: false
+        alertConfirmButtonOptions: {
+          loading: false
+        },
+        confirmCancelButtonOptions: {
+          disabled: false
+        },
+        confirmConfirmButtonOptions: {
+          loading: false
+        }
       };
     },
 
     methods: {
-      handleMouseEnter() {
-        this.isDarkShow = true;
+      handleClickAlertConfirmButton(e, vm) {
+        this.alertConfirmButtonOptions.loading = true;
+        setTimeout(() => {
+          vm.close();
+          this.alertConfirmButtonOptions.loading = false;
+        }, 3000);
       },
-      handleMouseLeave() {
-        this.isHoverTimeOut = setTimeout(() => {
-          this.isDarkShow = false;
-        }, 100);
+      handleClickConfirmConfirmButton(e, vm) {
+        this.confirmConfirmButtonOptions.loading = true;
+        this.confirmCancelButtonOptions.disabled = true;
+        setTimeout(() => {
+          vm.close();
+          this.confirmConfirmButtonOptions.loading = false;
+          this.confirmCancelButtonOptions.disabled = false;
+        }, 3000);
       },
-      handleDarkMouseEnter() {
-        window.clearTimeout(this.isHoverTimeOut);
-      },
-      handleDarkMouseLeave() {
-        this.isHoverTimeOut = setTimeout(() => {
-          this.isDarkShow = false;
-        }, 100);
+      handleClickConfirmCancelButton(e, vm) {
+        vm.close();
       }
     },
 
