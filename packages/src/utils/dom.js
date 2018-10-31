@@ -150,3 +150,23 @@ export function setStyle(element, styleName, value) {
     }
   }
 }
+
+export function hasClassChildren(element, className) {
+  let nodes = element.childNodes;
+  for (let i in nodes) {
+    if (hasClass(nodes[i], className)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export function getClassChildren(element, className) {
+  let nodes = element.childNodes;
+  for (let i in nodes) {
+    if (hasClass(nodes[i], className)) {
+      return nodes[i];
+    }
+  }
+  return undefined;
+}

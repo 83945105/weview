@@ -367,7 +367,7 @@
       },
       EscClose(e) {
         if (this.visible && this.escCloseable) {
-          if ([e.keyCode, e.which].includes(27)) {
+          if (e.keyCode === 27 || e.which === 27) {
             this.close();
           }
         }

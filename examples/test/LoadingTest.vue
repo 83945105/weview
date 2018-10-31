@@ -1,21 +1,49 @@
 <template>
   <div>
+
+    <div class="module-main">
+      <div class="module-content" style="overflow: hidden">
+        <we-button @click="$loading.closeAll()">关闭全部</we-button>
+        <we-button @click="handleOpenFullScreen">开启全屏3秒loading</we-button>
+      </div>
+    </div>
+
     <div class="page-title">Loading加载特效</div>
     <div class="first-title">组件方式</div>
     <div class="module-main">
       <div class="module-content" style="overflow: hidden">
+        <we-button @click="$refs.loading01.close()">关闭loading01</we-button>
+        <we-button @click="$refs.loading01.open()" type="primary">开启loading01</we-button>
+      </div>
+      <div class="module-content" style="overflow: hidden">
+        <we-button @click="$refs.loading02.close()">关闭loading02</we-button>
+        <we-button @click="$refs.loading02.open()" type="primary">开启loading02</we-button>
+      </div>
+      <div class="module-content" style="overflow: hidden">
+        <we-button @click="$refs.loading03.close()">关闭loading03</we-button>
+        <we-button @click="$refs.loading03.open()" type="primary">开启loading03</we-button>
+      </div>
+    </div>
+    <div class="module-main" style="margin-top: 5px">
+      <div class="module-content" style="overflow: hidden">
         <div style="border: 1px solid red; width: 200px; height: 200px; float:left;">
-          <we-loading :value="true"></we-loading>
+          <h1 style="display: table-cell;vertical-align: middle;height: 200px; width: 200px; text-align: center">
+            loading01</h1>
+          <we-loading ref="loading01" :value="true"></we-loading>
         </div>
 
         <div style="border: 1px solid red; width: 200px; height: 200px; float:left;margin-left: 10px;">
-          <we-loading :value="true" text="加载中"></we-loading>
+          <we-loading ref="loading02" :value="false" text="加载中"></we-loading>
+          <h1 style="display: table-cell;vertical-align: middle;height: 200px; width: 200px; text-align: center">
+            loading02</h1>
         </div>
 
         <div style="border: 1px solid red; width: 200px; height: 200px; float:left;margin-left: 10px;">
-          <we-loading :value="true">
+          <we-loading ref="loading03" :value="true">
             <we-icon slot="logo" name="home"></we-icon>
           </we-loading>
+          <h1 style="display: table-cell;vertical-align: middle;height: 200px; width: 200px; text-align: center">
+            loading03</h1>
         </div>
 
       </div>
@@ -24,34 +52,34 @@
     <div class="first-title">服务方式</div>
     <div class="module-main">
       <div class="module-content" style="overflow: hidden">
-        <we-button @click="() => {
-          loading01 = this.$loading({
-            target: '#loading01'
+        <we-button type="primary" @click="() => {
+          loading04 = this.$loading({
+            target: '#loading04'
           })
-        }">开启loading01
+        }">开启loading04
         </we-button>
         <we-button @click="() => {
-          loading01.close();
-        }">关闭loading01
+          loading04.close();
+        }">关闭loading04
         </we-button>
       </div>
       <div class="module-content" style="overflow: hidden">
-        <we-button @click="() => {
-          loading02 = this.$loading({
-            target: '#loading02',
+        <we-button type="primary" @click="() => {
+          loading05 = this.$loading({
+            target: '#loading05',
             text: '玩命加载中'
           })
-        }">开启loading02
+        }">开启loading05
         </we-button>
         <we-button @click="() => {
-          loading02.close();
-        }">关闭loading02
+          loading05.close();
+        }">关闭loading05
         </we-button>
       </div>
       <div class="module-content" style="overflow: hidden">
-        <we-button @click="() => {
-          loading03 = this.$loading({
-            target: '#loading03',
+        <we-button type="primary" @click="() => {
+          loading06 = this.$loading({
+            target: '#loading06',
             logoRender(h, props) {
               return h('we-icon', {
                 props: {
@@ -60,34 +88,75 @@
               });
             }
           })
-        }">开启loading03
+        }">开启loading06
         </we-button>
         <we-button @click="() => {
-          loading03.close();
-        }">关闭loading03
+          loading06.close();
+        }">关闭loading06
         </we-button>
       </div>
     </div>
 
     <div class="module-main" style="margin-top: 5px">
       <div class="module-content" style="overflow: hidden">
-        <div id="loading01" style="border: 1px solid red; width: 200px; height: 200px; float:left;">
+        <div id="loading04" style="border: 1px solid red; width: 200px; height: 200px; float:left;">
           <h1 style="display: table-cell;vertical-align: middle;height: 200px; width: 200px; text-align: center">
-            loading01</h1>
+            loading04</h1>
+
+
         </div>
 
-        <div id="loading02" style="border: 1px solid red; width: 200px; height: 200px; float:left;margin-left: 10px;">
+        <div id="loading05" style="border: 1px solid red; width: 200px; height: 200px; float:left;margin-left: 10px;">
           <h1 style="display: table-cell;vertical-align: middle;height: 200px; width: 200px; text-align: center">
-            loading02</h1>
+            loading05</h1>
         </div>
 
-        <div id="loading03" style="border: 1px solid red; width: 200px; height: 200px; float:left;margin-left: 10px;">
+        <div id="loading06" style="border: 1px solid red; width: 200px; height: 200px; float:left;margin-left: 10px;">
           <h1 style="display: table-cell;vertical-align: middle;height: 200px; width: 200px; text-align: center">
-            loading03</h1>
+            loading06</h1>
         </div>
 
       </div>
     </div>
+
+    <div class="first-title">指令方式</div>
+    <div class="module-main">
+      <div class="module-content" style="overflow: hidden">
+        <we-button type="primary" @click="value07 = true">开启loading07</we-button>
+        <we-button @click="value07 = false">关闭loading07</we-button>
+      </div>
+      <div class="module-content" style="overflow: hidden">
+        <we-button type="primary" @click="value08 = true">开启loading08</we-button>
+        <we-button @click="value08 = false">关闭loading08</we-button>
+      </div>
+      <div class="module-content" style="overflow: hidden">
+        <we-button type="primary" @click="value09 = true">开启loading09</we-button>
+        <we-button @click="value09 = false">关闭loading09</we-button>
+      </div>
+    </div>
+
+    <div class="module-main" style="margin-top: 5px">
+      <div class="module-content" style="overflow: hidden">
+        <div v-loading="value07" style="border: 1px solid red; width: 200px; height: 200px; float:left;">
+          <h1 style="display: table-cell;vertical-align: middle;height: 200px; width: 200px; text-align: center">
+            loading07</h1>
+        </div>
+
+        <div v-loading="{value: value08, text: 'loading'}" style="border: 1px solid red; width: 200px; height: 200px; float:left;margin-left: 10px;">
+          <h1 style="display: table-cell;vertical-align: middle;height: 200px; width: 200px; text-align: center">
+            loading08</h1>
+        </div>
+
+        <div v-loading="{value: value09, logoRender: h => h('we-icon', {props: {name: 'home'}})}" style="border: 1px solid red; width: 200px; height: 200px; float:left;margin-left: 10px;">
+          <h1 style="display: table-cell;vertical-align: middle;height: 200px; width: 200px; text-align: center">
+            loading09</h1>
+        </div>
+
+      </div>
+    </div>
+
+    <div style="margin-top: 100px; height: 10px"></div>
+
   </div>
 </template>
 
@@ -103,24 +172,37 @@
         value04: false,
         value05: false,
         value06: false,
+        value07: true,
+        value08: false,
+        value09: false,
 
         loading01: undefined,
         loading02: undefined,
         loading03: undefined,
         loading04: undefined,
         loading05: undefined,
-        loading06: undefined,
+        loading06: undefined
       };
     },
 
-    methods: {},
-
-    created() {
-    },
-
-    mounted() {
-
+    methods: {
+      handleOpenFullScreen() {
+        let loading = this.$loading({
+          fullscreen: true,
+          size: 'large',
+          logoRender(h) {
+            return h('we-icon', {
+              props: {
+                name: 'home',
+                size: 'large'
+              }
+            });
+          }
+        });
+        setTimeout(() => loading.close(), 3000);
+      }
     }
+
   }
 </script>
 

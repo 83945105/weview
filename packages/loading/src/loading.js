@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import WeLoading from './Loading.vue';
 import merge from "../../src/utils/merge.js";
+import {getClassChildren} from "../../src/utils/dom.js";
 
 const Default = {
   target: document.body,
@@ -17,6 +18,15 @@ export const getId = function () {
 
 export const addInstance = function (instance) {
   instances.push(instance);
+};
+
+export const getInstance = function (id) {
+  for (let i in instances) {
+    if (instances[i].id === id) {
+      return instances[i];
+    }
+  }
+  return undefined;
 };
 
 function removeInstance(instance) {
@@ -41,6 +51,11 @@ const Loading = function (properties = {}) {
   }
   __props__.target = __props__.target || document.body;
 
+  let node = getClassChildren(__props__.target, WeLoading.name);
+  if (node) {
+    return getInstance(node.id);
+  }
+
   if (__props__.target === document.body) {
     __props__.fullscreen = true;
   }
@@ -49,8 +64,6 @@ const Loading = function (properties = {}) {
     return globalInstance;
   }
 
-  let id = getId();
-
   let component = new Vue({
     render(h) {
       return h(WeLoading, {
@@ -58,9 +71,9 @@ const Loading = function (properties = {}) {
           value: true
         }),
         on: {
-          remove(vm) {
-            vm.destroy();
+          close(vm) {
             removeInstance(vm);
+            vm.destroy();
           }
         },
         scopedSlots: {
@@ -79,14 +92,8 @@ const Loading = function (properties = {}) {
 
   const Loading = component.$children[0];
 
-  Loading.id = id;
-
-  addInstance(Loading);
-
   if (__props__.fullscreen) {
     globalInstance = Loading;
-  } else {
-    instances.push(Loading);
   }
 
   return Loading;
@@ -106,10 +113,7 @@ Loading.close = function (target) {
 };
 
 Loading.closeAll = function () {
-  let is = [...instances];
-  for (let idx in is) {
-    is[idx].close();
-  }
+  [...instances].forEach(instance => instance.close());
   globalInstance && globalInstance.close();
 };
 

@@ -1,7 +1,11 @@
 <template>
-  <transition name="fade">
+  <transition name="fade"
+              @before-enter="handleTransitionBeforeEnter"
+              @after-leave="handleTransitionAfterLeave">
     <div v-show="visible"
+         :id="id"
          :class="[
+         `${prefixCls}-loading`,
           `${prefixCls}-loading-mask`,
           `${prefixCls}-loading-mask-black`,
           {'is-full': fullscreen}
@@ -63,6 +67,7 @@
 
     data() {
       return {
+        id: undefined,
         visible: false
       };
     },
@@ -72,11 +77,6 @@
         this.visible = val;
       },
       visible(val) {
-        if (val) {
-          this.addParentScrollClass();
-        } else {
-          this.removeParentScrollClass();
-        }
         this.$emit('input', val);
       }
     },
@@ -92,6 +92,13 @@
     },
 
     methods: {
+      handleTransitionBeforeEnter() {
+        this.addParentScrollClass();
+      },
+      handleTransitionAfterLeave() {
+        this.removeParentScrollClass();
+        this.$emit('close', this);
+      },
       addParentScrollClass() {
         let parent = this.fullscreen ? document.body : (this.$el.parentNode || document.body);
         this.$el.originalPosition = getStyle(parent, 'position');
@@ -105,9 +112,8 @@
       },
       removeParentScrollClass() {
         let parent = this.fullscreen ? document.body : (this.$el.parentNode || document.body);
-        removeClass(parent, `${this.prefixCls}-loading-parent-relative`);
         removeClass(parent, `${this.prefixCls}-loading-parent-hidden`);
-        this.$emit('remove', this);
+        removeClass(parent, `${this.prefixCls}-loading-parent-relative`);
       },
       open() {
         if (this.visible) return;
@@ -118,9 +124,8 @@
         this.visible = false;
       },
       destroy() {
-        this.$emit('destroy', this.id);
-        this.$destroy(true);
         this.$el.parentNode.removeChild(this.$el);
+        this.$destroy(true);
       }
     },
 

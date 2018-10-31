@@ -1,6 +1,6 @@
 import {$Loading} from '../index.js';
 import merge from "../../src/utils/merge.js";
-import {isBoolean, isObject} from "../../src/utils/util";
+import {isBoolean, isObject} from "../../src/utils/util.js";
 
 const LoadingDirective = {};
 
@@ -53,6 +53,12 @@ LoadingDirective.install = Vue => {
           value = binding.value;
         }
       });
+      if (value) {
+        create(el, binding);
+      } else {
+        el.vm && el.vm.close();
+        el.vm = undefined;
+      }
     }
   });
 
