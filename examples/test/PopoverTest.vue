@@ -30,7 +30,6 @@
                     :confirm-button-options="confirmConfirmButtonOptions"
                     @click-cancel-button="handleClickConfirmCancelButton"
                     @click-confirm-button="handleClickConfirmConfirmButton">
-
           <template slot="content">
             <template v-if="confirmConfirmButtonOptions.loading">
               <span style="color: red">删除中...</span>删除完成后将自动关闭气泡
@@ -39,9 +38,7 @@
               您确定要<span style="color: red">删除</span>该信息吗？
             </template>
           </template>
-
           <we-button>确认</we-button>
-
         </we-popover>
       </div>
     </div>
@@ -49,6 +46,7 @@
 </template>
 
 <script>
+
   import weButton from "../../packages/button/src/Button.vue";
   import weAnimation from "../../packages/animation/src/Animation.vue";
 

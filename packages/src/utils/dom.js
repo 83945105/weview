@@ -14,7 +14,7 @@ const camelCase = function (name) {
   }).replace(MOZ_HACK_REGEXP, 'Moz$1');
 };
 
-export const on = (function () {
+export const onEventListener = (function () {
   if (!isServer && document.addEventListener) {
     return function (element, event, handler) {
       if (element && event && handler) {
@@ -30,7 +30,7 @@ export const on = (function () {
   }
 })();
 
-export const off = (function () {
+export const offEventListener = (function () {
   if (!isServer && document.removeEventListener) {
     return function (element, event, handler) {
       if (element && event) {

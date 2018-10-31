@@ -43,7 +43,9 @@ export default {
 
   data() {
     return {
-      popperVisible: this.value
+      popperVisible: this.value,
+      popperEl: undefined,
+      referenceEl: undefined
     };
   },
 
@@ -74,8 +76,8 @@ export default {
       }
 
       const options = this.popperOptions;
-      const popper = this.popper || this.$refs.popper;
-      const reference = this.reference || this.$refs.reference;
+      const popper = this.popperEl || this.$refs.popper;
+      const reference = this.referenceEl || this.$refs.reference;
 
       if (!popper || !reference) {
         return;

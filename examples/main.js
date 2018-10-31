@@ -17,10 +17,10 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI);
 
-import iView from 'iview';
+/*import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 
-Vue.use(iView);
+Vue.use(iView);*/
 
 import weview from '../packages/index.js';
 // import '../lib/theme-chalk/index.css';

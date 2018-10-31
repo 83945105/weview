@@ -1,4 +1,4 @@
-<template>
+<!--<template>
   <div :class="[`${prefixCls}-tooltip-rel`]">
     <div ref="reference"
          @mouseenter="handleMouseEnterReference"
@@ -16,11 +16,11 @@
             `${prefixCls}-tooltip`,
             effect === 'dark' ? `${prefixCls}-tooltip-type-dark` : `${prefixCls}-tooltip-type-light`
            ]"
-           v-transfer-dom="{value: appendToBody}"
            :style="{
             maxWidth: maxWidth ? !isNaN(maxWidth) ? `${maxWidth}px` : maxWidth : undefined,
             zIndex: this.zIndex
            }"
+           v-transfer-dom="{value: appendToBody}"
            @mouseenter="handleMouseEnterPopper"
            @mouseleave="handleMouseLeavePopper"
       >
@@ -34,15 +34,17 @@
       </div>
     </transition>
   </div>
-</template>
+</template>-->
 
 <script>
 
+  import Vue from 'vue';
   import Conf from '../../src/mixins/conf.js';
   import Popper from '../../src/mixins/popper.js';
   import PopupManager from '../../src/utils/popup.js';
   import TransferDom from '../../src/directives/transfer-dom.js';
   import {hasClass} from "../../src/utils/dom.js";
+  import {onEventListener, offEventListener} from "../../src/utils/dom";
 
   export default {
 
@@ -106,7 +108,7 @@
       appendToBody: {//是否插入到body下
         type: Boolean,
         default() {
-          return !this.$WEVIEW || this.$WEVIEW.appendToBody === '' ? true : this.$WEVIEW.appendToBody;
+          return !this.$WEVIEW || this.$WEVIEW.appendToBody === '' ? false : this.$WEVIEW.appendToBody;
         }
       }
     },
@@ -115,6 +117,7 @@
       return {
         isManual: this.manual || this.trigger === 'manual',
         delayIndex: undefined,
+        popperVM: undefined
       };
     },
 
@@ -317,6 +320,64 @@
           this.popperVisible = false;
         }, this.hideDelay);
       }
+    },
+
+    beforeCreate() {
+      this.popperComponent = new Vue({
+        data: {vNode: ''},
+        render() {
+          return this.vNode;
+        }
+      }).$mount();
+    },
+
+    render(h) {
+      if (this.popperComponent) {
+        this.popperComponent.vNode = h('transition', {
+          props: {
+            name: 'fade'
+          }
+        }, [h('div', {
+          'class': [`${this.prefixCls}-tooltip`, this.effect === 'dark' ? `${this.prefixCls}-tooltip-type-dark` : `${this.prefixCls}-tooltip-type-light`],
+          style: {
+            maxWidth: this.maxWidth ? !isNaN(this.maxWidth) ? `${this.maxWidth}px` : this.maxWidth : undefined,
+            zIndex: this.zIndex,
+            display: !this.disabled && this.popperVisible ? 'inline' : 'none'
+          },
+          on: {
+            mouseenter: this.handleMouseEnterPopper,
+            mouseleave: this.handleMouseLeavePopper
+          }
+        }, [this.$slots.panel || h('div', {
+          'class': `${this.prefixCls}-tooltip-inner`
+        }, [h('div', {
+          'class': `${this.prefixCls}-tooltip-inner-content`
+        }, [this.$slots.content || this.content])])])]);
+      }
+
+      if (!this.$slots.default) return this.$slots.default;
+      return this.$slots.default.filter(c => c && c.tag)[0];
+    },
+
+    mounted() {
+      this.referenceEl = this.$el;
+      onEventListener(this.referenceEl, 'mouseenter', this.handleMouseEnterReference);
+      onEventListener(this.referenceEl, 'mouseleave', this.handleMouseLeaveReference);
+      onEventListener(this.referenceEl, 'mousedown', this.handleMouseDownReference);
+      onEventListener(this.referenceEl, 'mouseup', this.handleMouseUpReference);
+      onEventListener(this.referenceEl, 'click', this.handleClickReference);
+      document.body.appendChild(this.popperComponent.$el);
+      this.$nextTick(() => {
+        this.popperEl = this.popperComponent.$el;
+      });
+    },
+
+    beforeDestroy() {
+      offEventListener(this.referenceEl, 'mouseenter', this.handleMouseEnterReference);
+      offEventListener(this.referenceEl, 'mouseleave', this.handleMouseLeaveReference);
+      offEventListener(this.referenceEl, 'mousedown', this.handleMouseDownReference);
+      offEventListener(this.referenceEl, 'mouseup', this.handleMouseUpReference);
+      offEventListener(this.referenceEl, 'click', this.handleClickReference);
     }
 
   }
