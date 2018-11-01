@@ -43,7 +43,7 @@ export default {
 
   data() {
     return {
-      popperVisible: this.value,
+      popperVisible: false,
       popperEl: undefined,
       referenceEl: undefined
     };
@@ -56,13 +56,17 @@ export default {
         this.popperVisible = val;
       }
     },
-    popperVisible(val) {
-      if (val) {
-        this.updatePopper();
-      } else {
+    popperVisible: {
+      immediate: true,
+      handler(val) {
+        if (val) {
+          if (isFunction(this.handlePopperShow)) this.handlePopperShow();
+          this.updatePopper();
+        } else {
 
+        }
+        this.$emit('input', val);
       }
-      this.$emit('input', val);
     }
   },
 

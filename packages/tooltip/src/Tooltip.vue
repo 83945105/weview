@@ -108,7 +108,7 @@
       appendToBody: {//是否插入到body下
         type: Boolean,
         default() {
-          return !this.$WEVIEW || this.$WEVIEW.appendToBody === '' ? false : this.$WEVIEW.appendToBody;
+          return !this.$WEVIEW || this.$WEVIEW.appendToBody === '' ? true : this.$WEVIEW.appendToBody;
         }
       }
     },
@@ -117,7 +117,8 @@
       return {
         isManual: this.manual || this.trigger === 'manual',
         delayIndex: undefined,
-        popperVM: undefined
+        popperVM: undefined,
+        popperParentEl: undefined
       };
     },
 
@@ -131,7 +132,22 @@
       }
     },
 
+    watch: {
+      content() {
+        this.updatePopper();
+      }
+    },
+
     methods: {
+      handlePopperShow() {
+        if (this.popperParentEl === void 0) {
+          this.$nextTick(() => {
+            document.body.appendChild(this.popperEl);
+            this.updatePopper();
+          });
+          this.popperParentEl = document.body;
+        }
+      },
       onUpdate(e) {
         let referenceOffset = e.offsets.reference;
         let popperOffset = e.offsets.popper;
@@ -323,12 +339,16 @@
     },
 
     beforeCreate() {
+      let tooltip = this;
       this.popperComponent = new Vue({
         data: {vNode: ''},
         render() {
           return this.vNode;
+        },
+        mounted() {
+          tooltip.popperEl = this.$el;
         }
-      }).$mount();
+      });
     },
 
     render(h) {
@@ -361,18 +381,17 @@
 
     mounted() {
       this.referenceEl = this.$el;
+      this.popperComponent.$mount();
       onEventListener(this.referenceEl, 'mouseenter', this.handleMouseEnterReference);
       onEventListener(this.referenceEl, 'mouseleave', this.handleMouseLeaveReference);
       onEventListener(this.referenceEl, 'mousedown', this.handleMouseDownReference);
       onEventListener(this.referenceEl, 'mouseup', this.handleMouseUpReference);
       onEventListener(this.referenceEl, 'click', this.handleClickReference);
-      document.body.appendChild(this.popperComponent.$el);
-      this.$nextTick(() => {
-        this.popperEl = this.popperComponent.$el;
-      });
     },
 
     beforeDestroy() {
+      this.popperComponent && this.popperComponent.$destroy();
+      if (this.popperParentEl && this.popperEl) this.popperParentEl.removeChild(this.popperEl);
       offEventListener(this.referenceEl, 'mouseenter', this.handleMouseEnterReference);
       offEventListener(this.referenceEl, 'mouseleave', this.handleMouseLeaveReference);
       offEventListener(this.referenceEl, 'mousedown', this.handleMouseDownReference);

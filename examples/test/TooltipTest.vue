@@ -163,6 +163,10 @@
           <we-button>悬浮触发</we-button>
         </we-tooltip>
 
+        <we-tooltip :content="content01">
+          <input type="text" v-model="content01">
+        </we-tooltip>
+
       </div>
     </div>
 
@@ -184,7 +188,8 @@
       return {
 
         show01: false,
-        show02: false
+        show02: false,
+        content01: '改变文本'
 
       };
     },
