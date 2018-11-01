@@ -12,7 +12,7 @@
          ]"
          :style="{
           'backgroundColor': this.background,
-          zIndex: zIndex
+          zIndex: nextZIndex
          }">
       <div :class="`${prefixCls}-loading-spinner`">
         <slot>
@@ -62,7 +62,8 @@
         }
       },
       background: String,//背景颜色
-      fullscreen: Boolean//是否全屏
+      fullscreen: Boolean,//是否全屏
+      zIndex: Number
     },
 
     data() {
@@ -82,12 +83,8 @@
     },
 
     computed: {
-      zIndex() {
-        if (this.visible) {
-          return PopupManager.nextZIndex();
-        } else {
-          return 0;
-        }
+      nextZIndex() {
+        return this.zIndex || this.visible ? PopupManager.nextZIndex() : 0;
       }
     },
 

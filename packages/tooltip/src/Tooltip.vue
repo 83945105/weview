@@ -1,50 +1,11 @@
-<!--<template>
-  <div :class="[`${prefixCls}-tooltip-rel`]">
-    <div ref="reference"
-         @mouseenter="handleMouseEnterReference"
-         @mouseleave="handleMouseLeaveReference"
-         @mousedown="handleMouseDownReference"
-         @mouseup="handleMouseUpReference"
-         @click="handleClickReference"
-    >
-      <slot></slot>
-    </div>
-    <transition name="fade">
-      <div v-show="!disabled && popperVisible"
-           ref="popper"
-           :class="[
-            `${prefixCls}-tooltip`,
-            effect === 'dark' ? `${prefixCls}-tooltip-type-dark` : `${prefixCls}-tooltip-type-light`
-           ]"
-           :style="{
-            maxWidth: maxWidth ? !isNaN(maxWidth) ? `${maxWidth}px` : maxWidth : undefined,
-            zIndex: this.zIndex
-           }"
-           v-transfer-dom="{value: appendToBody}"
-           @mouseenter="handleMouseEnterPopper"
-           @mouseleave="handleMouseLeavePopper"
-      >
-        <slot name="panel">
-          <div :class="`${prefixCls}-tooltip-inner`">
-            <div :class="`${prefixCls}-tooltip-inner-content`">
-              <slot name="content">{{content}}</slot>
-            </div>
-          </div>
-        </slot>
-      </div>
-    </transition>
-  </div>
-</template>-->
-
 <script>
 
   import Vue from 'vue';
   import Conf from '../../src/mixins/conf.js';
   import Popper from '../../src/mixins/popper.js';
   import PopupManager from '../../src/utils/popup.js';
-  import TransferDom from '../../src/directives/transfer-dom.js';
   import {hasClass} from "../../src/utils/dom.js";
-  import {onEventListener, offEventListener} from "../../src/utils/dom";
+  import {onEventListener, offEventListener} from "../../src/utils/dom.js";
 
   export default {
 
@@ -53,8 +14,6 @@
     componentName: `${Conf.prefixNameCls}Tooltip`,
 
     optionName: `tooltip`,
-
-    directives: {TransferDom},
 
     mixins: [Conf, Popper],
 
@@ -110,7 +69,8 @@
         default() {
           return !this.$WEVIEW || this.$WEVIEW.appendToBody === '' ? true : this.$WEVIEW.appendToBody;
         }
-      }
+      },
+      zIndex: Number
     },
 
     data() {
@@ -123,12 +83,8 @@
     },
 
     computed: {
-      zIndex() {
-        if (this.popperVisible) {
-          return PopupManager.nextZIndex();
-        } else {
-          return 0;
-        }
+      nextZIndex() {
+        return this.zIndex || this.popperVisible ? PopupManager.nextZIndex() : 0;
       }
     },
 
@@ -361,7 +317,7 @@
           'class': [`${this.prefixCls}-tooltip`, this.effect === 'dark' ? `${this.prefixCls}-tooltip-type-dark` : `${this.prefixCls}-tooltip-type-light`],
           style: {
             maxWidth: this.maxWidth ? !isNaN(this.maxWidth) ? `${this.maxWidth}px` : this.maxWidth : undefined,
-            zIndex: this.zIndex,
+            zIndex: this.nextZIndex,
             display: !this.disabled && this.popperVisible ? 'inline' : 'none'
           },
           on: {

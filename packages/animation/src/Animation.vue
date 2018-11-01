@@ -1,15 +1,14 @@
 <template>
-  <transition
-    :name="tName"
-    @before-enter="beforeEnter"
-    @enter="enter"
-    @after-enter="afterEnter"
-    @enter-cancelled="enterCancelled"
+  <transition :name="tName"
+              @before-enter="beforeEnter"
+              @enter="enter"
+              @after-enter="afterEnter"
+              @enter-cancelled="enterCancelled"
 
-    @before-leave="beforeLeave"
-    @leave="leave"
-    @after-leave="afterLeave"
-    @leave-cancelled="leaveCancelled"
+              @before-leave="beforeLeave"
+              @leave="leave"
+              @after-leave="afterLeave"
+              @leave-cancelled="leaveCancelled"
   >
     <slot></slot>
   </transition>

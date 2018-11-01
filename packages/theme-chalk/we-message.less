@@ -1,124 +1,124 @@
 @import "./src/common/var.less";
 @import "./src/common/mixins.less";
 
-@message-css-prefix:~"@{css-prefix}message";
+@message-css-prefix: ~"@{css-prefix}message";
 
-.@{message-css-prefix}{
-  min-width:100px;
+.@{message-css-prefix} {
+  min-width: 100px;
   .mixin-default;
   .mixin-border-box;
-  padding:12px 20px;
-  position:fixed;
-  left:0;
-  top:0;
-  background-color:fade(@message-default-bg,@message-default-fade);
-  color:@message-default-color;
-  border-radius:@message-default-border-radius;
-  -webkit-box-shadow:0 0 10px tint(@color-black,85%);
-  box-shadow:0 0 10px tint(@color-black,85%);
-  z-index:9999;
-  display:-webkit-box;
-  display:-ms-flexbox;
-  display:flex;
-  -webkit-align-items:center;
+  padding: 12px 20px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: fade(@message-default-bg, @message-default-fade);
+  color: @message-default-color;
+  border-radius: @message-default-border-radius;
+  -webkit-box-shadow: 0 0 10px tint(@color-black, 85%);
+  box-shadow: 0 0 10px tint(@color-black, 85%);
+  z-index: 9999;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
 
-  &.is-center{
-    -webkit-box-pack:center;
-    -ms-flex-pack:center;
-    justify-content:center;
+  &.is-center {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
   }
 
-  &-bg{
-    padding: 5px 15px;
+  &-bg {
+    padding: 10px 15px;
     background-color: @message-bg-1;
     border: 1px solid @message-border-color;
     color: @color-text-2;
   }
-  &-primary{
+  &-primary {
     background-color: tint(@color-primary, 50%);
   }
-  &-success{
+  &-success {
     background-color: tint(@color-success, 92%);
   }
-  &-danger{
+  &-danger {
     background-color: tint(@color-danger, 92%);
   }
-  &-warning{
+  &-warning {
     background-color: tint(@color-warning, 92%);
   }
-  &-icon{
-    float:left;
-    font-size:@message-icon-size;
-    margin-right:5px;
+  &-icon {
+    float: left;
+    font-size: @message-icon-size;
+    margin-right: 5px;
 
-    &.is-right{
-      margin-left:5px;
-    }
-
-    &.is-left{
-      margin-right:5px;
+    &.is-right {
+      margin-left: 5px;
     }
 
-    &-primary{
-      color:@color-primary;
+    &.is-left {
+      margin-right: 5px;
     }
-    &-success{
-      color:@color-success;
+
+    &-primary {
+      color: @color-primary;
     }
-    &-danger{
-      color:@color-danger;
+    &-success {
+      color: @color-success;
     }
-    &-warning{
-      color:@color-warning;
+    &-danger {
+      color: @color-danger;
+    }
+    &-warning {
+      color: @color-warning;
     }
   }
-  &-text{
+  &-text {
     .mixin-wordwrap;
-    overflow:hidden;
-    min-height:20px;
-    line-height:1.4;
-    padding:0;
+    overflow: hidden;
+    min-height: 20px;
+    line-height: 1.4;
+    padding: 0;
   }
-  &-button-close{
-    display:block;
-    width:24px;
-    height:24px;
-    line-height:1.4;
-    padding:3px;
-    font-size:12px;
-    text-align:center;
-    font-weight:bold;
-    position:absolute;
-    top:-12px;
-    right:-12px;
-    z-index:10;
-    cursor:pointer;
-    background-color:@message-button-bg;
-    border:2px solid @message-button-border-color;
-    border-radius:@border-radius-all;
-    -webkit-box-shadow:0 0 8px tint(@color-black,50%);
-    box-shadow:0 0 8px tint(@color-black,50%);
-    color:@color-white;
-    &:hover{
-      background-color:@color-primary;
+  &-button-close {
+    display: block;
+    width: 16px;
+    height: 16px;
+    line-height: 1.4;
+    padding: 3px;
+    font-size: 12px;
+    text-align: center;
+    font-weight: bold;
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    z-index: 10;
+    cursor: pointer;
+    background-color: @message-button-bg;
+    border: 2px solid @message-button-border-color;
+    border-radius: @border-radius-all;
+    -webkit-box-shadow: 0 0 8px tint(@color-black, 50%);
+    box-shadow: 0 0 8px tint(@color-black, 50%);
+    color: @color-white;
+    &:hover {
+      background-color: @color-primary;
     }
-    &:active{
-      background-color:@color-primary-light-2;
+    &:active {
+      background-color: @color-primary-light-2;
     }
   }
 }
 
-.@{message-css-prefix}-animation{
+.@{message-css-prefix}-animation {
   -webkit-animation-duration: .3s;
   animation-duration: .3s;
 
-  &-open{
+  &-open {
     -webkit-animation-name: layer-bounceIn;
     animation-name: layer-bounceIn;
   }
-  &-close{
+  &-close {
     -webkit-animation-name: layer-bounceOut;
     animation-name: layer-bounceOut;
     -webkit-animation-fill-mode: both;
@@ -131,68 +131,68 @@
 @-webkit-keyframes layer-bounceIn {
   0% {
     opacity: 0;
-    -webkit-transform:translateX(-50%) translateY(-50%) scale(.5);
-    transform:translateX(-50%) translateY(-50%) scale(.5)
+    -webkit-transform: translateX(-50%) translateY(-50%) scale(.5);
+    transform: translateX(-50%) translateY(-50%) scale(.5)
   }
 
   100% {
     opacity: 1;
-    -webkit-transform:translateX(-50%) translateY(-50%) scale(1);
-    transform:translateX(-50%) translateY(-50%) scale(1)
+    -webkit-transform: translateX(-50%) translateY(-50%) scale(1);
+    transform: translateX(-50%) translateY(-50%) scale(1)
   }
 }
 
 @keyframes layer-bounceIn {
   0% {
     opacity: 0;
-    -webkit-transform:translateX(-50%) translateY(-50%) scale(.5);
-    -ms-transform:translateX(-50%) translateY(-50%) scale(.5);
-    transform:translateX(-50%) translateY(-50%) scale(.5)
+    -webkit-transform: translateX(-50%) translateY(-50%) scale(.5);
+    -ms-transform: translateX(-50%) translateY(-50%) scale(.5);
+    transform: translateX(-50%) translateY(-50%) scale(.5)
   }
 
   100% {
     opacity: 1;
-    -webkit-transform:translateX(-50%) translateY(-50%) scale(1);
-    -ms-transform:translateX(-50%) translateY(-50%) scale(1);
-    transform:translateX(-50%) translateY(-50%) scale(1)
+    -webkit-transform: translateX(-50%) translateY(-50%) scale(1);
+    -ms-transform: translateX(-50%) translateY(-50%) scale(1);
+    transform: translateX(-50%) translateY(-50%) scale(1)
   }
 }
 
 @-webkit-keyframes layer-bounceOut {
   100% {
     opacity: 0;
-    -webkit-transform:translateX(-50%) translateY(-50%) scale(.7);
-    transform:translateX(-50%) translateY(-50%) scale(.7)
+    -webkit-transform: translateX(-50%) translateY(-50%) scale(.7);
+    transform: translateX(-50%) translateY(-50%) scale(.7)
   }
 
   30% {
-    -webkit-transform:translateX(-50%) translateY(-50%) scale(1.05);
-    transform:translateX(-50%) translateY(-50%)  scale(1.05)
+    -webkit-transform: translateX(-50%) translateY(-50%) scale(1.05);
+    transform: translateX(-50%) translateY(-50%) scale(1.05)
   }
 
   0% {
-    -webkit-transform:translateX(-50%) translateY(-50%) scale(1);
-    transform:translateX(-50%) translateY(-50%) scale(1)
+    -webkit-transform: translateX(-50%) translateY(-50%) scale(1);
+    transform: translateX(-50%) translateY(-50%) scale(1)
   }
 }
 
 @keyframes layer-bounceOut {
   100% {
     opacity: 0;
-    -webkit-transform:translateX(-50%) translateY(-50%) scale(.7);
-    -ms-transform:translateX(-50%) translateY(-50%) scale(.7);
-    transform:translateX(-50%) translateY(-50%) scale(.7)
+    -webkit-transform: translateX(-50%) translateY(-50%) scale(.7);
+    -ms-transform: translateX(-50%) translateY(-50%) scale(.7);
+    transform: translateX(-50%) translateY(-50%) scale(.7)
   }
 
   30% {
-    -webkit-transform:translateX(-50%) translateY(-50%) scale(1.05);
-    -ms-transform:translateX(-50%) translateY(-50%) scale(1.05);
-    transform:translateX(-50%) translateY(-50%) scale(1.05)
+    -webkit-transform: translateX(-50%) translateY(-50%) scale(1.05);
+    -ms-transform: translateX(-50%) translateY(-50%) scale(1.05);
+    transform: translateX(-50%) translateY(-50%) scale(1.05)
   }
 
   0% {
-    -webkit-transform:translateX(-50%) translateY(-50%) scale(1);
-    -ms-transform:translateX(-50%) translateY(-50%) scale(1);
-    transform:translateX(-50%) translateY(-50%) scale(1)
+    -webkit-transform: translateX(-50%) translateY(-50%) scale(1);
+    -ms-transform: translateX(-50%) translateY(-50%) scale(1);
+    transform: translateX(-50%) translateY(-50%) scale(1)
   }
 }

@@ -1,21 +1,29 @@
 <template>
   <animation :name="_animationName" @before-enter="animationBeforeEnter" @after-leave="animationAfterLeave">
     <div v-show="visible"
-         :class="[messageClass, messageBgClass, centerClass, customClass]"
-         :style="style"
+         :class="[`${prefixCls}-message`, messageBgClass,
+         {
+          'is-center': center
+         },
+         customClass]"
+         :style="{
+          left: `${x}px`,
+          top: `${y}px`,
+          zIndex: nextZIndex
+         }"
          @mouseenter="clearTimer"
          @mouseleave="startTimer"
-         role="alert"
     >
       <icon v-if="iconPosition === 'left'" :name="iconName" :type="iconType" size="large"
-            :class="[iconClass, iconPositionClass]"></icon>
+            :class="[`${prefixCls}-message-icon`, 'is-left']"></icon>
       <slot>
-        <div v-if="!html" :class="[textClass]">{{message}}</div>
-        <div v-else v-html="message" :class="[textClass]"></div>
+        <div v-if="!html" :class="`${prefixCls}-message-text`">{{message}}</div>
+        <div v-else v-html="message" :class="`${prefixCls}-message-text`"></div>
       </slot>
       <icon v-if="iconPosition === 'right'" :name="iconName" :type="iconType" size="large"
-            :class="[iconClass, iconPositionClass]"></icon>
-      <icon v-if="showClose" name="close" :class="[deleteClass]" @click.native="handleClose"></icon>
+            :class="[`${prefixCls}-message-icon`, 'is-right']"></icon>
+      <icon v-if="showClose" name="close" :class="`${prefixCls}-message-button-close`"
+            @click.native="handleClose"></icon>
     </div>
   </animation>
 </template>
@@ -42,17 +50,6 @@
 
     mixins: [Conf, Global],
 
-    data() {
-      return {
-        visible: true,
-        timer: undefined,
-        w: 0,
-        h: 0,
-        x: -10000,
-        y: -10000
-      };
-    },
-
     props: {
       value: Boolean,
       message: String,
@@ -75,30 +72,32 @@
       customClass: String,
       iconPosition: {
         type: String,
-        default: 'left'
+        default: 'left',
+        validator(value) {
+          return ['left', 'right'].indexOf(value) !== -1;
+        }
       },
       animationName: String,
-      zIndex: {
-        type: Number,
-        default() {
-          return PopupManager.nextZIndex();
-        }
-      }
+      zIndex: Number
+    },
+
+    data() {
+      return {
+        visible: true,
+        timer: undefined,
+        w: 0,
+        h: 0,
+        x: -10000,
+        y: -10000
+      };
     },
 
     computed: {
+      nextZIndex() {
+        return this.zIndex || this.visible ? PopupManager.nextZIndex() : 0;
+      },
       typeKeys() {
         return Object.keys(MessageType);
-      },
-      style() {
-        return {
-          left: `${this.x}px`,
-          top: `${this.y}px`,
-          zIndex: this.zIndex
-        };
-      },
-      messageClass() {
-        return `${this.prefixCls}-message`;
       },
       messageBgClass() {
         let cls = MessageType.default.cls;
@@ -110,27 +109,14 @@
         }
         return cls;
       },
-      deleteClass() {
-        return `${this.prefixCls}-message-button-close`;
-      },
-      textClass() {
-        return `${this.prefixCls}-message-text`;
-      },
       centerClass() {
         return this.center ? `is-center` : undefined;
-      },
-      iconClass() {
-        return `${this.prefixCls}-message-icon`;
       },
       iconName() {
         return MessageType[this.type].iconName;
       },
       iconType() {
         return MessageType[this.type].iconType;
-      },
-      iconPositionClass() {
-        return this.iconPosition === 'left' ? `is-left` :
-          this.iconPosition === 'right' ? `is-right` : undefined;
       },
       _animationName() {
         if (this.animationName !== undefined) {
@@ -167,18 +153,21 @@
         this.close();
       },
       startTimer() {
+        if (this.timer) {
+          window.clearTimeout(this.timer);
+          this.timer = undefined;
+        }
         if (this.duration > 0) {
-          this.timer = setTimeout(() => {
-            this.close();
-          }, this.duration);
+          this.timer = setTimeout(() => this.close(), this.duration);
         }
       },
       clearTimer() {
-        clearTimeout(this.timer);
+        if (!this.timer) return;
+        window.clearTimeout(this.timer);
       },
       EscClose(e) {
         if (this.visible && this.escCloseable) {
-          if (e.keyCode === 27) {
+          if (e.keyCode === 27 || e.which === 27) {
             this.close();
           }
         }

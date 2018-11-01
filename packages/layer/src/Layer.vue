@@ -3,7 +3,7 @@
     <div v-if="visible && showMask"
          :class="[`${prefixCls}-layer-mask`, `${prefixCls}-layer-mask-bg`, customMaskClass]"
          :style="{
-          zIndex: zIndex
+          zIndex: nextZIndex
          }"
          @click.stop="maskClose"
     ></div>
@@ -90,32 +90,6 @@
 
     mixins: [Conf, Global],
 
-    data() {
-      return {
-        visible: true,
-        isDrag: false,
-        layerWidth: this.width,
-        layerHeight: this.height,
-        layerDomWidthCache: 0,
-        layerDomHeightCache: 0,
-        x: -10000,
-        y: -10000,
-        layerDom: undefined,
-        headerDom: undefined,
-        footerDom: undefined,
-
-        windowWidth: this.getWindowWidth(),
-        windowHeight: this.getWindowHeight(),
-
-        layerDomWidth: 0,
-        layerDomHeight: 0,
-
-        cx: 0,
-        cy: 0
-
-      };
-    },
-
     props: {
       value: Boolean,
       width: {
@@ -125,12 +99,7 @@
       height: {
         type: [Number, String]
       },
-      zIndex: {
-        type: Number,
-        default() {
-          return PopupManager.nextZIndex();
-        }
-      },
+      zIndex: Number,
       minWidth: {
         type: Number,
         default: 160
@@ -203,7 +172,36 @@
       iconName: String
     },
 
+    data() {
+      return {
+        visible: true,
+        isDrag: false,
+        layerWidth: this.width,
+        layerHeight: this.height,
+        layerDomWidthCache: 0,
+        layerDomHeightCache: 0,
+        x: -10000,
+        y: -10000,
+        layerDom: undefined,
+        headerDom: undefined,
+        footerDom: undefined,
+
+        windowWidth: this.getWindowWidth(),
+        windowHeight: this.getWindowHeight(),
+
+        layerDomWidth: 0,
+        layerDomHeight: 0,
+
+        cx: 0,
+        cy: 0
+
+      };
+    },
+
     computed: {
+      nextZIndex() {
+        return this.zIndex || this.visible ? PopupManager.nextZIndex() : 0;
+      },
       _width_() {
         return this.layerWidth ? parseFloat(`${this.layerWidth}`.replace(/[^0-9,.]/g, "")) : undefined;
       },

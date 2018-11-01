@@ -1,57 +1,13 @@
-<template>
-  <div v-if="visible === true || visible === 1" :class="[`${prefixCls}-skeleton`, {'is-animation': animation}]">
-    <div v-if="head" :class="`${prefixCls}-skeleton-picture is-left`">
-      <div :class="[
-              `${prefixCls}-skeleton-picture-one`,
-              headSize ? `${prefixCls}-skeleton-picture-one-size-${headSize}` : undefined,
-              headShape === 'square' ? 'is-square' : 'is-circle'
-              ]"
-      ></div>
-    </div>
-    <div :class="`${prefixCls}-skeleton-content`">
-      <h3 v-if="title"
-          :class="`${prefixCls}-skeleton-content-title`"
-          :style="{
-              width: isNaN(titleWidth) ? titleWidth : `${titleWidth}px`
-            }"></h3>
-      <ul v-if="paragraph" :class="`${prefixCls}-skeleton-content-paragraph`">
-        <li v-for="i in paragraphRows"
-            :key="i"
-            :style="{
-               width: __paragraphWidth__[i - 1]
-              }"
-        ></li>
-      </ul>
-    </div>
-    <div v-if="picture" :class="`${prefixCls}-skeleton-picture is-right`">
-      <div :class="`${prefixCls}-skeleton-picture-one`" style="height: 100px;width: 200px;"></div>
-    </div>
-  </div>
-  <div v-else-if="visible === false || visible === 0">
-    <slot></slot>
-  </div>
-  <div v-else
-       :class="`${prefixCls}-skeleton-fail-prompt`">
-    <slot name="error">
-      <span>{{errorPrompt(visible)}}</span>
-      <a href="javascript:void(0)"
-         :class="`${prefixCls}-skeleton-fail-prompt-link`"
-         @click.stop="handleClickReload">重试</a>
-    </slot>
-  </div>
-</template>
-
 <script>
 
   import Conf from '../../src/mixins/conf.js';
 
-  import Animation from '../../animation/src/Animation.vue';
   import Button from '../../button/src/Button.vue';
   import {getId, addInstance} from "./skeleton.js";
 
   export default {
 
-    components: {Animation: Animation, WeButton: Button},
+    components: {VButton: Button},
 
     name: `${Conf.prefixCls}-skeleton`,
 
@@ -192,6 +148,83 @@
       error(errorCode = 500) {
         this.visible = errorCode;
       }
+    },
+
+    render(h) {
+      if (this.visible === true || this.visible === 1) {
+        let childList = [];
+        if (this.head) {
+          childList.push(h('div', {
+            'class': `${this.prefixCls}-skeleton-picture is-left`
+          }, [h('div', {
+            'class': [`${this.prefixCls}-skeleton-picture-one`,
+              this.headSize ? `${this.prefixCls}-skeleton-picture-one-size-${this.headSize}` : undefined,
+              this.headShape === 'square' ? 'is-square' : 'is-circle'
+            ]
+          })]));
+        }
+        let contentList = [];
+        if (this.title) {
+          contentList.push(h('h3', {
+            'class': `${this.prefixCls}-skeleton-content-title`,
+            style: {
+              width: isNaN(this.titleWidth) ? this.titleWidth : `${this.titleWidth}px`
+            }
+          }));
+        }
+        if (this.paragraph) {
+          let paragraphList = [];
+          for (let i = 1; i <= this.paragraphRows; i++) {
+            paragraphList.push(h('li', {
+              key: i,
+              style: {
+                width: this.__paragraphWidth__[i - 1]
+              }
+            }))
+          }
+          contentList.push(h('ul', {
+            'class': `${this.prefixCls}-skeleton-content-paragraph`
+          }, paragraphList));
+        }
+        childList.push(h('div', {
+          'class': `${this.prefixCls}-skeleton-content`
+        }, contentList));
+        if (this.picture) {
+          childList.push(h('div', {
+            'class': `${this.prefixCls}-skeleton-picture is-right`
+          }, [h('div', {
+            'class': `${this.prefixCls}-skeleton-picture-one`,
+            style: {
+              width: '200px',
+              height: '100px'
+            }
+          })]));
+        }
+        return h('div', {
+          attrs: {
+            id: this.id
+          },
+          'class': [`${this.prefixCls}-skeleton`, {'is-animation': this.animation}]
+        }, childList);
+      }
+      if (this.visible === false || this.visible === 0) {
+        if (!this.$slots.default) return this.$slots.default;
+        return this.$slots.default.filter(c => c && c.tag)[0];
+      }
+      return h('div', {
+        attrs: {
+          id: this.id
+        },
+        'class': `${this.prefixCls}-skeleton-fail-prompt`
+      }, [this.$slots.error || h('span', this.errorPrompt(this.visible)), h('v-button', {
+        'class': `${this.prefixCls}-skeleton-fail-prompt-link`,
+        props: {
+          type: 'text'
+        },
+        on: {
+          click: this.handleClickReload
+        }
+      }, '重试')]);
     },
 
     mounted() {

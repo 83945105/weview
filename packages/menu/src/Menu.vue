@@ -12,7 +12,7 @@
           width: menuVerticalWidth,
           height: menuHorizontalHeight,
           overflow: collapsing ? 'hidden' : undefined,
-          zIndex: menuZIndex
+          zIndex: nextZIndex
          }]"
          @mouseenter.stop.self="handleMouseEnter"
          @mouseleave.stop.self="handleMouseLeave"
@@ -30,33 +30,11 @@
 
   import Conf from '../../src/mixins/conf.js';
   import Emitter from '../../src/mixins/emitter.js';
+  import Popper from '../../src/mixins/popper.js';
   import PopupManager from '../../src/utils/popup.js';
+  import TransferDom from '../../src/directives/transfer-dom.js';
 
   export default {
-    /*
-        render(h) {
-          const component = (
-            <div v-show={this.isShow}
-                 class={[`${this.prefixCls}-menu-external`, [this.isInit ? `${this.prefixCls}-common-position-init` : undefined]]}
-                 style={[this.showStyle, this.menuStyle, {width: this.menuVerticalWidth, height: this.menuHorizontalHeight}]}>
-              <scroll-bar>
-                <ul class={`${this.prefixCls}-menu`}
-                    style={this.menuStyle}>
-                  {this.$slots.default}
-                </ul>
-              </scroll-bar>
-              <div class={`${this.prefixCls}-common-clear`}></div>
-            </div>
-          );
-          if (this.openAccordionTransition) {
-            return (
-              <menu-accordion-transition>
-                {component}
-              </menu-accordion-transition>
-            );
-          }
-          return component;
-        },*/
 
     components: {
       'menu-accordion-transition': {
@@ -138,7 +116,7 @@
 
     optionName: `menu`,
 
-    mixins: [Conf, Emitter],
+    mixins: [Conf, Emitter, Popper],
 
     provide() {
       return {
@@ -191,12 +169,7 @@
         default: 240
       },
       height: [Number, String],// 菜单高度,仅当mode为 horizontal 时有效
-      zIndex: {
-        type: Number,
-        default() {
-          return PopupManager.nextZIndex();
-        }
-      },
+      zIndex: Number,//层级
       subMenuMode: {//子菜单模式 local 在当前节点上展开 open 新打开菜单 当 mode 为 horizontal 时强制使用open
         type: String,
         default: 'local',
@@ -297,8 +270,8 @@
         }
         return 50;
       },
-      menuZIndex() {
-        return this.zIndex + 1;
+      nextZIndex() {
+        return this.zIndex || this.isShow ? PopupManager.nextZIndex() : 0;
       },
       menuVerticalWidth() {
         if (this.mode !== 'vertical') {

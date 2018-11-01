@@ -1,112 +1,103 @@
 <template>
   <div>
-    <!--JS-->
-    <div class="first-title">JS</div>
-    <we-button @click="$skeleton.startAll()">全部开始</we-button>
-    <we-button @click="$skeleton.finishAll()">全部完成</we-button>
-    <we-button @click="$skeleton.errorAll(403)">全部403</we-button>
-    <we-button @click="jsSkeleton.start()">骨架屏</we-button>
-    <we-button @click="jsSkeleton.error(404)">加载失败</we-button>
-    <we-button @click="jsSkeleton.finish()">原内容</we-button>
-    <we-button @click="jsShowOne = 1">骨架屏(双向绑定测试)</we-button>
-    <we-button @click="jsShowOne = 403">加载失败(双向绑定测试)</we-button>
-    <we-button @click="jsShowOne = 0">原内容(双向绑定测试)</we-button>
+    <div class="page-title">Skeleton骨架屏</div>
+    <div class="first-title">组件方式</div>
     <div class="module-main">
-      <div id="skeleton01" class="module-content" style="height: 200px">
+      <div class="module-content">
+        <we-button @click="value01 = true">骨架屏</we-button>
+        <we-button @click="value01 = false">原始内容</we-button>
+        <we-button @click="value01 = 500">加载失败</we-button>
+      </div>
+    </div>
+    <div class="module-main" style="margin-top: 5px">
+      <div class="module-content" style="height: 300px">
 
+        <we-skeleton v-model="value01" animation>
 
-        <el-table :data="tableData"
+          <el-table :data="tableData"
+                    style="width: 100%">
+            <el-table-column prop="date"
+                             label="日期"
+                             width="180">
+            </el-table-column>
+            <el-table-column prop="name"
+                             label="姓名"
+                             width="180">
+            </el-table-column>
+            <el-table-column prop="address"
+                             label="地址">
+            </el-table-column>
+          </el-table>
+
+        </we-skeleton>
+
+      </div>
+    </div>
+
+    <div class="first-title">完整示例</div>
+    <div class="module-main">
+      <div class="module-content">
+        <we-button @click="value02 = true">骨架屏</we-button>
+        <we-button @click="value02 = false">原始内容</we-button>
+        <we-button @click="value02 = 500">加载失败</we-button>
+      </div>
+    </div>
+    <div class="module-main" style="margin-top: 5px">
+      <div class="module-content" style="height: 300px">
+
+        <we-skeleton v-model="value02" animation head picture :paragraph-rows="8" :paragraph-width="[100, 200, 300, '100%']">
+
+          <el-table :data="tableData"
+                    style="width: 100%">
+            <el-table-column prop="date"
+                             label="日期"
+                             width="180">
+            </el-table-column>
+            <el-table-column prop="name"
+                             label="姓名"
+                             width="180">
+            </el-table-column>
+            <el-table-column prop="address"
+                             label="地址">
+            </el-table-column>
+          </el-table>
+
+        </we-skeleton>
+
+      </div>
+    </div>
+
+    <div class="first-title">服务方式(未实现)</div>
+    <div class="module-main">
+      <div class="module-content">
+        <!--<we-button @click="skeleton01 = $skeleton({target: '#skeleton01'})">骨架屏</we-button>-->
+        <!--<we-button @click="skeleton01.finish()">原始内容</we-button>-->
+        <!--<we-button @click="skeleton01.error()">加载失败</we-button>-->
+      </div>
+    </div>
+    <div class="module-main" style="margin-top: 5px">
+      <div id="skeleton01" class="module-content">
+
+        <el-table  :data="tableData"
                   style="width: 100%">
-          <el-table-column
-            prop="date"
-            label="日期"
-            width="180">
+          <el-table-column prop="date"
+                           label="日期"
+                           width="180">
           </el-table-column>
-          <el-table-column
-            prop="name"
-            label="姓名"
-            width="180">
+          <el-table-column prop="name"
+                           label="姓名"
+                           width="180">
           </el-table-column>
-          <el-table-column
-            prop="address"
-            label="地址">
+          <el-table-column prop="address"
+                           label="地址">
           </el-table-column>
         </el-table>
 
-
       </div>
     </div>
-    <!--/JS-->
-    <!--指令-->
-    <div class="first-title">指令</div>
-    <we-button @click="$skeleton.startAll()">全部开始</we-button>
-    <we-button @click="$skeleton.finishAll()">全部完成</we-button>
-    <we-button @click="$skeleton.errorAll(403)">全部403</we-button>
-    <we-button @click="jsShowOne = 1">骨架屏</we-button>
-    <we-button @click="jsShowOne = 403">加载失败</we-button>
-    <we-button @click="jsShowOne = 0">原内容</we-button>
-    <div class="module-main">
-      <!--      <div v-skeleton="{value: jsShowOne, animation: true}" class="module-content" style="height: 200px">
 
-              2333333333333333333333333333
-              <we-button type="primary" :loading="true">按钮2</we-button>
+    <div style="margin-top: 100px; height: 10px"></div>
 
-            </div>-->
-    </div>
-    <!--/JS-->
-    <!--基本-->
-    <div class="first-title">基本</div>
-    <we-button @click="showOne = 1">骨架屏</we-button>
-    <we-button @click="showOne = 403">加载失败</we-button>
-    <we-button @click="showOne = 0">原内容</we-button>
-    <div class="module-main">
-      <div class="module-content" style="height: 200px">
-        <!--        <we-skeleton ref="skeleton02" v-model="showOne" :paragraph-rows="3" :timeout="3000"
-                             :paragraph-width="['100%', '90%', '80%', '70%', '60%', '50%', '40%']"
-                >
-                  654646
-                  wEr
-                  w3
-                  4
-                  234
-                  2
-                  34
-                  2
-                  34
-                </we-skeleton>-->
-      </div>
-    </div>
-    <!--/基本-->
-
-    <!--图片列表组合-->
-    <div class="first-title">图片列表组合</div>
-    <div class="module-main">
-      <div class="module-content">
-        <!--        <we-skeleton :value="true"
-                             head
-                             picture
-                             head-shape="square"
-                             :paragraph-rows="10"
-                             :paragraph-width="['100%', '90%', '80%', '70%', '60%', '50%', '40%']"
-                ></we-skeleton>-->
-      </div>
-    </div>
-    <!--/图片列表组合-->
-
-    <!--动画效果-->
-    <div class="first-title">动画效果</div>
-    <div class="module-main">
-      <div class="module-content">
-        <!--        <we-skeleton :value="true"
-                             head
-                             head-shape="square"
-                             animation
-                             :paragraph-rows="10"
-                             :paragraph-width="['100%', '90%', '80%', '70%', '60%', '50%', '40%']"
-                ></we-skeleton>-->
-      </div>
-    </div>
-    <!--/动画效果-->
   </div>
 </template>
 
@@ -125,9 +116,14 @@
     },
     data() {
       return {
-        jsShowOne: 1,
-        jsSkeleton: undefined,
-        showOne: 1,
+
+        value01: false,
+        value02: true,
+        value03: false,
+        value04: false,
+        value05: false,
+
+        skeleton01: undefined,
 
         tableData: [{
           date: '2016-05-02',
@@ -153,16 +149,19 @@
 
     mounted() {
 
-      this.jsSkeleton = this.$skeleton({
-        target: '#skeleton01'
-      });
-
 
     }
   }
 </script>
 
 <style scoped>
+  .page-title {
+    font-size: 32px;
+    font-weight: normal;
+    margin: 30px 0px 15px 0px;
+    color: #333333;
+  }
+
   .first-title {
     font-size: 22px;
     font-weight: normal;
@@ -199,5 +198,36 @@
 
   .module-fold:hover {
     background-color: #fcfcfc;
+  }
+
+  .popover-layout-main {
+    width: 338px;
+  }
+
+  .popover-layout-clear {
+    clear: both;
+  }
+
+  .popover-layout .popover-btn {
+    width: 60px;
+    margin: 5px 3px;
+  }
+
+  .popover-layout.is-left {
+    float: left;
+    width: 60px;
+  }
+
+  .popover-layout.is-left .popover-btn {
+    margin: 5px;
+  }
+
+  .popover-layout.is-right {
+    float: right;
+    width: 60px;
+  }
+
+  .popover-layout.is-right .popover-btn {
+    margin: 5px;
   }
 </style>
