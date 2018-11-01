@@ -92,6 +92,9 @@ export default {
       }
 
       options.placement = this.placement;
+      if (this.placements) {
+        options.placements = this.placements;
+      }
 
       if (!options.modifiers) {
         options.modifiers = {};

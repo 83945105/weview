@@ -1,13 +1,14 @@
 <template>
   <menu-accordion-transition>
     <div v-show="isShow"
-         :class="[`${prefixCls}-menu-external`, [isInit? `${prefixCls}-common-position-init` : undefined],
+         :index="index"
+         :class="[`${prefixCls}-menu-external`,
          {
           'is-collapse': openCollapseTransition,
           'is-accordion': openAccordionTransition,
           'is-accordion-collapse': openCollapseTransition && openAccordionTransition
          }]"
-         :style="[showStyle, menuStyle,
+         :style="[menuStyle,
          {
           width: menuVerticalWidth,
           height: menuHorizontalHeight,
@@ -16,6 +17,7 @@
          }]"
          @mouseenter.stop.self="handleMouseEnter"
          @mouseleave.stop.self="handleMouseLeave"
+         v-transfer-dom="{value: appendToBody}"
     >
       <ul :class="[`${prefixCls}-menu`, sizeClass]"
           :style="[menuStyle]">
@@ -118,6 +120,8 @@
 
     mixins: [Conf, Emitter, Popper],
 
+    directives: {TransferDom},
+
     provide() {
       return {
         indentNum: (this.isRoot || !this.indent) ? this.indentNum : this.menuItem.subMenuModeIsOpen ? 0 : this.indentNum + 1,
@@ -149,9 +153,26 @@
 
     props: {
       index: String,//唯一标识
-      value: {//菜单是否显示
-        type: Boolean,
-        default: true
+      value: Boolean,//菜单是否显示
+      placement: {//出现的位置
+        type: String,
+        default: 'right-start',
+        validator(value) {
+          return [
+            "left",
+            "left-start",
+            "left-end",
+            "right",
+            "right-start",
+            "right-end"
+          ].indexOf(value) !== -1;
+        }
+      },
+      placements: {
+        type: Array,
+        default() {
+          return ['left', 'right'];
+        }
       },
       size: String,//菜单尺寸
       mode: {//菜单模式  vertical - 垂直  horizontal - 水平
@@ -182,7 +203,7 @@
       },
       subMenuTrigger: {//子菜单打开触发方式 hover - 悬浮 click - 点击
         type: String,
-        default: 'hover',
+        default: 'click',
         validator(value) {
           return ['hover', 'click'].indexOf(value) !== -1
         }
@@ -216,6 +237,12 @@
         type: Boolean,
         default: true
       },
+      appendToBody: {
+        type: Boolean,
+        default() {
+          return !this.$WEVIEW || this.$WEVIEW.appendToBody === '' ? true : this.$WEVIEW.appendToBody;
+        }
+      },
       textColor: String,//菜单文本颜色
       backgroundColor: String,//菜单背景颜色
       activeTextColor: String,//文本激活颜色
@@ -231,7 +258,6 @@
 
     data() {
       return {
-        isInit: true,//是否是初始化
         locked: false,//是否锁定,锁定后无法进行任何操作
         subMenus: [],//当前菜单下的子菜单
         allSubMenus: [],//当前菜单下所有子菜单
@@ -242,7 +268,7 @@
         openAccordionTransition: false,//是否开启手风琴动画
         openCollapseTransition: false,//是否开启折叠动画
         isRoot: this === this.rootMenu,//是否是根节点
-        isShow: true,//是否显示当前菜单
+        isShow: this === this.rootMenu,//是否显示当前菜单,根菜单默认显示,子菜单默认隐藏
         showCache: this.value,
         isCollapse: this.collapse,//是否折叠当前菜单
         collapsing: false,//是否折叠中
@@ -271,7 +297,7 @@
         return 50;
       },
       nextZIndex() {
-        return this.zIndex || this.isShow ? PopupManager.nextZIndex() : 0;
+        return this.zIndex || (this.isShow || this.popperVisible) ? PopupManager.nextZIndex() : 0;
       },
       menuVerticalWidth() {
         if (this.mode !== 'vertical') {
@@ -294,36 +320,6 @@
           return `${height}px`;
         }
         return height;
-      },
-      showStyle() {
-        if (this.isRoot) {
-          //根节点在原始位置显示
-          return undefined;
-        }
-        if (!this.menuItem.subMenuModeIsOpen) {
-          //如果所属菜单项设置的子菜单模式不是打开 则在原位置显示
-          return undefined;
-        }
-        if (this.parentMenu.mode === 'vertical') {
-          //如果父菜单是垂直模式, 那么应该水平弹出
-          return {
-            position: 'absolute',
-            left: `${this.parentMenu.width + this.subMenuHorizontalOffset}px`,
-            top: `${this.subMenuVerticalOffset}px`
-          }
-          /*          console.log(`x: ${this.menuItem.subMenuOpenX} y: ${this.menuItem.subMenuOpenX}`)
-                    return {
-                      position: 'fixed',
-                      left: `${this.menuItem.subMenuOpenX + this.subMenuHorizontalOffset}px`,
-                      top: `${this.menuItem.subMenuOpenY}px`
-                    }*/
-        }
-        //如果父菜单是水平模式, 那么应该垂直弹出
-        return {
-          position: 'absolute',
-          left: `${this.subMenuHorizontalOffset}px`,
-          top: `${(this.height || this.iconWidth) + this.subMenuVerticalOffset}px`
-        }
       },
       menuStyle() {
         return {
@@ -431,7 +427,7 @@
           return;
         }
         if (!this.isRoot) {
-          if (!this.isInit && this.parentMenu.isAccordion) {
+          if (this.parentMenu.isAccordion) {
             this.parentMenu.subMenus.forEach(sm => {
               if (sm !== this) {
                 sm.hideMenu(false);
@@ -526,15 +522,24 @@
         //如果是根菜单,是否显示根据value判断
         this.isShow = this.value;
       } else {
-        //如果不是根菜单, 当父菜单折叠 或 value 为false 时 置为不显示
-        this.isShow = !this.parentMenu.isCollapse && this.value && !this.menuItem.subMenuModeIsOpen;
+        //如果不是根菜单, 当父菜单折叠 或 是子菜单 时 强制置为不显示
+        if (this.parentMenu.isCollapse || this.menuItem.subMenuModeIsOpen) {
+          this.isShow = false;
+        } else {
+          this.isShow = this.value;
+        }
         this.menuItem.expand = this.isShow;
+
+        if (this.menuItem.subMenuModeIsOpen) {
+          this.referenceEl = this.menuItem.$el;
+          this.popperEl = this.$el;
+          this.updatePopper();
+        }
       }
-      setTimeout(() => {
-        this.isInit = false;
+      this.$nextTick(() => {
         this.openAccordionTransition = this.accordionTransition;
         this.openCollapseTransition = this.collapseTransition;
-      }, 300);
+      });
     }
 
   }

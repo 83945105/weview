@@ -347,6 +347,7 @@
 
     beforeDestroy() {
       this.popperComponent && this.popperComponent.$destroy();
+      this.doDestroy && this.doDestroy();
       if (this.popperParentEl && this.popperEl) this.popperParentEl.removeChild(this.popperEl);
       offEventListener(this.referenceEl, 'mouseenter', this.handleMouseEnterReference);
       offEventListener(this.referenceEl, 'mouseleave', this.handleMouseLeaveReference);

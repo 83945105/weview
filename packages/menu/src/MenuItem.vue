@@ -111,6 +111,21 @@
       iconName: {//图标名称
         type: String,
         default: ''
+      },
+      subMenuMode: {//子菜单模式 local 在当前节点上展开 open 新打开菜单 当 mode 为 horizontal 时强制使用open
+        type: String,
+        validator(value) {
+          return [
+            'local',
+            'open'
+          ].indexOf(value) !== -1
+        }
+      },
+      subMenuTrigger: {//子菜单打开触发方式 hover - 悬浮 click - 点击
+        type: String,
+        validator(value) {
+          return ['hover', 'click'].indexOf(value) !== -1
+        }
       }
     },
 
@@ -119,8 +134,15 @@
         isRoot: this === this.rootMenuItem,//是否是根菜单项
         hasSubMenu: false,//是否拥有子菜单
         subMenu: undefined,//子菜单
-        subMenuModeIsOpen: this.menu.mode === 'horizontal' || this.menu.subMenuMode === 'open',//子菜单是否是打开模式
-        subMenuTriggerIsHover: (this.menu.mode === 'horizontal' || this.menu.subMenuMode === 'open') && this.menu.subMenuTrigger === 'hover',//子菜单是否是悬浮触发
+        //子菜单是否是打开模式
+        //1、所属菜单是水平 => true
+        //2、当前subMenuMode === undefined => 根据所属菜单的subMenuMode是否为open来判断
+        //3、当前subMenuMode !== undefined => 根据当前subMenuMode是否为open来判断
+        subMenuModeIsOpen: this.menu.mode === 'horizontal' || (this.subMenuMode === void 0 ? this.menu.subMenuMode === 'open' : this.subMenuMode === 'open'),
+        //子菜单是否是悬浮触发
+        //1、当前subMenuTrigger === undefined => 根据所属菜单的subMenuTrigger是否为hover来判断
+        //2、当前subMenuTrigger !== undefined => 根据当前subMenuTrigger是否为hover来判断
+        subMenuTriggerIsHover: this.subMenuTrigger === void 0 ? this.menu.subMenuTrigger === 'hover' : this.subMenuTrigger === 'hover',
         subMenuHoverLeaveTimeIndex: undefined,
         showRight: !this.menu.isCollapse,//是否显示右侧
         selected: this.value,//是否选中
@@ -312,10 +334,6 @@
         if (this.disabled || this.$slots.panel) {
           return;
         }
-        /*        console.log(e.offsetX)
-                console.log(e)
-                this.subMenuOpenX = e.pageX - e.offsetX + this.menu.width;
-                this.subMenuOpenY = e.y - e.offsetY;*/
         if (this.hasSubMenu) {
           if (this.subMenuTriggerIsHover || this.menu.collapse) {
             return;
