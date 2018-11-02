@@ -54,7 +54,14 @@
 
             </we-menu>
           </we-menu-item>
-          <we-tooltip :disabled="!collapse01" content="选项" placement="right">
+          <we-menu-item icon-name="home">选项</we-menu-item>
+          <we-menu-item icon-name="home">选项</we-menu-item>
+          <we-menu-item icon-name="home">选项</we-menu-item>
+          <we-menu-item icon-name="home">选项</we-menu-item>
+          <we-menu-item icon-name="home">选项</we-menu-item>
+          <we-menu-item icon-name="home">选项</we-menu-item>
+          <we-menu-item icon-name="home">选项</we-menu-item>
+          <!--<we-tooltip :disabled="!collapse01" content="选项" placement="right">
             <we-menu-item icon-name="home">选项</we-menu-item>
           </we-tooltip>
           <we-tooltip :disabled="!collapse01" content="选项" placement="right">
@@ -74,7 +81,7 @@
           </we-tooltip>
           <we-tooltip :disabled="!collapse01" content="选项" placement="right">
             <we-menu-item icon-name="home">选项</we-menu-item>
-          </we-tooltip>
+          </we-tooltip>-->
         </we-menu>
 
 

@@ -275,6 +275,9 @@
         } else {
           this.subMenu.hideMenu(false);
         }
+      },
+      subMenuModeIsOpen(val) {
+        if (this.subMenu) this.subMenu.isOpen = val;
       }
     },
 

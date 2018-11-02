@@ -43,31 +43,9 @@ export default {
 
   data() {
     return {
-      popperVisible: false,
       popperEl: undefined,
       referenceEl: undefined
     };
-  },
-
-  watch: {
-    value: {
-      immediate: true,
-      handler(val) {
-        this.popperVisible = val;
-      }
-    },
-    popperVisible: {
-      immediate: true,
-      handler(val) {
-        if (val) {
-          if (isFunction(this.handlePopperShow)) this.handlePopperShow();
-          this.updatePopper();
-        } else {
-
-        }
-        this.$emit('input', val);
-      }
-    }
   },
 
   methods: {

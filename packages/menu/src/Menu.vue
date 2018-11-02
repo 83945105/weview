@@ -1,6 +1,6 @@
 <template>
   <menu-accordion-transition>
-    <div v-show="isShow"
+    <div v-show="visible"
          :index="index"
          :class="[`${prefixCls}-menu-external`,
          {
@@ -17,7 +17,7 @@
          }]"
          @mouseenter.stop.self="handleMouseEnter"
          @mouseleave.stop.self="handleMouseLeave"
-         v-transfer-restore-dom="{value: appendToBody}"
+         v-transfer-restore-dom="{value: isOpen}"
     >
       <ul :class="[`${prefixCls}-menu`, sizeClass]"
           :style="[menuStyle]">
@@ -169,12 +169,6 @@
           ].indexOf(value) !== -1;
         }
       },
-      placements: {
-        type: Array,
-        default() {
-          return ['left', 'right'];
-        }
-      },
       size: String,//菜单尺寸
       mode: {//菜单模式  vertical - 垂直  horizontal - 水平
         type: String,
@@ -184,6 +178,12 @@
             'vertical',
             'horizontal'
           ].indexOf(value) !== -1
+        }
+      },
+      placements: {
+        type: Array,
+        default() {
+          return ['left', 'right'];
         }
       },
       width: {//菜单宽度,仅当mode为 vertical 时有效
@@ -257,7 +257,8 @@
         openAccordionTransition: false,//是否开启手风琴动画
         openCollapseTransition: false,//是否开启折叠动画
         isRoot: this === this.rootMenu,//是否是根节点
-        isShow: this === this.rootMenu,//是否显示当前菜单,根菜单默认显示,子菜单默认隐藏
+        isOpen: this !== this.rootMenu && this.menuItem.subMenuModeIsOpen === true,
+        visible: this === this.rootMenu,//是否显示当前菜单,根菜单默认显示,子菜单默认隐藏
         showCache: this.value,
         isCollapse: this.collapse,//是否折叠当前菜单
         collapsing: false,//是否折叠中
@@ -269,9 +270,6 @@
     },
 
     computed: {
-      isOpen() {
-        return this !== this.rootMenu && this.menuItem.subMenuModeIsOpen === true;
-      },
       menuSize() {
         return this.size || (this.$WEVIEW || {}).size;
       },
@@ -285,7 +283,7 @@
         return 50;
       },
       nextZIndex() {
-        return this.zIndex || (this.isShow || this.popperVisible) ? PopupManager.nextZIndex() : 0;
+        return this.zIndex || this.visible ? PopupManager.nextZIndex() : 0;
       },
       menuVerticalWidth() {
         if (this.mode !== 'vertical') return undefined;
@@ -308,10 +306,9 @@
 
     watch: {
       value(val) {
-        this.isShow = val;
+        this.visible = val;
       },
-      isShow(val) {
-        if (val) this.updatePopper();
+      visible(val) {
         if (this.menuItem) {
           this.menuItem.expand = val;
         }
@@ -344,6 +341,16 @@
             this.hideContentTimeIndex = undefined;
           }
           this.hideContentTimeIndex = setTimeout(() => this.hideContent = false, 50);
+        }
+      },
+      isOpen: {
+        immediate: false,
+        handler(val) {
+          if (val) {
+            setTimeout(() => this.updatePopper(), 300);
+          }else {
+            this.destroyPopper();
+          }
         }
       }
     },
@@ -404,10 +411,10 @@
       },
       restoreMenu() {
         if (this.locked || this.showCache === undefined) return;
-        this.isShow = this.showCache;
+        this.visible = this.showCache;
       },
       showMenu() {
-        if (this.locked || this.isShow) return;
+        if (this.locked || this.visible) return;
         if (!this.isRoot) {
           if (this.parentMenu.isAccordion) {
             this.parentMenu.subMenus.forEach(sm => {
@@ -428,13 +435,13 @@
             this.unLockToRootMenu();
           }
         }
-        this.isShow = true;
+        this.visible = true;
       },
       hideMenu(cache = true) {
-        if (this.locked || !this.isShow) return;
+        if (this.locked || !this.visible) return;
         this.showCache = undefined;
         if (cache) {
-          this.showCache = this.isShow;
+          this.showCache = this.visible;
         }
         //隐藏菜单时需要将所有open方式的子菜单也隐藏
         this.allSubMenus.forEach(sm => {
@@ -442,7 +449,7 @@
             sm.hideMenu();
           }
         });
-        this.isShow = false;
+        this.visible = false;
       },
       restoreSubMenu() {
         this.subMenus.forEach(sm => {
@@ -507,21 +514,17 @@
     mounted() {
       if (this.isRoot) {
         //如果是根菜单,是否显示根据value判断
-        this.isShow = this.value;
+        this.visible = this.value;
       } else {
         //如果不是根菜单, 当父菜单折叠 或 是子菜单 时 强制置为不显示
         if (this.parentMenu.isCollapse || this.menuItem.subMenuModeIsOpen) {
-          this.isShow = false;
+          this.visible = false;
         } else {
-          this.isShow = this.value;
+          this.visible = this.value;
         }
-        this.menuItem.expand = this.isShow;
-
-      }
-      if (this.isOpen) {
+        this.menuItem.expand = this.visible;
         this.referenceEl = this.menuItem.$el;
         this.popperEl = this.$el;
-        this.updatePopper();
       }
       this.$nextTick(() => {
         this.openAccordionTransition = this.accordionTransition;

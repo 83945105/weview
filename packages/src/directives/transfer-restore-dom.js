@@ -1,7 +1,6 @@
 // Thanks to: https://github.com/airyland/vux/blob/v2/src/directives/transfer-dom/index.js
 // Thanks to: https://github.com/calebroseland/vue-dom-portal
 
-import merge from "../utils/merge.js";
 import {isBoolean, isObject} from "../utils/util.js";
 
 /**
@@ -41,6 +40,14 @@ function create(el, target) {
   }
 }
 
+function restore(el) {
+  el.className = el.className.replace('v-transfer-restore-dom', '');
+  if (el.__transferDomData && el.__transferDomData.hasMovedOut === true) {
+    el.__transferDomData.parentNode && el.__transferDomData.parentNode.appendChild(el);
+  }
+  el.__transferDomData = null;
+}
+
 const directive = {
 
   inserted(el, {value}, vnode) {
@@ -76,38 +83,10 @@ const directive = {
       return;
     }
     if (!el.__transferDomData) return;
-
-    //还原
-    console.log(transfer)
-
-    // need to make sure children are done updating (vs. `update`)
-    const ref$1 = el.__transferDomData;
-    // homes.get(el)
-    const parentNode = ref$1.parentNode;
-    const home = ref$1.home;
-    const hasMovedOut = ref$1.hasMovedOut; // recall where home is
-
-    if (!hasMovedOut && target) {
-      // remove from document and leave placeholder
-      parentNode.replaceChild(home, el);
-      // append to target
-      getTarget(target).appendChild(el);
-      el.__transferDomData = merge({}, el.__transferDomData, {hasMovedOut: true, target: getTarget(target)})
-    } else if (hasMovedOut && target === false) {
-      // previously moved, coming back home
-      parentNode.replaceChild(el, home);
-      el.__transferDomData = merge({}, el.__transferDomData, {hasMovedOut: false, target: getTarget(target)})
-    } else if (target) {
-      // already moved, going somewhere else
-      getTarget(target).appendChild(el)
-    }
+    restore(el);
   },
   unbind: function unbind(el, binding) {
-    el.className = el.className.replace('v-transfer-restore-dom', '');
-    if (el.__transferDomData && el.__transferDomData.hasMovedOut === true) {
-      el.__transferDomData.parentNode && el.__transferDomData.parentNode.appendChild(el)
-    }
-    el.__transferDomData = null
+    restore(el);
   }
 };
 
