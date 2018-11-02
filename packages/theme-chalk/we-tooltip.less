@@ -57,6 +57,25 @@
   position: absolute;
   display: block;
   visibility: visible;
+  animation: opacity .5s;
+
+  &-fade-in-enter{
+    &-active {
+      animation: fade-in @fade-duration;
+    }
+
+    &-to {
+    }
+  }
+
+  &-fade-in-leave{
+    &-active {
+      animation: fade-in @fade-duration reverse;
+    }
+
+    &-to {
+    }
+  }
 
   &[x-placement^="top"] {
     padding-bottom: 12px;
@@ -154,19 +173,6 @@
       left: -8px;
     }
   }
-  //&[x-placement^="top"] .@{tooltip-arrow-css-prefix}{
-  //  left: 50%;
-  //  transform: translateX(-50%);
-  //}
-  //&[x-placement^="top-start"] .@{tooltip-arrow-css-prefix}{
-  //  left: 14px;
-  //  transform: none;
-  //}
-  //&[x-placement^="top-end"] .@{tooltip-arrow-css-prefix}{
-  //  right: 14px;
-  //  left: auto;
-  //  transform: none;
-  //}
 
   .@{tooltip-arrow-css-prefix}-right {
     left: 0px;
@@ -176,19 +182,6 @@
       left: -7px;
     }
   }
-  //&[x-placement^="right"] .@{tooltip-arrow-css-prefix}{
-  //  top: 50%;
-  //  transform: translateY(-50%);
-  //}
-  //&[x-placement^="right-start"] .@{tooltip-arrow-css-prefix}{
-  //  bottom: 7px;
-  //  top: auto;
-  //  transform: none;
-  //}
-  //&[x-placement^="right-end"] .@{tooltip-arrow-css-prefix}{
-  //  top: 7px;
-  //  transform: none;
-  //}
 
   .@{tooltip-arrow-css-prefix}-bottom {
     top: 5px;
@@ -198,19 +191,6 @@
       left: -8px;
     }
   }
-  //&[x-placement^="bottom"] .@{tooltip-arrow-css-prefix}{
-  //  left: 50%;
-  //  transform: translateX(-50%);
-  //}
-  //&[x-placement^="bottom-start"] .@{tooltip-arrow-css-prefix}{
-  //  left: 14px;
-  //  transform: none;
-  //}
-  //&[x-placement^="bottom-end"] .@{tooltip-arrow-css-prefix}{
-  //  right: 14px;
-  //  left: auto;
-  //  transform: none;
-  //}
 
   .@{tooltip-arrow-css-prefix}-left {
     right: 0px;
@@ -220,17 +200,34 @@
       right: -7px;
     }
   }
-  //&[x-placement^="left"] .@{tooltip-arrow-css-prefix}{
-  //  top: 50%;
-  //  transform: translateY(-50%);
-  //}
-  //&[x-placement^="left-start"] .@{tooltip-arrow-css-prefix}{
-  //  bottom: 7px;
-  //  top: auto;
-  //  transform: none;
-  //}
-  //&[x-placement^="left-end"] .@{tooltip-arrow-css-prefix}{
-  //  top: 7px;
-  //  transform: none;
-  //}
+}
+
+@keyframes fade-in{
+  0% {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in{
+  0% {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.we-fade-in-linear-enter-active,
+.we-fade-in-linear-leave-active {
+  transition: opacity .2s linear !important;
+}
+.we-fade-in-linear-enter,
+.we-fade-in-linear-leave,
+.we-fade-in-linear-leave-active {
+  opacity: 0;
 }
