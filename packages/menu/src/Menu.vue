@@ -17,7 +17,7 @@
          }]"
          @mouseenter.stop.self="handleMouseEnter"
          @mouseleave.stop.self="handleMouseLeave"
-         v-transfer-dom="{value: appendToBody && isOpen}"
+         v-transfer-restore-dom="{value: appendToBody}"
     >
       <ul :class="[`${prefixCls}-menu`, sizeClass]"
           :style="[menuStyle]">
@@ -34,7 +34,8 @@
   import Emitter from '../../src/mixins/emitter.js';
   import Popper from '../../src/mixins/popper.js';
   import PopupManager from '../../src/utils/popup.js';
-  import TransferDom from '../../src/directives/transfer-dom.js';
+  import TransferRestoreDom from '../../src/directives/transfer-restore-dom.js';
+  import {isFunction} from "../../src/utils/util";
 
   export default {
 
@@ -120,7 +121,7 @@
 
     mixins: [Conf, Emitter, Popper],
 
-    directives: {TransferDom},
+    directives: {TransferRestoreDom},
 
     provide() {
       return {
@@ -191,30 +192,23 @@
       },
       height: [Number, String],// 菜单高度,仅当mode为 horizontal 时有效
       zIndex: Number,//层级
-      subMenuMode: {//子菜单模式 local 在当前节点上展开 open 新打开菜单 当 mode 为 horizontal 时强制使用open
+      subMenuMode: {//子菜单模式 auto 自动(菜单折叠 - open 菜单展开 - local) local 在当前节点上展开 open 新打开菜单 当 mode 为 horizontal 时强制使用open
         type: String,
-        default: 'local',
+        default: 'auto',
         validator(value) {
           return [
+            'auto',
             'local',
             'open'
           ].indexOf(value) !== -1
         }
       },
-      subMenuTrigger: {//子菜单打开触发方式 hover - 悬浮 click - 点击
+      subMenuTrigger: {//子菜单打开触发方式 hover - 悬浮 click - 点击 manual - 手动
         type: String,
         default: 'click',
         validator(value) {
-          return ['hover', 'click'].indexOf(value) !== -1
+          return ['hover', 'click', 'manual'].indexOf(value) !== -1
         }
-      },
-      subMenuHorizontalOffset: {//子菜单水平位移
-        type: Number,
-        default: 0
-      },
-      subMenuVerticalOffset: {//子菜单垂直位移
-        type: Number,
-        default: 0
       },
       accordion: {//手风琴模式, 开启后每次至多展开一个子菜单
         type: Boolean,
@@ -237,12 +231,7 @@
         type: Boolean,
         default: true
       },
-      appendToBody: {
-        type: Boolean,
-        default() {
-          return !this.$WEVIEW || this.$WEVIEW.appendToBody === '' ? true : this.$WEVIEW.appendToBody;
-        }
-      },
+      appendToBody: Boolean,
       textColor: String,//菜单文本颜色
       backgroundColor: String,//菜单背景颜色
       activeTextColor: String,//文本激活颜色
@@ -265,7 +254,6 @@
         allMenuItems: [],//当前菜单下的所有菜单项
         menuItemGroups: [],//当前菜单下的分组
         isAccordion: this.accordion && this.mode === 'vertical',//是否是手风琴模式
-        isOpen: this !== this.rootMenu && this.menuItem.subMenuModeIsOpen === true,
         openAccordionTransition: false,//是否开启手风琴动画
         openCollapseTransition: false,//是否开启折叠动画
         isRoot: this === this.rootMenu,//是否是根节点
@@ -273,12 +261,17 @@
         showCache: this.value,
         isCollapse: this.collapse,//是否折叠当前菜单
         collapsing: false,//是否折叠中
+        hideContent: false,//是否隐藏内容
         collapsingTimeIndex: undefined,
+        hideContentTimeIndex: undefined,
         collapseDelayTimeIndex: undefined
       };
     },
 
     computed: {
+      isOpen() {
+        return this !== this.rootMenu && this.menuItem.subMenuModeIsOpen === true;
+      },
       menuSize() {
         return this.size || (this.$WEVIEW || {}).size;
       },
@@ -286,40 +279,24 @@
         return this.menuSize ? `${this.prefixCls}-menu-size-${this.menuSize}` : undefined;
       },
       iconWidth() {// 图标宽度 控制 折叠后的宽度
-        if (this.menuSize === 'mini') {
-          return 32;
-        }
-        if (this.menuSize === 'small') {
-          return 40;
-        }
-        if (this.menuSize === 'large') {
-          return 60;
-        }
+        if (this.menuSize === 'mini') return 32;
+        if (this.menuSize === 'small') return 40;
+        if (this.menuSize === 'large') return 60;
         return 50;
       },
       nextZIndex() {
         return this.zIndex || (this.isShow || this.popperVisible) ? PopupManager.nextZIndex() : 0;
       },
       menuVerticalWidth() {
-        if (this.mode !== 'vertical') {
-          return undefined;
-        }
-        if (this.isCollapse) {
-          return `${this.iconWidth}px`;
-        }
-        if (!isNaN(this.width)) {
-          return `${this.width}px`;
-        }
+        if (this.mode !== 'vertical') return undefined;
+        if (this.isCollapse) return `${this.iconWidth}px`;
+        if (!isNaN(this.width)) return `${this.width}px`;
         return this.width;
       },
       menuHorizontalHeight() {
-        if (this.mode !== 'horizontal') {
-          return undefined;
-        }
+        if (this.mode !== 'horizontal') return undefined;
         let height = this.height || this.iconWidth;
-        if (!isNaN(height)) {
-          return `${height}px`;
-        }
+        if (!isNaN(height)) return `${height}px`;
         return height;
       },
       menuStyle() {
@@ -334,6 +311,7 @@
         this.isShow = val;
       },
       isShow(val) {
+        if (val) this.updatePopper();
         if (this.menuItem) {
           this.menuItem.expand = val;
         }
@@ -343,9 +321,7 @@
       },
       collapse(val) {
         //这里不直接赋值给isCollapse是因为要先收起 再根据 设置的延迟 再 collapse 所以调用方法
-        if (this.mode === 'horizontal') {
-          return;
-        }
+        if (this.mode === 'horizontal') return;
         if (val) {
           this.collapseMenu();
         } else {
@@ -353,9 +329,22 @@
         }
       },
       isCollapse(val) {
-        window.clearTimeout(this.collapsingTimeIndex);
+        if (this.collapsingTimeIndex) {
+          window.clearTimeout(this.collapsingTimeIndex);
+          this.collapsingTimeIndex = undefined;
+        }
         this.collapsing = true;
         this.collapsingTimeIndex = setTimeout(() => this.collapsing = false, 300);
+
+        if (val) {
+          this.hideContent = true;
+        } else {
+          if (this.hideContentTimeIndex) {
+            window.clearTimeout(this.hideContentTimeIndex);
+            this.hideContentTimeIndex = undefined;
+          }
+          this.hideContentTimeIndex = setTimeout(() => this.hideContent = false, 50);
+        }
       }
     },
 
@@ -394,15 +383,11 @@
         this.menuItemGroups.push(menuItemGroup);
       },
       lockMenu() {
-        if (this.locked) {
-          return;
-        }
+        if (this.locked) return;
         this.locked = true;
       },
       unLockMenu() {
-        if (!this.locked) {
-          return;
-        }
+        if (!this.locked) return;
         this.locked = false;
       },
       lockToRootMenu() {
@@ -418,15 +403,11 @@
         }
       },
       restoreMenu() {
-        if (this.locked || this.showCache === undefined) {
-          return;
-        }
+        if (this.locked || this.showCache === undefined) return;
         this.isShow = this.showCache;
       },
       showMenu() {
-        if (this.locked || this.isShow) {
-          return;
-        }
+        if (this.locked || this.isShow) return;
         if (!this.isRoot) {
           if (this.parentMenu.isAccordion) {
             this.parentMenu.subMenus.forEach(sm => {
@@ -450,9 +431,7 @@
         this.isShow = true;
       },
       hideMenu(cache = true) {
-        if (this.locked || !this.isShow) {
-          return;
-        }
+        if (this.locked || !this.isShow) return;
         this.showCache = undefined;
         if (cache) {
           this.showCache = this.isShow;
@@ -483,10 +462,11 @@
         this.subMenus.forEach(m => m.hideMenu(cache));
       },
       collapseMenu() {
-        if (this.locked || this.isCollapse) {
-          return;
+        if (this.locked || this.isCollapse) return;
+        if (this.collapseDelayTimeIndex) {
+          window.clearTimeout(this.collapseDelayTimeIndex);
+          this.collapseDelayTimeIndex = undefined;
         }
-        window.clearTimeout(this.collapseDelayTimeIndex);
         this.menuItems.forEach(m => m.showRight = false);
         this.menuItemGroups.forEach(m => m.showTitle = false);
         this.hideSubMenu(true);
@@ -495,14 +475,20 @@
         }, this.collapseDelay);
       },
       expandMenu() {
-        if (this.locked || !this.isCollapse) {
-          return;
+        if (this.locked || !this.isCollapse) return;
+        if (this.collapseDelayTimeIndex) {
+          window.clearTimeout(this.collapseDelayTimeIndex);
+          this.collapseDelayTimeIndex = undefined;
         }
-        window.clearTimeout(this.collapseDelayTimeIndex);
         this.menuItems.forEach(m => m.showRight = true);
         this.menuItemGroups.forEach(m => m.showTitle = true);
         setTimeout(() => {
           this.restoreSubMenu();
+          this.subMenus.forEach(sm => {
+            if (sm.menuItem.subMenuModeIsOpen) {
+              sm.hideMenu();
+            }
+          });
         }, 0);
         this.isCollapse = false;
       }
@@ -541,6 +527,10 @@
         this.openAccordionTransition = this.accordionTransition;
         this.openCollapseTransition = this.collapseTransition;
       });
+    },
+
+    beforeDestroy() {
+      if (isFunction(this.destroyPopper)) this.destroyPopper();
     }
 
   }

@@ -146,9 +146,9 @@
     <div class="module-main">
       <div class="module-content">
 
-        <we-tooltip disabled v-model="show02" max-width="200px" placement="right" manual
+        <we-tooltip disabled max-width="200px" placement="right"
                     content="超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本提示超长文本">
-          <we-button @click="show02 = !show02">禁用</we-button>
+          <we-button>禁用</we-button>
         </we-tooltip>
 
         <we-tooltip placement="top" content="按住提示" trigger="focus">
@@ -161,6 +161,10 @@
 
         <we-tooltip placement="top" content="按住提示" trigger="hover">
           <we-button>悬浮触发</we-button>
+        </we-tooltip>
+
+        <we-tooltip v-model="show02" placement="top" content="按住提示" trigger="hover" manual>
+          <we-button @click="show02 = !show02">手动模式</we-button>
         </we-tooltip>
 
         <we-tooltip :content="content01">

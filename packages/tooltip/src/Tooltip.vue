@@ -4,8 +4,8 @@
   import Conf from '../../src/mixins/conf.js';
   import Popper from '../../src/mixins/popper.js';
   import PopupManager from '../../src/utils/popup.js';
-  import {hasClass} from "../../src/utils/dom.js";
-  import {onEventListener, offEventListener} from "../../src/utils/dom.js";
+  import {hasClass, onEventListener, offEventListener} from "../../src/utils/dom.js";
+  import {isFunction} from "../../src/utils/util.js";
 
   export default {
 
@@ -22,7 +22,7 @@
         type: String,
         default: 'hover',
         validator(value) {
-          return ['click', 'focus', 'hover'].indexOf(value) !== -1;
+          return ['click', 'focus', 'hover', 'manual'].indexOf(value) !== -1;
         }
       },
       effect: {
@@ -347,7 +347,7 @@
 
     beforeDestroy() {
       this.popperComponent && this.popperComponent.$destroy();
-      this.doDestroy && this.doDestroy();
+      if (isFunction(this.destroyPopper)) this.destroyPopper();
       if (this.popperParentEl && this.popperEl) this.popperParentEl.removeChild(this.popperEl);
       offEventListener(this.referenceEl, 'mouseenter', this.handleMouseEnterReference);
       offEventListener(this.referenceEl, 'mouseleave', this.handleMouseLeaveReference);

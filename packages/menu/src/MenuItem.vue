@@ -12,7 +12,7 @@
            @mouseleave.stop.self="handleMouseLeave"
       >
         <div v-show="showArrow"
-             :class="[`${prefixCls}-menu-item-title-arrow`, {'is-opened': expand}]">
+             :class="[`${prefixCls}-menu-item-title-arrow`, {'is-opened': expand, 'we-menu-take-up': menu.hideContent}]">
           <icon v-if="subMenuModeIsOpen" :name="isHorizontal ? 'angle-down' : 'angle-right'" size="default"></icon>
           <icon v-else :name="isHorizontal ? 'angle-right' : 'angle-down'" size="default"></icon>
         </div>
@@ -28,7 +28,7 @@
           <slot name="content">
             <div :class="[
                   `${prefixCls}-menu-item-title-inner-text`,
-                  {'is-left': !showIcon && !isHorizontal, 'is-right': !showArrow && !showPrompt && !isHorizontal}
+                  {'is-left': !showIcon && !isHorizontal, 'is-right': !showArrow && !showPrompt && !isHorizontal, 'we-menu-take-up': menu.hideContent}
                  ]">
               <slot></slot>
             </div>
@@ -104,27 +104,28 @@
       },
       prompt: String,//提示
       disabled: Boolean,//是否禁用,优先级高于menu
-      icon: {//是否显示图标,仅对菜单为水平排列有效
+      icon: {//是否显示图标,仅对菜单为垂直排列有效,如果是是根菜单项,默认显示,否则默认不显示
         Boolean,
-        default: true
+        default() {
+          return this === this.rootMenuItem;
+        }
       },
-      iconName: {//图标名称
-        type: String,
-        default: ''
-      },
-      subMenuMode: {//子菜单模式 local 在当前节点上展开 open 新打开菜单 当 mode 为 horizontal 时强制使用open
+      iconName: String,//图标名称
+      subMenuMode: {//子菜单模式 auto 自动(菜单折叠 - open 菜单展开 - local) local 在当前节点上展开 open 新打开菜单 当 mode 为 horizontal 时强制使用open
         type: String,
         validator(value) {
           return [
+            'auto',
             'local',
             'open'
           ].indexOf(value) !== -1
         }
       },
-      subMenuTrigger: {//子菜单打开触发方式 hover - 悬浮 click - 点击
+      subMenuTrigger: {//子菜单打开触发方式 hover - 悬浮 click - 点击 manual - 手动
         type: String,
+        default: 'click',
         validator(value) {
-          return ['hover', 'click'].indexOf(value) !== -1
+          return ['hover', 'click', 'manual'].indexOf(value) !== -1
         }
       }
     },
@@ -134,15 +135,14 @@
         isRoot: this === this.rootMenuItem,//是否是根菜单项
         hasSubMenu: false,//是否拥有子菜单
         subMenu: undefined,//子菜单
-        //子菜单是否是打开模式
-        //1、所属菜单是水平 => true
-        //2、当前subMenuMode === undefined => 根据所属菜单的subMenuMode是否为open来判断
-        //3、当前subMenuMode !== undefined => 根据当前subMenuMode是否为open来判断
-        subMenuModeIsOpen: this.menu.mode === 'horizontal' || (this.subMenuMode === void 0 ? this.menu.subMenuMode === 'open' : this.subMenuMode === 'open'),
         //子菜单是否是悬浮触发
         //1、当前subMenuTrigger === undefined => 根据所属菜单的subMenuTrigger是否为hover来判断
         //2、当前subMenuTrigger !== undefined => 根据当前subMenuTrigger是否为hover来判断
         subMenuTriggerIsHover: this.subMenuTrigger === void 0 ? this.menu.subMenuTrigger === 'hover' : this.subMenuTrigger === 'hover',
+        // 同上
+        subMenuTriggerIsClick: this.subMenuTrigger === void 0 ? this.menu.subMenuTrigger === 'click' : this.subMenuTrigger === 'click',
+        // 同上上
+        subMenuTriggerIsManual: this.subMenuTrigger === void 0 ? this.menu.subMenuTrigger === 'manual' : this.subMenuTrigger === 'manual',
         subMenuHoverLeaveTimeIndex: undefined,
         showRight: !this.menu.isCollapse,//是否显示右侧
         selected: this.value,//是否选中
@@ -157,6 +157,15 @@
     },
 
     computed: {
+      subMenuModeIsOpen() {
+        if (this.menu.mode === 'horizontal') return true;
+        if (this.subMenuMode === void 0) {
+          if (this.menu.subMenuMode === 'open') return true;
+          return !!(this.menu.subMenuMode === 'auto' && this.menu.isCollapse);
+        }
+        if (this.subMenuMode === 'open') return true;
+        return !!(this.subMenuMode === 'auto' && this.menu.isCollapse);
+      },
       showArrow() {
         return this.arrow && this.showRight && this.hasSubMenu;
       },
@@ -170,9 +179,7 @@
         return this.disabled ? `is-disabled` : undefined;
       },
       disabledStyle() {
-        if (!this.disabled) {
-          return;
-        }
+        if (!this.disabled) return;
         return {
           color: this.menu.disabledTextColor || this.rootMenu.disabledTextColor,
           backgroundColor: this.menu.disabledBackgroundColor || this.rootMenu.disabledBackgroundColor
@@ -192,9 +199,7 @@
         return (!this.hasSubMenu && this.selected) ? 'is-selected' : undefined;
       },
       selectedStyle() {
-        if (!this.selected || this.disabled) {
-          return undefined;
-        }
+        if (!this.selected || this.disabled) return undefined;
         return {
           color: this.menu.selectedTextColor || this.rootMenu.selectedTextColor,
           backgroundColor: this.menu.selectedBackgroundColor || this.rootMenu.selectedBackgroundColor
@@ -204,9 +209,7 @@
         return (this.hasSubMenu && this.active) ? 'is-active' : undefined;
       },
       activeStyle() {
-        if (!this.active || this.disabled) {
-          return undefined;
-        }
+        if (!this.active || this.disabled) return undefined;
         return {
           color: this.menu.activeTextColor || this.rootMenu.activeTextColor,
           backgroundColor: this.menu.activeBackgroundColor || this.rootMenu.activeBackgroundColor
@@ -216,9 +219,7 @@
         return this.hover ? 'is-hover' : undefined;
       },
       hoverStyle() {
-        if (!this.hover) {
-          return undefined;
-        }
+        if (!this.hover) return undefined;
         return {
           color: this.menu.hoverTextColor || this.rootMenu.hoverTextColor,
           backgroundColor: this.menu.hoverBackgroundColor || this.rootMenu.hoverBackgroundColor
@@ -274,38 +275,22 @@
         } else {
           this.subMenu.hideMenu(false);
         }
-      },
-      'menu.isCollapse': {
-        handler(v) {
-          this.showRight = !v;
-        },
-        deep: true
       }
     },
 
     methods: {
       handleMouseEnter(e) {
-        if (this.disabled) {
-          return;
-        }
+        if (this.disabled) return;
         this.hover = true;
-        if (this.hasSubMenu) {
-          if (!this.subMenuTriggerIsHover || this.menu.collapse) {
-            return;
-          }
+        if (this.hasSubMenu && this.subMenuTriggerIsHover) {
           this.clearSubMenuHoverLeaveTimeToRoot();
           this.expand = true;
         }
       },
       handleMouseLeave(e) {
-        if (this.disabled) {
-          return;
-        }
+        if (this.disabled) return;
         this.hover = false;
-        if (this.hasSubMenu) {
-          if (!this.subMenuTriggerIsHover || this.menu.collapse) {
-            return;
-          }
+        if (this.hasSubMenu && this.subMenuTriggerIsHover) {
           //离开关闭的时候给一个定时延迟,这样当子菜单触发进入事件,就取消定时,当子菜单触发离开事件继续启动延迟
           this.subMenuHoverLeaveTimeIndex = setTimeout(() => {
             this.expand = false;
@@ -315,6 +300,7 @@
       clearSubMenuHoverLeaveTimeToRoot() {
         if (this.subMenuTriggerIsHover) {
           window.clearTimeout(this.subMenuHoverLeaveTimeIndex);
+          this.subMenuHoverLeaveTimeIndex = undefined;
         }
         if (this.parentMenuItem) {
           this.parentMenuItem.clearSubMenuHoverLeaveTimeToRoot();
@@ -331,19 +317,12 @@
         }
       },
       handleClick(e) {
-        if (this.disabled || this.$slots.panel) {
-          return;
-        }
-        if (this.hasSubMenu) {
-          if (this.subMenuTriggerIsHover || this.menu.collapse) {
-            return;
-          }
+        if (this.disabled || this.$slots.panel) return;
+        if (this.hasSubMenu && this.subMenuTriggerIsClick) {
           this.expand = !this.expand;
           return;
         }
-        if (!this.selected) {
-          this.selected = true;
-        }
+        if (!this.selected) this.selected = true;
       },
       handleItemSelected() {
         //关闭所在菜单到根菜单之外所有打开的菜单

@@ -9,41 +9,72 @@
     </div>
 
     <div class="module-main">
-      <div class="module-content" style="margin-top: 5px; overflow: hidden; background-color: #4d4d4d">
+      <div class="module-content" style="margin-top: 5px; overflow: hidden; background-color: rgba(77,77,77,0.2)">
 
         <we-menu :value="true" index="root" :collapse="collapse01" :append-to-body="false">
-          <we-menu-item icon-name="home" subMenuMode="open">
+          <we-menu-item icon-name="home" subMenuMode="open" subMenuTrigger="click">
             选项
 
-            <we-menu index="01" slot="subMenu">
+            <!--<we-menu v-model="show01" index="01" slot="subMenu" subMenuMode="open">
 
               <we-menu-item>选项一</we-menu-item>
               <we-menu-item>选项一</we-menu-item>
               <we-menu-item>选项一</we-menu-item>
               <we-menu-item>选项一</we-menu-item>
-              <we-menu-item>选项一</we-menu-item>
+              <we-menu-item>
+                选项一
 
-            </we-menu>
+                <we-menu index="01-04" slot="subMenu">
+                  <we-menu-item>选项二</we-menu-item>
+                  <we-menu-item>选项二</we-menu-item>
+                  <we-menu-item>选项二</we-menu-item>
+                </we-menu>
+              </we-menu-item>
+
+            </we-menu>-->
 
           </we-menu-item>
           <we-menu-item icon-name="home">
             选项
 
-            <we-menu index="02" slot="subMenu">
+            <we-menu v-model="show02" index="02" slot="subMenu">
 
               <we-menu-item>选项一</we-menu-item>
               <we-menu-item>选项一</we-menu-item>
-              <we-menu-item>选项一</we-menu-item>
+              <we-menu-item>
+                选项一
+
+                <we-menu index="02-03" slot="subMenu">
+                  <we-menu-item>选项二</we-menu-item>
+                  <we-menu-item>选项二</we-menu-item>
+                  <we-menu-item>选项二</we-menu-item>
+                </we-menu>
+
+              </we-menu-item>
 
             </we-menu>
           </we-menu-item>
-          <we-menu-item icon-name="home">选项</we-menu-item>
-          <we-menu-item icon-name="home">选项</we-menu-item>
-          <we-menu-item icon-name="home">选项</we-menu-item>
-          <we-menu-item icon-name="home">选项</we-menu-item>
-          <we-menu-item icon-name="home">选项</we-menu-item>
-          <we-menu-item icon-name="home">选项</we-menu-item>
-          <we-menu-item icon-name="home">选项</we-menu-item>
+          <we-tooltip :disabled="!collapse01" content="选项" placement="right">
+            <we-menu-item icon-name="home">选项</we-menu-item>
+          </we-tooltip>
+          <we-tooltip :disabled="!collapse01" content="选项" placement="right">
+            <we-menu-item icon-name="home">选项</we-menu-item>
+          </we-tooltip>
+          <we-tooltip :disabled="!collapse01" content="选项" placement="right">
+            <we-menu-item icon-name="home">选项</we-menu-item>
+          </we-tooltip>
+          <we-tooltip :disabled="!collapse01" content="选项" placement="right">
+            <we-menu-item icon-name="home">选项</we-menu-item>
+          </we-tooltip>
+          <we-tooltip :disabled="!collapse01" content="选项" placement="right">
+            <we-menu-item icon-name="home">选项</we-menu-item>
+          </we-tooltip>
+          <we-tooltip :disabled="!collapse01" content="选项" placement="right">
+            <we-menu-item icon-name="home">选项</we-menu-item>
+          </we-tooltip>
+          <we-tooltip :disabled="!collapse01" content="选项" placement="right">
+            <we-menu-item icon-name="home">选项</we-menu-item>
+          </we-tooltip>
         </we-menu>
 
 
@@ -90,12 +121,16 @@
 
     data() {
       return {
-        collapse01: false
+        collapse01: false,
+
+        show01: false,
+        show02: false
       };
     },
 
-    methods: {
-    }
+    watch: {},
+
+    methods: {}
 
   }
 </script>

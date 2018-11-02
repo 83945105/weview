@@ -124,22 +124,10 @@ export default {
       this.popperJS ? this.popperJS.update() : this.createPopper();
     },
 
-    doDestroy() {
+    destroyPopper() {
       if (!this.popperJS || isServer) return;
       this.popperJS.destroy();
       this.popperJS = null;
-    },
-
-    updated() {
-      if (isServer) return;
-      this.updatePopper();
-    },
-
-    beforeDestroy() {
-      if (isServer) return;
-      if (this.popperJS) {
-        this.popperJS.destroy();
-      }
     }
 
   }
