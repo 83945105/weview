@@ -17,7 +17,7 @@
          }]"
          @mouseenter.stop.self="handleMouseEnter"
          @mouseleave.stop.self="handleMouseLeave"
-         v-transfer-dom="{value: appendToBody}"
+         v-transfer-dom="{value: appendToBody && isOpen}"
     >
       <ul :class="[`${prefixCls}-menu`, sizeClass]"
           :style="[menuStyle]">
@@ -265,6 +265,7 @@
         allMenuItems: [],//当前菜单下的所有菜单项
         menuItemGroups: [],//当前菜单下的分组
         isAccordion: this.accordion && this.mode === 'vertical',//是否是手风琴模式
+        isOpen: this !== this.rootMenu && this.menuItem.subMenuModeIsOpen === true,
         openAccordionTransition: false,//是否开启手风琴动画
         openCollapseTransition: false,//是否开启折叠动画
         isRoot: this === this.rootMenu,//是否是根节点
@@ -530,11 +531,11 @@
         }
         this.menuItem.expand = this.isShow;
 
-        if (this.menuItem.subMenuModeIsOpen) {
-          this.referenceEl = this.menuItem.$el;
-          this.popperEl = this.$el;
-          this.updatePopper();
-        }
+      }
+      if (this.isOpen) {
+        this.referenceEl = this.menuItem.$el;
+        this.popperEl = this.$el;
+        this.updatePopper();
       }
       this.$nextTick(() => {
         this.openAccordionTransition = this.accordionTransition;

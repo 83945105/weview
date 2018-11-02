@@ -69,6 +69,27 @@
     top: 0;
     bottom: 0;
   }
+
+  &[x-placement^="top"],
+  &[x-placement^="top-start"],
+  &[x-placement^="top-end"] {
+    margin-bottom: 5px;
+  }
+  &[x-placement^="bottom"],
+  &[x-placement^="bottom-start"],
+  &[x-placement^="bottom-end"] {
+    margin-top: 5px;
+  }
+  &[x-placement^="left"],
+  &[x-placement^="left-start"],
+  &[x-placement^="left-end"] {
+    margin-right: 5px;
+  }
+  &[x-placement^="right"],
+  &[x-placement^="right-start"],
+  &[x-placement^="right-end"] {
+    margin-left: 5px;
+  }
 }
 
 .@{menu-css-prefix} {
