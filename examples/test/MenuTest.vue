@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page-title">Menu菜单</div>
-    <div class="first-title">基本</div>
+    <div class="first-title">垂直菜单</div>
     <div class="module-main">
       <div class="module-content" style="overflow: hidden">
         <we-button type="primary" @click="collapse01 = !collapse01">折叠/展开</we-button>
@@ -26,7 +26,7 @@
             </we-menu>
 
           </we-menu-item>
-          <we-menu-item icon-name="home" subMenuMode="open">
+          <we-menu-item icon-name="home">
             选项
 
             <we-menu index="02" slot="subMenu">
