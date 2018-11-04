@@ -12,7 +12,7 @@
            @mouseleave.stop.self="handleMouseLeave"
       >
         <div v-show="showArrow"
-             :class="[`${prefixCls}-menu-item-title-arrow`, {'is-opened': expand, 'we-menu-take-up': menu.hideContent}]">
+             :class="[`${prefixCls}-menu-item-title-arrow`, {'is-opened': showSubMenu, 'we-menu-take-up': menu.hideContent}]">
           <icon v-if="subMenuModeIsOpen" :name="isHorizontal ? 'angle-down' : 'angle-right'" size="default"></icon>
           <icon v-else :name="isHorizontal ? 'angle-right' : 'angle-down'" size="default"></icon>
         </div>
@@ -147,7 +147,7 @@
         showRight: !this.menu.isCollapse,//是否显示右侧
         selected: this.value,//是否选中
         active: false,//是否激活
-        expand: false,//是否展开
+        showSubMenu: false,//是否显示子菜单
         hover: false,//是否悬浮
         isHorizontal: this.rootMenuItem === this && this.menu.mode === 'horizontal',        // 是否水平排列
 
@@ -269,15 +269,23 @@
           }
         }
       },
-      expand(val) {
+      showSubMenu(val) {
         if (val) {
-          this.subMenu.showMenu(false);
+          this.subMenu.showMenu();
         } else {
-          this.subMenu.hideMenu(false);
+          this.subMenu.hideMenuAndAllSubMenus(false);
         }
       },
       subMenuModeIsOpen(val) {
-        if (this.subMenu) this.subMenu.isOpen = val;
+        if (!this.subMenu) return;
+        if (val) {
+          this.subMenu.isOpen = val;
+        } else {
+          this.subMenu.isOpen = val;
+        }
+      },
+      subMenu(sm) {
+        sm.isOpen = this.subMenuModeIsOpen;
       }
     },
 
@@ -287,7 +295,7 @@
         this.hover = true;
         if (this.hasSubMenu && this.subMenuTriggerIsHover) {
           this.clearSubMenuHoverLeaveTimeToRoot();
-          this.expand = true;
+          this.showSubMenu = true;
         }
       },
       handleMouseLeave(e) {
@@ -296,7 +304,7 @@
         if (this.hasSubMenu && this.subMenuTriggerIsHover) {
           //离开关闭的时候给一个定时延迟,这样当子菜单触发进入事件,就取消定时,当子菜单触发离开事件继续启动延迟
           this.subMenuHoverLeaveTimeIndex = setTimeout(() => {
-            this.expand = false;
+            this.showSubMenu = false;
           }, 500);
         }
       },
@@ -312,7 +320,7 @@
       startSubMenuHoverLeaveTimeToRoot() {
         if (this.subMenuTriggerIsHover) {
           this.subMenuHoverLeaveTimeIndex = setTimeout(() => {
-            this.expand = false;
+            this.showSubMenu = false;
           }, 500);
         }
         if (this.parentMenuItem) {
@@ -322,7 +330,7 @@
       handleClick(e) {
         if (this.disabled || this.$slots.panel) return;
         if (this.hasSubMenu && this.subMenuTriggerIsClick) {
-          this.expand = !this.expand;
+          this.showSubMenu = !this.showSubMenu;
           return;
         }
         if (!this.selected) this.selected = true;

@@ -9,6 +9,7 @@ const Popper = isServer ? function () {
 } : require('popper.js/dist/umd/popper.js');
 
 import {isFunction} from "../utils/util.js";
+import merge from "../utils/merge";
 
 export default {
 
@@ -38,7 +39,8 @@ export default {
     popper: Object,//弹层
     offset: {
       default: 0
-    }
+    },
+    fixed: Boolean
   },
 
   data() {
@@ -49,7 +51,7 @@ export default {
   },
 
   methods: {
-    createPopper() {
+    createPopper(properties = {}) {
       if (isServer) {
         return;
       }
@@ -57,7 +59,7 @@ export default {
         return;
       }
 
-      const options = this.popperOptions;
+      const options = merge(this.popperOptions, properties);
       const popper = this.popperEl || this.$refs.popper;
       const reference = this.referenceEl || this.$refs.reference;
 
@@ -95,11 +97,11 @@ export default {
       this.popperJS = new Popper(reference, popper, options);
     },
 
-    updatePopper() {
+    updatePopper(properties = {}) {
       if (isServer) {
         return;
       }
-      this.popperJS ? this.popperJS.update() : this.createPopper();
+      this.popperJS ? this.popperJS.update() : this.createPopper(properties);
     },
 
     destroyPopper() {

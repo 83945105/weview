@@ -20,7 +20,6 @@ function getTarget(node) {
 
 function create(el, target) {
   if (el.__transferDomData) return;
-
   el.className = el.className ? el.className + ' v-transfer-restore-dom' : 'v-transfer-restore-dom';
   const parentNode = el.parentNode;
   const home = document.createComment('');
@@ -29,7 +28,7 @@ function create(el, target) {
   if (target !== false) {
     parentNode.replaceChild(home, el); // moving out, el is no longer in the document
     getTarget(target).appendChild(el); // moving into new place
-    hasMovedOut = true
+    hasMovedOut = true;
   }
 
   el.__transferDomData = {

@@ -17,7 +17,7 @@
          }]"
          @mouseenter.stop.self="handleMouseEnter"
          @mouseleave.stop.self="handleMouseLeave"
-         v-transfer-restore-dom="{value: isOpen}"
+         v-transfer-restore-dom="{value: appendToBody && isOpen}"
     >
       <ul :class="[`${prefixCls}-menu`, sizeClass]"
           :style="[menuStyle]">
@@ -257,7 +257,7 @@
         openAccordionTransition: false,//是否开启手风琴动画
         openCollapseTransition: false,//是否开启折叠动画
         isRoot: this === this.rootMenu,//是否是根节点
-        isOpen: this !== this.rootMenu && this.menuItem.subMenuModeIsOpen === true,
+        isOpen: false,//是否是打开模式,由所属menuItem决定
         visible: this === this.rootMenu,//是否显示当前菜单,根菜单默认显示,子菜单默认隐藏
         showCache: this.value,
         isCollapse: this.collapse,//是否折叠当前菜单
@@ -265,7 +265,8 @@
         hideContent: false,//是否隐藏内容
         collapsingTimeIndex: undefined,
         hideContentTimeIndex: undefined,
-        collapseDelayTimeIndex: undefined
+        collapseDelayTimeIndex: undefined,
+        createPopperTimeIndex: undefined
       };
     },
 
@@ -310,11 +311,13 @@
       },
       visible(val) {
         if (this.menuItem) {
-          this.menuItem.expand = val;
+          this.menuItem.showSubMenu = val;
         }
         if (this.value !== val) {
           this.$emit('input', val);
         }
+        // 更新所有子菜单的popper
+        this.updateAllSubMenusPopper();
       },
       collapse(val) {
         //这里不直接赋值给isCollapse是因为要先收起 再根据 设置的延迟 再 collapse 所以调用方法
@@ -324,6 +327,8 @@
         } else {
           this.expandMenu();
         }
+        // 更新所有子菜单的popper
+        this.updateAllSubMenusPopper();
       },
       isCollapse(val) {
         if (this.collapsingTimeIndex) {
@@ -343,14 +348,15 @@
           this.hideContentTimeIndex = setTimeout(() => this.hideContent = false, 50);
         }
       },
-      isOpen: {
-        immediate: false,
-        handler(val) {
-          if (val) {
-            setTimeout(() => this.updatePopper(), 300);
-          }else {
-            this.destroyPopper();
-          }
+      isOpen(val) {
+        if (this.createPopperTimeIndex) {
+          window.clearTimeout(this.createPopperTimeIndex);
+          this.createPopperTimeIndex = undefined;
+        }
+        if (val) {
+          this.createPopperTimeIndex = setTimeout(() => this.updatePopper({positionFixed: true}), 300);
+        } else {
+          this.destroyPopper();
         }
       }
     },
@@ -367,6 +373,18 @@
           //启动所属 子菜单open 模式的菜单项至根菜单项的关闭定时
           this.menuItem.startSubMenuHoverLeaveTimeToRoot();
         }
+      },
+      updateSubMenusPopper() {
+        this.subMenus.forEach(sm => {
+          if (!sm.isOpen) return true;
+          sm.updatePopper();
+        });
+      },
+      updateAllSubMenusPopper() {
+        this.allSubMenus.forEach(sm => {
+          if (!sm.isOpen) return true;
+          sm.updatePopper();
+        });
       },
       addSubMenu(subMenu) {
         this.subMenus.push(subMenu);
@@ -409,6 +427,68 @@
           this.parentMenu.unLockToRootMenu();
         }
       },
+      hideMenu(cache = true) {
+        if (this.locked || !this.visible) return;
+        this.showCache = undefined;
+        if (cache) {
+          this.showCache = this.visible;
+        }
+        this.visible = false;
+      },
+      hideSubMenus(cache = true) {
+        this.subMenus.forEach(sm => sm.hideMenu(cache));
+      },
+      hideAllSubMenus(cache = true) {
+        this.allSubMenus.forEach(sm => sm.hideMenu(cache));
+      },
+      hideOpenSubMenus() {
+        this.subMenus.forEach(sm => {
+          if (!sm.isOpen) return true;
+          sm.hideMenu(false);
+        });
+      },
+      hideAllOpenSubMenus() {
+        this.allSubMenus.forEach(sm => {
+          if (!sm.isOpen) return true;
+          sm.hideMenu(false);
+        });
+      },
+      hideMenuAndSubMenus(cache = true) {
+        if (this.locked || !this.visible) return;
+        this.showCache = undefined;
+        if (cache) {
+          this.showCache = this.visible;
+        }
+        this.hideSubMenus(cache);
+        this.visible = false;
+      },
+      hideMenuAndAllSubMenus(cache = true) {
+        if (this.locked || !this.visible) return;
+        this.showCache = undefined;
+        if (cache) {
+          this.showCache = this.visible;
+        }
+        this.hideAllSubMenus();
+        this.visible = false;
+      },
+      hideMenuAndOpenSubMenus(cache = true) {
+        if (this.locked || !this.visible) return;
+        this.showCache = undefined;
+        if (cache) {
+          this.showCache = this.visible;
+        }
+        this.hideOpenSubMenus();
+        this.visible = false;
+      },
+      hideMenuAndAllOpenSubMenus(cache = true) {
+        if (this.locked || !this.visible) return;
+        this.showCache = undefined;
+        if (cache) {
+          this.showCache = this.visible;
+        }
+        this.hideAllOpenSubMenus();
+        this.visible = false;
+      },
       restoreMenu() {
         if (this.locked || this.showCache === undefined) return;
         this.visible = this.showCache;
@@ -417,56 +497,37 @@
         if (this.locked || this.visible) return;
         if (!this.isRoot) {
           if (this.parentMenu.isAccordion) {
+            //当父菜单是手风琴模式时,关闭所有兄弟菜单及其子菜单
             this.parentMenu.subMenus.forEach(sm => {
-              if (sm !== this) {
-                sm.hideMenu(false);
-              }
+              if (sm === this) return true;
+              //应该是关闭所有兄弟菜单及其所有子菜单
+              sm.hideMenuAndAllSubMenus(false)
             });
           }
-          if (this.menuItem.subMenuModeIsOpen) {
+          if (this.isOpen) {
             //如果菜单是打开模式,应该将当前菜单到根菜单之外的所有open菜单关闭
-            //现将不需要关闭的菜单锁定,关闭其余菜单后在解除锁定
+            //先将不需要关闭的菜单锁定,关闭其余菜单后在解除锁定
             this.lockToRootMenu();
             this.rootMenu.allSubMenus.forEach(sm => {
-              if (sm !== this && sm.menuItem.subMenuModeIsOpen) {
-                sm.hideMenu(false);
-              }
+              if (!sm.isOpen || sm === this) return true;
+              sm.hideMenu(false);
             });
             this.unLockToRootMenu();
           }
         }
         this.visible = true;
       },
-      hideMenu(cache = true) {
-        if (this.locked || !this.visible) return;
-        this.showCache = undefined;
-        if (cache) {
-          this.showCache = this.visible;
-        }
-        //隐藏菜单时需要将所有open方式的子菜单也隐藏
+      restoreSubMenus() {
+        this.subMenus.forEach(sm => {
+          if (sm.isOpen) return true;
+          sm.restoreMenu();
+        });
+      },
+      restoreAllSubMenus() {
         this.allSubMenus.forEach(sm => {
-          if (sm.menuItem.subMenuModeIsOpen) {
-            sm.hideMenu();
-          }
+          if (sm.isOpen) return true;
+          sm.restoreMenu();
         });
-        this.visible = false;
-      },
-      restoreSubMenu() {
-        this.subMenus.forEach(sm => {
-          if (!sm.menuItem.subMenuModeIsOpen) {
-            sm.restoreMenu();
-          }
-        });
-      },
-      showSubMenu() {
-        this.subMenus.forEach(sm => {
-          if (!sm.menuItem.subMenuModeIsOpen) {
-            sm.showMenu();
-          }
-        });
-      },
-      hideSubMenu(cache = true) {
-        this.subMenus.forEach(m => m.hideMenu(cache));
       },
       collapseMenu() {
         if (this.locked || this.isCollapse) return;
@@ -476,7 +537,7 @@
         }
         this.menuItems.forEach(m => m.showRight = false);
         this.menuItemGroups.forEach(m => m.showTitle = false);
-        this.hideSubMenu(true);
+        this.subMenus.forEach(sm => sm.hideMenuAndAllSubMenus(true));
         this.collapseDelayTimeIndex = setTimeout(() => {
           this.isCollapse = true;
         }, this.collapseDelay);
@@ -490,12 +551,8 @@
         this.menuItems.forEach(m => m.showRight = true);
         this.menuItemGroups.forEach(m => m.showTitle = true);
         setTimeout(() => {
-          this.restoreSubMenu();
-          this.subMenus.forEach(sm => {
-            if (sm.menuItem.subMenuModeIsOpen) {
-              sm.hideMenu();
-            }
-          });
+          this.hideAllOpenSubMenus();
+          this.restoreAllSubMenus();
         }, 0);
         this.isCollapse = false;
       }
@@ -522,7 +579,7 @@
         } else {
           this.visible = this.value;
         }
-        this.menuItem.expand = this.visible;
+        this.menuItem.showSubMenu = this.visible;
         this.referenceEl = this.menuItem.$el;
         this.popperEl = this.$el;
       }

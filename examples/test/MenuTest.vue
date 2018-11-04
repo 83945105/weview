@@ -9,13 +9,13 @@
     </div>
 
     <div class="module-main">
-      <div class="module-content" style="margin-top: 5px; overflow: hidden; background-color: rgba(77,77,77,0.2)">
+      <div class="module-content" style="margin-top: 5px; overflow: hidden; background-color: rgba(77,77,77,0.2); height: 500px">
 
         <we-menu :value="true" index="root" :collapse="collapse01" :append-to-body="false">
-          <we-menu-item icon-name="home" subMenuMode="open" subMenuTrigger="click">
+          <!--<we-menu-item icon-name="home" subMenuMode="open" subMenuTrigger="click">
             选项
 
-            <!--<we-menu v-model="show01" index="01" slot="subMenu" subMenuMode="open">
+            <we-menu v-model="show01" index="01" slot="subMenu" subMenuMode="open">
 
               <we-menu-item>选项一</we-menu-item>
               <we-menu-item>选项一</we-menu-item>
@@ -31,36 +31,38 @@
                 </we-menu>
               </we-menu-item>
 
-            </we-menu>-->
+            </we-menu>
 
-          </we-menu-item>
-          <we-menu-item icon-name="home">
+          </we-menu-item>-->
+          <we-menu-item icon-name="home" index="item02">
             选项
 
-            <we-menu v-model="show02" index="02" slot="subMenu">
+            <we-menu v-model="show02" index="02" slot="subMenu" :appendToBody="false">
 
+              <we-menu-item>02选项一</we-menu-item>
               <we-menu-item>选项一</we-menu-item>
-              <we-menu-item>选项一</we-menu-item>
-              <we-menu-item>
-                选项一
+              <we-menu-item index="item02-03" subMenuMode="open">
+                选项一item02-03
 
                 <we-menu index="02-03" slot="subMenu">
+                  <we-menu-item>选项二02-03</we-menu-item>
                   <we-menu-item>选项二</we-menu-item>
-                  <we-menu-item>选项二</we-menu-item>
-                  <we-menu-item>选项二</we-menu-item>
+                  <we-menu-item subMenuMode="open">
+                    选项二
+
+                    <we-menu index="03-03" slot="subMenu">
+                      <we-menu-item>选项二03-03</we-menu-item>
+                      <we-menu-item>选项二</we-menu-item>
+                      <we-menu-item>选项二</we-menu-item>
+                    </we-menu>
+
+                  </we-menu-item>
                 </we-menu>
 
               </we-menu-item>
 
             </we-menu>
           </we-menu-item>
-          <we-menu-item icon-name="home">选项</we-menu-item>
-          <we-menu-item icon-name="home">选项</we-menu-item>
-          <we-menu-item icon-name="home">选项</we-menu-item>
-          <we-menu-item icon-name="home">选项</we-menu-item>
-          <we-menu-item icon-name="home">选项</we-menu-item>
-          <we-menu-item icon-name="home">选项</we-menu-item>
-          <we-menu-item icon-name="home">选项</we-menu-item>
           <!--<we-tooltip :disabled="!collapse01" content="选项" placement="right">
             <we-menu-item icon-name="home">选项</we-menu-item>
           </we-tooltip>
