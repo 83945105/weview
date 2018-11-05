@@ -97,6 +97,7 @@
       visible(val) {
         if (val) {
           this.handlePopperShow();
+          this.updatePopper();
         }
         this.$emit('input', val);
       },
@@ -110,7 +111,7 @@
         if (this.popperParentEl === void 0) {
           this.$nextTick(() => {
             document.body.appendChild(this.popperEl);
-            this.updatePopper();
+            this.updatePopper({positionFixed: true});
           });
           this.popperParentEl = document.body;
         }

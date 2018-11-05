@@ -9,10 +9,10 @@
     </div>
 
     <div class="module-main">
-      <div class="module-content" style="margin-top: 5px; overflow: hidden; background-color: rgba(77,77,77,0.2); height: 500px">
+      <div class="module-content" style="margin-top: 5px; overflow: hidden; background-color: rgba(77,77,77,0.2);">
 
         <we-menu :value="true" index="root" :collapse="collapse01" :append-to-body="false">
-          <!--<we-menu-item icon-name="home" subMenuMode="open" subMenuTrigger="click">
+          <we-menu-item icon-name="home" subMenuMode="open" subMenuTrigger="click">
             选项
 
             <we-menu v-model="show01" index="01" slot="subMenu" subMenuMode="open">
@@ -33,18 +33,18 @@
 
             </we-menu>
 
-          </we-menu-item>-->
+          </we-menu-item>
           <we-menu-item icon-name="home" index="item02">
             选项
 
-            <we-menu v-model="show02" index="02" slot="subMenu" :appendToBody="false">
+            <we-menu v-model="show02" index="02" slot="subMenu" :appendToBody="true">
 
               <we-menu-item>02选项一</we-menu-item>
               <we-menu-item>选项一</we-menu-item>
               <we-menu-item index="item02-03" subMenuMode="open">
                 选项一item02-03
 
-                <we-menu index="02-03" slot="subMenu">
+                <we-menu index="02-03" slot="subMenu" :appendToBody="false">
                   <we-menu-item>选项二02-03</we-menu-item>
                   <we-menu-item>选项二</we-menu-item>
                   <we-menu-item subMenuMode="open">
@@ -63,9 +63,6 @@
 
             </we-menu>
           </we-menu-item>
-          <!--<we-tooltip :disabled="!collapse01" content="选项" placement="right">
-            <we-menu-item icon-name="home">选项</we-menu-item>
-          </we-tooltip>
           <we-tooltip :disabled="!collapse01" content="选项" placement="right">
             <we-menu-item icon-name="home">选项</we-menu-item>
           </we-tooltip>
@@ -83,9 +80,11 @@
           </we-tooltip>
           <we-tooltip :disabled="!collapse01" content="选项" placement="right">
             <we-menu-item icon-name="home">选项</we-menu-item>
-          </we-tooltip>-->
+          </we-tooltip>
+          <we-tooltip :disabled="!collapse01" content="选项" placement="right">
+            <we-menu-item icon-name="home">选项</we-menu-item>
+          </we-tooltip>
         </we-menu>
-
 
       </div>
     </div>
@@ -95,14 +94,51 @@
       </div>
     </div>
 
-    <div class="first-title">服务方式</div>
+    <div class="first-title">水平菜单</div>
     <div class="module-main">
       <div class="module-content" style="overflow: hidden">
       </div>
     </div>
 
     <div class="module-main" style="margin-top: 5px">
-      <div class="module-content" style="overflow: hidden">
+      <div class="module-content" style="overflow: hidden; background-color: rgba(77,77,77,0.2); height: 300px">
+
+        <we-menu :value="true" mode="horizontal" index="root">
+
+          <we-tooltip content="选项" placement="bottom">
+            <we-menu-item>选项</we-menu-item>
+          </we-tooltip>
+          <we-tooltip content="选项" placement="bottom">
+            <we-menu-item>选项</we-menu-item>
+          </we-tooltip>
+          <we-menu-item>
+            <we-icon name="home"></we-icon>
+            选项
+
+            <we-menu slot="subMenu">
+              <we-menu-item>选项</we-menu-item>
+              <we-menu-item>选项</we-menu-item>
+              <we-menu-item subMenuMode="open">
+                选项
+                <we-menu slot="subMenu" :append-to-body="false">
+                  <we-menu-item>选项</we-menu-item>
+                  <we-menu-item>选项</we-menu-item>
+                </we-menu>
+
+              </we-menu-item>
+            </we-menu>
+
+          </we-menu-item>
+          <we-tooltip content="选项" placement="bottom">
+            <we-menu-item>选项</we-menu-item>
+          </we-tooltip>
+          <we-tooltip content="选项" placement="bottom">
+            <we-menu-item>选项</we-menu-item>
+          </we-tooltip>
+          <we-tooltip content="选项" placement="bottom">
+            <we-menu-item>选项</we-menu-item>
+          </we-tooltip>
+        </we-menu>
 
       </div>
     </div>
@@ -130,7 +166,7 @@
 
     data() {
       return {
-        collapse01: false,
+        collapse01: true,
 
         show01: false,
         show02: false

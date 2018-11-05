@@ -17,7 +17,7 @@
          }]"
          @mouseenter.stop.self="handleMouseEnter"
          @mouseleave.stop.self="handleMouseLeave"
-         v-transfer-restore-dom="{value: appendToBody && isOpen}"
+         v-transfer-restore-dom="{value: isAppendToBody}"
     >
       <ul :class="[`${prefixCls}-menu`, sizeClass]"
           :style="[menuStyle]">
@@ -155,21 +155,6 @@
     props: {
       index: String,//唯一标识
       value: Boolean,//菜单是否显示
-      placement: {//出现的位置
-        type: String,
-        default: 'right-start',
-        validator(value) {
-          return [
-            "left",
-            "left-start",
-            "left-end",
-            "right",
-            "right-start",
-            "right-end"
-          ].indexOf(value) !== -1;
-        }
-      },
-      size: String,//菜单尺寸
       mode: {//菜单模式  vertical - 垂直  horizontal - 水平
         type: String,
         default: 'vertical',
@@ -180,6 +165,30 @@
           ].indexOf(value) !== -1
         }
       },
+      placement: {//出现的位置
+        type: String,
+        default() {
+          if (!this.parentMenu) return 'right-start';
+          return this.parentMenu.mode === 'vertical' ? 'right-start' : 'bottom-start';
+        },
+        validator(value) {
+          return [
+            "top",
+            "top-start",
+            "top-end",
+            "bottom",
+            "bottom-start",
+            "bottom-end",
+            "left",
+            "left-start",
+            "left-end",
+            "right",
+            "right-start",
+            "right-end"
+          ].indexOf(value) !== -1;
+        }
+      },
+      size: String,//菜单尺寸
       placements: {
         type: Array,
         default() {
@@ -258,6 +267,7 @@
         openCollapseTransition: false,//是否开启折叠动画
         isRoot: this === this.rootMenu,//是否是根节点
         isOpen: false,//是否是打开模式,由所属menuItem决定
+        isAppendToBody: false,//是否插入到body下
         visible: this === this.rootMenu,//是否显示当前菜单,根菜单默认显示,子菜单默认隐藏
         showCache: this.value,
         isCollapse: this.collapse,//是否折叠当前菜单
@@ -327,8 +337,6 @@
         } else {
           this.expandMenu();
         }
-        // 更新所有子菜单的popper
-        this.updateAllSubMenusPopper();
       },
       isCollapse(val) {
         if (this.collapsingTimeIndex) {
@@ -336,7 +344,11 @@
           this.collapsingTimeIndex = undefined;
         }
         this.collapsing = true;
-        this.collapsingTimeIndex = setTimeout(() => this.collapsing = false, 300);
+        this.collapsingTimeIndex = setTimeout(() => {
+          this.collapsing = false;
+          // 更新所有子菜单的popper
+          this.updateAllSubMenusPopper();
+        }, 300);
 
         if (val) {
           this.hideContent = true;
@@ -354,8 +366,23 @@
           this.createPopperTimeIndex = undefined;
         }
         if (val) {
-          this.createPopperTimeIndex = setTimeout(() => this.updatePopper({positionFixed: true}), 300);
+          this.createPopperTimeIndex = setTimeout(() => {
+            this.isAppendToBody = this.appendToBody;
+
+            let placements = [];
+            if (!this.isRoot && this.parentMenu.mode === 'vertical') {
+              placements = ['left', 'right'];
+            } else if (!this.isRoot && this.parentMenu.mode === 'horizontal') {
+              placements = ['top', 'bottom'];
+            }
+            this.updatePopper({positionFixed: true, placements: placements});
+          }, 350);
         } else {
+          if (!this.isRoot) {
+            this.parentMenu.hideContent = true;
+            this.createPopperTimeIndex = setTimeout(() => this.parentMenu.hideContent = false, 50);
+          }
+          this.isAppendToBody = false;
           this.destroyPopper();
         }
       }

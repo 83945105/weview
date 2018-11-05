@@ -59,7 +59,7 @@ export default {
         return;
       }
 
-      const options = merge(this.popperOptions, properties);
+      const options = merge(properties, this.popperOptions);
       const popper = this.popperEl || this.$refs.popper;
       const reference = this.referenceEl || this.$refs.reference;
 
@@ -72,9 +72,6 @@ export default {
       }
 
       options.placement = this.placement;
-      if (this.placements) {
-        options.placements = this.placements;
-      }
 
       if (!options.modifiers) {
         options.modifiers = {};
