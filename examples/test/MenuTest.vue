@@ -11,7 +11,10 @@
     <div class="module-main">
       <div class="module-content" style="margin-top: 5px; overflow: hidden; background-color: rgba(77,77,77,0.2);">
 
-        <we-menu :value="true" index="root" :collapse="collapse01" :append-to-body="false">
+        <we-menu :value="true" index="root" :collapse="collapse01"
+                 :append-to-body="false"
+                 sub-menu-trigger="hover"
+        >
           <we-menu-item icon-name="home" subMenuMode="open" subMenuTrigger="click">
             选项
 
@@ -39,7 +42,7 @@
 
             <we-menu v-model="show02" index="02" slot="subMenu" :appendToBody="true">
 
-              <we-menu-item>02选项一</we-menu-item>
+              <we-menu-item icon icon-name="home">02选项一</we-menu-item>
               <we-menu-item>选项一</we-menu-item>
               <we-menu-item index="item02-03" subMenuMode="open">
                 选项一item02-03
@@ -103,10 +106,11 @@
     <div class="module-main" style="margin-top: 5px">
       <div class="module-content" style="overflow: hidden; background-color: rgba(77,77,77,0.2); height: 300px">
 
-        <we-menu :value="true" mode="horizontal" index="root">
+        <we-menu :value="true" mode="horizontal" index="root"
+        >
 
           <we-tooltip content="选项" placement="bottom">
-            <we-menu-item>选项</we-menu-item>
+            <we-menu-item icon icon-name="home">选项</we-menu-item>
           </we-tooltip>
           <we-tooltip content="选项" placement="bottom">
             <we-menu-item>选项</we-menu-item>

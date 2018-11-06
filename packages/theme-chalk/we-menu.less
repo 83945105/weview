@@ -93,8 +93,9 @@
 }
 
 .@{menu-css-prefix} {
-  background-color: @menu-bg;
+  //background-color: @menu-bg;
   position: relative;
+
   width: 100%;
   .mixin-default;
 
@@ -236,32 +237,47 @@
   position: relative;
   .mixin-border-box;
   .mixin-select-none;
+  background-color: @menu-bg;
 
   &.is-horizontal {
     float: left;
-    background-color: @menu-bg;
+    //background-color: @menu-bg;
 
-    .@{menu-css-prefix}-item-title-inner {
-      margin-right: 0;
-      padding: 0 15px 0 15px;
-    }
-    &.is-arrow {
-      .@{menu-css-prefix}-item-title-inner {
-        margin-right: 23px;
-        padding: 0 0 0 15px;
-      }
-      .@{menu-css-prefix}-item-title {
-        padding-right: 12px;
-      }
-      .@{menu-css-prefix}-item-title-arrow {
-        width: 20px;
-        margin-left: 3px;
-      }
-      .@{menu-css-prefix}-item-title-inner-icon {
-        width: 25px;
-        text-align: left;
+    .@{menu-css-prefix}-item-title {
+      &-inner{
+        float: left;
+        &.is-h-left {
+          margin-left: 15px;
+        }
+
+        &.is-h-right {
+          margin-right: 15px;
+        }
       }
     }
+
+    .@{menu-css-prefix}-item-title-arrow{
+      &.is-h-arrow {
+        margin-right: 6px;
+      }
+    }
+    //&.is-arrow {
+    //  .@{menu-css-prefix}-item-title-inner {
+    //    margin-right: 23px;
+    //    padding: 0 0 0 15px;
+    //  }
+    //  .@{menu-css-prefix}-item-title {
+    //    padding-right: 12px;
+    //  }
+    //  .@{menu-css-prefix}-item-title-arrow {
+    //    width: 20px;
+    //    margin-left: 3px;
+    //  }
+    //  .@{menu-css-prefix}-item-title-inner-icon {
+    //    width: 25px;
+    //    text-align: left;
+    //  }
+    //}
   }
 
   &-title {

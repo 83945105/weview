@@ -39,8 +39,13 @@
         <div v-if="showFooter" :class="[footerClass]">
           <slot name="footer">
             <div :class="[`${prefixCls}-layer-footer-inner`, footerAlignClass]">
-              <we-button @click="handleClickCancelButton">{{cancelButtonText}}</we-button>
-              <we-button type="primary" :loading="confirmButtonLoading" @click="handleClickConfirmButton">
+              <we-button v-bind="cancelButtonOptions__"
+                         @click="handleClickCancelButton">
+                {{cancelButtonText}}
+              </we-button>
+              <we-button type="primary"
+                         v-bind="confirmButtonOptions__"
+                         @click="handleClickConfirmButton">
                 {{confirmButtonText}}
               </we-button>
             </div>
@@ -146,15 +151,16 @@
       resizeOutTheScreen: Boolean,
       customClass: String,
       customMaskClass: String,
-      confirmButtonText: {
-        type: String,
-        default: '确定'
-      },
-      confirmButtonLoading: Boolean,
       cancelButtonText: {
         type: String,
         default: '取消'
       },
+      cancelButtonOptions: Object,//取消按钮配置
+      confirmButtonText: {
+        type: String,
+        default: '确定'
+      },
+      confirmButtonOptions: Object,//确认按钮配置
       showClose: {
         type: Boolean,
         default: true
@@ -193,7 +199,10 @@
         layerDomHeight: 0,
 
         cx: 0,
-        cy: 0
+        cy: 0,
+
+        cancelButtonOptions__: {},
+        confirmButtonOptions__: {}
 
       };
     },
@@ -238,7 +247,7 @@
           height: this.__height__,
           left: `${this.x}px`,
           top: `${this.y}px`,
-          zIndex: this.zIndex + 1
+          zIndex: this.nextZIndex + 1
         };
       },
       layerClass() {
@@ -346,6 +355,28 @@
       },
       height(v) {
         this.layerHeight = v;
+      },
+      cancelButtonOptions: {
+        immediate: true,
+        handler(val) {
+          let options = val;
+          if (!options) options = {};
+          if (!options.size) options.size = 'default';
+          if (!options.type) options.type = 'default';
+          this.cancelButtonOptions__ = options;
+        },
+        deep: true
+      },
+      confirmButtonOptions: {
+        immediate: true,
+        handler(val) {
+          let options = val;
+          if (!options) options = {};
+          if (!options.size) options.size = 'default';
+          if (!options.type) options.type = 'primary';
+          this.confirmButtonOptions__ = options;
+        },
+        deep: true
       }
     },
 
@@ -376,11 +407,11 @@
         this.$el.parentNode.removeChild(this.$el);
       },
       handleClickCancelButton(e) {
-        this.$emit('click-cancel', e);
+        this.$emit('click-cancel-button', e);
         this.close();
       },
       handleClickConfirmButton(e) {
-        this.$emit('click-confirm', e, this.close);
+        this.$emit('click-confirm-button', e, this.close);
       },
       initLeftPosition(width) {
         this.layerDomWidth = width ? width : this.layerDomWidthCache;

@@ -1,10 +1,13 @@
 <template>
   <li :class="[itemClass]"
+      :style="{
+        backgroundColor: menu.backgroundColor || rootMenu.backgroundColor
+      }"
   >
     <slot name="panel">
       <div :class="[`${prefixCls}-menu-item-title`, hoverClass, activeClass, selectedClass, disabledClass]"
            :style="[{
-            paddingLeft: `${indentNum * 15}px`,
+            paddingLeft: `${menu.indentNum * 15}px`,
             color: menu.textColor || rootMenu.textColor
            }, hoverStyle, activeStyle, selectedStyle, disabledStyle]"
            @click.stop="handleClick"
@@ -12,15 +15,25 @@
            @mouseleave.stop.self="handleMouseLeave"
       >
         <div v-show="showArrow"
-             :class="[`${prefixCls}-menu-item-title-arrow`, {'is-opened': showSubMenu, 'we-menu-take-up': menu.hideContent}]">
+             :class="[`${prefixCls}-menu-item-title-arrow`,
+             {
+              'is-h-arrow': isHorizontal,
+              'is-opened': showSubMenu,
+              'we-menu-take-up': menu.hideContent
+             }]">
           <icon v-if="subMenuModeIsOpen" :name="isHorizontal ? 'angle-down' : 'angle-right'" size="default"></icon>
           <icon v-else :name="isHorizontal ? 'angle-right' : 'angle-down'" size="default"></icon>
         </div>
 
         <div v-show="showPrompt" :class="[`${prefixCls}-menu-item-title-prompt`]">{{prompt}}</div>
 
-        <div :class="[`${prefixCls}-menu-item-title-inner`]">
-          <div v-if="showIcon" :class="[`${prefixCls}-menu-item-title-inner-icon`]">
+        <div :class="[`${prefixCls}-menu-item-title-inner`,
+        {
+          'is-h-left': isHorizontal && !icon,
+          'is-h-right': isHorizontal && !showArrow
+        }]"
+        >
+          <div v-if="icon" :class="[`${prefixCls}-menu-item-title-inner-icon`]">
             <slot name="icon">
               <icon :name="iconName" size="default"></icon>
             </slot>
@@ -28,7 +41,7 @@
           <slot name="content">
             <div :class="[
                   `${prefixCls}-menu-item-title-inner-text`,
-                  {'is-left': !showIcon && !isHorizontal, 'is-right': !showArrow && !showPrompt && !isHorizontal, 'we-menu-take-up': menu.hideContent}
+                  {'is-left': !icon && !isHorizontal, 'is-right': !showArrow && !showPrompt && !isHorizontal, 'we-menu-take-up': menu.hideContent}
                  ]">
               <slot></slot>
             </div>
@@ -76,9 +89,6 @@
     },
 
     inject: {
-      indentNum: {
-        default: 0
-      },
       rootMenu: ['rootMenu'],
       menu: ['menu'],
       rootMenuItem: {
@@ -104,10 +114,10 @@
       },
       prompt: String,//提示
       disabled: Boolean,//是否禁用,优先级高于menu
-      icon: {//是否显示图标,仅对菜单为垂直排列有效,如果是是根菜单项,默认显示,否则默认不显示
-        Boolean,
+      icon: {//是否显示图标,如果所属菜单是根菜单且不是水平模式则显示
+        type: Boolean,
         default() {
-          return this === this.rootMenuItem;
+          return this.menu.isRoot && this.menu.mode !== 'horizontal';
         }
       },
       iconName: String,//图标名称
@@ -123,7 +133,6 @@
       },
       subMenuTrigger: {//子菜单打开触发方式 hover - 悬浮 click - 点击 manual - 手动
         type: String,
-        default: 'click',
         validator(value) {
           return ['hover', 'click', 'manual'].indexOf(value) !== -1
         }
@@ -135,28 +144,27 @@
         isRoot: this === this.rootMenuItem,//是否是根菜单项
         hasSubMenu: false,//是否拥有子菜单
         subMenu: undefined,//子菜单
-        //子菜单是否是悬浮触发
-        //1、当前subMenuTrigger === undefined => 根据所属菜单的subMenuTrigger是否为hover来判断
-        //2、当前subMenuTrigger !== undefined => 根据当前subMenuTrigger是否为hover来判断
-        subMenuTriggerIsHover: this.subMenuTrigger === void 0 ? this.menu.subMenuTrigger === 'hover' : this.subMenuTrigger === 'hover',
-        // 同上
-        subMenuTriggerIsClick: this.subMenuTrigger === void 0 ? this.menu.subMenuTrigger === 'click' : this.subMenuTrigger === 'click',
-        // 同上上
-        subMenuTriggerIsManual: this.subMenuTrigger === void 0 ? this.menu.subMenuTrigger === 'manual' : this.subMenuTrigger === 'manual',
         subMenuHoverLeaveTimeIndex: undefined,
         showRight: !this.menu.isCollapse,//是否显示右侧
         selected: this.value,//是否选中
         active: false,//是否激活
         showSubMenu: false,//是否显示子菜单
         hover: false,//是否悬浮
-        isHorizontal: this.rootMenuItem === this && this.menu.mode === 'horizontal',        // 是否水平排列
-
-        subMenuOpenX: 0,
-        subMenuOpenY: 0
+        // 是否水平排列
+        isHorizontal: this.rootMenuItem === this && this.menu.mode === 'horizontal'
       };
     },
 
     computed: {
+      subMenuTriggerIsHover() {
+        return this.subMenuTrigger === void 0 ? this.menu.subMenuTrigger === 'hover' : this.subMenuTrigger === 'hover';
+      },
+      subMenuTriggerIsClick() {
+        return this.subMenuTrigger === void 0 ? this.menu.subMenuTrigger === 'click' : this.subMenuTrigger === 'click';
+      },
+      subMenuTriggerIsManual() {
+        return this.subMenuTrigger === void 0 ? this.menu.subMenuTrigger === 'manual' : this.subMenuTrigger === 'manual';
+      },
       subMenuModeIsOpen() {
         if (this.menu.mode === 'horizontal') return true;
         if (this.subMenuMode === void 0) {
@@ -171,9 +179,6 @@
       },
       showPrompt() {
         return !this.showArrow && this.prompt && this.showRight;
-      },
-      showIcon() {
-        return this.icon && !this.isHorizontal;
       },
       disabledClass() {
         return this.disabled ? `is-disabled` : undefined;

@@ -25,6 +25,8 @@
         </we-popover>
         <we-popover title="请确认" type="confirm"
                     confirm-button-text="删了吧"
+                    trigger="hover"
+                    :manual="confirmConfirmButtonOptions.loading"
                     :cancel-button-text="confirmConfirmButtonOptions.loading ? '你没有想的机会了' : '我再想想'"
                     :cancel-button-options="confirmCancelButtonOptions"
                     :confirm-button-options="confirmConfirmButtonOptions"
@@ -84,7 +86,7 @@
           vm.close();
           this.confirmConfirmButtonOptions.loading = false;
           this.confirmCancelButtonOptions.disabled = false;
-        }, 3000);
+        }, 5000);
       },
       handleClickConfirmCancelButton(e, vm) {
         vm.close();

@@ -8,8 +8,7 @@
           'is-accordion': openAccordionTransition,
           'is-accordion-collapse': openCollapseTransition && openAccordionTransition
          }]"
-         :style="[menuStyle,
-         {
+         :style="[{
           width: menuVerticalWidth,
           height: menuHorizontalHeight,
           overflow: collapsing ? 'hidden' : undefined,
@@ -19,8 +18,7 @@
          @mouseleave.stop.self="handleMouseLeave"
          v-transfer-restore-dom="{value: isAppendToBody}"
     >
-      <ul :class="[`${prefixCls}-menu`, sizeClass]"
-          :style="[menuStyle]">
+      <ul :class="[`${prefixCls}-menu`, sizeClass]">
         <slot></slot>
       </ul>
       <div :class="[`${prefixCls}-common-clear`]"></div>
@@ -123,18 +121,7 @@
 
     directives: {TransferRestoreDom},
 
-    provide() {
-      return {
-        indentNum: (this.isRoot || !this.indent) ? this.indentNum : this.menuItem.subMenuModeIsOpen ? 0 : this.indentNum + 1,
-        rootMenu: this.rootMenu,
-        menu: this
-      };
-    },
-
     inject: {
-      indentNum: {//缩进号
-        default: 0
-      },
       rootMenu: {//根菜单,默认自身
         default() {
           return this;
@@ -150,6 +137,13 @@
       menuItem: {//所属menuItem
         default: null
       }
+    },
+
+    provide() {
+      return {
+        rootMenu: this.rootMenu,
+        menu: this
+      };
     },
 
     props: {
@@ -281,6 +275,9 @@
     },
 
     computed: {
+      indentNum() {
+        return (this.isOpen || this.isRoot || !this.indent) ? 0 : this.parentMenu.indentNum + 1;
+      },
       menuSize() {
         return this.size || (this.$WEVIEW || {}).size;
       },
@@ -307,11 +304,6 @@
         let height = this.height || this.iconWidth;
         if (!isNaN(height)) return `${height}px`;
         return height;
-      },
-      menuStyle() {
-        return {
-          backgroundColor: this.backgroundColor || this.rootMenu.backgroundColor
-        };
       }
     },
 
@@ -326,7 +318,9 @@
         if (this.value !== val) {
           this.$emit('input', val);
         }
-        // 更新所有子菜单的popper
+        if (val) {
+          this.updateOpenPopper();
+        }
         this.updateAllSubMenusPopper();
       },
       collapse(val) {
@@ -389,6 +383,10 @@
     },
 
     methods: {
+      updateOpenPopper() {
+        if (!this.isOpen) return;
+        this.updatePopper();
+      },
       handleMouseEnter(e) {
         if (!this.isRoot && this.menuItem.subMenuTriggerIsHover) {
           //清除所属 子菜单open 模式的菜单项至根菜单项的关闭定时
@@ -403,14 +401,12 @@
       },
       updateSubMenusPopper() {
         this.subMenus.forEach(sm => {
-          if (!sm.isOpen) return true;
-          sm.updatePopper();
+          sm.updateOpenPopper();
         });
       },
       updateAllSubMenusPopper() {
         this.allSubMenus.forEach(sm => {
-          if (!sm.isOpen) return true;
-          sm.updatePopper();
+          sm.updateOpenPopper();
         });
       },
       addSubMenu(subMenu) {
@@ -524,22 +520,26 @@
         if (this.locked || this.visible) return;
         if (!this.isRoot) {
           if (this.parentMenu.isAccordion) {
-            //当父菜单是手风琴模式时,关闭所有兄弟菜单及其子菜单
-            this.parentMenu.subMenus.forEach(sm => {
-              if (sm === this) return true;
-              //应该是关闭所有兄弟菜单及其所有子菜单
-              sm.hideMenuAndAllSubMenus(false)
-            });
+            setTimeout(() => {
+              //当父菜单是手风琴模式时,关闭所有兄弟菜单及其子菜单
+              this.parentMenu.subMenus.forEach(sm => {
+                if (sm === this) return true;
+                //应该是关闭所有兄弟菜单及其所有子菜单
+                sm.hideMenuAndAllSubMenus(false)
+              });
+            }, 0);
           }
           if (this.isOpen) {
-            //如果菜单是打开模式,应该将当前菜单到根菜单之外的所有open菜单关闭
-            //先将不需要关闭的菜单锁定,关闭其余菜单后在解除锁定
-            this.lockToRootMenu();
-            this.rootMenu.allSubMenus.forEach(sm => {
-              if (!sm.isOpen || sm === this) return true;
-              sm.hideMenu(false);
-            });
-            this.unLockToRootMenu();
+            setTimeout(() => {
+              //如果菜单是打开模式,应该将当前菜单到根菜单之外的所有open菜单关闭
+              //先将不需要关闭的菜单锁定,关闭其余菜单后在解除锁定
+              this.lockToRootMenu();
+              this.rootMenu.allSubMenus.forEach(sm => {
+                if (!sm.isOpen || sm === this) return true;
+                sm.hideMenu(false);
+              });
+              this.unLockToRootMenu();
+            }, 0);
           }
         }
         this.visible = true;

@@ -103,6 +103,9 @@
       },
       content() {
         this.updatePopper();
+      },
+      manual(val) {
+        this.isManual = val || this.trigger === 'manual';
       }
     },
 
