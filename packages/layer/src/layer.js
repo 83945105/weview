@@ -15,7 +15,7 @@ function removeInstance(vm) {
       break;
     }
   }
-};
+}
 
 const Default = {
   target: ''

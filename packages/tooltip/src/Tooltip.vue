@@ -1,11 +1,12 @@
 <script>
-
   import Vue from 'vue';
   import Conf from '../../src/mixins/conf.js';
   import Popper from '../../src/mixins/popper.js';
+  import {directive as clickOutside} from 'v-click-outside-x';
   import PopupManager from '../../src/utils/popup.js';
-  import {hasClass, onEventListener, offEventListener} from "../../src/utils/dom.js";
+  import {hasClass, findClassToRoot, onEventListener, offEventListener} from "../../src/utils/dom.js";
   import {isFunction} from "../../src/utils/util.js";
+  import {getId} from './tooltip.js';
 
   export default {
 
@@ -16,6 +17,8 @@
     optionName: `tooltip`,
 
     mixins: [Conf, Popper],
+
+    directives: {clickOutside},
 
     props: {
       value: Boolean,
@@ -76,6 +79,7 @@
 
     data() {
       return {
+        id: undefined,
         visible: this.value,
         isManual: this.manual || this.trigger === 'manual',
         delayIndex: undefined,
@@ -287,11 +291,24 @@
 
     render(h) {
       if (this.popperComponent) {
+        let directives = [];
+        if (this.trigger === 'click') {
+          directives.push({
+            name: 'click-outside',
+            value: (e) => {
+              if (!this.visible) return;
+              const el = findClassToRoot(e.target, `${this.prefixCls}-tooltip`);
+              if (el !== void 0 && el.id !== this.id) return;
+              this.handleClickReference(e);
+            }
+          });
+        }
         this.popperComponent.vNode = h('transition', {
           props: {
             name: 'fade'
           }
         }, [h('div', {
+          attrs: {id: this.id},
           'class': [`${this.prefixCls}-tooltip`, this.effect === 'dark' ? `${this.prefixCls}-tooltip-type-dark` : `${this.prefixCls}-tooltip-type-light`],
           style: {
             maxWidth: this.maxWidth ? !isNaN(this.maxWidth) ? `${this.maxWidth}px` : this.maxWidth : undefined,
@@ -301,7 +318,8 @@
           on: {
             mouseenter: this.handleMouseEnterPopper,
             mouseleave: this.handleMouseLeavePopper
-          }
+          },
+          directives: directives
         }, [this.$slots.panel || h('div', {
           'class': `${this.prefixCls}-tooltip-inner`
         }, [h('div', {
@@ -321,6 +339,7 @@
       onEventListener(this.referenceEl, 'mousedown', this.handleMouseDownReference);
       onEventListener(this.referenceEl, 'mouseup', this.handleMouseUpReference);
       onEventListener(this.referenceEl, 'click', this.handleClickReference);
+      this.id = getId();
     },
 
     beforeDestroy() {

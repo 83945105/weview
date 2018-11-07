@@ -161,6 +161,18 @@ export function hasClassChildren(element, className) {
   return false;
 }
 
+export function hasClassToRoot(element, className) {
+  if (!element) return false;
+  if (hasClass(element, className)) return true;
+  return hasClassToRoot(element.parentNode, className);
+}
+
+export function findClassToRoot(element, className) {
+  if (!element) return undefined;
+  if (hasClass(element, className)) return element;
+  return findClassToRoot(element.parentNode, className);
+}
+
 export function getClassChildren(element, className) {
   let nodes = element.childNodes;
   for (let i in nodes) {
