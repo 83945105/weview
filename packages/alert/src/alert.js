@@ -3,84 +3,81 @@ import $Layer from '../../layer/src/layer.js';
 import WeButton from '../../button/src/Button.vue';
 import {isObject, isString} from "../../src/utils/util.js";
 import Conf from "../../src/mixins/conf.js";
-
-const merge = require('webpack-merge');
+import merge from "../../src/utils/merge.js";
 
 const Default = {
   title: '警告',
-  message: '',
+  content: '',
   confirmButtonText: '确定',
-  onClose: undefined,
+  onClickConfirmButton: () => {
+  },
   escCloseable: false,
   maskClosable: false,
   footerAlign: 'right',
   iconName: 'warning-circle-o'
 };
 
-const Alert = function (opts) {
+const Alert = function (properties = {}) {
   if (Vue.prototype.$isServer) {
     return;
   }
-
-  let message;
-  if (isString(opts)) {
-    message = opts;
-    opts = merge(Default, {
-      message: message
+  let content;
+  if (isString(properties)) {
+    content = properties;
+    properties = merge({}, Default, {
+      content: content
     });
-  } else if (isObject(opts)) {
-    opts = merge(Default, opts);
+  } else if (isObject(properties)) {
+    properties = merge({}, Default, properties);
   } else {
-    opts = merge(Default, {});
+    properties = merge({}, Default);
   }
-
-  let instance;
-
-  if (!opts.footerRender) {
-    let cls={};
+  let Alert;
+  if (!properties.footerRender) {
+    let cls = {};
     cls[`${Conf.prefixCls}-layer-footer-inner`] = true;
-    if(opts.footerAlign === "right"){
+    if (properties.footerAlign === "right") {
       cls[`${Conf.prefixCls}-layer-footer-inner tar`] = true;
-    }else if(opts.footerAlign === "center"){
+    } else if (properties.footerAlign === "center") {
       cls[`${Conf.prefixCls}-layer-footer-inner tac`] = true;
-    }else if(opts.footerAlign === "left"){
+    } else if (properties.footerAlign === "left") {
       cls[`${Conf.prefixCls}-layer-footer-inner tal`] = true;
     }
-
-    opts.footerRender = function (h) {
+    properties.footerRender = function (h) {
+      const confirmButtonOptions = merge({}, properties.confirmButtonOptions);
+      if (!confirmButtonOptions.type) {
+        confirmButtonOptions.type = 'primary';
+      }
       return h('div', {
         'class': cls
-      },[
+      }, [
         h(WeButton, {
-          props: {
-            type: 'primary'
-          },
+          props: confirmButtonOptions,
           on: {
-            click() {
-              $Layer.close(instance);
+            click(e) {
+              const rs = properties.onClickConfirmButton(e, Alert);
+              if (rs === false) return;
+              $Layer.close(Alert);
             }
           }
-        }, opts.confirmButtonText)
+        }, properties.confirmButtonText)
       ]);
     };
   }
-
-  if (!opts.render) {
-    opts.render = function (h) {
+  if (!properties.render) {
+    properties.render = function (h) {
       return h('div', {
         style: {
           padding: '15px'
         },
         domProps: {
-          innerHTML: opts.message
+          innerHTML: properties.content
         }
       });
     };
   }
-
-  instance = $Layer(opts);
-
-  return instance;
+  Alert = $Layer(properties);
+  return Alert;
 };
 
 Alert.close = function (target) {
@@ -155,7 +152,7 @@ for (let type in AlertType) {
     if (isString(opts)) {
       opts = {
         title: AlertType[type].title,
-        message: opts,
+        content: opts,
         iconName: AlertType[type].iconName,
         iconType: AlertType[type].iconType
       };

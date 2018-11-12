@@ -2,6 +2,7 @@ import Vue from 'vue';
 import WeLoading from './Loading.vue';
 import merge from "../../src/utils/merge.js";
 import {getClassChildren} from "../../src/utils/dom.js";
+import {isString} from "../../src/utils/util.js";
 
 const Default = {
   target: document.body,
@@ -46,7 +47,7 @@ const Loading = function (properties = {}) {
     return;
   }
   const __props__ = merge({}, Default, properties);
-  if (typeof __props__.target === 'string') {
+  if (isString(__props__.target)) {
     __props__.target = document.querySelector(__props__.target);
   }
   __props__.target = __props__.target || document.body;
@@ -101,7 +102,7 @@ const Loading = function (properties = {}) {
 
 Loading.close = function (target) {
   for (let i = 0; i < instances.length; i++) {
-    if (typeof target === 'string' && instances[i].id === target) {
+    if (isString(target) && instances[i].id === target) {
       instances[i].close();
       break;
     }

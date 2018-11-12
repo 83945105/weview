@@ -60,6 +60,10 @@ export function isExist(obj) {
   return !(isNull(obj) || isUndefined(obj));
 }
 
+export function isArrayString(str) {
+  return (/^\[(.*?)\]$/.test(str));
+}
+
 function ___paramsMatching(strings, numbers, booleans, objects, arrays, funs, nulls, undefineds, htmlElements, param) {
   if (isArray(param)) {
     for (let idx in param) {

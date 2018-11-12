@@ -250,6 +250,7 @@
 
     data() {
       return {
+        nextZIndex: this.zIndex,
         locked: false,//是否锁定,锁定后无法进行任何操作
         subMenus: [],//当前菜单下的子菜单
         allSubMenus: [],//当前菜单下所有子菜单
@@ -290,9 +291,6 @@
         if (this.menuSize === 'large') return 60;
         return 50;
       },
-      nextZIndex() {
-        return this.zIndex || this.visible ? PopupManager.nextZIndex() : 0;
-      },
       menuVerticalWidth() {
         if (this.mode !== 'vertical') return undefined;
         if (this.isCollapse) return `${this.iconWidth}px`;
@@ -319,6 +317,7 @@
           this.$emit('input', val);
         }
         if (val) {
+          this.nextZIndex = this.zIndex ? this.zIndex : PopupManager.nextZIndex();
           this.updateOpenPopper();
         }
         this.updateAllSubMenusPopper();

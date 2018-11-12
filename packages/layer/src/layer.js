@@ -1,12 +1,31 @@
 import Vue from 'vue';
 import WeLayer from './Layer.vue';
-import {isString, isObject} from "../../src/utils/util.js";
+import {isString} from "../../src/utils/util.js";
+import merge from "../../src/utils/merge.js";
 
-const merge = require('webpack-merge');
+const Default = {
+  target: document.body
+};
 
 let seed = 1;
-let instance;
 let instances = [];
+
+export const getId = function () {
+  return `layer-${seed++}`;
+};
+
+export const addInstance = function (instance) {
+  instances.push(instance);
+};
+
+export const getInstance = function (id) {
+  for (let i in instances) {
+    if (instances[i].id === id) {
+      return instances[i];
+    }
+  }
+  return undefined;
+};
 
 function removeInstance(vm) {
   for (let i = 0; i < instances.length; i++) {
@@ -17,53 +36,22 @@ function removeInstance(vm) {
   }
 }
 
-const Default = {
-  target: ''
-};
-
-const Layer = function (opts = {}) {
+const Layer = function (properties = {}) {
   if (Vue.prototype.$isServer) {
     return;
   }
-  let target;
-  if (isString(opts)) {
-    opts = merge(Default, {
-      target: opts
-    });
-  } else if (opts instanceof HTMLElement) {
-    opts = merge(Default, {
-      target: opts
-    });
-  } else if (isObject(opts)) {
-    target = opts.target;
-    if (isString(target)) {
-      target = document.querySelector(`${target}`);
-    } else if (target instanceof HTMLElement) {
-      target = target;
-    } else {
-      target = undefined;
-    }
-    opts = merge(Default, opts, {
-      target: target
-    });
-  } else {
-    opts = merge(Default, {});
+  const __props__ = merge({}, Default, properties);
+  if (isString(__props__.target)) {
+    __props__.target = document.querySelector(__props__.target);
   }
-
-  let html;
-  if (isString(opts.target)) {
-    html = opts.target;
-  } else {
-    html = opts.target.innerHTML;
-  }
-
-  let id = `layer-${seed++}`;
+  __props__.target = __props__.target || document.body;
 
   let vm = new Vue({
     render(h) {
-      opts.value = true;
       return h(WeLayer, {
-        props: opts,
+        props: merge({}, __props__, {
+          value: true
+        }),
         on: {
           animationAfterLeave(el, vm) {
             removeInstance(vm);
@@ -72,42 +60,37 @@ const Layer = function (opts = {}) {
         },
         scopedSlots: {
           header: (props) => {
-            return opts.headerRender ? opts.headerRender(h, props) : undefined;
+            return __props__.headerRender ? __props__.headerRender(h, props) : undefined;
           },
           default: (props) => {
-            return opts.render ? opts.render(h, props) : h('div', {
+            return __props__.render ? __props__.render(h, props) : h('div', {
               domProps: {
-                innerHTML: html
+                innerHTML: __props__.target.innerHTML
               }
             });
           },
           footer: (props) => {
-            return opts.footerRender ? opts.footerRender(h, props) : undefined;
+            return __props__.footerRender ? __props__.footerRender(h, props) : undefined;
           }
         }
       });
     }
   }).$mount();
 
-  let parent = document.body;
-  if (target && target.parentNode) {
-    parent = target.parentNode;
-  }
+  let parent = __props__.target.parentNode || document.body;
 
   parent.appendChild(vm.$el);
 
-  instance = vm.$children[0];
+  const Layer = vm.$children[0];
 
-  instance.id = id;
+  instances.push(Layer);
 
-  instances.push(instance);
-
-  return instance;
+  return Layer;
 };
 
 Layer.close = function (target) {
   for (let i = 0; i < instances.length; i++) {
-    if (typeof target === 'string' && instances[i].id === target) {
+    if (isString(target) && instances[i].id === target) {
       instances[i].close();
       break;
     }
@@ -119,9 +102,7 @@ Layer.close = function (target) {
 };
 
 Layer.closeAll = function () {
-  for (let idx in instances) {
-    instances[idx].close();
-  }
+  [...instances].forEach(instance => instance.close());
 };
 
 export default Layer;

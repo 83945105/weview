@@ -81,17 +81,12 @@
       return {
         id: undefined,
         visible: this.value,
+        nextZIndex: this.zIndex,
         isManual: this.manual || this.trigger === 'manual',
         delayIndex: undefined,
         popperVM: undefined,
         popperParentEl: undefined
       };
-    },
-
-    computed: {
-      nextZIndex() {
-        return this.zIndex || this.visible ? PopupManager.nextZIndex() : 0;
-      }
     },
 
     watch: {
@@ -100,6 +95,7 @@
       },
       visible(val) {
         if (val) {
+          this.nextZIndex = this.zIndex ? this.zIndex : PopupManager.nextZIndex();
           this.handlePopperShow();
           this.updatePopper();
         }

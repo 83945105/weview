@@ -69,7 +69,8 @@
     data() {
       return {
         id: undefined,
-        visible: false
+        visible: false,
+        nextZIndex: this.zIndex,
       };
     },
 
@@ -78,13 +79,10 @@
         this.visible = val;
       },
       visible(val) {
+        if(val) {
+          this.nextZIndex = this.zIndex ? this.zIndex : PopupManager.nextZIndex();
+        }
         this.$emit('input', val);
-      }
-    },
-
-    computed: {
-      nextZIndex() {
-        return this.zIndex || this.visible ? PopupManager.nextZIndex() : 0;
       }
     },
 

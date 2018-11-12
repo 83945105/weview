@@ -3,98 +3,96 @@ import $Layer from '../../layer/src/layer.js';
 import WeButton from '../../button/src/Button.vue';
 import {isObject, isString} from "../../src/utils/util.js";
 import Conf from "../../src/mixins/conf.js";
-
-const merge = require('webpack-merge');
+import merge from "../../src/utils/merge.js";
 
 const Default = {
   title: '确认',
-  message: '',
+  content: '',
   confirmButtonText: '确定',
-  clickConfirm: undefined,
+  onClickConfirmButton: () => {
+  },
   cancelButtonText: '取消',
-  clickCancel: undefined,
-  onClose: undefined,
+  onClickCancelButton: () => {
+  },
   escCloseable: false,
   maskClosable: false,
   iconName: 'help-circle-o',
   footerAlign: 'right'
 };
 
-const Confirm = function (opts) {
+const Confirm = function (properties = {}) {
   if (Vue.prototype.$isServer) {
     return;
   }
 
-  let message;
-  if (isString(opts)) {
-    message = opts;
-    opts = merge(Default, {
-      message: message
+  let content;
+  if (isString(properties)) {
+    content = properties;
+    properties = merge({}, Default, {
+      content: content
     });
-  } else if (isObject(opts)) {
-    opts = merge(Default, opts);
+  } else if (isObject(properties)) {
+    properties = merge({}, Default, properties);
   } else {
-    opts = merge(Default, {});
+    properties = merge({}, Default);
   }
 
-  let instance;
-
-  if (!opts.footerRender) {
-    let cls={};
+  let Confirm;
+  if (!properties.footerRender) {
+    let cls = {};
     cls[`${Conf.prefixCls}-layer-footer-inner`] = true;
-    if(opts.footerAlign === "right"){
+    if (properties.footerAlign === "right") {
       cls[`${Conf.prefixCls}-layer-footer-inner tar`] = true;
-    }else if(opts.footerAlign === "center"){
+    } else if (properties.footerAlign === "center") {
       cls[`${Conf.prefixCls}-layer-footer-inner tac`] = true;
-    }else if(opts.footerAlign === "left"){
+    } else if (properties.footerAlign === "left") {
       cls[`${Conf.prefixCls}-layer-footer-inner tal`] = true;
     }
-
-    opts.footerRender = function (h) {
-      let btn = [];
-      btn.push(h(WeButton, {
-        on: {
-          click(e) {
-            opts.clickCancel && opts.clickCancel(e);
-            $Layer.close(instance);
-          }
-        }
-      }, opts.cancelButtonText));
-      btn.push(h(WeButton, {
-        props: {
-          type: 'primary'
-        },
-        on: {
-          click(e) {
-            opts.clickConfirm && opts.clickConfirm(e, () => {
-              $Layer.close(instance);
-            });
-          }
-        }
-      }, opts.confirmButtonText));
+    properties.footerRender = function (h) {
+      const cancelButtonOptions = merge({}, properties.cancelButtonOptions);
+      if (!cancelButtonOptions.type) {
+        cancelButtonOptions.type = 'text';
+      }
+      const confirmButtonOptions = merge({}, properties.confirmButtonOptions);
+      if (!confirmButtonOptions.type) {
+        confirmButtonOptions.type = 'primary';
+      }
       return h('div', {
         'class': cls
-      },
-        [btn]);
+      }, [h(WeButton, {
+        props: cancelButtonOptions,
+        on: {
+          click(e) {
+            const rs = properties.onClickCancelButton(e, Confirm);
+            if (rs === false) return;
+            $Layer.close(Confirm);
+          }
+        }
+      }, properties.cancelButtonText), h(WeButton, {
+        props: confirmButtonOptions,
+        on: {
+          click(e) {
+            properties.onClickConfirmButton(e, Confirm);
+          }
+        }
+      }, properties.confirmButtonText)]);
     };
   }
 
-  if (!opts.render) {
-    opts.render = function (h) {
+  if (!properties.render) {
+    properties.render = function (h) {
       return h('div', {
         style: {
           padding: '15px'
         },
         domProps: {
-          innerHTML: opts.message
+          innerHTML: properties.content
         }
       });
     };
   }
-
-  instance = $Layer(opts);
-
-  return instance;
+  Confirm = $Layer(properties);
+  return Confirm;
 };
 
 Confirm.close = function (target) {

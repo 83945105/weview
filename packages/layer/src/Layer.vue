@@ -8,7 +8,7 @@
          @click.stop="maskClose"
     ></div>
     <animation :name="_animationName_" @before-enter="animationBeforeEnter" @after-leave="animationAfterLeave">
-      <div v-show="visible" :class="[layerClass, customClass]" :style="style">
+      <div v-show="visible" :id="id" :class="[layerClass, customClass]" :style="style">
         <div v-if="showHeader" :class="[headerClass, dragClass]" @mousedown="dragMousedown">
           <slot name="header">
             <div :class="`${prefixCls}-layer-header-title`">
@@ -82,6 +82,7 @@
   import Button from '../../button/src/Button.vue';
   import Icon from '../../icon/src/Icon.vue';
   import Animation from '../../animation/src/Animation.vue';
+  import {addInstance, getId} from "./layer.js";
 
   export default {
 
@@ -173,14 +174,15 @@
         type: Boolean,
         default: true
       },
-      onClose: Function,
       animationName: String,
       iconName: String
     },
 
     data() {
       return {
+        id: undefined,
         visible: true,
+        nextZIndex: this.zIndex,
         isDrag: false,
         layerWidth: this.width,
         layerHeight: this.height,
@@ -203,14 +205,10 @@
 
         cancelButtonOptions__: {},
         confirmButtonOptions__: {}
-
       };
     },
 
     computed: {
-      nextZIndex() {
-        return this.zIndex || this.visible ? PopupManager.nextZIndex() : 0;
-      },
       _width_() {
         return this.layerWidth ? parseFloat(`${this.layerWidth}`.replace(/[^0-9,.]/g, "")) : undefined;
       },
@@ -347,14 +345,19 @@
     },
 
     watch: {
-      value(v) {
-        this.visible = v;
+      value(val) {
+        this.visible = val;
       },
-      width(v) {
-        this.layerWidth = v;
+      visible(val) {
+        if (val) {
+          this.nextZIndex = this.zIndex ? this.zIndex : PopupManager.nextZIndex();
+        }
       },
-      height(v) {
-        this.layerHeight = v;
+      width(val) {
+        this.layerWidth = val;
+      },
+      height(val) {
+        this.layerHeight = val;
       },
       cancelButtonOptions: {
         immediate: true,
@@ -385,8 +388,6 @@
         if (this.visible) {
           this.visible = false;
           this.$emit('input', false);
-          this.onClose && this.onClose();
-          this.$emit('close');
         }
       },
       maskClose() {
@@ -407,11 +408,11 @@
         this.$el.parentNode.removeChild(this.$el);
       },
       handleClickCancelButton(e) {
-        this.$emit('click-cancel-button', e);
+        this.$emit('click-cancel-button', e, this);
         this.close();
       },
       handleClickConfirmButton(e) {
-        this.$emit('click-confirm-button', e, this.close);
+        this.$emit('click-confirm-button', e, this);
       },
       initLeftPosition(width) {
         this.layerDomWidth = width ? width : this.layerDomWidthCache;
@@ -666,6 +667,8 @@
       this.$nextTick(() => {
         this.visible = this.value;
       });
+      this.id = getId();
+      addInstance(this);
     },
 
     beforeDestroy() {

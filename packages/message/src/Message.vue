@@ -84,6 +84,7 @@
     data() {
       return {
         visible: true,
+        nextZIndex: this.zIndex,
         timer: undefined,
         w: 0,
         h: 0,
@@ -93,9 +94,6 @@
     },
 
     computed: {
-      nextZIndex() {
-        return this.zIndex || this.visible ? PopupManager.nextZIndex() : 0;
-      },
       typeKeys() {
         return Object.keys(MessageType);
       },
@@ -128,11 +126,12 @@
     },
 
     watch: {
-      value(v) {
-        this.visible = v;
+      value(val) {
+        this.visible = val;
       },
-      visible(v) {
-        if (v) {
+      visible(val) {
+        if (val) {
+          this.nextZIndex = this.zIndex ? this.zIndex : PopupManager.nextZIndex();
           this.startTimer();
         } else {
           this.clearTimer();
