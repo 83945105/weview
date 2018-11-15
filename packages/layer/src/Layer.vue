@@ -3,7 +3,7 @@
     <div v-if="visible && showMask"
          :class="[`${prefixCls}-layer-mask`, `${prefixCls}-layer-mask-bg`, customMaskClass]"
          :style="{
-          zIndex: nextZIndex
+          zIndex: nextZIndex - 1
          }"
          @click.stop="maskClose"
     ></div>
@@ -245,7 +245,7 @@
           height: this.__height__,
           left: `${this.x}px`,
           top: `${this.y}px`,
-          zIndex: this.nextZIndex + 1
+          zIndex: this.nextZIndex
         };
       },
       layerClass() {
@@ -350,7 +350,7 @@
       },
       visible(val) {
         if (val) {
-          this.nextZIndex = this.zIndex ? this.zIndex : PopupManager.nextZIndex();
+          this.nextZIndex = this.zIndex ? this.zIndex : PopupManager.nextZIndex(2);
         }
       },
       width(val) {

@@ -11,16 +11,26 @@
     <template v-if="beforeLine">
       <div v-if="menu.mode === 'vertical'"
            :class="[`${prefixCls}-menu-item-group-split-horizontal`]"
-      ></div>
+           :style="{
+            backgroundColor: menu.backgroundColor || rootMenu.backgroundColor
+           }"
+      ><em :style="{backgroundColor: menu.groupLineColor || rootMenu.groupLineColor}"></em></div>
       <div v-else-if="menu.mode === 'horizontal'"
            :class="[`${prefixCls}-menu-item-group-split-vertical is-before-line`]"
-           :style="{height: `${menu.height - 16}px`}"></div>
+           :style="{
+            backgroundColor: menu.backgroundColor || rootMenu.backgroundColor
+           }"
+      ><em :style="{
+            height: `${(menu.height || menu.iconWidth) - 16}px`,
+            backgroundColor: menu.groupLineColor || rootMenu.groupLineColor
+           }"></em></div>
     </template>
 
     <h3 v-show="showTitle && title && menu.mode === 'vertical'"
         :class="[`${prefixCls}-menu-item-group-title`]"
         :style="[{
-          paddingLeft: `${indentNum * 15 + menu.iconWidth}px`
+          paddingLeft: `${indentNum * 15 + menu.iconWidth}px`,
+          backgroundColor: menu.backgroundColor || rootMenu.backgroundColor
         }]"
     >{{title}}</h3>
 
@@ -31,10 +41,19 @@
     <template v-if="afterLine">
       <div v-if="menu.mode === 'vertical'"
            :class="[`${prefixCls}-menu-item-group-split-horizontal`]"
-      ></div>
+           :style="{
+            backgroundColor: menu.backgroundColor || rootMenu.backgroundColor
+           }"
+      ><em :style="{backgroundColor: menu.groupLineColor || rootMenu.groupLineColor}"></em></div>
       <div v-else-if="menu.mode === 'horizontal'"
            :class="[`${prefixCls}-menu-item-group-split-vertical is-after-line`]"
-           :style="{height: `${(menu.height || menu.iconWidth) - 16}px`}"></div>
+           :style="{
+            backgroundColor: menu.backgroundColor || rootMenu.backgroundColor
+           }"
+      ><em :style="{
+            height: `${(menu.height || menu.iconWidth) - 16}px`,
+            backgroundColor: menu.groupLineColor || rootMenu.groupLineColor
+           }"></em></div>
     </template>
 
     <div :class="[`${prefixCls}-common-clear`]"></div>

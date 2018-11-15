@@ -417,16 +417,21 @@
       line-height: 28px;
       padding-top: 10px;
       color: @menu-item-group-title-color;
+      background-color: @menu-bg;
     }
     &-split-vertical {
       position: absolute;
       top: 0;
+      bottom: 0;
       z-index: 10;
-      width: 1px;
-      font-size: 0;
-      margin: 8px 0 0;
-      padding: 0;
-      background-color: @menu-border-color-split;
+      padding: 8px 3px;
+      background-color: @menu-bg;
+
+      & > em{
+        display: block;
+        width: 1px;
+        background-color: @menu-border-color-split;
+      }
 
       &-left-space {
         margin-left: 3px;
@@ -438,22 +443,24 @@
       }
 
       &.is-before-line {
-        left: 0;
+        left: -3px;
       }
       &.is-after-line {
-        right: 0;
+        right: -3px;
       }
     }
 
     &-split-horizontal {
-      height: 1px;
-      line-height: 1px;
-      font-size: 0;
-      margin: 0px 10px 3px;
-      padding: 3px 0 0;
-      border: none;
-      border-bottom: 1px solid @menu-border-color-split;
-      .mixin-border-box;
+      padding: 3px 8px;
+      background-color: @menu-bg;
+
+      & > em{
+        display: block;
+        height: 1px;
+        line-height: 1px;
+        font-size: 0;
+        background-color: @menu-border-color-split;
+      }
     }
   }
 }

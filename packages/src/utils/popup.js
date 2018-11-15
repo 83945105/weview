@@ -6,8 +6,8 @@ const PopupManager = {
     return PopupManager.zIndex;
   },
 
-  nextZIndex() {
-    return PopupManager.zIndex++;
+  nextZIndex(increment = 1) {
+    return PopupManager.zIndex += increment;
   }
 };
 

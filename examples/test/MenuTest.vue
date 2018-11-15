@@ -13,7 +13,6 @@
 
         <we-menu :value="true" index="root" :collapse="collapse01"
                  :append-to-body="false"
-                 sub-menu-trigger="hover"
         >
           <we-menu-item icon-name="home" subMenuMode="open" subMenuTrigger="click">
             选项
@@ -78,12 +77,14 @@
           <we-tooltip :disabled="!collapse01" content="选项" placement="right">
             <we-menu-item icon-name="home">选项</we-menu-item>
           </we-tooltip>
-          <we-tooltip :disabled="!collapse01" content="选项" placement="right">
-            <we-menu-item icon-name="home">选项</we-menu-item>
-          </we-tooltip>
-          <we-tooltip :disabled="!collapse01" content="选项" placement="right">
-            <we-menu-item icon-name="home">选项</we-menu-item>
-          </we-tooltip>
+          <we-menu-item-group before-line after-line title="分组">
+            <we-tooltip :disabled="!collapse01" content="选项" placement="right">
+              <we-menu-item icon-name="home">选项</we-menu-item>
+            </we-tooltip>
+            <we-tooltip :disabled="!collapse01" content="选项" placement="right">
+              <we-menu-item icon-name="home">选项</we-menu-item>
+            </we-tooltip>
+          </we-menu-item-group>
           <we-tooltip :disabled="!collapse01" content="选项" placement="right">
             <we-menu-item icon-name="home">选项</we-menu-item>
           </we-tooltip>
@@ -91,8 +92,103 @@
 
       </div>
     </div>
-    <div class="module-main" style="margin-top: 5px">
+    <div class="first-title">垂直菜单(自定义主题)</div>
+    <div class="module-main">
       <div class="module-content" style="overflow: hidden">
+        <we-button type="primary" @click="collapse02 = !collapse02">折叠/展开</we-button>
+      </div>
+    </div>
+
+    <div class="module-main">
+      <div class="module-content" style="margin-top: 5px; overflow: hidden; background-color: rgba(77,77,77,0.2);">
+
+        <we-menu :value="true" index="root" :collapse="collapse02"
+                 :append-to-body="false"
+                 text-color="#cccccc"
+                 background-color="#252525"
+                 active-text-color="#ffffff"
+                 active-background-color="#151515"
+                 selected-text-color="#ffffff"
+                 selected-background-color="#2199ed"
+                 hover-text-color="#2199ed"
+                 hover-background-color="#151515"
+                 group-line-color="red"
+        >
+          <we-menu-item icon-name="home" subMenuMode="open" subMenuTrigger="click">
+            选项
+
+            <we-menu v-model="show03" index="01" slot="subMenu" subMenuMode="open">
+
+              <we-menu-item>选项一</we-menu-item>
+              <we-menu-item>选项一</we-menu-item>
+              <we-menu-item>选项一</we-menu-item>
+              <we-menu-item>选项一</we-menu-item>
+              <we-menu-item>
+                选项一
+
+                <we-menu index="01-04" slot="subMenu">
+                  <we-menu-item>选项二</we-menu-item>
+                  <we-menu-item>选项二</we-menu-item>
+                  <we-menu-item>选项二</we-menu-item>
+                </we-menu>
+              </we-menu-item>
+
+            </we-menu>
+
+          </we-menu-item>
+          <we-menu-item icon-name="home" index="item02">
+            选项
+
+            <we-menu v-model="show04" index="02" slot="subMenu" :appendToBody="true">
+
+              <we-menu-item icon icon-name="home">02选项一</we-menu-item>
+              <we-menu-item>选项一</we-menu-item>
+              <we-menu-item index="item02-03" subMenuMode="open">
+                选项一item02-03
+
+                <we-menu index="02-03" slot="subMenu" :appendToBody="false">
+                  <we-menu-item>选项二02-03</we-menu-item>
+                  <we-menu-item>选项二</we-menu-item>
+                  <we-menu-item subMenuMode="open">
+                    选项二
+
+                    <we-menu index="03-03" slot="subMenu">
+                      <we-menu-item>选项二03-03</we-menu-item>
+                      <we-menu-item>选项二</we-menu-item>
+                      <we-menu-item>选项二</we-menu-item>
+                    </we-menu>
+
+                  </we-menu-item>
+                </we-menu>
+
+              </we-menu-item>
+
+            </we-menu>
+          </we-menu-item>
+          <we-tooltip :disabled="!collapse02" content="选项" placement="right">
+            <we-menu-item icon-name="home">选项</we-menu-item>
+          </we-tooltip>
+          <we-tooltip :disabled="!collapse02" content="选项" placement="right">
+            <we-menu-item icon-name="home">选项</we-menu-item>
+          </we-tooltip>
+          <we-tooltip :disabled="!collapse02" content="选项" placement="right">
+            <we-menu-item icon-name="home">选项</we-menu-item>
+          </we-tooltip>
+          <we-tooltip :disabled="!collapse02" content="选项" placement="right">
+            <we-menu-item icon-name="home">选项</we-menu-item>
+          </we-tooltip>
+          <we-menu-item-group before-line after-line title="分组">
+            <we-tooltip :disabled="!collapse02" content="选项" placement="right">
+              <we-menu-item icon-name="home">选项</we-menu-item>
+            </we-tooltip>
+            <we-tooltip :disabled="!collapse02" content="选项" placement="right">
+              <we-menu-item icon-name="home">选项</we-menu-item>
+            </we-tooltip>
+          </we-menu-item-group>
+          <we-tooltip :disabled="!collapse02" content="选项" placement="right">
+            <we-menu-item icon-name="home">选项</we-menu-item>
+          </we-tooltip>
+        </we-menu>
 
       </div>
     </div>
@@ -100,6 +196,7 @@
     <div class="first-title">水平菜单</div>
     <div class="module-main">
       <div class="module-content" style="overflow: hidden">
+        <we-button type="primary">显示/隐藏</we-button>
       </div>
     </div>
 
@@ -133,12 +230,14 @@
             </we-menu>
 
           </we-menu-item>
-          <we-tooltip content="选项" placement="bottom">
-            <we-menu-item>选项</we-menu-item>
-          </we-tooltip>
-          <we-tooltip content="选项" placement="bottom">
-            <we-menu-item>选项</we-menu-item>
-          </we-tooltip>
+          <we-menu-item-group before-line after-line>
+            <we-tooltip content="选项" placement="bottom">
+              <we-menu-item>选项</we-menu-item>
+            </we-tooltip>
+            <we-tooltip content="选项" placement="bottom">
+              <we-menu-item>选项</we-menu-item>
+            </we-tooltip>
+          </we-menu-item-group>
           <we-tooltip content="选项" placement="bottom">
             <we-menu-item>选项</we-menu-item>
           </we-tooltip>
@@ -147,15 +246,71 @@
       </div>
     </div>
 
-    <div class="first-title">指令方式</div>
+    <div class="first-title">水平菜单(自定义主题)</div>
     <div class="module-main">
       <div class="module-content" style="overflow: hidden">
+        <we-button type="primary">显示/隐藏</we-button>
       </div>
     </div>
 
     <div class="module-main" style="margin-top: 5px">
-      <div class="module-content" style="overflow: hidden">
+      <div class="module-content" style="overflow: hidden; background-color: rgba(77,77,77,0.2); height: 300px">
 
+        <we-menu :value="true" mode="horizontal" index="root"
+                 text-color="#cccccc"
+                 background-color="#252525"
+                 active-text-color="#ffffff"
+                 active-background-color="#151515"
+                 selected-text-color="#ffffff"
+                 selected-background-color="#2199ed"
+                 hover-text-color="#2199ed"
+                 hover-background-color="#151515"
+                 group-line-color="red"
+        >
+
+          <we-tooltip content="选项" placement="bottom">
+            <we-menu-item icon icon-name="home">选项</we-menu-item>
+          </we-tooltip>
+          <we-tooltip content="选项" placement="bottom">
+            <we-menu-item>选项</we-menu-item>
+          </we-tooltip>
+          <we-menu-item>
+            <we-icon name="home"></we-icon>
+            选项
+
+            <we-menu slot="subMenu">
+              <we-menu-item>选项</we-menu-item>
+              <we-menu-item>选项</we-menu-item>
+              <we-menu-item subMenuMode="open">
+                选项
+                <we-menu slot="subMenu" :append-to-body="false">
+                  <we-menu-item>选项</we-menu-item>
+                  <we-menu-item>选项</we-menu-item>
+                </we-menu>
+
+              </we-menu-item>
+            </we-menu>
+
+          </we-menu-item>
+          <we-menu-item-group before-line after-line title="分组">
+            <we-tooltip content="选项" placement="bottom">
+              <we-menu-item>选项</we-menu-item>
+            </we-tooltip>
+            <we-tooltip content="选项" placement="bottom">
+              <we-menu-item>选项</we-menu-item>
+            </we-tooltip>
+          </we-menu-item-group>
+          <we-tooltip content="选项" placement="bottom">
+            <we-menu-item>选项</we-menu-item>
+          </we-tooltip>
+        </we-menu>
+
+      </div>
+    </div>
+
+    <div class="first-title">上下文菜单</div>
+    <div class="module-main">
+      <div class="module-content" style="overflow: hidden">
       </div>
     </div>
 
@@ -171,9 +326,12 @@
     data() {
       return {
         collapse01: true,
+        collapse02: true,
 
         show01: false,
-        show02: false
+        show02: false,
+        show03: false,
+        show04: false
       };
     },
 

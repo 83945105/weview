@@ -245,7 +245,8 @@
       hoverTextColor: String,//悬停文本颜色
       hoverBackgroundColor: String,//悬停背景颜色
       disabledTextColor: String,//菜单禁用文本颜色
-      disabledBackgroundColor: String//菜单禁用背景颜色
+      disabledBackgroundColor: String,//菜单禁用背景颜色
+      groupLineColor: String//分组线颜色
     },
 
     data() {
@@ -310,12 +311,8 @@
         this.visible = val;
       },
       visible(val) {
-        if (this.menuItem) {
-          this.menuItem.showSubMenu = val;
-        }
-        if (this.value !== val) {
-          this.$emit('input', val);
-        }
+        if (this.menuItem) this.menuItem.showSubMenu = val;
+        if (this.value !== val) this.$emit('input', val);
         if (val) {
           this.nextZIndex = this.zIndex ? this.zIndex : PopupManager.nextZIndex();
           this.updateOpenPopper();
@@ -399,32 +396,24 @@
         }
       },
       updateSubMenusPopper() {
-        this.subMenus.forEach(sm => {
-          sm.updateOpenPopper();
-        });
+        this.subMenus.forEach(sm => sm.updateOpenPopper());
       },
       updateAllSubMenusPopper() {
-        this.allSubMenus.forEach(sm => {
-          sm.updateOpenPopper();
-        });
+        this.allSubMenus.forEach(sm => sm.updateOpenPopper());
       },
       addSubMenu(subMenu) {
         this.subMenus.push(subMenu);
       },
       addAllSubMenu(subMenu) {
         this.allSubMenus.push(subMenu);
-        if (this.parentMenu) {
-          this.parentMenu.addAllSubMenu(subMenu);
-        }
+        if (this.parentMenu) this.parentMenu.addAllSubMenu(subMenu);
       },
       addMenuItem(menuItem) {
         this.menuItems.push(menuItem);
       },
       addAllMenuItem(menuItem) {
         this.allMenuItems.push(menuItem);
-        if (this.parentMenu) {
-          this.parentMenu.addAllMenuItem(menuItem);
-        }
+        if (this.parentMenu) this.parentMenu.addAllMenuItem(menuItem);
       },
       addMenuItemGroup(menuItemGroup) {
         this.menuItemGroups.push(menuItemGroup);
@@ -439,22 +428,17 @@
       },
       lockToRootMenu() {
         this.lockMenu();
-        if (!this.isRoot) {
-          this.parentMenu.lockToRootMenu();
-        }
+        if (this.isRoot) return;
+        this.parentMenu.lockToRootMenu();
       },
       unLockToRootMenu() {
         this.unLockMenu();
-        if (!this.isRoot) {
-          this.parentMenu.unLockToRootMenu();
-        }
+        if (this.isRoot) return;
+        this.parentMenu.unLockToRootMenu();
       },
       hideMenu(cache = true) {
         if (this.locked || !this.visible) return;
-        this.showCache = undefined;
-        if (cache) {
-          this.showCache = this.visible;
-        }
+        if (cache) this.showCache = this.visible;
         this.visible = false;
       },
       hideSubMenus(cache = true) {
@@ -478,42 +462,34 @@
       hideMenuAndSubMenus(cache = true) {
         if (this.locked || !this.visible) return;
         this.showCache = undefined;
-        if (cache) {
-          this.showCache = this.visible;
-        }
+        if (cache) this.showCache = this.visible;
         this.hideSubMenus(cache);
         this.visible = false;
       },
       hideMenuAndAllSubMenus(cache = true) {
         if (this.locked || !this.visible) return;
-        this.showCache = undefined;
-        if (cache) {
-          this.showCache = this.visible;
-        }
-        this.hideAllSubMenus();
+        if (cache) this.showCache = this.visible;
+        this.hideAllSubMenus(cache);
         this.visible = false;
       },
       hideMenuAndOpenSubMenus(cache = true) {
         if (this.locked || !this.visible) return;
         this.showCache = undefined;
-        if (cache) {
-          this.showCache = this.visible;
-        }
+        if (cache) this.showCache = this.visible;
         this.hideOpenSubMenus();
         this.visible = false;
       },
       hideMenuAndAllOpenSubMenus(cache = true) {
         if (this.locked || !this.visible) return;
         this.showCache = undefined;
-        if (cache) {
-          this.showCache = this.visible;
-        }
+        if (cache) this.showCache = this.visible;
         this.hideAllOpenSubMenus();
         this.visible = false;
       },
       restoreMenu() {
         if (this.locked || this.showCache === undefined) return;
         this.visible = this.showCache;
+        this.showCache = undefined;
       },
       showMenu() {
         if (this.locked || this.visible) return;
@@ -564,9 +540,7 @@
         this.menuItems.forEach(m => m.showRight = false);
         this.menuItemGroups.forEach(m => m.showTitle = false);
         this.subMenus.forEach(sm => sm.hideMenuAndAllSubMenus(true));
-        this.collapseDelayTimeIndex = setTimeout(() => {
-          this.isCollapse = true;
-        }, this.collapseDelay);
+        this.collapseDelayTimeIndex = setTimeout(() => this.isCollapse = true, this.collapseDelay);
       },
       expandMenu() {
         if (this.locked || !this.isCollapse) return;
@@ -576,10 +550,8 @@
         }
         this.menuItems.forEach(m => m.showRight = true);
         this.menuItemGroups.forEach(m => m.showTitle = true);
-        setTimeout(() => {
-          this.hideAllOpenSubMenus();
-          this.restoreAllSubMenus();
-        }, 0);
+        this.hideAllOpenSubMenus();
+        this.restoreAllSubMenus();
         this.isCollapse = false;
       }
     },
