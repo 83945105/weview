@@ -79,8 +79,17 @@
         this.visible = val;
       },
       visible(val) {
-        if(val) {
-          this.nextZIndex = this.zIndex ? this.zIndex : PopupManager.nextZIndex();
+        if (val) {
+          if (this.$el && this.$el.parentNode) {
+            if (this.$el.parentNode.dataset.loadingIndex) {
+              this.nextZIndex = this.$el.parentNode.dataset.loadingIndex;
+            } else {
+              this.nextZIndex = this.zIndex ? this.zIndex : PopupManager.nextZIndex();
+              this.$el.parentNode.dataset.loadingIndex = this.nextZIndex;
+            }
+          } else {
+            this.nextZIndex = this.zIndex ? this.zIndex : PopupManager.nextZIndex();
+          }
         }
         this.$emit('input', val);
       }
