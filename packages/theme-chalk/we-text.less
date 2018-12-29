@@ -1,29 +1,29 @@
 @import "./src/common/var.less";
 @import "./src/common/mixins.less";
 
-@text-css-prefix:~"@{css-prefix}text";
+@text-css-prefix: ~"@{css-prefix}text";
 
-.text-size(@height;@font-size;@border-radius){
+.text-size(@height;@font-size;@border-radius) {
   height: @height;
   font-size: @font-size;
   border-radius: @border-radius;
 }
 
-.text-color(@color; @background; @border){
-  background-color: tint(@background,50%);
+.text-color(@color; @background; @border) {
+  background-color: tint(@background, 50%);
   border-color: @border;
   color: @color;
 }
 
-.text-variant(@color; @background; @border){
+.text-variant(@color; @background; @border) {
   background-color: tint(@background, 100%);
   border-color: tint(@border, 50%);
   color: @color;
 
-  &.tac{
+  &.tac {
     text-align: center;
   }
-  &.tar{
+  &.tar {
     text-align: right;
   }
 
@@ -31,35 +31,38 @@
     border-color: tint(@border, 30%);
   }
 
-  &.is-disabled{
+  &.is-disabled {
     cursor: not-allowed;
     background-color: tint(@background, 80%);
     border-color: tint(@border, 60%);
     color: tint(@color, 50%);
 
-    &::-webkit-input-placeholder{
+    &::-webkit-input-placeholder {
       color: tint(@color, 50%);
     }
-    &::-moz-placeholder{
+
+    &::-moz-placeholder {
       color: tint(@color, 50%);
     }
-    &::-moz-placeholder{
+
+    &::-moz-placeholder {
       color: tint(@color, 50%);
     }
-    &::-ms-input-placeholder{
+
+    &::-ms-input-placeholder {
       color: tint(@color, 50%);
     }
   }
 }
 
-.@{text-css-prefix}{
+.@{text-css-prefix} {
   .mixin-border-box;
   width: 180px;
   display: inline-block;
-  line-height:normal;
-  position:relative;
+  line-height: normal;
+  position: relative;
 
-  &-prefix{
+  &-prefix {
     .mixin-horizontal-vertical;
     position: absolute;
     top: 0;
@@ -68,7 +71,7 @@
     width: 30px;
   }
 
-  &-suffix{
+  &-suffix {
     .mixin-horizontal-vertical;
     position: absolute;
     top: 0;
@@ -77,21 +80,34 @@
     width: 30px;
   }
 
-  &-size{
-    &-large{
+  &-clear {
+    cursor: pointer;
+    color: @color-text-7;
+
+    &:hover {
+      color: @color-text-5;
+    }
+
+    &:active {
+      color: @color-text-7;
+    }
+  }
+
+  &-size {
+    &-large {
       font-size: @text-large-font-size;
     }
 
-    &-small{
+    &-small {
       font-size: @text-small-font-size;
     }
 
-    &-mini{
+    &-mini {
       font-size: @text-mini-font-size;
     }
   }
 
-  &-inner{
+  &-inner {
     .mixin-border-box;
     .mixin-default;
     display: inline-block;
@@ -105,7 +121,7 @@
     background-image: none;
     border: 1px solid @text-default-border;
     color: @text-default-color;
-    padding:0 10px;
+    padding: 0 10px;
 
     .text-size(@text-default-height; @text-default-font-size; @text-default-border-radius);
 
@@ -113,93 +129,100 @@
       outline: 0;
     }
 
-    &-size{
-      &-large{
+    &-size {
+      &-large {
         .text-size(@text-large-height; @text-large-font-size; @text-large-border-radius);
       }
 
-      &-small{
+      &-small {
         .text-size(@text-small-height; @text-small-font-size; @text-small-border-radius);
       }
 
-      &-mini{
+      &-mini {
         .text-size(@text-mini-height; @text-mini-font-size; @text-mini-border-radius);
       }
     }
-    &-prefix{
+
+    &-prefix {
       padding-left: 30px;
     }
-    &-suffix{
+
+    &-suffix {
       padding-right: 30px;
     }
 
-    &.is-rectangle{
+    &.is-rectangle {
       -webkit-border-radius: 0;
       border-radius: 0;
     }
 
-    &.is-round{
+    &.is-round {
       -webkit-border-radius: 100px;
       border-radius: 100px;
     }
 
-    &-type{
-      &-default{
+    &-type {
+      &-default {
         background-color: @text-default-fill;
         border-color: @text-default-border;
         color: @text-default-color;
 
-        &.tac{
+        &.tac {
           text-align: center;
         }
-        &.tar{
+
+        &.tar {
           text-align: right;
         }
 
         &:focus {
-          border-color:tint(@text-default-focus-border, 60%);
+          border-color: tint(@text-default-focus-border, 60%);
         }
 
-        &.is-disabled{
+        &.is-disabled {
           cursor: not-allowed;
           background-color: tint(@text-default-border, 70%);
           border-color: tint(@text-default-border, 30%);
           color: tint(@text-default-color, 70%);
 
-          &::-webkit-input-placeholder{
+          &::-webkit-input-placeholder {
             color: tint(@text-default-color, 60%);
           }
-          &::-moz-placeholder{
+
+          &::-moz-placeholder {
             color: tint(@text-default-color, 60%);
           }
-          &::-moz-placeholder{
+
+          &::-moz-placeholder {
             color: tint(@text-default-color, 60%);
           }
-          &::-ms-input-placeholder{
+
+          &::-ms-input-placeholder {
             color: tint(@text-default-color, 60%);
           }
         }
       }
 
-      &-success{
+      &-success {
         .text-variant(@text-success-color; @text-success-fill; @text-success-border);
       }
 
-      &-error{
+      &-error {
         .text-variant(@text-error-border; @text-error-fill; @text-error-border);
       }
     }
   }
 
-  &-multi{
-    display:block;
-    &-inner{
+  &-multi {
+    display: block;
+
+    &-inner {
       min-height: @text-default-height;
       line-height: 1.5;
       width: @text-multi-width;
       padding: 6px 8px;
 
-      &.is-resize{
+      &.is-resize {
         resize: none;
       }
     }

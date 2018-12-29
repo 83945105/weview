@@ -51,6 +51,10 @@
         <input type="text" class="we-text-inner we-text-inner-suffix we-text-inner-type-default" readonly placeholder="请选择日期" />
         <div class="we-text-suffix"><we-icon name="calendar"></we-icon></div>
       </div>
+      <div class="we-text">
+        <input type="text" class="we-text-inner we-text-inner-suffix we-text-inner-type-default" readonly placeholder="清除文本内容" />
+        <div class="we-text-suffix we-text-clear"><we-icon name="close-circle"></we-icon></div>
+      </div>
     </div>
     <div class="mt15">
       <div class="we-text">
