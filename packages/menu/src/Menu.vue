@@ -59,7 +59,7 @@
               enter(el) {
                 el.dataset.oldOverflow = el.style.overflow;
                 if (el.scrollHeight !== 0) {
-                  el.style.height = `${el.scrollHeight}px`;
+                  el.style.height = `${context.parent.height || el.scrollHeight}px`;
                   el.style.paddingTop = el.dataset.oldPaddingTop;
                   el.style.paddingBottom = el.dataset.oldPaddingBottom;
                 } else {

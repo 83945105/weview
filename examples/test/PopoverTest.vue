@@ -44,6 +44,35 @@
         </we-popover>
       </div>
     </div>
+
+    <div class="first-title">与其它组件集成</div>
+    <div class="module-main" style="width: 200px">
+      <div class="module-content" style="overflow-x: hidden; overflow-y: auto; width: 90%">
+        <el-tree :data="treeData" :props="treeDefaultProps">
+          <span class="custom-tree-node" slot-scope="{ node, data }">
+            <span>{{ node.label }}</span>
+            <span>
+              <el-popover placement="right"
+                          title="查看"
+                          width="400"
+                          trigger="click">
+                4654646
+                <el-button slot="reference" type="text" size="mini">Append</el-button>
+              </el-popover>
+              <we-popover title="操作" type="confirm"
+                          placement="right"
+                          confirm-button-text="删除"
+              >
+                <template slot="content">
+                  46546464
+                </template>
+                <el-button type="text" size="mini">Delete</el-button>
+              </we-popover>
+            </span>
+          </span>
+        </el-tree>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -67,6 +96,45 @@
         },
         confirmConfirmButtonOptions: {
           loading: false
+        },
+        treeData: [{
+          label: '一级 1',
+          children: [{
+            label: '二级 1-1',
+            children: [{
+              label: '三级 1-1-1'
+            }]
+          }]
+        }, {
+          label: '一级 2',
+          children: [{
+            label: '二级 2-1',
+            children: [{
+              label: '三级 2-1-1'
+            }]
+          }, {
+            label: '二级 2-2',
+            children: [{
+              label: '三级 2-2-1'
+            }]
+          }]
+        }, {
+          label: '一级 3',
+          children: [{
+            label: '二级 3-1',
+            children: [{
+              label: '三级 3-1-1'
+            }]
+          }, {
+            label: '二级 3-2',
+            children: [{
+              label: '三级 3-2-1'
+            }]
+          }]
+        }],
+        treeDefaultProps: {
+          children: 'children',
+          label: 'label'
         }
       };
     },
