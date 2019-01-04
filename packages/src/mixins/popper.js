@@ -19,10 +19,6 @@ export default {
       type: String,
       default: 'bottom'
     },
-    boundariesPadding: {
-      type: Number,
-      default: 50
-    },
     popperOptions: {//popper.js 配置项
       type: Object,
       default() {
@@ -37,10 +33,8 @@ export default {
     },
     reference: Object,//参照物
     popper: Object,//弹层
-    offset: {
-      default: 0
-    },
-    fixed: Boolean
+    offset: [String, Number],
+    appendToBody: Boolean
   },
 
   data() {
@@ -80,7 +74,15 @@ export default {
       if (!options.modifiers.offset) {
         options.modifiers.offset = {};
       }
-      options.modifiers.offset.offset = this.offset;
+      if (this.offset) {
+        options.modifiers.offset.offset = this.offset;
+      }
+      if (!options.modifiers.preventOverflow) {
+        options.modifiers.preventOverflow = {};
+      }
+      if (!options.modifiers.preventOverflow.boundariesElement && this.appendToBody) {
+        options.modifiers.preventOverflow.boundariesElement = '';
+      }
 
       options.onCreate = () => {
         this.$nextTick(this.updatePopper);

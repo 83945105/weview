@@ -4,6 +4,8 @@
            :effect="effect"
            :max-width="maxWidth"
            :placement="placement"
+           :offset="offset"
+           :popper-options="popperOptions"
            :disabled="disabled"
            :open-delay="openDelay"
            :hide-delay="hideDelay"
@@ -101,6 +103,19 @@
             "right-start",
             "right-end"
           ].indexOf(value) !== -1;
+        }
+      },
+      offset: [String, Number],
+      popperOptions: {//popper.js 配置项
+        type: Object,
+        default() {
+          return {
+            modifiers: {
+              computeStyle: {
+                gpuAcceleration: false,
+              }
+            }
+          };
         }
       },
       disabled: Boolean,//是否禁用
