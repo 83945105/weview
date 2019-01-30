@@ -5,12 +5,7 @@
     <div class="module-main">
       <div class="module-content">
         <we-button @click="$confirm('您确定要这么做吗？')">默认</we-button>
-        <we-button @click="$confirm({
-          content: '您确定要这么做吗？',
-          onClickConfirmButton(e, vm) {
-            vm.close();
-          }
-        })">点击确定关闭
+        <we-button @click="clickConfirmToClose">点击确定关闭
         </we-button>
         <we-button @click="$confirm({
           content: '点击取消将不会关闭',
@@ -60,6 +55,12 @@
   export default {
     name: "confirm-test",
 
+    data() {
+      return {
+        confirmLoading: false
+      };
+    },
+
     methods: {
       renderConfirm() {
         this.$confirm({
@@ -99,6 +100,19 @@
 
           }
         });
+      },
+      clickConfirmToClose() {
+        this.$confirm({
+          content: '您确定要这么做吗？',
+          confirmButtonOptions: {loading: this.confirmLoading},
+          onClickConfirmButton(e, vm) {
+            this.confirmLoading = true;
+            setTimeout(() => {
+              this.confirmLoading = false;
+              vm.close();
+            }, 3000);
+          }
+        })
       }
     }
   }
