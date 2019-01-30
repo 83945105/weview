@@ -144,6 +144,7 @@
         isRoot: this === this.rootMenuItem,//是否是根菜单项
         hasSubMenu: false,//是否拥有子菜单
         subMenu: undefined,//子菜单
+        subMenuHoverEnterTimeIndex: undefined,
         subMenuHoverLeaveTimeIndex: undefined,
         showRight: !this.menu.isCollapse,//是否显示右侧
         selected: this.value,//是否选中
@@ -298,8 +299,10 @@
         this.$emit('mouse-enter', e, this);
         this.hover = true;
         if (this.hasSubMenu && this.subMenuTriggerIsHover) {
-          this.clearSubMenuHoverLeaveTimeToRoot();
-          this.showSubMenu = true;
+          this.subMenuHoverEnterTimeIndex = setTimeout(() => {
+            this.clearSubMenuHoverLeaveTimeToRoot();
+            this.showSubMenu = true;
+          }, 300);
         }
       },
       handleMouseLeave(e) {
@@ -307,6 +310,7 @@
         this.$emit('mouse-leave', e, this);
         this.hover = false;
         if (this.hasSubMenu && this.subMenuTriggerIsHover) {
+          window.clearTimeout(this.subMenuHoverEnterTimeIndex);
           //离开关闭的时候给一个定时延迟,这样当子菜单触发进入事件,就取消定时,当子菜单触发离开事件继续启动延迟
           this.subMenuHoverLeaveTimeIndex = setTimeout(() => this.showSubMenu = false, 500);
         }

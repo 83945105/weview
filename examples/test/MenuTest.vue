@@ -176,7 +176,7 @@
                  hover-background-color="#151515"
                  group-line-color="red"
         >
-          <we-menu-item icon-name="home" subMenuMode="open" subMenuTrigger="click">
+          <we-menu-item icon-name="home" subMenuMode="open" subMenuTrigger="hover">
             选项
 
             <we-menu v-model="show03" index="01" slot="subMenu" subMenuMode="open">
