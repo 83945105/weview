@@ -8,7 +8,7 @@
          @click.stop="maskClose"
     ></div>
     <animation :name="_animationName_" @before-enter="animationBeforeEnter" @after-leave="animationAfterLeave">
-      <div v-show="visible" :id="id" :class="[layerClass, customClass]" :style="style">
+      <div v-show="visible" :id="id" :class="[layerClass, customClass]" :style="style" tabindex="0">
         <div v-if="showHeader" :class="[headerClass, dragClass]" @mousedown="dragMousedown">
           <slot name="header">
             <div :class="`${prefixCls}-layer-header-title`">
@@ -351,6 +351,7 @@
       visible(val) {
         if (val) {
           this.nextZIndex = this.zIndex ? this.zIndex : PopupManager.nextZIndex(2);
+          this.$el.querySelector(`.${this.prefixCls}-layer`).focus();
         }
       },
       width(val) {

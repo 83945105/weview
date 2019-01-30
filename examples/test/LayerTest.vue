@@ -177,6 +177,12 @@
         只有左边和右边可以缩放的弹层
       </we-button>
     </div>
+    <div style="margin-top: 20px">
+      <we-button type="primary"
+                 @click="handleShowJsLayer">
+        JS控制
+      </we-button>
+    </div>
   </div>
 </template>
 
@@ -262,6 +268,9 @@
             ]);
           }
         });
+      },
+      handleShowJsLayer() {
+        this.$layer('你可以用Enter确认弹层')
       }
     },
 

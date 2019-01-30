@@ -33,6 +33,18 @@
       </div>
     </div>
 
+    <div class="first-title">JS控制</div>
+    <div class="module-main">
+      <div class="module-content">
+        <we-button @click="$confirm({
+          content: '你可以使用键盘的Enter确认,Esc关闭',
+          drag: true,
+          showMask: true
+        })">弹出一个确认框
+        </we-button>
+      </div>
+    </div>
+
     <div class="first-title">Render</div>
     <div class="module-main">
       <div class="module-content">
