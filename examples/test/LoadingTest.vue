@@ -14,14 +14,17 @@
       <div class="module-content" style="overflow: hidden">
         <we-button @click="$refs.loading01.close()">关闭loading01</we-button>
         <we-button @click="$refs.loading01.open()" type="primary">开启loading01</we-button>
+        <we-button @click="$refs.loading01.destroy()" type="danger">销毁loading01</we-button>
       </div>
       <div class="module-content" style="overflow: hidden">
         <we-button @click="$refs.loading02.close()">关闭loading02</we-button>
         <we-button @click="$refs.loading02.open()" type="primary">开启loading02</we-button>
+        <we-button @click="$refs.loading02.destroy()" type="danger">销毁loading02</we-button>
       </div>
       <div class="module-content" style="overflow: hidden">
         <we-button @click="$refs.loading03.close()">关闭loading03</we-button>
         <we-button @click="$refs.loading03.open()" type="primary">开启loading03</we-button>
+        <we-button @click="$refs.loading03.destroy()" type="danger">销毁loading03</we-button>
       </div>
     </div>
     <div class="module-main" style="margin-top: 5px">
@@ -142,12 +145,14 @@
             loading07</h1>
         </div>
 
-        <div v-loading="{value: value08, text: 'loading'}" style="border: 1px solid red; width: 200px; height: 200px; float:left;margin-left: 10px;">
+        <div v-loading="{value: value08, text: 'loading'}"
+             style="border: 1px solid red; width: 200px; height: 200px; float:left;margin-left: 10px;">
           <h1 style="display: table-cell;vertical-align: middle;height: 200px; width: 200px; text-align: center">
             loading08</h1>
         </div>
 
-        <div v-loading="{value: value09, logoRender: h => h('we-icon', {props: {name: 'home'}})}" style="border: 1px solid red; width: 200px; height: 200px; float:left;margin-left: 10px;">
+        <div v-loading="{value: value09, logoRender: h => h('we-icon', {props: {name: 'home'}})}"
+             style="border: 1px solid red; width: 200px; height: 200px; float:left;margin-left: 10px;">
           <h1 style="display: table-cell;vertical-align: middle;height: 200px; width: 200px; text-align: center">
             loading09</h1>
         </div>

@@ -1,50 +1,61 @@
 import Vue from 'vue';
 import WeMessage from './Message.vue';
+import merge from "../../src/utils/merge.js";
 import Conf from '../../src/mixins/conf.js';
 import {isObject, isString} from "../../src/utils/util.js";
 
-const merge = require('webpack-merge');
+const Default = {content: ''};
 
-let seed = 1;
-let instance;
+let seed = 0;
 let instances = [];
 
-function removeInstance(vm) {
+export const getId = function () {
+  return `message-${seed++}`;
+};
+
+export const getInstance = function (id) {
+  for (let i in instances) {
+    if (instances[i].id === id) {
+      return instances[i];
+    }
+  }
+  return undefined;
+};
+
+export const addInstance = function (instance) {
+  instances.push(instance);
+};
+
+export const removeInstance = function (instance) {
   for (let i = 0; i < instances.length; i++) {
-    if (instances[i].id === vm.id) {
+    if (instances[i].id === instance.id) {
       instances.splice(i, 1);
       break;
     }
   }
 };
 
-const Default = {message: ''};
+const Message = (properties = {}) => {
+  if (Vue.prototype.$isServer) return;
 
-const Message = function (opts = {}) {
-  if (Vue.prototype.$isServer) {
-    return;
-  }
-
-  if (isString(opts)) {
-    opts = merge(Default, {
-      message: opts
+  const __props__ = {};
+  if (isString(properties)) {
+    merge(__props__, Default, {
+      content: properties
     });
-  } else if (isObject(opts)) {
-    opts = merge(Default, opts);
+  } else if (isObject(properties)) {
+    merge(__props__, Default, properties);
   } else {
-    opts = merge(Default, {});
+    merge(__props__, Default);
   }
 
-  let id = `message-${seed++}`;
-
-  let vm = new Vue({
+  let component = new Vue({
     render(h) {
-      opts.value = true;
+      __props__.value = true;
       return h(WeMessage, {
-        props: opts,
+        props: __props__,
         on: {
-          animationAfterLeave(el, vm) {
-            removeInstance(vm);
+          afterLeave(el, vm) {
             vm.destroy();
           }
         }
@@ -52,15 +63,9 @@ const Message = function (opts = {}) {
     }
   }).$mount();
 
-  document.body.appendChild(vm.$el);
+  document.body.appendChild(component.$el);
 
-  instance = vm.$children[0];
-
-  instance.id = id;
-
-  instances.push(instance);
-
-  return instance;
+  return component.$children[0];
 };
 
 export const MessageType = {
@@ -115,22 +120,22 @@ export const MessageType = {
 };
 
 for (let type in MessageType) {
-  Message[MessageType[type].method] = (opts = {}) => {
-    if (typeof opts === 'string') {
-      opts = {
-        message: opts,
+  Message[MessageType[type].method] = (properties = {}) => {
+    if (isString(properties)) {
+      properties = {
+        content: properties,
         type: type
       };
     } else {
-      opts.type = type;
+      properties.type = type;
     }
-    return Message(opts);
+    return Message(properties);
   };
 }
 
 Message.close = function (target) {
   for (let i = 0; i < instances.length; i++) {
-    if (typeof target === 'string' && instances[i].id === target) {
+    if (isString(target) && instances[i].id === target) {
       instances[i].close();
       break;
     }
@@ -142,9 +147,7 @@ Message.close = function (target) {
 };
 
 Message.closeAll = function () {
-  for (let idx in instances) {
-    instances[idx].close();
-  }
+  [...instances].forEach(instance => instance.close());
 };
 
 export default Message;

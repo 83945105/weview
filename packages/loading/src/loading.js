@@ -9,16 +9,12 @@ const Default = {
   fullscreen: false
 };
 
-let seed = 1;
+let seed = 0;
 let instances = [];
 let globalInstance;
 
 export const getId = function () {
   return `loading-${seed++}`;
-};
-
-export const addInstance = function (instance) {
-  instances.push(instance);
 };
 
 export const getInstance = function (id) {
@@ -30,7 +26,11 @@ export const getInstance = function (id) {
   return undefined;
 };
 
-function removeInstance(instance) {
+export const addInstance = function (instance) {
+  instances.push(instance);
+};
+
+export const removeInstance = function (instance) {
   for (let i = 0; i < instances.length; i++) {
     if (instances[i].id === instance.id) {
       instances.splice(i, 1);
@@ -40,7 +40,7 @@ function removeInstance(instance) {
   if (globalInstance && globalInstance.id === instance.id) {
     globalInstance = undefined;
   }
-}
+};
 
 const Loading = function (properties = {}) {
   if (Vue.prototype.$isServer) {
@@ -72,8 +72,7 @@ const Loading = function (properties = {}) {
           value: true
         }),
         on: {
-          close(vm) {
-            removeInstance(vm);
+          afterLeave(el, vm) {
             vm.destroy();
           }
         },

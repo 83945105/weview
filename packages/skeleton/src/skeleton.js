@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import WeSkeleton from './Skeleton.vue';
 import merge from "../../src/utils/merge.js";
+import {isString} from "../../src/utils/util.js";
 
 const Default = {};
 
@@ -16,11 +17,10 @@ export const addInstance = function (instance) {
 };
 
 const Skeleton = (properties = {}) => {
-  if (Vue.prototype.$isServer) {
-    return;
-  }
+  if (Vue.prototype.$isServer) return;
+
   const __props__ = merge({}, Default, properties);
-  if (typeof __props__.target === 'string') {
+  if (isString(__props__.target)) {
     __props__.target = document.querySelector(__props__.target);
   }
   __props__.target = __props__.target || document.body;

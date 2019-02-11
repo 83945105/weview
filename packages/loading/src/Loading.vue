@@ -1,7 +1,7 @@
 <template>
   <transition name="fade"
-              @before-enter="handleTransitionBeforeEnter"
-              @after-leave="handleTransitionAfterLeave">
+              @before-enter="beforeEnter"
+              @after-leave="afterLeave">
     <div v-show="visible"
          :id="id"
          :class="[
@@ -36,7 +36,7 @@
   import PopupManager from '../../src/utils/popup.js';
   import {hasClass, addClass, removeClass, getStyle} from '../../src/utils/dom.js';
   import Conf from '../../src/mixins/conf.js';
-  import {getId, addInstance} from './loading.js';
+  import {getId, addInstance, removeInstance} from './loading.js';
 
   import Icon from '../../icon/src/Icon.vue';
 
@@ -79,6 +79,7 @@
         this.visible = val;
       },
       visible(val) {
+        this.$emit('input', val);
         if (val) {
           if (this.$el && this.$el.parentNode) {
             if (this.$el.parentNode.dataset.loadingIndex) {
@@ -91,17 +92,16 @@
             this.nextZIndex = this.zIndex ? this.zIndex : PopupManager.nextZIndex();
           }
         }
-        this.$emit('input', val);
       }
     },
 
     methods: {
-      handleTransitionBeforeEnter() {
+      beforeEnter() {
         this.addParentScrollClass();
       },
-      handleTransitionAfterLeave() {
+      afterLeave(el) {
         this.removeParentScrollClass();
-        this.$emit('close', this);
+        this.$emit('afterLeave', el, this);
       },
       addParentScrollClass() {
         let parent = this.fullscreen ? document.body : (this.$el.parentNode || document.body);
@@ -126,11 +126,16 @@
       close() {
         if (!this.visible) return;
         this.visible = false;
+        this.$emit('close', this);
       },
       destroy() {
         this.$el.parentNode.removeChild(this.$el);
         this.$destroy(true);
       }
+    },
+
+    destroyed() {
+      removeInstance(this);
     },
 
     mounted() {
