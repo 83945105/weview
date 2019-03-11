@@ -56,6 +56,20 @@
         }]
       },
       {
+        "desc": "Frame",
+        "name": "Frame",
+        "path": "/frame",
+        "items": [{
+          "desc": "窗口",
+          "name": "WindowsTest",
+          "path": "/windowsTest"
+        }, {
+          "desc": "面板",
+          "name": "PanelTest",
+          "path": "/panelTest"
+        }]
+      },
+      {
         "desc": "Navigation",
         "name": "Navigation",
         "path": "/navigation",
