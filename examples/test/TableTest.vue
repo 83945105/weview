@@ -1,6 +1,5 @@
 <template>
-  <div style="width:400px; height: 250px">
-    <!--we-table-scroll-x we-table-scroll-y-->
+  <div style="width:700px; height: 250px">
     <div class="we-table we-table-align-left we-table-border we-table-scroll-x we-table-scroll-y">
       <div ref="header" class="we-table-header-wrapper">
         <table cellpadding="0" cellspacing="0" border="0" class="we-table-header" style="width: 750px">
@@ -58,7 +57,12 @@
               </div>
             </td>
             <td class="is-leaf">
-              <div class="cell">列内容1</div>
+              <we-tooltip trigger="hover" max-width="200px" placement="top"
+                          content="列内容1列内容1列内容1列内容1">
+                <div class="cell" :class="{'is-ellipsis': showOverflowTooltip}">
+                  列内容1列内容1列内容1列内容1
+                </div>
+              </we-tooltip>
             </td>
             <td class="is-leaf">
               <div class="cell">列内容2</div>
@@ -187,7 +191,6 @@
         </table>
       </div>
 
-
       <div class="we-table-fixed-left" style="width: 50px; bottom: 17px;"
            :class="{'is-fixed-shadow':scrollLeft}">
         <div class="we-table-fixed-left-header-wrapper">
@@ -226,7 +229,7 @@
             </thead>
           </table>
         </div>
-        <div class="we-table-fixed-left-content-wrapper" style="top: 47px; height: 185px;">
+        <div ref="fixedLeft" class="we-table-fixed-left-content-wrapper" style="top: 47px; height: 185px;">
           <table cellpadding="0" cellspacing="0" border="0" class="we-table-content" style="width: 750px">
             <colgroup>
               <col width="50">
@@ -412,7 +415,7 @@
             </thead>
           </table>
         </div>
-        <div class="we-table-fixed-right-content-wrapper" style="top: 47px; height: 185px;">
+        <div ref="fixedRight" class="we-table-fixed-right-content-wrapper" style="top: 47px; height: 185px;">
           <table cellpadding="0" cellspacing="0" border="0" class="we-table-content" style="width: 750px">
             <colgroup>
               <col width="50">
@@ -562,51 +565,6 @@
 
       <div class="we-table-fixed-patch" style="height: 47px; width: 17px;"></div>
     </div>
-    <!--<table class="we-table" cellpadding="0" cellspacing="0" border="1">-->
-    <!--<colgroup>-->
-    <!--<col width="120px" />-->
-    <!--<col width="120px" />-->
-    <!--</colgroup>-->
-    <!--<tr>-->
-    <!--<th>-->
-    <!--<div class="we-table-cell">标题2</div>-->
-    <!--</th>-->
-    <!--<th>-->
-    <!--<div class="we-table-cell">标题2</div>-->
-    <!--</th>-->
-    <!--</tr>-->
-    <!--<tr>-->
-    <!--<td>-->
-    <!--<div class="we-table-cell">内容1</div>-->
-    <!--</td>-->
-    <!--<td>-->
-    <!--<div class="we-table-cell">内容2</div>-->
-    <!--</td>-->
-    <!--</tr>-->
-    <!--</table>-->
-
-    <!--<table class="we-table" cellpadding="0" cellspacing="0" border="1">-->
-    <!--<colgroup>-->
-    <!--<col width="120px" />-->
-    <!--<col width="120px" />-->
-    <!--</colgroup>-->
-    <!--<tr>-->
-    <!--<th>-->
-    <!--<div class="we-table-cell">标题2</div>-->
-    <!--</th>-->
-    <!--<th>-->
-    <!--<div class="we-table-cell">标题2</div>-->
-    <!--</th>-->
-    <!--</tr>-->
-    <!--<tr>-->
-    <!--<td>-->
-    <!--<div class="we-table-cell">内容1</div>-->
-    <!--</td>-->
-    <!--<td>-->
-    <!--<div class="we-table-cell">内容2</div>-->
-    <!--</td>-->
-    <!--</tr>-->
-    <!--</table>-->
   </div>
 </template>
 
@@ -626,7 +584,8 @@
       return {
         checked: false,
         scrollLeft: true,
-        scrollRight: false
+        scrollRight: false,
+        showOverflowTooltip: true
       };
     },
 
@@ -639,13 +598,15 @@
           this.scrollLeft = false;
         }
 
-        let scrollBarWidth = this.$refs.content.offsetWidth + this.$refs.content.scrollLeft + (this.$refs.content.offsetWidth - this.$refs.content.clientWidth);
-        console.log(scrollBarWidth + '+++' + this.$refs.content.scrollLeft);
-        if (this.$refs.content.scrollLeft === scrollBarWidth) {
+        let scrollWidth = this.$refs.content.scrollLeft + this.$refs.content.clientWidth;
+        if (this.$refs.content.scrollWidth === scrollWidth) {
           this.scrollRight = true;
         } else {
           this.scrollRight = false;
         }
+
+        this.$refs.fixedLeft.scrollTop = this.$refs.content.scrollTop;
+        this.$refs.fixedRight.scrollTop = this.$refs.content.scrollTop;
       }
     },
 
