@@ -33,7 +33,7 @@
   import Popper from '../../src/mixins/popper.js';
   import PopupManager from '../../src/utils/popup.js';
   import TransferRestoreDom from '../../src/directives/transfer-restore-dom.js';
-  import {isFunction} from "../../src/utils/util";
+  import {isFunction} from "../../src/utils/util.js";
 
   export default {
 

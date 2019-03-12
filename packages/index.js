@@ -2,6 +2,8 @@
  * Title:
  * Description:
  * author: 白超
+ * qq: 83945105
+ * wx: wx_83945105
  * date: 2018/4/19
  * version: v1.0
  */
@@ -27,6 +29,7 @@ import Skeleton from './skeleton/index.js';
 import {$Skeleton} from './skeleton/index.js';
 import Tooltip from './tooltip/index.js';
 import Popover from './popover/index.js';
+import Table from './table/index.js';
 
 import PopupManager from './src/utils/popup.js';
 
@@ -45,7 +48,8 @@ const components = [
   MenuItemGroup,
   Skeleton,
   Tooltip,
-  Popover
+  Popover,
+  Table
 ];
 
 const install = function (Vue, options = {}) {
@@ -86,7 +90,8 @@ export {
   Skeleton,
   $Skeleton,
   Tooltip,
-  Popover
+  Popover,
+  Table
 }
 
 export default install;

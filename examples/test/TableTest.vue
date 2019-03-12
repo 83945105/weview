@@ -565,6 +565,19 @@
 
       <div class="we-table-fixed-patch" style="height: 47px; width: 17px;"></div>
     </div>
+
+    <div style="border: 1px red solid; width: 500px; height: 500px">
+      <render-table-body :data="tableRows" :columns="tableColumns"></render-table-body>
+    </div>
+
+    <div style="border: 1px red solid; width: 500px; height: 500px">
+      <render-table-thead :data="tableRows" :columns="tableColumns"></render-table-thead>
+    </div>
+
+    <div style="border: 1px red solid; width: 500px; height: 500px">
+      <we-table :data="tableRows" :columns="tableColumns"></we-table>
+    </div>
+
   </div>
 </template>
 
@@ -572,8 +585,13 @@
   import WeIcon from '../../packages/icon/src/Icon.vue';
   import WeButton from "../../packages/button/src/Button";
 
+  import RenderTableBody from '../../packages/table/src/render-table-body.js';
+  import RenderTableThead from '../../packages/table/src/render-table-thead.js';
+
   export default {
     components: {
+      RenderTableBody,
+      RenderTableThead,
       weIcon: WeIcon,
       weButton: WeButton
     },
@@ -585,7 +603,29 @@
         checked: false,
         scrollLeft: true,
         scrollRight: false,
-        showOverflowTooltip: true
+        showOverflowTooltip: true,
+
+        tableRows: (() => {
+          let rows = [];
+          for (let i = 1; i <= 10; i++) {
+            rows.push({
+              id: i,
+              name: '这是姓名',
+              age: '这是年龄'
+            });
+          }
+          return rows;
+        })(),
+        tableColumns: [{
+          label: 'ID',
+          prop: 'id'
+        }, {
+          label: '姓名',
+          prop: 'name'
+        }, {
+          label: '年龄',
+          prop: 'age'
+        }]
       };
     },
 
