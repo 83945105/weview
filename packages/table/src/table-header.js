@@ -22,3 +22,16 @@ export default {
     columns: Array
   }
 }
+
+export function parseColumnsToHeader(columns) {
+  let tableHeaderRow = {};
+  let tableHeaderColumns = [];
+  columns.forEach(column => {
+    tableHeaderRow[column.prop] = column.label;
+    tableHeaderColumns.push({
+      label: '',
+      prop: column.prop
+    });
+  });
+  return {tableHeaderData: [tableHeaderRow], tableHeaderColumns: tableHeaderColumns};
+}

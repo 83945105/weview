@@ -4,6 +4,7 @@
   import RenderThead from './render-table-thead.js';
   import RenderTbody from './render-table-body.js';
   import TableHeader from './table-header.js';
+  import {parseColumnsToHeader} from './table-header.js';
   import TableBody from './table-body.js';
 
   export default {
