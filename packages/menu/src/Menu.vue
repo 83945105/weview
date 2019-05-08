@@ -1,4 +1,4 @@
-<template>
+<!--<template>
   <menu-accordion-transition>
     <div v-show="visible"
          :index="index"
@@ -24,7 +24,7 @@
       <div :class="[`${prefixCls}-common-clear`]"></div>
     </div>
   </menu-accordion-transition>
-</template>
+</template>-->
 
 <script type="text/jsx">
 
@@ -564,6 +564,40 @@
         this.menuItem.hasSubMenu = true;
         this.menuItem.subMenu = this;
       }
+    },
+
+    render(h) {
+      return h('menu-accordion-transition', [
+        h('div', {
+          style: [{
+            display: this.visible ? 'inline' : 'none',
+            width: this.menuVerticalWidth,
+            height: this.menuHorizontalHeight,
+            overflow: this.collapsing ? 'hidden' : undefined,
+            zIndex: this.nextZIndex
+          }],
+          attrs: {
+            index: this.index
+          },
+          'class': [`${this.prefixCls}-menu-external`,
+            {
+              'is-collapse': this.openCollapseTransition,
+              'is-accordion': this.openAccordionTransition,
+              'is-accordion-collapse': this.openCollapseTransition && this.openAccordionTransition
+            }],
+          directives: [{
+            name: 'transfer-restore-dom',
+            value: this.isAppendToBody
+          }]
+        }, [
+          h('ul', {
+            'class': [`${this.prefixCls}-menu`, this.sizeClass]
+          }, [this.$slots.default]),
+          h('div', {
+            'class': [`${this.prefixCls}-common-clear`]
+          })
+        ])
+      ]);
     },
 
     mounted() {

@@ -383,7 +383,7 @@
 
 <script>
   export default {
-    name: "loading-test",
+    name: "menu-test",
 
     data() {
       return {
@@ -405,7 +405,7 @@
 
     created() {
       let tableData = [];
-      for (let i = 0; i < 200; i++) {
+      for (let i = 0; i < 1; i++) {
         tableData.push({
           date: '2016-05-01',
           name: '王小虎',

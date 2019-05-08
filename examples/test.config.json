@@ -45,39 +45,52 @@
         "desc": "Form",
         "name": "Form",
         "path": "/form",
-        "items": [{
-          "desc": "单选按钮",
-          "name": "RadioTest",
-          "path": "/radioTest"
-        },{
-          "desc": "复选按钮",
-          "name": "CheckboxTest",
-          "path": "/checkboxTest"
-        }]
+        "items": [
+          {
+            "desc": "单选按钮",
+            "name": "RadioTest",
+            "path": "/radioTest"
+          },
+          {
+            "desc": "复选按钮",
+            "name": "CheckboxTest",
+            "path": "/checkboxTest"
+          }
+        ]
       },
       {
         "desc": "Frame",
         "name": "Frame",
         "path": "/frame",
-        "items": [{
-          "desc": "窗口",
-          "name": "WindowsTest",
-          "path": "/windowsTest"
-        }, {
-          "desc": "面板",
-          "name": "PanelTest",
-          "path": "/panelTest"
-        }]
+        "items": [
+          {
+            "desc": "窗口",
+            "name": "WindowsTest",
+            "path": "/windowsTest"
+          },
+          {
+            "desc": "面板",
+            "name": "PanelTest",
+            "path": "/panelTest"
+          }
+        ]
       },
       {
         "desc": "Navigation",
         "name": "Navigation",
         "path": "/navigation",
-        "items": [{
-          "desc": "菜单",
-          "name": "MenuTest",
-          "path": "/menuTest"
-        }]
+        "items": [
+          {
+            "desc": "菜单",
+            "name": "MenuTest",
+            "path": "/menuTest"
+          },
+          {
+            "desc": "上下文菜单",
+            "name": "ContextMenuTest",
+            "path": "/context/menuTest"
+          }
+        ]
       },
       {
         "desc": "通知测试",
